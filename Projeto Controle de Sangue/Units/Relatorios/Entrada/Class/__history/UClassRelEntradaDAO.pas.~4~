@@ -1,0 +1,98 @@
+unit UClassRelEntradaDAO;
+
+interface
+
+uses System.Classes, System.SysUtils, UClassConexao, UClassPersistencia, UClassRelEntrada;
+
+type
+  TRelEntradaDAO = class(TPersistent)
+  private
+    FConexao: TConexao;
+  public
+
+    function getRelatorio(var pPersistencia: TPersistencia; const pRELENTRADA: TRelEntrada): Boolean;
+
+    constructor Create(const pCONEXAO: TConexao); overload;
+    destructor Destroy; override;
+
+  end;
+
+implementation
+
+uses System.StrUtils, UEnumsRelatorio;
+
+{ TRelEntradaDAO }
+
+constructor TRelEntradaDAO.Create(const pCONEXAO: TConexao);
+begin
+
+end;
+
+destructor TRelEntradaDAO.Destroy;
+begin
+
+  inherited;
+end;
+
+function TRelEntradaDAO.getRelatorio(var pPersistencia: TPersistencia; const pRELENTRADA: TRelEntrada): Boolean;
+begin
+
+  try
+
+    pPersistencia.IniciaTransacao;
+
+    pPersistencia.Query.SQL.Add('SELECT');
+    pPersistencia.Query.SQL.Add('  e.id,');
+    pPersistencia.Query.SQL.Add('  e.id_usuario,');
+    pPersistencia.Query.SQL.Add('  e.id_bolsa,');
+    pPersistencia.Query.SQL.Add('  e.data_entrada,');
+    pPersistencia.Query.SQL.Add('  e.observacao,');
+
+    pPersistencia.Query.SQL.Add('FROM entrada e');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
+    pPersistencia.Query.SQL.Add('ON(b.id = e.id_bolsa)');
+
+    pPersistencia.Query.SQL.Add('WHERE data_entrada BETWEEN :pDataIni AND :pDataFim');
+    pPersistencia.setParametro('pDataFin', pRELENTRADA.DataIni);
+    pPersistencia.setParametro('pDataFim', pRELENTRADA.DataFim);
+
+    case (pRELENTRADA.FiltroTipo) of
+
+      tfEntre:
+        begin
+
+          pPersistencia.Query.SQL.Add('AND tipo BETWEEN :pTipoIni AND :pTipoFim');
+
+          pPersistencia.setParametro('pTipoIni', pRELENTRADA.ListTipo[0]);
+          pPersistencia.setParametro('pTipoFim', pRELENTRADA.ListTipo[0]);
+
+        end;
+      tfSomente, tfOmitir:
+        begin
+
+          pPersistencia.Query.SQL.Add('AND tipo ' + IfThen(pRELENTRADA.FiltroTipo = tfOmitir, 'NOT', '') +
+            ' IN (:pListTipo)');
+
+          pPersistencia.setParametro('pListTipo', pRELENTRADA.ListTipo.Text);
+
+        end;
+
+    end;
+
+    pPersistencia.Transacao.CommitRetaining;
+
+    Result := False;
+
+  except
+    on E: Exception do
+    begin
+
+      Result := False;
+
+    end;
+  end;
+
+end;
+
+end.

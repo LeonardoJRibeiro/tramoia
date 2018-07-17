@@ -1,0 +1,41 @@
+unit URelEntrada;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport;
+
+type
+  TFrmRelEntrada = class(TForm)
+    RLReport: TRLReport;
+    RLBandHeader: TRLBand;
+    RLLabel: TRLLabel;
+    RLBandTitle: TRLBand;
+    RLLabelDataEntrada: TRLLabel;
+    RLPanel1: TRLPanel;
+    RLLabelNumeroBolsa: TRLLabel;
+    RLPanel2: TRLPanel;
+    RLLabelOrigem: TRLLabel;
+    RLPanel3: TRLPanel;
+    RLLabelTipo: TRLLabel;
+    RLPanel4: TRLPanel;
+    RLLabelVolume: TRLLabel;
+    RLPanel5: TRLPanel;
+    RLLabelAboRh: TRLLabel;
+    RLPanel6: TRLPanel;
+    RLLabel1: TRLLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmRelEntrada: TFrmRelEntrada;
+
+implementation
+
+{$R *.dfm}
+
+end.

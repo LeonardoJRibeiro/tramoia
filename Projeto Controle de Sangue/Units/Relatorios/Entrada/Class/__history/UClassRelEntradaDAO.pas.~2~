@@ -1,0 +1,73 @@
+unit UClassRelEntradaDAO;
+
+interface
+
+uses System.Classes, System.SysUtils, UClassConexao, UClassPersistencia, UClassRelEntrada;
+
+type
+  TRelEntradaDAO = class(TPersistent)
+  private
+    FConexao: TConexao;
+  public
+
+    function getRelatorio(var pPersistencia: TPersistencia; const pRELENTRADA: TRelEntrada): Boolean;
+
+    constructor Create(const pCONEXAO: TConexao); overload;
+    destructor Destroy; override;
+
+  end;
+
+implementation
+
+{ TRelEntradaDAO }
+
+constructor TRelEntradaDAO.Create(const pCONEXAO: TConexao);
+begin
+
+end;
+
+destructor TRelEntradaDAO.Destroy;
+begin
+
+  inherited;
+end;
+
+function TRelEntradaDAO.getRelatorio(var pPersistencia: TPersistencia; const pRELENTRADA: TRelEntrada): Boolean;
+begin
+
+  try
+
+    pPersistencia.IniciaTransacao;
+
+    pPersistencia.Query.SQL.Add('SELECT');
+    pPersistencia.Query.SQL.Add('  id,');
+    pPersistencia.Query.SQL.Add('  id_usuario,');
+    pPersistencia.Query.SQL.Add('  id_bolsa,');
+    pPersistencia.Query.SQL.Add('  data_entrada,');
+    pPersistencia.Query.SQL.Add('  observacao');
+    pPersistencia.Query.SQL.Add('FROM entrada');
+
+    pPersistencia.Query.SQL.Add('WHERE data_entrada BETWEEN :pDataIni AND :pDataFim');
+    pPersistencia.setParametro('pDataFin', pRELENTRADA.DataIni);
+    pPersistencia.setParametro('pDataFim', pRELENTRADA.DataFim);
+
+
+
+
+
+    pPersistencia.Transacao.CommitRetaining;
+
+    Result := False;
+
+  except
+    on E: Exception do
+    begin
+
+      Result := False;
+
+    end;
+  end;
+
+end;
+
+end.

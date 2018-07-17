@@ -1,0 +1,85 @@
+unit URelEntrada;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Data.DB;
+
+type
+  TFrmRelEntrada = class(TForm)
+    RLReport: TRLReport;
+    RLBandHeader: TRLBand;
+    RLLabel: TRLLabel;
+    RLBandTitle: TRLBand;
+    RLLabelDataEntrada: TRLLabel;
+    RLPanel1: TRLPanel;
+    RLLabelNumeroBolsa: TRLLabel;
+    RLPanel2: TRLPanel;
+    RLLabelOrigem: TRLLabel;
+    RLPanel3: TRLPanel;
+    RLLabelTipo: TRLLabel;
+    RLPanel4: TRLPanel;
+    RLLabelVolume: TRLLabel;
+    RLPanel5: TRLPanel;
+    RLLabelAboRh: TRLLabel;
+    RLPanel6: TRLPanel;
+    RLLabel1: TRLLabel;
+    DataSource: TDataSource;
+  private
+    FForeignFormKey: SmallInt;
+    FCodUsu: Integer;
+
+    function PreparaRelatorio: Boolean;
+
+  public
+    class function getRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+  end;
+
+var
+  FrmRelEntrada: TFrmRelEntrada;
+
+implementation
+
+uses UClassMensagem;
+
+{$R *.dfm}
+{ TFrmRelEntrada }
+
+class function TFrmRelEntrada.getRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+begin
+
+  Application.CreateForm(TFrmRelEntrada, FrmRelEntrada);
+  try
+
+    try
+
+      if (FrmRelEntrada.PreparaRelatorio) then
+      begin
+
+        FrmRelEntrada.RLReport.PreviewModal;
+
+      end;
+
+      Result := True;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(Format(TMensagem.getMensagem(0), ['de relatório de entrada', E.Message]));
+      end;
+    end;
+
+  finally
+    FreeAndNil(FrmRelEntrada);
+  end;
+
+end;
+
+function TFrmRelEntrada.PreparaRelatorio: Boolean;
+begin
+
+end;
+
+end.

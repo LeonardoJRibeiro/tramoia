@@ -1,0 +1,159 @@
+unit UClassRelEntrada;
+
+interface
+
+uses System.SysUtils, System.Classes, UEnumsRelatorio;
+
+type
+  TRelEntrada = class(TPersistent)
+  private
+
+    FDataIni: TDate;
+    FDataFim: TDate;
+
+    FFiltroTipo: TTipoFiltro;
+    FListTipo: TStringList;
+
+    FFiltroGrupoSanguineo: TTipoFiltro;
+    FListGrupoSanguineo: TStringList;
+
+    FFiltroVolume: TTipoFiltro;
+    FListVolume: TStringList;
+
+    FVisualizar: Boolean;
+
+    function getDataIni: TDate;
+    function getFiltroGrupoSanguineo: TTipoFiltro;
+    function getFiltroTipo: TTipoFiltro;
+    function getFiltroVolume: TTipoFiltro;
+    function getVisualizar: Boolean;
+
+    procedure setDataIni(const Value: TDate);
+    procedure setFiltroGrupoSanguineo(const Value: TTipoFiltro);
+    procedure setFiltroTipo(const Value: TTipoFiltro);
+    procedure setFiltroVolume(const Value: TTipoFiltro);
+    procedure setVisualizar(const Value: Boolean);
+    function getDataFim: TDate;
+    procedure setDataFim(const Value: TDate);
+
+  public
+
+    property DataIni: TDate read getDataIni write setDataIni;
+    property DataFim: TDate read getDataFim write setDataFim;
+
+    property FiltroTipo: TTipoFiltro read getFiltroTipo write setFiltroTipo;
+    property ListTipo: TStringList read FListTipo write FListTipo;
+
+    property FiltroGrupoSanguineo: TTipoFiltro read getFiltroGrupoSanguineo write setFiltroGrupoSanguineo;
+    property ListGrupoSanguineo: TStringList read FListGrupoSanguineo write FListGrupoSanguineo;
+
+    property FiltroVolume: TTipoFiltro read getFiltroVolume write setFiltroVolume;
+    property ListVolume: TStringList read FListVolume write FListVolume;
+
+    property Visualizar: Boolean read getVisualizar write setVisualizar;
+
+    constructor Create; overload;
+    destructor Destroy; override;
+
+  end;
+
+implementation
+
+{ TRelEntrada }
+
+constructor TRelEntrada.Create;
+begin
+
+end;
+
+destructor TRelEntrada.Destroy;
+begin
+
+  inherited;
+end;
+
+function TRelEntrada.getDataFim: TDate;
+begin
+
+  Result := Self.FDataFim;
+
+end;
+
+function TRelEntrada.getDataIni: TDate;
+begin
+
+  Result := Self.FDataIni;
+
+end;
+
+function TRelEntrada.getFiltroGrupoSanguineo: TTipoFiltro;
+begin
+
+  Result := Self.FFiltroGrupoSanguineo;
+
+end;
+
+function TRelEntrada.getFiltroTipo: TTipoFiltro;
+begin
+
+  Result := Self.FFiltroTipo;
+
+end;
+
+function TRelEntrada.getFiltroVolume: TTipoFiltro;
+begin
+
+  Result := Self.FFiltroVolume;
+
+end;
+
+function TRelEntrada.getVisualizar: Boolean;
+begin
+
+  Result := Self.FVisualizar;
+
+end;
+
+procedure TRelEntrada.setDataFim(const Value: TDate);
+begin
+
+  Self.FDataFim := Value;
+
+end;
+
+procedure TRelEntrada.setDataIni(const Value: TDate);
+begin
+
+  Self.FDataIni := Value;
+
+end;
+
+procedure TRelEntrada.setFiltroGrupoSanguineo(const Value: TTipoFiltro);
+begin
+
+  Self.FFiltroGrupoSanguineo := Value;
+
+end;
+
+procedure TRelEntrada.setFiltroTipo(const Value: TTipoFiltro);
+begin
+
+  Self.FiltroTipo := Value;
+
+end;
+
+procedure TRelEntrada.setFiltroVolume(const Value: TTipoFiltro);
+begin
+
+  Self.FFiltroVolume := Value;
+
+end;
+
+procedure TRelEntrada.setVisualizar(const Value: Boolean);
+begin
+
+  Self.FVisualizar := Value;
+
+end;
+
+end.

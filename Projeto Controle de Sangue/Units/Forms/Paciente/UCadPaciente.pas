@@ -119,7 +119,7 @@ begin
       begin
         Application.MessageBox(PChar(Format(TMensagem.getMensagem(7), ['Paciente'])), PChar('Informação'),
           MB_OK + MB_ICONINFORMATION);
-        ModalResult := mrOk;
+        //ModalResult := mrOk;
       end;
 
     end;

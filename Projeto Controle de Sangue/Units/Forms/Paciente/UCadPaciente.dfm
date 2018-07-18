@@ -184,7 +184,6 @@ object FrmCadPaciente: TFrmCadPaciente
             Top = 32
             Width = 92
             Height = 21
-            Alignment = taCenter
             EditMask = '00/00/0000;1;_'
             MaxLength = 10
             TabOrder = 2

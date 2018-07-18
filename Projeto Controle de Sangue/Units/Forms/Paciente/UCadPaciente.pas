@@ -66,7 +66,7 @@ type
     procedure BtnSairClick(Sender: TObject);
     procedure EdtCpfExit(Sender: TObject);
   private
-    FId: Integer;
+    FIdPaciente: Integer;
 
     FNumeroProntuario: string;
 
@@ -75,6 +75,13 @@ type
     function getIdMunicipio(): Integer;
 
     function getCodgioMunicipio(const pID: Integer): Integer;
+
+    function ValidaCampos: Boolean;
+
+    function SalvaPaciente: Boolean;
+
+    function SalvaEndereco: Boolean;
+
   public
     class function getCadPaciente(const pID: Integer = -1): Boolean;
   end;
@@ -101,6 +108,145 @@ var
   lEndereco: TEndereco;
   lEnderecoDao: TEnderecoDao;
 begin
+
+  if (Self.ValidaCampos) then
+  begin
+
+    if (Self.SalvaPaciente) then
+    begin
+
+      if (Self.SalvaEndereco) then
+      begin
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(7), ['Paciente'])), PChar('Informação'),
+          MB_OK + MB_ICONINFORMATION);
+        ModalResult := mrOk;
+      end;
+
+    end;
+
+  end;
+
+end;
+
+procedure TFrmCadPaciente.s(Sender: TObject);
+begin
+
+  if (ComboboxSexo.ItemIndex = -1) then
+  begin
+
+    ComboboxSexo.DroppedDown := True;
+
+  end;
+
+end;
+
+function TFrmCadPaciente.SalvaEndereco: Boolean;
+var
+  lEndereco: TEndereco;
+  lEnderecoDao: TEnderecoDao;
+begin
+
+  if (Self.ValidaCampos) then
+  begin
+
+    if (Self.SalvaPaciente) then
+    begin
+
+      lEndereco := TEndereco.Create;
+      try
+
+        lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
+        try
+
+          try
+            lEndereco.Id := lEnderecoDao.getId(Self.FIdPaciente);
+            lEndereco.Logradouro := EdtLogradouro.Text;
+            lEndereco.Bairro := EdtBairro.Text;
+            lEndereco.Numero := EdtNumero.Text;
+            lEndereco.Id_Municipio := Self.getIdMunicipio;
+            lEndereco.Cep := EdtCep.Text;
+            lEndereco.Complemento := EdtComplemento.Text;
+            lEndereco.Id_Paciente := Self.FIdPaciente;
+
+            Result := lEnderecoDao.Salvar(lEndereco);
+
+          except
+            Result := False;
+
+          end;
+
+        finally
+          FreeAndNil(lEnderecoDao);
+        end;
+
+      finally
+        FreeAndNil(lEndereco);
+      end;
+
+    end;
+
+  end;
+
+end;
+
+function TFrmCadPaciente.SalvaPaciente: Boolean;
+var
+  lPaciente: TPaciente;
+  lPacienteDao: TPacienteDao;
+begin
+  Result := False;
+
+  lPaciente := TPaciente.Create;
+  try
+
+    try
+      lPaciente.Id := Self.FIdPaciente;
+      lPaciente.Nome := EdtNome.Text;
+      lPaciente.Nome_Pai := EdtNomePai.Text;
+      lPaciente.Nome_Mae := EdtNomeMae.Text;
+      lPaciente.Data_Nascimento := StrToDate(EdtDataNascimento.Text);
+      lPaciente.Sexo := Copy(ComboboxSexo.Text, 0, 1);
+      lPaciente.Num_Prontuario := EdtNumProntuario.Text;
+      lPaciente.Abo := Trim(Copy(ComboBoxABO.Text, 0, Length(ComboBoxABO.Text) - 1));
+      lPaciente.Rh := (Trim(Copy(ComboBoxABO.Text, Length(ComboBoxABO.Text), 1)));
+      lPaciente.Cpf := EdtCpf.Text;
+      lPaciente.Rg := EdtRg.Text;
+      lPaciente.Telefone := EdtTelefone.Text;
+      lPaciente.Sus := EdtSus.Text;
+      lPaciente.Observacao := MemoObservacoes.Text;
+
+      lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
+      try
+
+        if (lPacienteDao.Salvar(lPaciente)) then
+        begin
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(7), ['Paciente'])), PChar('Informação'),
+            MB_OK + MB_ICONINFORMATION);
+          Result := True;
+        end;
+
+      finally
+        FreeAndNil(lPacienteDao);
+      end;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['paciente', E.Message])), PChar('Erro'),
+          MB_OK + MB_ICONWARNING);
+      end;
+    end;
+
+  finally
+    FreeAndNil(lPaciente);
+  end;
+
+end;
+
+function TFrmCadPaciente.ValidaCampos: Boolean;
+begin
+  Result := False;
 
   if (Trim(EdtNome.Text).IsEmpty) then
   begin
@@ -164,92 +310,7 @@ begin
 
   end;
 
-  lPaciente := TPaciente.Create;
-  try
-
-    try
-
-      lPaciente.Id := Self.FId;
-      lPaciente.Nome := EdtNome.Text;
-      lPaciente.Nome_Pai := EdtNomePai.Text;
-      lPaciente.Nome_Mae := EdtNomeMae.Text;
-      lPaciente.Data_Nascimento := StrToDate(EdtDataNascimento.Text);
-      lPaciente.Sexo := Copy(ComboboxSexo.Text, 0, 1);
-      lPaciente.Num_Prontuario := EdtNumProntuario.Text;
-      lPaciente.Abo := Trim(Copy(ComboBoxABO.Text, 0, Length(ComboBoxABO.Text) - 1));
-      lPaciente.Rh := (Trim(Copy(ComboBoxABO.Text, Length(ComboBoxABO.Text), 1)));
-      lPaciente.Cpf := EdtCpf.Text;
-      lPaciente.Rg := EdtRg.Text;
-      lPaciente.Telefone := EdtTelefone.Text;
-      lPaciente.Sus := EdtSus.Text;
-      lPaciente.Observacao := MemoObservacoes.Text;
-
-      lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
-      try
-
-        if (lPacienteDao.Salvar(lPaciente)) then
-        begin
-          lEndereco := TEndereco.Create;
-
-          try
-
-            lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
-            try
-
-              lEndereco.Id := lEnderecoDao.getId(lPaciente.Id);
-              lEndereco.Logradouro := EdtLogradouro.Text;
-              lEndereco.Bairro := EdtBairro.Text;
-              lEndereco.Numero := EdtNumero.Text;
-              lEndereco.Id_Municipio := Self.getIdMunicipio;
-              lEndereco.Cep := EdtCep.Text;
-              lEndereco.Complemento := EdtComplemento.Text;
-              lEndereco.Id_Paciente := lPaciente.Id;
-
-              if (lEnderecoDao.Salvar(lEndereco)) then
-              begin
-                Application.MessageBox(PChar(Format(TMensagem.getMensagem(7), ['Paciente'])), PChar('Informação'),
-                  MB_OK + MB_ICONINFORMATION);
-                ModalResult := mrOk;
-              end;
-
-            finally
-              FreeAndNil(lEnderecoDao);
-            end;
-
-          finally
-            FreeAndNil(lEndereco);
-          end;
-
-        end;
-
-      finally
-        FreeAndNil(lPacienteDao);
-      end;
-
-    except
-      on E: Exception do
-      begin
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['paciente', E.Message])), PChar('Erro'),
-          MB_OK + MB_ICONWARNING);
-      end;
-    end;
-
-  finally
-    FreeAndNil(lPaciente);
-  end;
-
-end;
-
-procedure TFrmCadPaciente.s(Sender: TObject);
-begin
-
-  if (ComboboxSexo.ItemIndex = -1) then
-  begin
-
-    ComboboxSexo.DroppedDown := True;
-
-  end;
-
+  Result := True;
 end;
 
 procedure TFrmCadPaciente.EdtCodMunicipioExit(Sender: TObject);
@@ -429,9 +490,9 @@ begin
   try
 
     try
-      FrmCadPaciente.FId := pID;
+      FrmCadPaciente.FIdPaciente := pID;
 
-      if (FrmCadPaciente.FId > 0) then
+      if (FrmCadPaciente.FIdPaciente > 0) then
       begin
         FrmCadPaciente.getObjeto;
       end;
@@ -493,7 +554,7 @@ begin
     lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
     try
 
-      if (lPacienteDao.getObjeto(Self.FId, lPaciente)) then
+      if (lPacienteDao.getObjeto(Self.FIdPaciente, lPaciente)) then
       begin
         EdtNome.Text := lPaciente.Nome;
         ComboboxSexo.ItemIndex := ifthen(lPaciente.Sexo = 'M', 0, 1);

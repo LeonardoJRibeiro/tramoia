@@ -1,9 +1,11 @@
 object FrmCadUsuario: TFrmCadUsuario
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Cadastro de Usu'#225'rio'
-  ClientHeight = 185
-  ClientWidth = 242
+  ClientHeight = 195
+  ClientWidth = 252
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,24 +13,24 @@ object FrmCadUsuario: TFrmCadUsuario
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
   object PanelBotoes: TPanel
     Left = 0
-    Top = 150
-    Width = 242
+    Top = 160
+    Width = 252
     Height = 35
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -117
-    ExplicitTop = 189
-    ExplicitWidth = 564
+    ExplicitTop = 150
+    ExplicitWidth = 242
     object BtnFechar: TButton
       Left = 157
       Top = 6
       Width = 75
       Height = 25
-      Caption = 'Fechar'
+      Caption = 'Sair'
       TabOrder = 0
       OnClick = BtnFecharClick
     end
@@ -37,7 +39,7 @@ object FrmCadUsuario: TFrmCadUsuario
       Top = 6
       Width = 75
       Height = 25
-      Caption = 'Salvar'
+      Caption = 'Gravar'
       TabOrder = 1
       OnClick = BtnSalvarClick
     end
@@ -45,14 +47,12 @@ object FrmCadUsuario: TFrmCadUsuario
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 242
-    Height = 150
+    Width = 252
+    Height = 160
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 80
-    ExplicitTop = 120
-    ExplicitWidth = 185
-    ExplicitHeight = 41
+    ExplicitWidth = 242
+    ExplicitHeight = 150
     object Label1: TLabel
       Left = 24
       Top = 65

@@ -21,7 +21,8 @@ type
   private
     FId: Integer;
   public
-    class function getCadUsuario(const pID: Integer = -1): Boolean;
+    class function getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
+      const pID: Integer = -1): Boolean;
   end;
 
 var
@@ -30,7 +31,7 @@ var
 implementation
 
 uses
-  UClassUsuario, UClassUsuarioDao, UDMConexao, UBiblioteca, System.StrUtils;
+  UClassUsuario, UClassUsuarioDao, UDMConexao, UBiblioteca, System.StrUtils, UClassMensagem;
 
 {$R *.dfm}
 { TForm1 }
@@ -61,7 +62,9 @@ begin
 
         if (lUsuarioDao.Salvar(lUsuario)) then
         begin
-
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Usuário'])), PChar('Informação'),
+            MB_OK + MB_ICONINFORMATION);
+          ModalResult := mrOk;
         end;
 
       finally
@@ -81,7 +84,8 @@ begin
 
 end;
 
-class function TFrmCadUsuario.getCadUsuario(const pID: Integer): Boolean;
+class function TFrmCadUsuario.getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
+  const pID: Integer = -1): Boolean;
 begin
   Application.CreateForm(TFrmCadUsuario, FrmCadUsuario);
   try

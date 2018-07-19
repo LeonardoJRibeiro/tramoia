@@ -101,6 +101,12 @@ inherited FrmConsPaciente: TFrmConsPaciente
           ExplicitWidth = 147
           inherited ComboBoxTipoCons: TComboBox
             Width = 129
+            ItemIndex = 2
+            Text = 'N'#250'm. Protu'#225'rio'
+            Items.Strings = (
+              'Palavra chave'
+              'Nome'
+              'N'#250'm. Protu'#225'rio')
             ExplicitWidth = 129
           end
         end

@@ -114,7 +114,8 @@ begin
             pPersistencia.Query.SQL.Add('ORDER BY nome');
 
           end;
-        3: // Código(registro_paciente, o Id do paciente no sistema do hospital).
+
+        2: // Código(registro_paciente, o Id do paciente no sistema do hospital).
           begin
 
             if (not pCHAVE.Trim.IsEmpty) then
@@ -129,8 +130,6 @@ begin
 
           end;
       end;
-
-      pPersistencia.Query.SQL.SaveToFile('C:\teste.txt');
 
       pPersistencia.Query.Open;
 

@@ -10,7 +10,6 @@ uses
 type
   TFrmConsPaciente = class(TFrmCons)
     DataSource: TDataSource;
-    procedure BtnSairClick(Sender: TObject);
     procedure ComboBoxTipoConsChange(Sender: TObject);
     procedure ComboBoxTipoConsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ComboBoxTipoConsCloseUp(Sender: TObject);
@@ -23,14 +22,13 @@ type
     procedure BtnExcluirClick(Sender: TObject);
     procedure EdtConsExit(Sender: TObject);
   private
-
     FForeignFormKey: SmallInt;
-    FCodUsu: Integer;
+    FIdUsuario: Integer;
 
     FNumProntuario: Integer;
 
   public
-    class function getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+    class function getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
       var pNumProntuario: Integer): Boolean;
   end;
 
@@ -47,7 +45,11 @@ uses System.Math, UDMConexao, UClassMensagem, UClassPacienteDAO, UCadPaciente, U
 procedure TFrmConsPaciente.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
-  TFrmCadPaciente.getCadPaciente(Self.FClientDataSet.FieldByName('id').AsInteger);
+  if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario,
+    Self.FClientDataSet.FieldByName('id').AsInteger)) then
+  begin
+    EdtConsInvokeSearch(Self);
+  end;
 end;
 
 procedure TFrmConsPaciente.BtnExcluirClick(Sender: TObject);
@@ -91,18 +93,11 @@ procedure TFrmConsPaciente.BtnNovoClick(Sender: TObject);
 begin
   inherited;
 
-  if (TFrmCadPaciente.getCadPaciente()) then
+  if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario)) then
   begin
     EdtConsInvokeSearch(Self);
   end;
 
-end;
-
-procedure TFrmConsPaciente.BtnSairClick(Sender: TObject);
-begin
-  inherited;
-  ModalResult := mrCancel;
-  Close;
 end;
 
 procedure TFrmConsPaciente.ComboBoxTipoConsChange(Sender: TObject);
@@ -185,49 +180,49 @@ end;
 procedure TFrmConsPaciente.EdtConsInvokeSearch(Sender: TObject);
 var
   lPacienteDao: TPacienteDAO;
+  lPersistencia: TPersistencia;
 begin
   inherited;
 
-  lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+  lPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
   try
-
+    lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
     try
 
-      DataSource.DataSet := nil;
+      try
 
-      if (lPacienteDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
-      begin
-
-        if (not Self.FPersistencia.Query.IsEmpty) then
+        Self.FClientDataSet.Close;
+        if (lPacienteDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, lPersistencia)) then
         begin
-
-          Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
+          Self.FClientDataSet.SetProvider(lPersistencia.DataSetProvider);
           Self.FClientDataSet.Open;
           Self.FClientDataSet.Active := True;
           DataSource.DataSet := Self.FClientDataSet;
 
-          DBGrid.SetFocus;
-
-        end
-        else
-        begin
-
-          Self.FClientDataSet.Active := False;
-          EdtCons.SetFocus;
+          if (not Self.FClientDataSet.IsEmpty) then
+          begin
+            DBGrid.SetFocus;
+          end
+          else
+          begin
+            EdtCons.SetFocus;
+          end
 
         end;
 
+      except
+        on E: Exception do
+        begin
+          raise Exception.Create(Format(TMensagem.getMensagem(1), ['paciente(s)', E.Message]));
+        end;
       end;
 
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create(Format(TMensagem.getMensagem(1), ['paciente(s)', E.Message]));
-      end;
+    finally
+      lPacienteDao.Destroy;
     end;
 
   finally
-    lPacienteDao.Destroy;
+    lPersistencia.Destroy;
   end;
 
 end;
@@ -238,7 +233,7 @@ begin
   EdtConsInvokeSearch(Self);
 end;
 
-class function TFrmConsPaciente.getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+class function TFrmConsPaciente.getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
   var pNumProntuario: Integer): Boolean;
 begin
 
@@ -248,7 +243,7 @@ begin
     try
 
       FrmConsPaciente.FForeignFormKey := pFOREIGNFORMKEY;
-      FrmConsPaciente.FCodUsu := pCOD_USU;
+      FrmConsPaciente.FIdUsuario := pID_USUARIO;
 
       Result := FrmConsPaciente.ShowModal = mrOk;
 

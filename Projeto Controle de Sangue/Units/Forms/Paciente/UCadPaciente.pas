@@ -83,7 +83,8 @@ type
     function SalvaEndereco: Boolean;
 
   public
-    class function getCadPaciente(const pID: Integer = -1): Boolean;
+    class function getCadPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
+      const pID: Integer = -1): Boolean;
   end;
 
 var
@@ -472,7 +473,8 @@ begin
   EdtNome.SetFocus;
 end;
 
-class function TFrmCadPaciente.getCadPaciente(const pID: Integer = -1): Boolean;
+class function TFrmCadPaciente.getCadPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
+  const pID: Integer = -1): Boolean;
 begin
 
   Application.CreateForm(TFrmCadPaciente, FrmCadPaciente);

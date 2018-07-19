@@ -139,17 +139,16 @@ begin
 
       lRelEntrada.Visualizar := pSENDER = BtnVisualizar;
 
-      lAuxStringList := TStringList.Create;
+      lAuxStringList := TStringList;
       try
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroTipo), ListBoxTipo, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(RadioGroupFiltroTipo, ListBoxTipo, lAuxStringList);
         lRelEntrada.ListTipo.Text := lAuxStringList.Text;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroGrupoSanguineo), ListBoxGrupoSanguineo,
-          lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(RadioGroupFiltroGrupoSanguineo, ListBoxGrupoSanguineo, lAuxStringList);
         lRelEntrada.ListGrupoSanguineo.Text := lAuxStringList.Text;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroVolume), ListBoxVolume, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(RadioGroupFiltroVolume, ListBoxVolume, lAuxStringList);
         lRelEntrada.ListVolume.Text := lAuxStringList.Text;
 
       finally

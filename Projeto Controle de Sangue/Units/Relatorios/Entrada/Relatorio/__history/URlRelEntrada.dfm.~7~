@@ -224,27 +224,27 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      object RLDBTextDataEntrada: TRLDBText
-        Left = 12
+      object RLDBTextdata_entrada: TRLDBText
+        Left = 4
         Top = 20
-        Width = 80
+        Width = 96
         Height = 16
         Alignment = taCenter
         DataField = 'data_entrada'
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextNumeroBolsa: TRLDBText
-        Left = 166
+      object RLDBTextnumero_bolsa: TRLDBText
+        Left = 158
         Top = 20
-        Width = 86
+        Width = 103
         Height = 16
         Alignment = taCenter
         DataField = 'numero_bolsa'
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextOrigem: TRLDBText
+      object RLDBTextorigem1: TRLDBText
         Left = 324
         Top = 20
         Width = 44
@@ -254,7 +254,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextTipo: TRLDBText
+      object RLDBTexttipo1: TRLDBText
         Left = 400
         Top = 20
         Width = 26
@@ -264,28 +264,28 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextVolume: TRLDBText
-        Left = 466
+      object RLDBTextvolume1: TRLDBText
+        Left = 464
         Top = 20
-        Width = 44
+        Width = 48
         Height = 16
         Alignment = taCenter
         DataField = 'volume'
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextAboRh: TRLDBText
-        Left = 551
+      object RLDBText1: TRLDBText
+        Left = 543
         Top = 20
-        Width = 36
+        Width = 52
         Height = 16
         Alignment = taCenter
         DataField = 'aborh'
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextObservacao: TRLDBText
-        Left = 795
+      object RLDBTextobservacao1: TRLDBText
+        Left = 794
         Top = 20
         Width = 70
         Height = 16

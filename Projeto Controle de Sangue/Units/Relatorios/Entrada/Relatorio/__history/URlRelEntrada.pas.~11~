@@ -27,20 +27,28 @@ type
     RLPanel6: TRLPanel;
     RLLabel1: TRLLabel;
     DataSource: TDataSource;
-    RLBand1: TRLBand;
+    RLBandDetail: TRLBand;
     RLDBTextDataEntrada: TRLDBText;
+    RLPanel7: TRLPanel;
     RLDBTextNumeroBolsa: TRLDBText;
+    RLPanel8: TRLPanel;
     RLDBTextOrigem: TRLDBText;
+    RLPanel9: TRLPanel;
     RLDBTextTipo: TRLDBText;
+    RLPanel10: TRLPanel;
     RLDBTextVolume: TRLDBText;
+    RLPanel11: TRLPanel;
     RLDBTextAboRh: TRLDBText;
+    RLPanel12: TRLPanel;
     RLDBTextObservacao: TRLDBText;
-    RLPanel13: TRLPanel;
-    RLPanel14: TRLPanel;
-    RLPanel15: TRLPanel;
-    RLPanel16: TRLPanel;
-    RLPanel17: TRLPanel;
-    RLPanel18: TRLPanel;
+    RLBand1: TRLBand;
+    RLDBTextdata_entrada: TRLDBText;
+    RLDBTextnumero_bolsa: TRLDBText;
+    RLDBTextorigem1: TRLDBText;
+    RLDBTexttipo1: TRLDBText;
+    RLDBTextvolume1: TRLDBText;
+    RLDBText1: TRLDBText;
+    RLDBTextobservacao1: TRLDBText;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -169,7 +177,6 @@ begin
         if (Result) then
         begin
 
-          // Usa o ClientDataSet pra não dar erro com o TSQLQuery qnd for gerar o relatório.
           Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
           Self.FClientDataSet.Open;
           Self.FClientDataSet.Active := True;

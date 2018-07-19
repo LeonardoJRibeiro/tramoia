@@ -61,8 +61,7 @@ begin
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
     pPersistencia.Query.SQL.Add('ON(b.id = e.id_bolsa)');
 
-    // Se parar parâmetro pro SQL da erro.
-    pPersistencia.Query.SQL.Add('WHERE e.data_entrada BETWEEN :pDataIni AND :pDataFim');
+   pPersistencia.Query.SQL.Add('WHERE e.data_entrada BETWEEN :pDataIni AND :pDataFim');
     pPersistencia.setParametro('pDataIni', pRELENTRADA.DataIni);
     pPersistencia.setParametro('pDataFim', pRELENTRADA.DataFim);
 

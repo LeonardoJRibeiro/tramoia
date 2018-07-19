@@ -69,7 +69,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       Borders.DrawRight = True
       Borders.DrawBottom = True
       object RLLabelDataEntrada: TRLLabel
-        Left = 1
+        Left = 4
         Top = 20
         Width = 96
         Height = 16
@@ -82,7 +82,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'Data de entrada'
       end
       object RLPanel1: TRLPanel
-        Left = 102
+        Left = 106
         Top = 0
         Width = 1
         Height = 56
@@ -104,7 +104,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'N'#250'mero da bolsa'
       end
       object RLPanel2: TRLPanel
-        Left = 311
+        Left = 316
         Top = -1
         Width = 1
         Height = 57
@@ -113,7 +113,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLLabelOrigem: TRLLabel
-        Left = 324
+        Left = 326
         Top = 20
         Width = 46
         Height = 16
@@ -218,15 +218,10 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       Left = 38
       Top = 153
       Width = 1047
-      Height = 55
-      Borders.Sides = sdCustom
-      Borders.DrawLeft = True
-      Borders.DrawTop = False
-      Borders.DrawRight = True
-      Borders.DrawBottom = True
-      object RLDBTextDataEntrada: TRLDBText
-        Left = 12
-        Top = 20
+      Height = 64
+      object RLDBTextdata_entrada: TRLDBText
+        Left = 20
+        Top = 32
         Width = 80
         Height = 16
         Alignment = taCenter
@@ -234,9 +229,9 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextNumeroBolsa: TRLDBText
-        Left = 166
-        Top = 20
+      object RLDBTextnumero_bolsa: TRLDBText
+        Left = 158
+        Top = 32
         Width = 86
         Height = 16
         Alignment = taCenter
@@ -244,9 +239,9 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextOrigem: TRLDBText
-        Left = 324
-        Top = 20
+      object RLDBTextorigem1: TRLDBText
+        Left = 326
+        Top = 32
         Width = 44
         Height = 16
         Alignment = taCenter
@@ -254,9 +249,9 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextTipo: TRLDBText
+      object RLDBTexttipo1: TRLDBText
         Left = 400
-        Top = 20
+        Top = 32
         Width = 26
         Height = 16
         Alignment = taCenter
@@ -264,9 +259,9 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextVolume: TRLDBText
-        Left = 466
-        Top = 20
+      object RLDBTextvolume1: TRLDBText
+        Left = 474
+        Top = 32
         Width = 44
         Height = 16
         Alignment = taCenter
@@ -274,19 +269,19 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextAboRh: TRLDBText
-        Left = 551
-        Top = 20
-        Width = 36
+      object RLDBText1: TRLDBText
+        Left = 543
+        Top = 32
+        Width = 52
         Height = 16
         Alignment = taCenter
         DataField = 'aborh'
         DataSource = DataSource
         Text = ''
       end
-      object RLDBTextObservacao: TRLDBText
-        Left = 795
-        Top = 20
+      object RLDBTextobservacao1: TRLDBText
+        Left = 794
+        Top = 32
         Width = 70
         Height = 16
         Alignment = taCenter
@@ -294,60 +289,145 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         DataSource = DataSource
         Text = ''
       end
-      object RLPanel13: TRLPanel
-        Left = 102
-        Top = -2
-        Width = 1
-        Height = 56
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLPanel14: TRLPanel
-        Left = 311
-        Top = -3
-        Width = 1
-        Height = 57
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLPanel15: TRLPanel
-        Left = 384
-        Top = -2
-        Width = 1
-        Height = 56
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLPanel16: TRLPanel
-        Left = 446
-        Top = -2
-        Width = 1
-        Height = 56
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLPanel17: TRLPanel
-        Left = 533
-        Top = -2
-        Width = 1
-        Height = 56
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLPanel18: TRLPanel
-        Left = 606
-        Top = -1
-        Width = 1
-        Height = 56
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
+    end
+  end
+  object RLBandDetail: TRLBand
+    Left = 38
+    Top = 274
+    Width = 1047
+    Height = 56
+    Borders.Sides = sdCustom
+    Borders.DrawLeft = True
+    Borders.DrawTop = False
+    Borders.DrawRight = True
+    Borders.DrawBottom = True
+    Borders.FixedBottom = True
+    Color = clWhite
+    ParentColor = False
+    Transparent = False
+    object RLDBTextDataEntrada: TRLDBText
+      Left = 4
+      Top = 24
+      Width = 96
+      Height = 13
+      Alignment = taCenter
+      DataField = 'data_entrada'
+      DataSource = DataSource
+      Text = ''
+    end
+    object RLPanel7: TRLPanel
+      Left = 106
+      Top = -1
+      Width = 1
+      Height = 56
+      Color = clBlack
+      ParentColor = False
+      Transparent = False
+    end
+    object RLDBTextNumeroBolsa: TRLDBText
+      Left = 158
+      Top = 24
+      Width = 103
+      Height = 13
+      Alignment = taCenter
+      DataField = 'numero_bolsa'
+      DataSource = DataSource
+      Text = ''
+    end
+    object RLPanel8: TRLPanel
+      Left = 316
+      Top = -2
+      Width = 1
+      Height = 57
+      Color = clBlack
+      ParentColor = False
+      Transparent = False
+    end
+    object RLDBTextOrigem: TRLDBText
+      Left = 326
+      Top = 24
+      Width = 46
+      Height = 13
+      Alignment = taCenter
+      DataField = 'origem'
+      DataSource = DataSource
+      Text = ''
+    end
+    object RLPanel9: TRLPanel
+      Left = 384
+      Top = -2
+      Width = 1
+      Height = 57
+      Color = clBlack
+      ParentColor = False
+      Transparent = False
+    end
+    object RLDBTextTipo: TRLDBText
+      Left = 400
+      Top = 24
+      Width = 27
+      Height = 13
+      Alignment = taCenter
+      DataField = 'tipo'
+      DataSource = DataSource
+      Text = ''
+    end
+    object RLPanel10: TRLPanel
+      Left = 446
+      Top = -2
+      Width = 1
+      Height = 57
+      Color = clBlack
+      ParentColor = False
+      Transparent = False
+    end
+    object RLDBTextVolume: TRLDBText
+      Left = 464
+      Top = 24
+      Width = 48
+      Height = 13
+      Alignment = taCenter
+      DataField = 'volume'
+      DataSource = DataSource
+      Text = ''
+    end
+    object RLPanel11: TRLPanel
+      Left = 533
+      Top = -2
+      Width = 1
+      Height = 57
+      Color = clBlack
+      ParentColor = False
+      Transparent = False
+    end
+    object RLDBTextAboRh: TRLDBText
+      Left = 543
+      Top = 24
+      Width = 52
+      Height = 13
+      Alignment = taCenter
+      DataField = 'aborh'
+      DataSource = DataSource
+      Text = ''
+    end
+    object RLPanel12: TRLPanel
+      Left = 606
+      Top = -2
+      Width = 1
+      Height = 57
+      Color = clBlack
+      ParentColor = False
+      Transparent = False
+    end
+    object RLDBTextObservacao: TRLDBText
+      Left = 608
+      Top = 24
+      Width = 436
+      Height = 13
+      Alignment = taCenter
+      DataField = 'observacao'
+      DataSource = DataSource
+      Text = ''
     end
   end
   object DataSource: TDataSource

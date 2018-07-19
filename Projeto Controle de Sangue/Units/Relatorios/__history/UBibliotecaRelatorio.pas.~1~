@@ -20,7 +20,7 @@ type
     class procedure ListBoxKeyDownGeral(const pKEY: Word; const pLISTBOX: TListBox; const pEDT: TEdit;
       const pBTN: TBitBtn);
 
-    class procedure PreparaStringList(const pTIPOFILTRO: TTipoFiltro; const pLISTBOX: TListBox;
+    class procedure PreparaStringList(const pRADIOGROUP: TRadioGroup; const pLISTBOX: TListBox;
       var pStringList: TStringList);
 
     class procedure setSqlFiltro(const pATRIBUTO: string; const pTIPOFILTRO: TTipoFiltro;
@@ -106,33 +106,28 @@ begin
 
 end;
 
-class procedure TBibliotecaRelatorio.PreparaStringList(const pTIPOFILTRO: TTipoFiltro; const pLISTBOX: TListBox;
+class procedure TBibliotecaRelatorio.PreparaStringList(const pRADIOGROUP: TRadioGroup; const pLISTBOX: TListBox;
   var pStringList: TStringList);
 var
   lCount: Integer;
 begin
 
-  case (pTIPOFILTRO) of
+  if (pRADIOGROUP.ItemIndex = 0) then
+  begin
 
-    tfEntre:
-      begin
+    pStringList.Add(pLISTBOX.Items[0]);
+    pStringList.Add(pLISTBOX.Items[1]);
 
-        pStringList.Add(pLISTBOX.Items[0]);
-        pStringList.Add(pLISTBOX.Items[1]);
+  end
+  else
+  begin
 
-      end;
+    for lCount := 0 to pLISTBOX.Items.Count - 1 do
+    begin
 
-    tfSomente, tfOmitir:
-      begin
+      pStringList.Add(pLISTBOX.Items[lCount] + IfThen(lCount < pLISTBOX.Items.Count, ',', ''));
 
-        for lCount := 0 to pLISTBOX.Items.Count - 1 do
-        begin
-
-          pStringList.Add(pLISTBOX.Items[lCount] + IfThen(lCount < pLISTBOX.Items.Count, ',', ''));
-
-        end;
-
-      end;
+    end;
 
   end;
 
@@ -168,8 +163,8 @@ begin
   else
   begin
 
-    pEDT.Enabled := pRADIOGROUP.ItemIndex <> 3;
-    pBTN.Enabled := pRADIOGROUP.ItemIndex <> 3;
+    pEDT.Enabled := True;
+    pBTN.Enabled := True;
 
   end;
 

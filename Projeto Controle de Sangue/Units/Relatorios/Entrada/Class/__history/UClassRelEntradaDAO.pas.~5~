@@ -52,7 +52,6 @@ begin
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');
     pPersistencia.Query.SQL.Add('  b.rh,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo,' + QuotedStr('/') + ', b.rh) AS aborh,');
     pPersistencia.Query.SQL.Add('  b.origem,');
     pPersistencia.Query.SQL.Add('  b.volume,');
     pPersistencia.Query.SQL.Add('  b.sorologia');
@@ -61,15 +60,13 @@ begin
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
     pPersistencia.Query.SQL.Add('ON(b.id = e.id_bolsa)');
 
-    // Se parar parâmetro pro SQL da erro.
     pPersistencia.Query.SQL.Add('WHERE e.data_entrada BETWEEN :pDataIni AND :pDataFim');
     pPersistencia.setParametro('pDataIni', pRELENTRADA.DataIni);
     pPersistencia.setParametro('pDataFim', pRELENTRADA.DataFim);
 
     TBibliotecaRelatorio.setSqlFiltro('b.tipo', pRELENTRADA.FiltroTipo, pRELENTRADA.ListTipo, pPersistencia);
 
-    TBibliotecaRelatorio.setSqlFiltro('b.abo', pRELENTRADA.FiltroGrupoSanguineo, pRELENTRADA.ListGrupoSanguineo,
-      pPersistencia);
+    TBibliotecaRelatorio.setSqlFiltro('b.abo', pRELENTRADA.FiltroGrupoSanguineo, pRELENTRADA.ListGrupoSanguineo, pPersistencia);
 
     TBibliotecaRelatorio.setSqlFiltro('b.volume', pRELENTRADA.FiltroVolume, pRELENTRADA.ListVolume, pPersistencia);
 
@@ -77,16 +74,15 @@ begin
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
     pPersistencia.Query.SQL.Add('  b.numero_bolsa');
 
-    pPersistencia.Query.Open;
+    pPersistencia.Transacao.CommitRetaining;
 
-    Result := True;
+    Result := False;
 
   except
     on E: Exception do
     begin
 
       Result := False;
-      raise Exception.Create(E.Message);
 
     end;
   end;

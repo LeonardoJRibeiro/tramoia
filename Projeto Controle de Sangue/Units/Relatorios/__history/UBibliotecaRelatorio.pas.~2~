@@ -168,8 +168,8 @@ begin
   else
   begin
 
-    pEDT.Enabled := pRADIOGROUP.ItemIndex <> 3;
-    pBTN.Enabled := pRADIOGROUP.ItemIndex <> 3;
+    pEDT.Enabled := True;
+    pBTN.Enabled := True;
 
   end;
 

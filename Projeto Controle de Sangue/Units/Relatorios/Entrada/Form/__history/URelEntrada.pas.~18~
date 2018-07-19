@@ -40,6 +40,15 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure RadioGroupFiltroTipoClick(Sender: TObject);
+    procedure BtnAddTipoClick(Sender: TObject);
+    procedure RadioGroupFiltroGrupoSanguineoClick(Sender: TObject);
+    procedure BtnAddGrupoSanguineoClick(Sender: TObject);
+    procedure RadioGroupFiltroVolumeClick(Sender: TObject);
+    procedure BtnAddVolumeClick(Sender: TObject);
+    procedure ListBoxTipoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ListBoxGrupoSanguineoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ListBoxVolumeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
@@ -53,10 +62,32 @@ var
 
 implementation
 
-uses UBiblioteca, UClassMensagem, System.DateUtils;
+uses UBiblioteca, UBibliotecaRelatorio, UClassMensagem, System.DateUtils;
 
 {$R *.dfm}
 { TFrmRelEntrada }
+
+procedure TFrmRelEntrada.BtnAddGrupoSanguineoClick(Sender: TObject);
+begin
+
+  TBibliotecaRelatorio.BtnAddClickGeral(RadioGroupFiltroGrupoSanguineo, ListBoxGrupoSanguineo, GroupBoxGrupoSanguineo,
+    EdtGrupoSanguineo, BtnAddGrupoSanguineo);
+
+end;
+
+procedure TFrmRelEntrada.BtnAddTipoClick(Sender: TObject);
+begin
+
+  TBibliotecaRelatorio.BtnAddClickGeral(RadioGroupFiltroTipo, ListBoxTipo, GroupBoxTipo, EdtTipo, BtnAddTipo);
+
+end;
+
+procedure TFrmRelEntrada.BtnAddVolumeClick(Sender: TObject);
+begin
+
+  TBibliotecaRelatorio.BtnAddClickGeral(RadioGroupFiltroVolume, ListBoxVolume, GroupBoxVolume, EdtVolume, BtnAddVolume);
+
+end;
 
 procedure TFrmRelEntrada.BtnSairClick(Sender: TObject);
 begin
@@ -68,14 +99,14 @@ end;
 procedure TFrmRelEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 
- TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup',
-    'FrmRelEntrada.RadioGroupFiltroTipo', RadioGroupFiltroTipo.ItemIndex.ToString);
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelEntrada.RadioGroupFiltroTipo',
+    RadioGroupFiltroTipo.ItemIndex.ToString);
 
- TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup',
-    'FrmRelEntrada.RadioGroupFiltroGrupoSanguineo', RadioGroupFiltroGrupoSanguineo.ItemIndex.ToString);
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelEntrada.RadioGroupFiltroGrupoSanguineo',
+    RadioGroupFiltroGrupoSanguineo.ItemIndex.ToString);
 
- TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup',
-    'FrmRelEntrada.RadioGroupFiltroVolume', RadioGroupFiltroVolume.ItemIndex.ToString);
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelEntrada.RadioGroupFiltroVolume',
+    RadioGroupFiltroVolume.ItemIndex.ToString);
 
   Action := caFree;
 
@@ -143,6 +174,49 @@ begin
       raise Exception.Create(Format(TMensagem.getMensagem(0), ['de relatório de entrada', E.Message]));
     end;
   end;
+
+end;
+
+procedure TFrmRelEntrada.ListBoxTipoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  TBibliotecaRelatorio.ListBoxKeyDownGeral(Key, ListBoxTipo, EdtTipo, BtnAddTipo);
+
+end;
+
+procedure TFrmRelEntrada.ListBoxGrupoSanguineoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  TBibliotecaRelatorio.ListBoxKeyDownGeral(Key, ListBoxGrupoSanguineo, EdtGrupoSanguineo, BtnAddGrupoSanguineo);
+
+end;
+
+procedure TFrmRelEntrada.ListBoxVolumeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  TBibliotecaRelatorio.ListBoxKeyDownGeral(Key, ListBoxVolume, EdtVolume, BtnAddVolume);
+
+end;
+
+procedure TFrmRelEntrada.RadioGroupFiltroGrupoSanguineoClick(Sender: TObject);
+begin
+
+  TBibliotecaRelatorio.RadioGroupClickGeral(RadioGroupFiltroGrupoSanguineo, ListBoxGrupoSanguineo, EdtGrupoSanguineo,
+    BtnAddGrupoSanguineo);
+
+end;
+
+procedure TFrmRelEntrada.RadioGroupFiltroTipoClick(Sender: TObject);
+begin
+
+  TBibliotecaRelatorio.RadioGroupClickGeral(RadioGroupFiltroTipo, ListBoxTipo, EdtTipo, BtnAddTipo);
+
+end;
+
+procedure TFrmRelEntrada.RadioGroupFiltroVolumeClick(Sender: TObject);
+begin
+
+  TBibliotecaRelatorio.RadioGroupClickGeral(RadioGroupFiltroVolume, ListBoxVolume, EdtVolume, BtnAddVolume);
 
 end;
 

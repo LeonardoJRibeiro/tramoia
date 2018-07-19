@@ -49,9 +49,13 @@ type
     procedure ListBoxTipoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ListBoxGrupoSanguineoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ListBoxVolumeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnVisualizarClick(Sender: TObject);
+    procedure BtnImprimirClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
+
+    procedure ChamaRelatorio(const pSENDER: TObject);
 
   public
     class function getRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
@@ -62,7 +66,8 @@ var
 
 implementation
 
-uses UBiblioteca, UBibliotecaRelatorio, UClassMensagem, System.DateUtils;
+uses System.DateUtils, UBiblioteca, UBibliotecaRelatorio, UClassMensagem, UClassRelEntrada, UEnumsRelatorio,
+  URlRelEntrada, UClassForeignKeyForms;
 
 {$R *.dfm}
 { TFrmRelEntrada }
@@ -89,10 +94,80 @@ begin
 
 end;
 
+procedure TFrmRelEntrada.BtnImprimirClick(Sender: TObject);
+begin
+
+  Self.ChamaRelatorio(Sender);
+
+end;
+
 procedure TFrmRelEntrada.BtnSairClick(Sender: TObject);
 begin
 
   Close;
+
+end;
+
+procedure TFrmRelEntrada.BtnVisualizarClick(Sender: TObject);
+begin
+
+  Self.ChamaRelatorio(Sender);
+
+end;
+
+procedure TFrmRelEntrada.ChamaRelatorio(const pSENDER: TObject);
+var
+  lRelEntrada: TRelEntrada;
+
+  // Uso esse objeto auxiliar por que o Delphi da erro de compilação se eu passar a property do StringList.
+  lAuxStringList: TStringList;
+begin
+
+  lRelEntrada := TRelEntrada.Create;
+  try
+
+    try
+
+      lRelEntrada.DataIni := DateTimePickerDataInicial.Date;
+      lRelEntrada.DataFim := DateTimePickerDataFinal.Date;
+
+      lRelEntrada.FiltroTipo := TTipoFiltro(RadioGroupFiltroTipo.ItemIndex);
+
+      lRelEntrada.FiltroGrupoSanguineo := TTipoFiltro(RadioGroupFiltroGrupoSanguineo.ItemIndex);
+
+      lRelEntrada.FiltroVolume := TTipoFiltro(RadioGroupFiltroVolume.ItemIndex);
+
+      lRelEntrada.Visualizar := pSENDER = BtnVisualizar;
+
+      lAuxStringList := TStringList.Create;
+      try
+
+        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroTipo), ListBoxTipo, lAuxStringList);
+        lRelEntrada.ListTipo.Text := lAuxStringList.Text;
+
+        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroGrupoSanguineo), ListBoxGrupoSanguineo,
+          lAuxStringList);
+        lRelEntrada.ListGrupoSanguineo.Text := lAuxStringList.Text;
+
+        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroVolume), ListBoxVolume, lAuxStringList);
+        lRelEntrada.ListVolume.Text := lAuxStringList.Text;
+
+      finally
+        lAuxStringList.Destroy;
+      end;
+
+      TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada);
+
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create(Format(TMensagem.getMensagem(7), ['relatório de entrada', E.Message]));
+      end;
+    end;
+
+  finally
+    lRelEntrada.Destroy;
+  end;
 
 end;
 

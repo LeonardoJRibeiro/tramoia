@@ -198,6 +198,7 @@ begin
           Self.FClientDataSet.Open;
           Self.FClientDataSet.Active := True;
           DataSource.DataSet := Self.FClientDataSet;
+
           DBGrid.SetFocus;
 
         end

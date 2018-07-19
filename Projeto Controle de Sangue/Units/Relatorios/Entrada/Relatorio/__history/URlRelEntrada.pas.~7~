@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Data.DB, UClassPersistencia;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Data.DB, UClassRelEntrada, UClassPersistencia;
 
 type
   TFrmRlRelEntrada = class(TForm)
@@ -32,12 +32,14 @@ type
 
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
+    FRelEntrada: TRelEntrada;
     FPersistencia: TPersistencia;
 
     function PreparaRelatorio: Boolean;
 
   public
-    class function getRlRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+    class function getRlRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+      const pRELENTRADA: TRelEntrada): Boolean;
   end;
 
 var
@@ -45,7 +47,7 @@ var
 
 implementation
 
-uses UClassMensagem, UDMConexao;
+uses UClassMensagem, UDMConexao, UClassRelEntradaDAO;
 
 {$R *.dfm}
 { TFrmRelEntrada }
@@ -64,7 +66,8 @@ begin
 
 end;
 
-class function TFrmRlRelEntrada.getRlRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+class function TFrmRlRelEntrada.getRlRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+  const pRELENTRADA: TRelEntrada): Boolean;
 begin
 
   Application.CreateForm(TFrmRlRelEntrada, FrmRlRelEntrada);
@@ -72,14 +75,28 @@ begin
 
     try
 
+      FrmRlRelEntrada.FForeignFormKey := pFOREIGNFORMKEY;
+      FrmRlRelEntrada.FCodUsu := pCOD_USU;
+      FrmRlRelEntrada.FRelEntrada := pRELENTRADA;
+
       if (FrmRlRelEntrada.PreparaRelatorio) then
       begin
 
-        FrmRlRelEntrada.RLReport.PreviewModal;
+        if (pRELENTRADA.Visualizar) then
+        begin
+
+          Result := FrmRlRelEntrada.RLReport.PreviewModal;
+
+        end
+        else
+        begin
+
+          FrmRlRelEntrada.RLReport.Print;
+          Result := True;
+
+        end;
 
       end;
-
-      Result := True;
 
     except
       on E: Exception do
@@ -96,7 +113,28 @@ begin
 end;
 
 function TFrmRlRelEntrada.PreparaRelatorio: Boolean;
+var
+  lRelEntradaDAO: TRelEntradaDAO;
 begin
+
+  lRelEntradaDAO := TRelEntradaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+
+      Result := lRelEntradaDAO.getRelatorio(Self.FPersistencia, Self.FRelEntrada);
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(Format(TMensagem.getMensagem(1), ['entradas para gerar o relatório', E.Message]));
+      end;
+    end;
+
+  finally
+    lRelEntradaDAO.Destroy;
+  end;
 
 end;
 

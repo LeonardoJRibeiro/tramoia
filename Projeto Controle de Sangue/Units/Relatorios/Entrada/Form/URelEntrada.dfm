@@ -288,6 +288,7 @@ object FrmRelEntrada: TFrmRelEntrada
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
       TabOrder = 1
+      OnClick = BtnImprimirClick
     end
     object BtnVisualizar: TBitBtn
       Left = 344
@@ -371,6 +372,7 @@ object FrmRelEntrada: TFrmRelEntrada
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
       TabOrder = 2
+      OnClick = BtnVisualizarClick
     end
   end
   object PanelGrupoSanguineo: TPanel

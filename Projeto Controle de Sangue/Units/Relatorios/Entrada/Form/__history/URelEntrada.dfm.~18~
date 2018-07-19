@@ -18,6 +18,7 @@ object FrmRelEntrada: TFrmRelEntrada
   OnClose = FormClose
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PanelData: TPanel
@@ -28,7 +29,6 @@ object FrmRelEntrada: TFrmRelEntrada
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 644
     object GroupBoxDataEntrada: TGroupBox
       AlignWithMargins = True
       Left = 3
@@ -44,7 +44,6 @@ object FrmRelEntrada: TFrmRelEntrada
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 638
       object LabelA: TLabel
         Left = 475
         Top = 28
@@ -94,7 +93,6 @@ object FrmRelEntrada: TFrmRelEntrada
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitLeft = 1
       object EdtTipo: TEdit
         Left = 10
         Top = 24
@@ -102,7 +100,7 @@ object FrmRelEntrada: TFrmRelEntrada
         Height = 21
         Alignment = taCenter
         CharCase = ecUpperCase
-        MaxLength = 2
+        MaxLength = 3
         TabOrder = 0
       end
       object BtnAddTipo: TBitBtn
@@ -147,6 +145,7 @@ object FrmRelEntrada: TFrmRelEntrada
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
         TabOrder = 1
+        OnClick = BtnAddTipoClick
       end
       object RadioGroupFiltroTipo: TRadioGroup
         Left = 10
@@ -161,6 +160,7 @@ object FrmRelEntrada: TFrmRelEntrada
           'Omitir '
           'Todos')
         TabOrder = 2
+        OnClick = RadioGroupFiltroTipoClick
       end
       object ListBoxTipo: TListBox
         Left = 10
@@ -168,7 +168,9 @@ object FrmRelEntrada: TFrmRelEntrada
         Width = 306
         Height = 76
         ItemHeight = 13
+        Sorted = True
         TabOrder = 3
+        OnKeyDown = ListBoxTipoKeyDown
       end
     end
   end
@@ -181,8 +183,6 @@ object FrmRelEntrada: TFrmRelEntrada
     BevelInner = bvLowered
     BevelWidth = 2
     TabOrder = 2
-    ExplicitTop = 455
-    ExplicitWidth = 644
     object BtnSair: TBitBtn
       Left = 550
       Top = 9
@@ -288,6 +288,7 @@ object FrmRelEntrada: TFrmRelEntrada
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
       TabOrder = 1
+      OnClick = BtnImprimirClick
     end
     object BtnVisualizar: TBitBtn
       Left = 344
@@ -371,6 +372,7 @@ object FrmRelEntrada: TFrmRelEntrada
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
       TabOrder = 2
+      OnClick = BtnVisualizarClick
     end
   end
   object PanelGrupoSanguineo: TPanel
@@ -389,7 +391,6 @@ object FrmRelEntrada: TFrmRelEntrada
       Align = alClient
       Caption = 'Grupo sangu'#237'neo'
       TabOrder = 0
-      ExplicitLeft = 4
       object EdtGrupoSanguineo: TEdit
         Left = 11
         Top = 24
@@ -397,7 +398,7 @@ object FrmRelEntrada: TFrmRelEntrada
         Height = 21
         Alignment = taCenter
         CharCase = ecUpperCase
-        MaxLength = 2
+        MaxLength = 3
         TabOrder = 0
       end
       object BtnAddGrupoSanguineo: TBitBtn
@@ -442,6 +443,7 @@ object FrmRelEntrada: TFrmRelEntrada
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
         TabOrder = 1
+        OnClick = BtnAddGrupoSanguineoClick
       end
       object RadioGroupFiltroGrupoSanguineo: TRadioGroup
         Left = 10
@@ -456,6 +458,7 @@ object FrmRelEntrada: TFrmRelEntrada
           'Omitir '
           'Todos')
         TabOrder = 2
+        OnClick = RadioGroupFiltroGrupoSanguineoClick
       end
       object ListBoxGrupoSanguineo: TListBox
         Left = 10
@@ -463,11 +466,15 @@ object FrmRelEntrada: TFrmRelEntrada
         Width = 290
         Height = 76
         ItemHeight = 13
+        ParentShowHint = False
+        ShowHint = False
+        Sorted = True
         TabOrder = 3
+        OnKeyDown = ListBoxGrupoSanguineoKeyDown
       end
     end
   end
-  object Panel1: TPanel
+  object PanelVolume: TPanel
     Left = 646
     Top = 65
     Width = 332
@@ -489,7 +496,7 @@ object FrmRelEntrada: TFrmRelEntrada
         Height = 21
         Alignment = taCenter
         CharCase = ecUpperCase
-        MaxLength = 2
+        MaxLength = 3
         TabOrder = 0
       end
       object BtnAddVolume: TBitBtn
@@ -534,6 +541,7 @@ object FrmRelEntrada: TFrmRelEntrada
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
         TabOrder = 1
+        OnClick = BtnAddVolumeClick
       end
       object RadioGroupFiltroVolume: TRadioGroup
         Left = 10
@@ -548,6 +556,7 @@ object FrmRelEntrada: TFrmRelEntrada
           'Omitir '
           'Todos')
         TabOrder = 2
+        OnClick = RadioGroupFiltroVolumeClick
       end
       object ListBoxVolume: TListBox
         Left = 10
@@ -555,7 +564,11 @@ object FrmRelEntrada: TFrmRelEntrada
         Width = 290
         Height = 76
         ItemHeight = 13
+        ParentShowHint = False
+        ShowHint = False
+        Sorted = True
         TabOrder = 3
+        OnKeyDown = ListBoxVolumeKeyDown
       end
     end
   end

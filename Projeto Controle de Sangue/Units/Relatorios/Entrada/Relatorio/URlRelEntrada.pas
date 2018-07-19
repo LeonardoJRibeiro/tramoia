@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Data.DB, UClassRelEntrada, UClassPersistencia;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Datasnap.DBClient, Data.DB, UClassRelEntrada,
+  UClassPersistencia;
 
 type
   TFrmRlRelEntrada = class(TForm)
@@ -26,14 +27,30 @@ type
     RLPanel6: TRLPanel;
     RLLabel1: TRLLabel;
     DataSource: TDataSource;
+    RLBand1: TRLBand;
+    RLDBTextDataEntrada: TRLDBText;
+    RLDBTextNumeroBolsa: TRLDBText;
+    RLDBTextOrigem: TRLDBText;
+    RLDBTextTipo: TRLDBText;
+    RLDBTextVolume: TRLDBText;
+    RLDBTextAboRh: TRLDBText;
+    RLDBTextObservacao: TRLDBText;
+    RLPanel13: TRLPanel;
+    RLPanel14: TRLPanel;
+    RLPanel15: TRLPanel;
+    RLPanel16: TRLPanel;
+    RLPanel17: TRLPanel;
+    RLPanel18: TRLPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
 
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
     FRelEntrada: TRelEntrada;
     FPersistencia: TPersistencia;
+    FClientDataSet: TClientDataSet;
 
     function PreparaRelatorio: Boolean;
 
@@ -52,10 +69,29 @@ uses UClassMensagem, UDMConexao, UClassRelEntradaDAO;
 {$R *.dfm}
 { TFrmRelEntrada }
 
+procedure TFrmRlRelEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+
+          Self.FClientDataSet.Close;
+          Self.FClientDataSet.Active := False;
+
+          DataSource.DataSet := nil;
+
+
+end;
+
 procedure TFrmRlRelEntrada.FormCreate(Sender: TObject);
 begin
 
   Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+
+  Self.FClientDataSet := TClientDataSet.Create(nil);
+  Self.FClientDataSet.Aggregates.Clear;
+  Self.FClientDataSet.Params.Clear;
+  Self.FClientDataSet.AggregatesActive := False;
+  Self.FClientDataSet.AutoCalcFields := True;
+  Self.FClientDataSet.FetchOnDemand := True;
+  Self.FClientDataSet.ObjectView := True;
 
 end;
 
@@ -63,6 +99,9 @@ procedure TFrmRlRelEntrada.FormDestroy(Sender: TObject);
 begin
 
   Self.FPersistencia.Destroy;
+
+
+  Self.FClientDataSet.Destroy;
 
 end;
 
@@ -122,7 +161,24 @@ begin
 
     try
 
-      Result := lRelEntradaDAO.getRelatorio(Self.FPersistencia, Self.FRelEntrada);
+      if(lRelEntradaDAO.getRelatorio(Self.FPersistencia, Self.FRelEntrada))then
+      begin
+
+        Result := not Self.FPersistencia.Query.IsEmpty;
+
+        if (Result) then
+        begin
+
+          // Usa o ClientDataSet pra não dar erro com o TSQLQuery qnd for gerar o relatório.
+          Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
+          Self.FClientDataSet.Open;
+          Self.FClientDataSet.Active := True;
+
+          DataSource.DataSet := Self.FClientDataSet;
+
+        end;
+
+      end;
 
     except
       on E: Exception do

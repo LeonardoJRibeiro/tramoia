@@ -64,12 +64,25 @@ implementation
 constructor TRelEntrada.Create;
 begin
 
+  Self.FListTipo := TStringList.Create;
+
+  Self.FListGrupoSanguineo := TStringList.Create;
+
+  Self.FListVolume := TStringList.Create;
+
 end;
 
 destructor TRelEntrada.Destroy;
 begin
 
+  Self.FListTipo.Destroy;
+
+  Self.FListGrupoSanguineo.Destroy;
+
+  Self.FListVolume.Destroy;
+
   inherited;
+
 end;
 
 function TRelEntrada.getDataFim: TDate;
@@ -138,7 +151,7 @@ end;
 procedure TRelEntrada.setFiltroTipo(const pFILTROTIPO: TTipoFiltro);
 begin
 
-  Self.FiltroTipo := pFILTROTIPO;
+  Self.FFiltroTipo := pFILTROTIPO;
 
 end;
 

@@ -46,6 +46,10 @@ begin
       begin
         Result := '%S não cadastrado.';
       end;
+    7:
+      begin
+        Result := 'Erro ao preparar %S. Motivo %S.';
+      end;
   end;
 
 end;

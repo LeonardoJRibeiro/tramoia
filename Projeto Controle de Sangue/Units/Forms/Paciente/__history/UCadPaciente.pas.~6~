@@ -146,35 +146,45 @@ var
   lEnderecoDao: TEnderecoDao;
 begin
 
-  lEndereco := TEndereco.Create;
-  try
+  if (Self.ValidaCampos) then
+  begin
 
-    lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
-    try
+    if (Self.SalvaPaciente) then
+    begin
 
+      lEndereco := TEndereco.Create;
       try
-        lEndereco.Id := lEnderecoDao.getId(Self.FIdPaciente);
-        lEndereco.Logradouro := EdtLogradouro.Text;
-        lEndereco.Bairro := EdtBairro.Text;
-        lEndereco.Numero := EdtNumero.Text;
-        lEndereco.Id_Municipio := Self.getIdMunicipio;
-        lEndereco.Cep := EdtCep.Text;
-        lEndereco.Complemento := EdtComplemento.Text;
-        lEndereco.Id_Paciente := Self.FIdPaciente;
 
-        Result := lEnderecoDao.Salvar(lEndereco);
+        lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
+        try
 
-      except
-        Result := False;
+          try
+            lEndereco.Id := lEnderecoDao.getId(Self.FIdPaciente);
+            lEndereco.Logradouro := EdtLogradouro.Text;
+            lEndereco.Bairro := EdtBairro.Text;
+            lEndereco.Numero := EdtNumero.Text;
+            lEndereco.Id_Municipio := Self.getIdMunicipio;
+            lEndereco.Cep := EdtCep.Text;
+            lEndereco.Complemento := EdtComplemento.Text;
+            lEndereco.Id_Paciente := Self.FIdPaciente;
 
+            Result := lEnderecoDao.Salvar(lEndereco);
+
+          except
+            Result := False;
+
+          end;
+
+        finally
+          FreeAndNil(lEnderecoDao);
+        end;
+
+      finally
+        FreeAndNil(lEndereco);
       end;
 
-    finally
-      FreeAndNil(lEnderecoDao);
     end;
 
-  finally
-    FreeAndNil(lEndereco);
   end;
 
 end;
@@ -208,7 +218,12 @@ begin
       lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
       try
 
-        Result := lPacienteDao.Salvar(lPaciente);
+        if (lPacienteDao.Salvar(lPaciente)) then
+        begin
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(7), ['Paciente'])), PChar('Informação'),
+            MB_OK + MB_ICONINFORMATION);
+          Result := True;
+        end;
 
       finally
         FreeAndNil(lPacienteDao);

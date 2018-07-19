@@ -62,11 +62,6 @@ begin
       begin
         Result := '%s salvo com sucesso!'
       end;
-
-    9:
-      begin
-        Result := 'Deseja realmente excluir o paciente?'
-      end;
   end;
 
 end;

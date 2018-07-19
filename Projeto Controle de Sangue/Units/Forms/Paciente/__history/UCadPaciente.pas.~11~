@@ -146,45 +146,35 @@ var
   lEnderecoDao: TEnderecoDao;
 begin
 
-  if (Self.ValidaCampos) then
-  begin
+  lEndereco := TEndereco.Create;
+  try
 
-    if (Self.SalvaPaciente) then
-    begin
+    lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
+    try
 
-      lEndereco := TEndereco.Create;
       try
+        lEndereco.Id := lEnderecoDao.getId(Self.FIdPaciente);
+        lEndereco.Logradouro := EdtLogradouro.Text;
+        lEndereco.Bairro := EdtBairro.Text;
+        lEndereco.Numero := EdtNumero.Text;
+        lEndereco.Id_Municipio := Self.getIdMunicipio;
+        lEndereco.Cep := EdtCep.Text;
+        lEndereco.Complemento := EdtComplemento.Text;
+        lEndereco.Id_Paciente := Self.FIdPaciente;
 
-        lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
-        try
+        Result := lEnderecoDao.Salvar(lEndereco);
 
-          try
-            lEndereco.Id := lEnderecoDao.getId(Self.FIdPaciente);
-            lEndereco.Logradouro := EdtLogradouro.Text;
-            lEndereco.Bairro := EdtBairro.Text;
-            lEndereco.Numero := EdtNumero.Text;
-            lEndereco.Id_Municipio := Self.getIdMunicipio;
-            lEndereco.Cep := EdtCep.Text;
-            lEndereco.Complemento := EdtComplemento.Text;
-            lEndereco.Id_Paciente := Self.FIdPaciente;
+      except
+        Result := False;
 
-            Result := lEnderecoDao.Salvar(lEndereco);
-
-          except
-            Result := False;
-
-          end;
-
-        finally
-          FreeAndNil(lEnderecoDao);
-        end;
-
-      finally
-        FreeAndNil(lEndereco);
       end;
 
+    finally
+      FreeAndNil(lEnderecoDao);
     end;
 
+  finally
+    FreeAndNil(lEndereco);
   end;
 
 end;
@@ -218,11 +208,10 @@ begin
       lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
       try
 
-        if (lPacienteDao.Salvar(lPaciente)) then
+        Result := lPacienteDao.Salvar(lPaciente);
+        if (Result) then
         begin
-          Application.MessageBox(PChar(Format(TMensagem.getMensagem(7), ['Paciente'])), PChar('Informação'),
-            MB_OK + MB_ICONINFORMATION);
-          Result := True;
+          Self.FIdPaciente := lPaciente.Id;
         end;
 
       finally

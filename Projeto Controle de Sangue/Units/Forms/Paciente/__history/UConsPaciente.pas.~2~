@@ -56,33 +56,26 @@ var
 begin
   inherited;
 
-  case Application.MessageBox(PChar(TMensagem.getMensagem(9)), PChar('Cuidado'), MB_YESNO + MB_ICONQUESTION) of
-    IDYES:
+  lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+
+      if (lPacienteDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
       begin
-
-        lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
-        try
-
-          try
-
-            if (lPacienteDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-            begin
-              EdtConsInvokeSearch(Self);
-            end;
-
-          except
-            on E: Exception do
-            begin
-              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
-                MB_OK + MB_ICONSTOP);
-            end;
-          end;
-
-        finally
-          lPacienteDao.Destroy;
-        end;
-
+        EdtConsInvokeSearch(Self);
       end;
+
+    except
+      on E: Exception do
+      begin
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+          MB_OK + MB_ICONSTOP);
+      end;
+    end;
+
+  finally
+    lPacienteDao.Destroy;
   end;
 
 end;

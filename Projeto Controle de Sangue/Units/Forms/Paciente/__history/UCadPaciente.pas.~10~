@@ -117,7 +117,7 @@ begin
 
       if (Self.SalvaEndereco) then
       begin
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Paciente'])), PChar('Informação'),
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(7), ['Paciente'])), PChar('Informação'),
           MB_OK + MB_ICONINFORMATION);
         ModalResult := mrOk;
       end;
@@ -211,7 +211,7 @@ begin
         Result := lPacienteDao.Salvar(lPaciente);
         if (Result) then
         begin
-          Self.FIdPaciente := lPaciente.Id;
+
         end;
 
       finally

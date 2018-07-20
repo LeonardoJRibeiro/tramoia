@@ -9,10 +9,10 @@ uses
 
 type
   TFrmCons = class(TForm)
-    PanelTop: TPanel;
+    PanelGrid: TPanel;
     DBGrid: TDBGrid;
-    PanelClient: TPanel;
-    Panel1: TPanel;
+    PanelBotoes: TPanel;
+    PanelConsulta: TPanel;
     GroupBoxConsulta: TGroupBox;
     GroupBoxTipoCons: TGroupBox;
     ComboBoxTipoCons: TComboBox;

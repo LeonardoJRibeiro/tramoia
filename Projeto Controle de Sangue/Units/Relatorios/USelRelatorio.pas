@@ -32,7 +32,7 @@ var
 
 implementation
 
-uses UClassMensagem, UClassForeignKeyForms, URelEntrada;
+uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida;
 
 {$R *.dfm}
 { TFrmSelRelatorio }
@@ -47,7 +47,7 @@ end;
 procedure TFrmSelRelatorio.BtnRelSaidaSangueClick(Sender: TObject);
 begin
 
-  ShowMessage('Em desenvolvimento');
+  TFrmRelSaida.getRelSaida(TForeignKeyForms.FIdUSelRelatorio, Self.FCodUsu);
 
 end;
 

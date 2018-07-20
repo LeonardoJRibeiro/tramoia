@@ -19,12 +19,16 @@ type
     function getNomeAndUF(const pCODIGO_IBGE: Integer; var pNomeMunicpio, pUF: string): Boolean;
     function getCodigoIbge(const pID: Integer): Integer;
 
+    function getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt; var pPersistencia: TPersistencia): Boolean;
+
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
   end;
 
 implementation
+
+uses System.StrUtils;
 
 constructor TMunicipioDAO.Create(const pCONEXAO: TConexao);
 begin
@@ -103,6 +107,68 @@ begin
 
   finally
     lPersistencia.Destroy;
+  end;
+
+end;
+
+function TMunicipioDAO.getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt;
+  var pPersistencia: TPersistencia): Boolean;
+begin
+  try
+
+    pPersistencia.IniciaTransacao;
+
+    pPersistencia.Query.SQL.Add('SELECT');
+    pPersistencia.Query.SQL.Add('  m.codigo_ibge,');
+    pPersistencia.Query.SQL.Add('  m.nome,');
+    pPersistencia.Query.SQL.Add('  e.uf');
+    pPersistencia.Query.SQL.Add('FROM municipio m');
+    pPersistencia.Query.SQL.Add('INNER JOIN estado e');
+    pPersistencia.Query.SQL.Add('ON (m.id_estado = e.id)');
+    pPersistencia.Query.SQL.Add('WHERE 0=0');
+
+    case (pTIPOCONS) of
+      0, 1: // Palavra chave e Nome
+        begin
+
+          if (not pCHAVE.Trim.IsEmpty) then
+          begin
+
+            pPersistencia.Query.SQL.Add('AND m.nome LIKE :pChave');
+            pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
+
+          end;
+
+          pPersistencia.Query.SQL.Add('ORDER BY nome');
+
+        end;
+
+      2: // Código do IBGE
+        begin
+
+          if (not pCHAVE.Trim.IsEmpty) then
+          begin
+
+            pPersistencia.Query.SQL.Add('AND codigo_ibge = :pChave');
+            pPersistencia.setParametro('pChave', pCHAVE);
+
+          end;
+
+          pPersistencia.Query.SQL.Add('ORDER BY codigo_ibge');
+
+        end;
+    end;
+
+    pPersistencia.Query.Open;
+
+    Result := True;
+
+  except
+    on E: Exception do
+    begin
+      Result := False;
+      raise Exception.Create(E.Message);
+    end;
   end;
 
 end;

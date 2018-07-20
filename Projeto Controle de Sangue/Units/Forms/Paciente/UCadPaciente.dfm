@@ -42,10 +42,8 @@ object FrmCadPaciente: TFrmCadPaciente
     ActivePage = TabSheetDadosGerais
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 488
     object TabSheetDadosGerais: TTabSheet
       Caption = 'Dados gerais'
-      ExplicitHeight = 460
       object PanelDadosPessoais: TPanel
         Left = 0
         Top = 0
@@ -262,7 +260,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Height = 168
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 180
         object GroupBoxEndereco: TGroupBox
           AlignWithMargins = True
           Left = 4
@@ -395,8 +392,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Height = 82
         Align = alClient
         TabOrder = 2
-        ExplicitTop = 348
-        ExplicitHeight = 112
         object GroupBoxInfoComplementares: TGroupBox
           AlignWithMargins = True
           Left = 4
@@ -431,7 +426,6 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
-      ExplicitHeight = 460
       object MemoObservacoes: TMemo
         Left = 16
         Top = 16
@@ -449,7 +443,6 @@ object FrmCadPaciente: TFrmCadPaciente
     Height = 34
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 488
     object BtnSalvar: TSpeedButton
       Left = 166
       Top = 1

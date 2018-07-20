@@ -1,19 +1,19 @@
-unit URlRelEntrada;
+unit URlRelSaida;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Datasnap.DBClient, Data.DB, UClassRelEntrada,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Datasnap.DBClient, Data.DB, UClassRelSaida,
   UClassPersistencia;
 
 type
-  TFrmRlRelEntrada = class(TForm)
+  TFrmRlRelSaida = class(TForm)
     RLReport: TRLReport;
     RLBandHeader: TRLBand;
     RLLabel: TRLLabel;
     RLBandTitle: TRLBand;
-    RLLabelDataEntrada: TRLLabel;
+    RLLabelDataSaida: TRLLabel;
     RLPanel1: TRLPanel;
     RLLabelNumeroBolsa: TRLLabel;
     RLPanel2: TRLPanel;
@@ -26,21 +26,21 @@ type
     RLLabelAboRh: TRLLabel;
     RLPanel6: TRLPanel;
     RLLabel1: TRLLabel;
-    DataSource: TDataSource;
     RLBand1: TRLBand;
-    RLDBTextDataEntrada: TRLDBText;
+    RLDBTextDataSaida: TRLDBText;
     RLDBTextNumeroBolsa: TRLDBText;
     RLDBTextOrigem: TRLDBText;
     RLDBTextTipo: TRLDBText;
     RLDBTextVolume: TRLDBText;
     RLDBTextAboRh: TRLDBText;
     RLDBTextObservacao: TRLDBText;
-    RLPanel13: TRLPanel;
-    RLPanel14: TRLPanel;
-    RLPanel15: TRLPanel;
-    RLPanel16: TRLPanel;
-    RLPanel17: TRLPanel;
-    RLPanel18: TRLPanel;
+    RLPanel7: TRLPanel;
+    RLPanel8: TRLPanel;
+    RLPanel9: TRLPanel;
+    RLPanel10: TRLPanel;
+    RLPanel11: TRLPanel;
+    RLPanel12: TRLPanel;
+    DataSource: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -48,28 +48,28 @@ type
 
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
-    FRelEntrada: TRelEntrada;
+    FRelSaida: TRelSaida;
     FPersistencia: TPersistencia;
     FClientDataSet: TClientDataSet;
 
     function PreparaRelatorio: Boolean;
 
   public
-    class function getRlRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
-      const pRELENTRADA: TRelEntrada): Boolean;
+    class function getRlRelSaida(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+      const pRELSAIDA: TRelSaida): Boolean;
   end;
 
 var
-  FrmRlRelEntrada: TFrmRlRelEntrada;
+  FrmRlRelSaida: TFrmRlRelSaida;
 
 implementation
 
-uses UClassMensagem, UDMConexao, UClassRelEntradaDAO;
+uses UClassMensagem, UDMConexao, UClassRelSaidaDAO;
 
 {$R *.dfm}
-{ TFrmRelEntrada }
+{ TFrmRlRelSaida }
 
-procedure TFrmRlRelEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFrmRlRelSaida.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 
   Self.FClientDataSet.Close;
@@ -79,7 +79,7 @@ begin
 
 end;
 
-procedure TFrmRlRelEntrada.FormCreate(Sender: TObject);
+procedure TFrmRlRelSaida.FormCreate(Sender: TObject);
 begin
 
   Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
@@ -94,7 +94,7 @@ begin
 
 end;
 
-procedure TFrmRlRelEntrada.FormDestroy(Sender: TObject);
+procedure TFrmRlRelSaida.FormDestroy(Sender: TObject);
 begin
 
   Self.FPersistencia.Destroy;
@@ -104,32 +104,32 @@ begin
 
 end;
 
-class function TFrmRlRelEntrada.getRlRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
-  const pRELENTRADA: TRelEntrada): Boolean;
+class function TFrmRlRelSaida.getRlRelSaida(const pFOREIGNFORMKEY: SmallInt;
+  const pCOD_USU: Integer; const pRELSAIDA: TRelSaida): Boolean;
 begin
 
-  Application.CreateForm(TFrmRlRelEntrada, FrmRlRelEntrada);
+  Application.CreateForm(TFrmRlRelSaida, FrmRlRelSaida);
   try
 
     try
 
-      FrmRlRelEntrada.FForeignFormKey := pFOREIGNFORMKEY;
-      FrmRlRelEntrada.FCodUsu := pCOD_USU;
-      FrmRlRelEntrada.FRelEntrada := pRELENTRADA;
+      FrmRlRelSaida.FForeignFormKey := pFOREIGNFORMKEY;
+      FrmRlRelSaida.FCodUsu := pCOD_USU;
+      FrmRlRelSaida.FRelSaida := pRELSAIDA;
 
-      if (FrmRlRelEntrada.PreparaRelatorio) then
+      if (FrmRlRelSaida.PreparaRelatorio) then
       begin
 
-        if (pRELENTRADA.Visualizar) then
+        if (pRELSAIDA.Visualizar) then
         begin
 
-          Result := FrmRlRelEntrada.RLReport.PreviewModal;
+          Result := FrmRlRelSaida.RLReport.PreviewModal;
 
         end
         else
         begin
 
-          FrmRlRelEntrada.RLReport.Print;
+          FrmRlRelSaida.RLReport.Print;
           Result := True;
 
         end;
@@ -140,27 +140,27 @@ begin
       on E: Exception do
       begin
         Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(0), ['de relatório de entrada', E.Message]));
+        raise Exception.Create(Format(TMensagem.getMensagem(0), ['de relatório de saída', E.Message]));
       end;
     end;
 
   finally
-    FreeAndNil(FrmRlRelEntrada);
+    FreeAndNil(FrmRlRelSaida);
   end;
 
 end;
 
-function TFrmRlRelEntrada.PreparaRelatorio: Boolean;
+function TFrmRlRelSaida.PreparaRelatorio: Boolean;
 var
-  lRelEntradaDAO: TRelEntradaDAO;
+  lRelSaidaDAO: TRelSaidaDAO;
 begin
 
-  lRelEntradaDAO := TRelEntradaDAO.Create(DataModuleConexao.Conexao);
+  lRelSaidaDAO := TRelSaidaDAO.Create(DataModuleConexao.Conexao);
   try
 
     try
 
-      if(lRelEntradaDAO.getRelatorio(Self.FPersistencia, Self.FRelEntrada))then
+      if(lRelSaidaDAO.getRelatorio(Self.FPersistencia, Self.FRelSaida))then
       begin
 
         Result := not Self.FPersistencia.Query.IsEmpty;
@@ -188,7 +188,7 @@ begin
     end;
 
   finally
-    lRelEntradaDAO.Destroy;
+    lRelSaidaDAO.Destroy;
   end;
 
 end;

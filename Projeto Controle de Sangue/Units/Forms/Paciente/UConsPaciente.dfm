@@ -7,18 +7,15 @@ inherited FrmConsPaciente: TFrmConsPaciente
   ExplicitHeight = 415
   PixelsPerInch = 96
   TextHeight = 13
-  inherited PanelTop: TPanel
+  inherited PanelGrid: TPanel
     Width = 802
-    Height = 345
+    Height = 273
     ExplicitWidth = 802
-    ExplicitHeight = 345
+    ExplicitHeight = 273
     inherited DBGrid: TDBGrid
-      Top = 73
       Width = 800
       Height = 271
       DataSource = DataSource
-      Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-      ReadOnly = True
       OnDblClick = DBGridDblClick
       OnKeyDown = DBGridKeyDown
       Columns = <
@@ -84,46 +81,8 @@ inherited FrmConsPaciente: TFrmConsPaciente
           Visible = True
         end>
     end
-    inherited Panel1: TPanel
-      Width = 800
-      Height = 72
-      ExplicitWidth = 800
-      ExplicitHeight = 72
-      inherited GroupBoxConsulta: TGroupBox
-        Width = 770
-        Height = 59
-        ExplicitWidth = 770
-        ExplicitHeight = 59
-        inherited GroupBoxTipoCons: TGroupBox
-          Top = 5
-          Width = 147
-          ExplicitTop = 5
-          ExplicitWidth = 147
-          inherited ComboBoxTipoCons: TComboBox
-            Width = 129
-            ItemIndex = 2
-            Text = 'N'#250'm. Protu'#225'rio'
-            Items.Strings = (
-              'Palavra chave'
-              'Nome'
-              'N'#250'm. Protu'#225'rio')
-            ExplicitWidth = 129
-          end
-        end
-        inherited EdtCons: TSearchBox
-          Left = 176
-          Top = 20
-          Width = 497
-          OnExit = EdtConsExit
-          OnInvokeSearch = EdtConsInvokeSearch
-          ExplicitLeft = 176
-          ExplicitTop = 20
-          ExplicitWidth = 497
-        end
-      end
-    end
   end
-  inherited PanelClient: TPanel
+  inherited PanelBotoes: TPanel
     Top = 345
     Width = 802
     Height = 41
@@ -138,6 +97,29 @@ inherited FrmConsPaciente: TFrmConsPaciente
     end
     inherited BtnExcluir: TSpeedButton
       OnClick = BtnExcluirClick
+    end
+  end
+  inherited PanelConsulta: TPanel
+    Width = 802
+    ExplicitWidth = 802
+    inherited GroupBoxConsulta: TGroupBox
+      Width = 578
+      ExplicitWidth = 578
+      inherited GroupBoxTipoCons: TGroupBox
+        inherited ComboBoxTipoCons: TComboBox
+          ItemIndex = 2
+          Text = 'N'#250'm. Prontu'#225'rio'
+          OnChange = ComboBoxTipoConsChange
+          Items.Strings = (
+            'Palavra chave'
+            'Nome'
+            'N'#250'm. Prontu'#225'rio')
+        end
+      end
+      inherited EdtCons: TSearchBox
+        OnExit = EdtConsExit
+        OnInvokeSearch = EdtConsInvokeSearch
+      end
     end
   end
   object DataSource: TDataSource

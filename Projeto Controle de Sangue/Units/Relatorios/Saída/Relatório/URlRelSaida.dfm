@@ -12,6 +12,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
   Font.Style = []
   OldCreateOrder = False
   Position = poDesigned
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object RLReport: TRLReport
@@ -63,7 +66,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
       Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      object RLLabelDataEntrada: TRLLabel
+      object RLLabelDataSaida: TRLLabel
         Left = 1
         Top = 20
         Width = 96
@@ -74,7 +77,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        Caption = 'Data de entrada'
+        Caption = 'Data de sa'#237'da'
       end
       object RLPanel1: TRLPanel
         Left = 102
@@ -219,13 +222,14 @@ object FrmRlRelSaida: TFrmRlRelSaida
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      object RLDBTextDataEntrada: TRLDBText
-        Left = 12
+      object RLDBTextDataSaida: TRLDBText
+        Left = 18
         Top = 20
-        Width = 80
+        Width = 68
         Height = 16
         Alignment = taCenter
-        DataField = 'data_entrada'
+        DataField = 'data_saida'
+        DataSource = DataSource
         Text = ''
       end
       object RLDBTextNumeroBolsa: TRLDBText
@@ -235,6 +239,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Height = 16
         Alignment = taCenter
         DataField = 'numero_bolsa'
+        DataSource = DataSource
         Text = ''
       end
       object RLDBTextOrigem: TRLDBText
@@ -244,6 +249,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Height = 16
         Alignment = taCenter
         DataField = 'origem'
+        DataSource = DataSource
         Text = ''
       end
       object RLDBTextTipo: TRLDBText
@@ -253,6 +259,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Height = 16
         Alignment = taCenter
         DataField = 'tipo'
+        DataSource = DataSource
         Text = ''
       end
       object RLDBTextVolume: TRLDBText
@@ -262,6 +269,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Height = 16
         Alignment = taCenter
         DataField = 'volume'
+        DataSource = DataSource
         Text = ''
       end
       object RLDBTextAboRh: TRLDBText
@@ -271,6 +279,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Height = 16
         Alignment = taCenter
         DataField = 'aborh'
+        DataSource = DataSource
         Text = ''
       end
       object RLDBTextObservacao: TRLDBText
@@ -280,6 +289,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Height = 16
         Alignment = taCenter
         DataField = 'observacao'
+        DataSource = DataSource
         Text = ''
       end
       object RLPanel7: TRLPanel

@@ -10,7 +10,7 @@ uses
 type
   TFrmRelSaida = class(TForm)
     PanelData: TPanel;
-    GroupBoxDataEntrada: TGroupBox;
+    GroupBoxDataSaida: TGroupBox;
     LabelA: TLabel;
     DateTimePickerDataInicial: TDateTimePicker;
     DateTimePickerDataFinal: TDateTimePicker;
@@ -59,7 +59,7 @@ type
     procedure ChamaRelatorio(const pSENDER: TObject);
 
   public
-    class function getRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean; static;
+    class function getRelSaida(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
   end;
 
 var
@@ -67,7 +67,7 @@ var
 
 implementation
 
-uses System.DateUtils, UBiblioteca, UBibliotecaRelatorio, UClassMensagem, UClassRelSaida, //URlRelSaida,
+uses System.DateUtils, UBiblioteca, UBibliotecaRelatorio, UClassMensagem, UClassRelSaida, URlRelSaida,
   UEnumsRelatorio, UClassForeignKeyForms;
 
 {$R *.dfm}
@@ -158,7 +158,7 @@ begin
         lAuxStringList.Destroy;
       end;
 
-      TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelSaida);
+      TFrmRlRelSaida.getRlRelSaida(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelSaida);
 
     except
       on E: Exception do
@@ -213,17 +213,17 @@ begin
   DateTimePickerDataFinal.DateTime := TBiblioteca.getUltimoDiaMes(Now);
 
   RadioGroupFiltroTipo.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup',
-    'FrmRelEntrada.RadioGroupFiltroTipo', '3').ToInteger;
+    'FrmRelSaida.RadioGroupFiltroTipo', '3').ToInteger;
 
   RadioGroupFiltroGrupoSanguineo.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup',
-    'FrmRelEntrada.RadioGroupFiltroGrupoSanguineo', '3').ToInteger;
+    'FrmRelSaida.RadioGroupFiltroGrupoSanguineo', '3').ToInteger;
 
   RadioGroupFiltroVolume.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup',
-    'FrmRelEntrada.RadioGroupFiltroVolume', '3').ToInteger;
+    'FrmRelSaida.RadioGroupFiltroVolume', '3').ToInteger;
 
 end;
 
-class function TFrmRelSaida.getRelEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+class function TFrmRelSaida.getRelSaida(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
 begin
 
   if (FrmRelSaida = nil) then
@@ -248,7 +248,7 @@ begin
     on E: Exception do
     begin
       Result := False;
-      raise Exception.Create(Format(TMensagem.getMensagem(0), ['de relatório de entrada', E.Message]));
+      raise Exception.Create(Format(TMensagem.getMensagem(0), ['de relatório de saída', E.Message]));
     end;
   end;
 

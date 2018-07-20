@@ -72,11 +72,10 @@ uses UClassMensagem, UDMConexao, UClassRelEntradaDAO;
 procedure TFrmRlRelEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 
-          Self.FClientDataSet.Close;
-          Self.FClientDataSet.Active := False;
+  Self.FClientDataSet.Close;
+  Self.FClientDataSet.Active := False;
 
-          DataSource.DataSet := nil;
-
+  DataSource.DataSet := nil;
 
 end;
 

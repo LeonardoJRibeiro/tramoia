@@ -21,16 +21,15 @@ object FrmRelSaida: TFrmRelSaida
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = -10
-    ExplicitWidth = 970
-    object GroupBoxDataEntrada: TGroupBox
+    object GroupBoxDataSaida: TGroupBox
       AlignWithMargins = True
       Left = 3
       Top = 3
       Width = 954
       Height = 59
       Align = alClient
-      Caption = 'Data de entrada'
+      Caption = 'Data de sa'#237'da'
+      Enabled = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -38,7 +37,6 @@ object FrmRelSaida: TFrmRelSaida
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 964
       object LabelA: TLabel
         Left = 475
         Top = 28
@@ -175,8 +173,6 @@ object FrmRelSaida: TFrmRelSaida
     BevelInner = bvLowered
     BevelWidth = 2
     TabOrder = 2
-    ExplicitLeft = -10
-    ExplicitWidth = 970
     object BtnSair: TBitBtn
       Left = 550
       Top = 9

@@ -345,17 +345,12 @@ var
   lId: Integer;
 begin
 
-  if (Trim(EdtCodMunicipio.Text) = '') then
+  if (TFrmConsMunicpio.getConsMunicpio(TForeignKeyForms.FIdUConsMunicipio, lId)) then
   begin
-
-    if (TFrmConsMunicpio.getConsMunicpio(TForeignKeyForms.FIdUConsMunicipio, lId)) then
+    if (lId.ToString <> '') then
     begin
-      if (lId.ToString <> '') then
-      begin
-        EdtCodMunicipio.Text := lId.ToString;
-      end;
+      EdtCodMunicipio.Text := lId.ToString;
     end;
-
   end;
 
 end;

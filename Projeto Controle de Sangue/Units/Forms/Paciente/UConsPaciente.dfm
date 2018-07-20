@@ -89,6 +89,15 @@ inherited FrmConsPaciente: TFrmConsPaciente
     ExplicitTop = 345
     ExplicitWidth = 802
     ExplicitHeight = 41
+    inherited BtnNovo: TSpeedButton
+      OnClick = BtnNovoClick
+    end
+    inherited BtnAlterar: TSpeedButton
+      OnClick = BtnAlterarClick
+    end
+    inherited BtnExcluir: TSpeedButton
+      OnClick = BtnExcluirClick
+    end
   end
   inherited PanelConsulta: TPanel
     Width = 802

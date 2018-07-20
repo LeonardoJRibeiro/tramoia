@@ -1,15 +1,21 @@
 inherited FrmConsMunicpio: TFrmConsMunicpio
   Caption = 'Consulta de munic'#237'pios'
-  ClientHeight = 237
-  ClientWidth = 523
-  ExplicitWidth = 529
-  ExplicitHeight = 266
+  ClientHeight = 323
+  ClientWidth = 494
+  OnShow = FormShow
+  ExplicitWidth = 500
+  ExplicitHeight = 352
   PixelsPerInch = 96
   TextHeight = 13
-  inherited PanelTop: TPanel
-    Width = 523
+  inherited PanelGrid: TPanel
+    Width = 494
+    Height = 209
+    ExplicitWidth = 494
+    ExplicitHeight = 209
     inherited DBGrid: TDBGrid
-      Width = 521
+      Width = 492
+      Height = 207
+      DataSource = DataSource
       Columns = <
         item
           Expanded = False
@@ -33,21 +39,28 @@ inherited FrmConsMunicpio: TFrmConsMunicpio
           Visible = True
         end>
     end
-    inherited Panel1: TPanel
-      Width = 521
-      inherited GroupBoxConsulta: TGroupBox
-        Width = 498
-        ExplicitWidth = 498
-        inherited EdtCons: TSearchBox
-          Width = 352
-          ExplicitWidth = 352
-        end
+  end
+  inherited PanelBotoes: TPanel
+    Top = 281
+    Width = 494
+    ExplicitTop = 281
+    ExplicitWidth = 494
+  end
+  inherited PanelConsulta: TPanel
+    Width = 494
+    ExplicitWidth = 494
+    inherited GroupBoxConsulta: TGroupBox
+      Width = 474
+      ExplicitWidth = 474
+      inherited EdtCons: TSearchBox
+        Top = 20
+        Width = 328
+        OnExit = EdtConsExit
+        OnInvokeSearch = EdtConsInvokeSearch
+        ExplicitTop = 20
+        ExplicitWidth = 328
       end
     end
-  end
-  inherited PanelClient: TPanel
-    Width = 523
-    Height = 46
   end
   object DataSource: TDataSource
     Left = 48

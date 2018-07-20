@@ -78,71 +78,68 @@ end;
 function TPacienteDAO.getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt;
   var pPersistencia: TPersistencia): Boolean;
 begin
-  begin
 
-    try
+  try
 
-      pPersistencia.IniciaTransacao;
+    pPersistencia.IniciaTransacao;
 
-      pPersistencia.Query.SQL.Add('SELECT');
-      pPersistencia.Query.SQL.Add('  id,');
-      pPersistencia.Query.SQL.Add('  nome,');
-      pPersistencia.Query.SQL.Add('  num_prontuario,');
-      pPersistencia.Query.SQL.Add('  CONCAT(abo, rh) grupo_sanguineo,');
-      pPersistencia.Query.SQL.Add('  CONCAT(SUBSTRING(CPF,1,3), ' + QuotedStr('.') + ', SUBSTRING(CPF,4,3), ' +
-        QuotedStr('.') + ',SUBSTRING(CPF,7,3), ' + QuotedStr('-') + ', SUBSTRING(CPF,10,2)) AS cpf,');
-      pPersistencia.Query.SQL.Add('CONCAT(SUBSTRING(sus,1,11), ' + QuotedStr(' ') + ', SUBSTRING(sus,12,4), ' +
-        QuotedStr(' ') + ', SUBSTRING(sus,16,1)) AS sus,');
-      pPersistencia.Query.SQL.Add('  rg,');
-      pPersistencia.Query.SQL.Add('  telefone');
-      pPersistencia.Query.SQL.Add('FROM paciente');
+    pPersistencia.Query.SQL.Add('SELECT');
+    pPersistencia.Query.SQL.Add('  id,');
+    pPersistencia.Query.SQL.Add('  nome,');
+    pPersistencia.Query.SQL.Add('  num_prontuario,');
+    pPersistencia.Query.SQL.Add('  CONCAT(abo, rh) grupo_sanguineo,');
+    pPersistencia.Query.SQL.Add('  CONCAT(SUBSTRING(CPF,1,3), ' + QuotedStr('.') + ', SUBSTRING(CPF,4,3), ' +
+      QuotedStr('.') + ',SUBSTRING(CPF,7,3), ' + QuotedStr('-') + ', SUBSTRING(CPF,10,2)) AS cpf,');
+    pPersistencia.Query.SQL.Add('CONCAT(SUBSTRING(sus,1,11), ' + QuotedStr(' ') + ', SUBSTRING(sus,12,4), ' +
+      QuotedStr(' ') + ', SUBSTRING(sus,16,1)) AS sus,');
+    pPersistencia.Query.SQL.Add('  rg,');
+    pPersistencia.Query.SQL.Add('  telefone');
+    pPersistencia.Query.SQL.Add('FROM paciente');
 
-      pPersistencia.Query.SQL.Add('WHERE 0=0');
+    pPersistencia.Query.SQL.Add('WHERE 0=0');
 
-      case (pTIPOCONS) of
-        0, 1: // Palavra chave e Nome
+    case (pTIPOCONS) of
+      0, 1: // Palavra chave e Nome
+        begin
+
+          if (not pCHAVE.Trim.IsEmpty) then
           begin
 
-            if (not pCHAVE.Trim.IsEmpty) then
-            begin
-
-              pPersistencia.Query.SQL.Add('AND nome LIKE :pChave');
-              pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
-
-            end;
-
-            pPersistencia.Query.SQL.Add('ORDER BY nome');
+            pPersistencia.Query.SQL.Add('AND nome LIKE :pChave');
+            pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
 
           end;
 
-        2: // Código(registro_paciente, o Id do paciente no sistema do hospital).
+          pPersistencia.Query.SQL.Add('ORDER BY nome');
+
+        end;
+
+      2: // Código(registro_paciente, o Id do paciente no sistema do hospital).
+        begin
+
+          if (not pCHAVE.Trim.IsEmpty) then
           begin
 
-            if (not pCHAVE.Trim.IsEmpty) then
-            begin
-
-              pPersistencia.Query.SQL.Add('AND num_prontuario = :pChave');
-              pPersistencia.setParametro('pChave', pCHAVE);
-
-            end;
-
-            pPersistencia.Query.SQL.Add('ORDER BY num_prontuario');
+            pPersistencia.Query.SQL.Add('AND num_prontuario = :pChave');
+            pPersistencia.setParametro('pChave', pCHAVE);
 
           end;
-      end;
 
-      pPersistencia.Query.Open;
+          pPersistencia.Query.SQL.Add('ORDER BY num_prontuario');
 
-      Result := True;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
+        end;
     end;
 
+    pPersistencia.Query.Open;
+
+    Result := True;
+
+  except
+    on E: Exception do
+    begin
+      Result := False;
+      raise Exception.Create(E.Message);
+    end;
   end;
 
 end;

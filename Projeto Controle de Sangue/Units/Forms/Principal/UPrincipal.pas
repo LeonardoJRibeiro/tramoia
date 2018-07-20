@@ -41,6 +41,7 @@ type
     procedure BtnSaidaClick(Sender: TObject);
     procedure BtnEntradaClick(Sender: TObject);
     procedure BtnRelatoriosClick(Sender: TObject);
+    procedure Cadastrar2Click(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -55,7 +56,7 @@ implementation
 
 {$R *.dfm}
 
-uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio;
+uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario;
 
 procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
 begin
@@ -76,7 +77,7 @@ end;
 procedure TFrmPrincipal.BtnRelatoriosClick(Sender: TObject);
 begin
 
-  TFrmSelRelatorio.getSelRelatorio( TForeignKeyForms.FIdUSelRelatorio,  Self.FIdUsuario);
+  TFrmSelRelatorio.getSelRelatorio(TForeignKeyForms.FIdUSelRelatorio, Self.FIdUsuario);
 
 end;
 
@@ -90,6 +91,11 @@ end;
 procedure TFrmPrincipal.BtnSairClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TFrmPrincipal.Cadastrar2Click(Sender: TObject);
+begin
+  TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.FormCreate(Sender: TObject);

@@ -185,8 +185,8 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Units\Relatorios\UBibliotecaRelatorio.pas"/>
-        <DCCReference Include="Units\Class\DAO\UClassBolsaDao.pas"/>
         <DCCReference Include="Units\Class\Controll\UClassBolsa.pas"/>
+        <DCCReference Include="Units\Class\DAO\UClassBolsaDao.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

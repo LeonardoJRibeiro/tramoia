@@ -22,33 +22,50 @@ begin
       begin
         Result := 'Erro ao criar janela %S: %S.';
       end;
+
     1:
       begin
         Result := 'Erro ao consultar %S: %S.';
       end;
+
     2:
       begin
         Result := 'Erro ao excluir %s. Motivo: %s.';
       end;
+
     3:
       begin
         Result := 'Campo "%S" é obrigatório e não foi informado.';
       end;
+
     4:
       begin
         Result := 'Erro ao salvar %S. Motivo: %S.';
       end;
+
     5:
       begin
         Result := 'Erro ao pesquisar %S. Motivo: %S.';
       end;
+
     6:
       begin
         Result := '%S não cadastrado.';
       end;
+
     7:
       begin
         Result := 'Erro ao preparar %S. Motivo %S.';
+      end;
+
+    8:
+      begin
+        Result := '%s salvo com sucesso!'
+      end;
+
+    9:
+      begin
+        Result := 'Deseja realmente excluir o paciente?'
       end;
   end;
 

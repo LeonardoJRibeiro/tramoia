@@ -16,8 +16,9 @@ type
     FIdUCadPaciente: Byte = 3;
     FIdUConsMunicipio: Byte = 4;
     FIdUSaida: Byte = 5;
-    FIdUSelRelatorio = 6;
-    FIdURelEntrada  = 7;
+    FIdUSelRelatorio: Byte = 6;
+    FIdURelEntrada: Byte = 7;
+    FIdULogin: Byte = 8;
 
   end;
 

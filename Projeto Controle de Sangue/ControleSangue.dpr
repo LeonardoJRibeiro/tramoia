@@ -43,8 +43,8 @@ uses
   URelEntrada in 'Units\Relatorios\Entrada\Form\URelEntrada.pas' {FrmRelEntrada},
   URlRelEntrada in 'Units\Relatorios\Entrada\Relatorio\URlRelEntrada.pas' {FrmRlRelEntrada},
   UBibliotecaRelatorio in 'Units\Relatorios\UBibliotecaRelatorio.pas',
-  UClassBolsaDao in 'Units\Class\DAO\UClassBolsaDao.pas',
-  UClassBolsa in 'Units\Class\Controll\UClassBolsa.pas';
+  UClassBolsa in 'Units\Class\Controll\UClassBolsa.pas',
+  UClassBolsaDao in 'Units\Class\DAO\UClassBolsaDao.pas';
 
 {$R *.res}
 

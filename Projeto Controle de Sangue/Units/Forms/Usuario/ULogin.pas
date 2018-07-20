@@ -13,12 +13,14 @@ type
     EdtSenha: TMaskEdit;
     BtnLogin: TBitBtn;
     BtnSair: TBitBtn;
+    Label1: TLabel;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnLoginClick(Sender: TObject);
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
   private
     FCodUsu: Integer;
     FNumTentativas: Integer;
@@ -33,7 +35,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDMConexao, UClassUsuarioDao, UBiblioteca, UClassMensagem;
+uses UDMConexao, UClassUsuarioDao, UBiblioteca, UClassMensagem, UCadUsuario, UClassForeignKeyForms;
 
 procedure TFrmLogin.BtnLoginClick(Sender: TObject);
 var
@@ -117,7 +119,7 @@ begin
   case (Key) of
     VK_ESCAPE:
       begin
-        close;
+        Close;
       end;
   end;
 
@@ -157,6 +159,11 @@ begin
     FreeAndNil(FrmLogin);
   end;
 
+end;
+
+procedure TFrmLogin.Label1Click(Sender: TObject);
+begin
+  TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdULogin, -1);
 end;
 
 end.

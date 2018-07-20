@@ -33537,8 +33537,24 @@ object FrmLogin: TFrmLogin
       F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9
       F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9
       F8FFFAF9F8FFFAF9F8FFFAF9F8FFFAF9F8FFE6E2DE7C}
-    ExplicitLeft = 40
-    ExplicitTop = 8
+    ExplicitTop = 24
+    ExplicitHeight = 443
+  end
+  object Label1: TLabel
+    Left = 59
+    Top = 452
+    Width = 133
+    Height = 13
+    Caption = 'Cadastrar Novo Usu'#225'rio'
+    Color = clBtnFace
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label1Click
   end
   object EdtNome: TEdit
     Left = 59
@@ -33572,8 +33588,8 @@ object FrmLogin: TFrmLogin
     OnKeyDown = EdtSenhaKeyDown
   end
   object BtnLogin: TBitBtn
-    Left = 64
-    Top = 408
+    Left = 59
+    Top = 395
     Width = 225
     Height = 51
     Caption = 'Login'
@@ -33713,7 +33729,7 @@ object FrmLogin: TFrmLogin
   end
   object BtnSair: TBitBtn
     Left = 312
-    Top = 408
+    Top = 395
     Width = 205
     Height = 51
     Caption = 'Sair'

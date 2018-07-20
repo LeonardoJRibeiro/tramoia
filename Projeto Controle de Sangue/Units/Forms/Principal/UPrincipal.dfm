@@ -45115,6 +45115,7 @@ object FrmPrincipal: TFrmPrincipal
       Caption = 'Usu'#225'rios'
       object Cadastrar2: TMenuItem
         Caption = 'Cadastrar'
+        OnClick = Cadastrar2Click
       end
       object Consultar1: TMenuItem
         Caption = 'Consultar'

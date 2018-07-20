@@ -9,7 +9,6 @@ uses
 
 type
   TFrmConsMunicpio = class(TFrmCons)
-    DataSource: TDataSource;
   private
     FForeignFormKey: SmallInt;
   public

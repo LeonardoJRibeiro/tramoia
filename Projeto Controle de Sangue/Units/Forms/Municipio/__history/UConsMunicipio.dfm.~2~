@@ -22,14 +22,13 @@ inherited FrmConsMunicpio: TFrmConsMunicpio
           Expanded = False
           FieldName = 'nome'
           Title.Caption = 'Nome'
-          Width = 276
+          Width = 236
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'uf'
           Title.Caption = 'UF'
-          Width = 91
           Visible = True
         end>
     end

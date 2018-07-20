@@ -55,15 +55,10 @@ implementation
 
 { TFrmEntradaSaida }
 uses System.StrUtils, UClassForeignKeyForms, UClassMensagem, UClassEntrada, UClassEntradaDao, UDMConexao,
-  UClassSaidaDao, UClassBolsa, UClassBolsaDAO, UClassBibliotecaDao;
+  UClassSaidaDao;
 
 procedure TFrmEntrada.BtnGravarClick(Sender: TObject);
 var
-  lBolsa: TBolsa;
-  lBolsaDAO: TBolsaDAO;
-
-  lIdBolsa: Integer;
-
   lEntrada: TEntrada;
   lEntradaDAO: TEntradaDAO;
 begin
@@ -123,61 +118,33 @@ begin
 
   end;
 
-  lBolsa := TBolsa.Create;
+  lEntrada := TEntrada.Create;
   try
 
-    lBolsa.Id := -1;
-    lBolsa.NumeroBolsa := EdtNumeroBolsa.Text;
-    lBolsa.Tipo := EdtTipo.Text;
-    lBolsa.Abo := Copy(ComboBoxAboBolsa.Text, 0, string(ComboBoxAboBolsa.Text).Length - 1);
-    lBolsa.Rh := Copy(ComboBoxAboBolsa.Text, string(ComboBoxAboBolsa.Text).Length,
-      string(ComboBoxAboBolsa.Text).Length);
-    lBolsa.Origem := EdtOrigem.Text;
-    lBolsa.Volume := StrToInt(EdtVolume.Text);
-    lBolsa.Sorologia := 'N';
-    lBolsa.PossuiEstoque := True;
+    lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
+    lEntrada.Id_Usuario := Self.FCodUsu;
+    lEntrada.Data_Entrada := Now;
+    lEntrada.Numero_Da_Bolsa := EdtNumeroBolsa.Text;
+    lEntrada.Origem := EdtOrigem.Text;
+    lEntrada.Tipo := EdtTipo.Text;
+    lEntrada.Volume := StrToCurr(EdtVolume.Text);
+    lEntrada.Grupo_Sanguineo := ComboBoxAboBolsa.Text;
+    lEntrada.Sorologia := 'N';
+    lEntrada.Observacao := EdtObservacao.Text;
 
-    lBolsaDAO := TBolsaDAO.Create(DataModuleConexao.Conexao);
+    lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
     try
 
       try
 
-        if (lBolsaDAO.Salvar(lBolsa)) then
+        if (lEntradaDAO.Salvar(lEntrada)) then
         begin
 
-          lIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_bolsa', lBolsa.NumeroBolsa,
-            DataModuleConexao.Conexao);
+          EdtOrdemSaida.Text := lEntrada.Id.ToString;
 
-          lEntrada := TEntrada.Create;
-          try
+          BtnGravar.Enabled := False;
 
-            lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
-            lEntrada.IdUsuario := Self.FCodUsu;
-            lEntrada.IdBolsa := lIdBolsa;
-            lEntrada.DataEntrada := Now;
-            lEntrada.Observacao := EdtObservacao.Text;
-
-            lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
-            try
-
-              if (lEntradaDAO.Salvar(lEntrada)) then
-              begin
-
-                EdtOrdemSaida.Text := lEntrada.Id.ToString;
-
-                BtnGravar.Enabled := False;
-
-                BtnNovo.SetFocus;
-
-              end;
-
-            finally
-              lEntradaDAO.Destroy;
-            end;
-
-          finally
-            lEntrada.Destroy;
-          end;
+          BtnNovo.SetFocus;
 
         end;
 
@@ -189,11 +156,11 @@ begin
       end;
 
     finally
-      lBolsaDAO.Destroy;
+      lEntradaDAO.Destroy;
     end;
 
   finally
-    lBolsa.Destroy;
+    lEntrada.Destroy;
   end;
 
 end;

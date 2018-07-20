@@ -37,9 +37,6 @@ type
     class function getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: Integer;
       const pCONEXAO: TConexao): Variant;
 
-    class function getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: string;
-      const pCONEXAO: TConexao): Variant;
-
     class function setValorAtributo(const pENTIDADE, pCAMPO_A_SER_ALTERADO, pIDENTIFICADOR: string;
       const pCHAVE: Variant; const pALTERACAO: Variant; const pCONEXAO: TConexao): Boolean;
 
@@ -120,46 +117,6 @@ begin
   end;
 
 end;
-
-class function TPersistencia.getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO, pIDENTIFICADOR, pCHAVE: string;
-  const pCONEXAO: TConexao): Variant;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(pCONEXAO);
-  try
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add(pATRIBUTO_RETORNO);
-      lPersistencia.Query.SQL.Add('FROM ' + pENTIDADE);
-      lPersistencia.Query.SQL.Add('WHERE ' + pIDENTIFICADOR + '=' + pCHAVE);
-
-      lPersistencia.Query.Open;
-
-      if (not lPersistencia.Query.IsEmpty) then
-      begin
-        Result := lPersistencia.Query.FieldByName(pATRIBUTO_RETORNO).Value;
-      end
-      else
-      begin
-        Result := -1;
-      end;
-
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create(E.Message);
-      end;
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
 
 class function TPersistencia.getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO, pIDENTIFICADOR: string;
   const pCHAVE: Integer; const pCONEXAO: TConexao): Variant;

@@ -11,10 +11,7 @@ type
 
   public
     class function getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: Integer;
-      const pCONEXAO: TConexao): Variant; overload;
-
-    class function getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: string;
-      const pCONEXAO: TConexao): Variant; overload;
+      const pCONEXAO: TConexao): Variant;
 
     class function setValorAtributo(const pEntidade, pCAMPO_A_SER_ALTERADO, pIDENTIFICADOR: string;
       const pCHAVE: Variant; const pALTERACAO: Variant; const pCONEXAO: TConexao): Boolean;
@@ -58,13 +55,11 @@ class function TClassBibliotecaDao.getValorAtributo(const pEntidade, pCAMPO_RETO
 var
   lPersistencia: TPersistencia;
 begin
-
   lPersistencia := TPersistencia.Create(pCONEXAO);
   try
 
     try
       Result := lPersistencia.getValorAtributo(pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR, pCHAVE, pCONEXAO);
-
     except
       on E: Exception do
       begin
@@ -76,33 +71,6 @@ begin
   finally
     lPersistencia.Destroy;
   end;
-end;
-
-class function TClassBibliotecaDao.getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR, pCHAVE: string;
-  const pCONEXAO: TConexao): Variant;
-var
-  lPersistencia: TPersistencia;
-begin
-
-  lPersistencia := TPersistencia.Create(pCONEXAO);
-  try
-
-    try
-
-      Result := lPersistencia.getValorAtributo(pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR, pCHAVE, pCONEXAO);
-
-    except
-      on E: Exception do
-      begin
-        Result := -1;
-        raise Exception.Create(E.Message);
-      end;
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
 end;
 
 class function TClassBibliotecaDao.setValorAtributo(const pEntidade, pCAMPO_A_SER_ALTERADO, pIDENTIFICADOR: string;

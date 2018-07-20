@@ -145,15 +145,13 @@ begin
         if (lBolsaDAO.Salvar(lBolsa)) then
         begin
 
-          lIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_bolsa', lBolsa.NumeroBolsa,
-            DataModuleConexao.Conexao);
+//          lIdBolsa :=  TClassBibliotecaDao.getValorAtributo
 
           lEntrada := TEntrada.Create;
           try
 
             lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
             lEntrada.IdUsuario := Self.FCodUsu;
-            lEntrada.IdBolsa := lIdBolsa;
             lEntrada.DataEntrada := Now;
             lEntrada.Observacao := EdtObservacao.Text;
 

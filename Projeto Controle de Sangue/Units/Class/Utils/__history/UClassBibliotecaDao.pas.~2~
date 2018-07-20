@@ -58,13 +58,11 @@ class function TClassBibliotecaDao.getValorAtributo(const pEntidade, pCAMPO_RETO
 var
   lPersistencia: TPersistencia;
 begin
-
   lPersistencia := TPersistencia.Create(pCONEXAO);
   try
 
     try
       Result := lPersistencia.getValorAtributo(pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR, pCHAVE, pCONEXAO);
-
     except
       on E: Exception do
       begin

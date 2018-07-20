@@ -106,12 +106,9 @@ function TBolsaDAO.Salvar(var pObjeto: TBolsa): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
-
   lPersistencia := TPersistencia.Create(Self.FConexao);
   try
-
     try
-
       lPersistencia.IniciaTransacao;
 
       if (not Self.getExiste(pObjeto.Id)) then

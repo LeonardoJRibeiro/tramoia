@@ -142,9 +142,9 @@ begin
       end;
 
       lPersistencia.setParametro('pId', pObjeto.Id);
-      lPersistencia.setParametro('pId_Usuario', pObjeto.IdUsuario);
-      lPersistencia.setParametro('pId_Bolsa', pObjeto.IdBolsa);
-      lPersistencia.setParametro('pData_Entrada', pObjeto.DataEntrada);
+      lPersistencia.setParametro('pId_Usuario', pObjeto.Id_Usuario);
+      lPersistencia.setParametro('pId_Bolsa', pObjeto.Id_Bolsa);
+      lPersistencia.setParametro('pData_Entrada', pObjeto.Data_Entrada);
       lPersistencia.setParametro('pObservacao', pObjeto.Observacao);
  
       lPersistencia.Query.ExecSQL;
@@ -185,9 +185,9 @@ begin
       lPersistencia.Query.Open;
 
       pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.IdUsuario := lPersistencia.Query.FieldByName('id_usuario').AsInteger;
-      pObjeto.IdBolsa := lPersistencia.Query.FieldByName('id_bolsa').AsInteger;
-      pObjeto.DataEntrada := lPersistencia.Query.FieldByName('data_entrada').AsDateTime;
+      pObjeto.Id_Usuario := lPersistencia.Query.FieldByName('id_usuario').AsInteger;
+      pObjeto.Id_Bolsa := lPersistencia.Query.FieldByName('id_bolsa').AsInteger;
+      pObjeto.Data_Entrada := lPersistencia.Query.FieldByName('data_entrada').AsDateTime;
       pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').Asstring;
  
  

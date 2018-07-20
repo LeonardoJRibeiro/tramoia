@@ -7,22 +7,22 @@ uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersis
 type
   TBolsaDAO = class(TInterfacedPersistent, IInterfaceDao<TBolsa>)
   private
-    FConexao: TConexao;
+    FConexao : TConexao;
 
   public
-    function getExiste(const pID: Integer): Boolean;
-    function Excluir(const pID: Integer): Boolean;
-    function Salvar(var pObjeto: TBolsa): Boolean;
-    function getObjeto(const pID: Integer; var pObjeto: TBolsa): Boolean;
+    function getExiste(const pID: Integer) : Boolean;
+    function Excluir(const pID: Integer) : Boolean;
+    function Salvar(var pObjeto: TBolsa) : Boolean;
+    function getObjeto(const pID: Integer; var pObjeto: TBolsa) : Boolean;
 
-    constructor Create(const pCONEXAO: TConexao); overload;
+    constructor Create(const pCONEXAO : TConexao); overload;
     destructor Destroy; override;
 
   end;
 
 implementation
 
-constructor TBolsaDAO.Create(const pCONEXAO: TConexao);
+constructor TBolsaDAO.Create(const pCONEXAO : TConexao);
 begin
   Self.FConexao := pCONEXAO;
 end;
@@ -87,6 +87,7 @@ begin
 
       Result := lPersistencia.Query.Fields[0].AsInteger > 0;
 
+
     except
       on E: Exception do
       begin
@@ -102,22 +103,19 @@ begin
 
 end;
 
-function TBolsaDAO.Salvar(var pObjeto: TBolsa): Boolean;
+function TBolsaDAO.Salvar(var pObjeto : TBolsa): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
-
   lPersistencia := TPersistencia.Create(Self.FConexao);
   try
-
     try
-
       lPersistencia.IniciaTransacao;
 
       if (not Self.getExiste(pObjeto.Id)) then
       begin
 
-        pObjeto.Id := lPersistencia.getProximoCodigo('bolsa', 'id');
+        pObjeto.Id:= lPersistencia.getProximoCodigo('bolsa','id');
         lPersistencia.Query.SQL.Add('INSERT INTO bolsa (');
         lPersistencia.Query.SQL.Add('  id,');
         lPersistencia.Query.SQL.Add('  numero_bolsa,');
@@ -156,18 +154,18 @@ begin
       end;
 
       lPersistencia.setParametro('pId', pObjeto.Id);
-      lPersistencia.setParametro('pNumero_Bolsa', pObjeto.NumeroBolsa);
+      lPersistencia.setParametro('pNumero_Bolsa', pObjeto.Numero_Bolsa);
       lPersistencia.setParametro('pTipo', pObjeto.Tipo);
       lPersistencia.setParametro('pAbo', pObjeto.Abo);
       lPersistencia.setParametro('pRh', pObjeto.Rh);
       lPersistencia.setParametro('pOrigem', pObjeto.Origem);
       lPersistencia.setParametro('pVolume', pObjeto.Volume);
       lPersistencia.setParametro('pSorologia', pObjeto.Sorologia);
-      lPersistencia.setParametro('pPossui_Estoque', pObjeto.PossuiEstoque);
-
+      lPersistencia.setParametro('pPossui_Estoque', pObjeto.Possui_Estoque);
+ 
       lPersistencia.Query.ExecSQL;
-
-      Result := True;
+ 
+      Result:= True;
 
     except
       on E: Exception do
@@ -188,42 +186,32 @@ function TBolsaDAO.getObjeto(const pID: Integer; var pObjeto: TBolsa): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
-
   lPersistencia := TPersistencia.Create(Self.FConexao);
   try
-
     try
-
       lPersistencia.IniciaTransacao;
 
       lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  id,');
-      lPersistencia.Query.SQL.Add('  numero_bolsa,');
-      lPersistencia.Query.SQL.Add('  tipo,');
-      lPersistencia.Query.SQL.Add('  abo,');
-      lPersistencia.Query.SQL.Add('  rh,');
-      lPersistencia.Query.SQL.Add('  origem,');
-      lPersistencia.Query.SQL.Add('  volume,');
-      lPersistencia.Query.SQL.Add('  sorologia,');
-      lPersistencia.Query.SQL.Add('  possui_estoque');
+      lPersistencia.Query.SQL.Add('  *');
       lPersistencia.Query.SQL.Add('FROM bolsa');
-
       lPersistencia.Query.SQL.Add('WHERE id= :pId');
+
       lPersistencia.setParametro('pId', pID);
 
       lPersistencia.Query.Open;
 
       pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.NumeroBolsa := lPersistencia.Query.FieldByName('numero_bolsa').Asstring;
+      pObjeto.Numero_Bolsa := lPersistencia.Query.FieldByName('numero_bolsa').Asstring;
       pObjeto.Tipo := lPersistencia.Query.FieldByName('tipo').Asstring;
       pObjeto.Abo := lPersistencia.Query.FieldByName('abo').Asstring;
       pObjeto.Rh := lPersistencia.Query.FieldByName('rh').Asstring;
       pObjeto.Origem := lPersistencia.Query.FieldByName('origem').Asstring;
       pObjeto.Volume := lPersistencia.Query.FieldByName('volume').AsInteger;
       pObjeto.Sorologia := lPersistencia.Query.FieldByName('sorologia').Asstring;
-      pObjeto.PossuiEstoque := lPersistencia.Query.FieldByName('possui_estoque').Asstring;
-
-      Result := True;
+      pObjeto.Possui_Estoque := lPersistencia.Query.FieldByName('possui_estoque').Asstring;
+ 
+ 
+      Result:= True;
 
     except
       on E: Exception do

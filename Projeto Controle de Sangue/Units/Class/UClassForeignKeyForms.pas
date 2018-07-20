@@ -19,6 +19,7 @@ type
     FIdUSelRelatorio: Byte = 6;
     FIdURelEntrada: Byte = 7;
     FIdULogin: Byte = 8;
+    FIdURelSaida: Byte = 9;
 
   end;
 

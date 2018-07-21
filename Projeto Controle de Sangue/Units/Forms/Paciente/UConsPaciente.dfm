@@ -106,7 +106,10 @@ inherited FrmConsPaciente: TFrmConsPaciente
       Width = 578
       ExplicitWidth = 578
       inherited GroupBoxTipoCons: TGroupBox
+        Width = 119
+        ExplicitWidth = 119
         inherited ComboBoxTipoCons: TComboBox
+          Width = 102
           ItemIndex = 2
           Text = 'N'#250'm. Prontu'#225'rio'
           OnChange = ComboBoxTipoConsChange
@@ -114,11 +117,14 @@ inherited FrmConsPaciente: TFrmConsPaciente
             'Palavra chave'
             'Nome'
             'N'#250'm. Prontu'#225'rio')
+          ExplicitWidth = 102
         end
       end
       inherited EdtCons: TSearchBox
+        Left = 138
         OnExit = EdtConsExit
         OnInvokeSearch = EdtConsInvokeSearch
+        ExplicitLeft = 138
       end
     end
   end

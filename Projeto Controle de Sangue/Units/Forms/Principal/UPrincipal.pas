@@ -42,6 +42,9 @@ type
     procedure BtnEntradaClick(Sender: TObject);
     procedure BtnRelatoriosClick(Sender: TObject);
     procedure Cadastrar2Click(Sender: TObject);
+    procedure Cadastrar1Click(Sender: TObject);
+    procedure Entradas1Click(Sender: TObject);
+    procedure Sadas1Click(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -56,7 +59,8 @@ implementation
 
 {$R *.dfm}
 
-uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario;
+uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
+  URelEntrada, URelSaida;
 
 procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
 begin
@@ -93,9 +97,23 @@ begin
   Close;
 end;
 
+procedure TFrmPrincipal.Cadastrar1Click(Sender: TObject);
+begin
+
+  TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario);
+
+end;
+
 procedure TFrmPrincipal.Cadastrar2Click(Sender: TObject);
 begin
   TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
+procedure TFrmPrincipal.Entradas1Click(Sender: TObject);
+begin
+
+  TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
 end;
 
 procedure TFrmPrincipal.FormCreate(Sender: TObject);
@@ -122,6 +140,13 @@ end;
 procedure TFrmPrincipal.LogofClick(Sender: TObject);
 begin
   TimerLogin.Enabled := True;
+end;
+
+procedure TFrmPrincipal.Sadas1Click(Sender: TObject);
+begin
+
+  TFrmRelSaida.getRelSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
 end;
 
 procedure TFrmPrincipal.TimerLoginTimer(Sender: TObject);

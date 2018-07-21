@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.WinXCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.WinXCtrls,
+  UClassBolsaDAO;
 
 type
   TFrmEntrada = class(TForm)
@@ -39,9 +40,15 @@ type
     procedure EdtTipoEnter(Sender: TObject);
     procedure ComboBoxAboBolsaKeyPress(Sender: TObject; var Key: Char);
     procedure ComboBoxAboBolsaEnter(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
+
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
+
+    FBolsaDAO: TBolsaDAO;
+
   public
     class function getEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
   end;
@@ -55,12 +62,11 @@ implementation
 
 { TFrmEntradaSaida }
 uses System.StrUtils, UClassForeignKeyForms, UClassMensagem, UClassEntrada, UClassEntradaDao, UDMConexao,
-  UClassSaidaDao, UClassBolsa, UClassBolsaDAO, UClassBibliotecaDao;
+  UClassSaidaDao, UClassBolsa, UClassBibliotecaDao;
 
 procedure TFrmEntrada.BtnGravarClick(Sender: TObject);
 var
   lBolsa: TBolsa;
-  lBolsaDAO: TBolsaDAO;
 
   lIdBolsa: Integer;
 
@@ -137,59 +143,52 @@ begin
     lBolsa.Sorologia := 'N';
     lBolsa.PossuiEstoque := 'S';
 
-    lBolsaDAO := TBolsaDAO.Create(DataModuleConexao.Conexao);
     try
 
-      try
+      if (Self.FBolsaDAO.Salvar(lBolsa)) then
+      begin
 
-        if (lBolsaDAO.Salvar(lBolsa)) then
-        begin
+        lIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_bolsa', lBolsa.NumeroBolsa,
+          DataModuleConexao.Conexao);
 
-          lIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_bolsa', lBolsa.NumeroBolsa,
-            DataModuleConexao.Conexao);
+        lEntrada := TEntrada.Create;
+        try
 
-          lEntrada := TEntrada.Create;
+          lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
+          lEntrada.IdUsuario := Self.FCodUsu;
+          lEntrada.IdBolsa := lIdBolsa;
+          lEntrada.DataEntrada := Now;
+          lEntrada.Observacao := EdtObservacao.Text;
+
+          lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
           try
 
-            lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
-            lEntrada.IdUsuario := Self.FCodUsu;
-            lEntrada.IdBolsa := lIdBolsa;
-            lEntrada.DataEntrada := Now;
-            lEntrada.Observacao := EdtObservacao.Text;
+            if (lEntradaDAO.Salvar(lEntrada)) then
+            begin
 
-            lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
-            try
+              EdtOrdemSaida.Text := lEntrada.Id.ToString;
 
-              if (lEntradaDAO.Salvar(lEntrada)) then
-              begin
+              BtnGravar.Enabled := False;
 
-                EdtOrdemSaida.Text := lEntrada.Id.ToString;
+              BtnNovo.SetFocus;
 
-                BtnGravar.Enabled := False;
-
-                BtnNovo.SetFocus;
-
-              end;
-
-            finally
-              lEntradaDAO.Destroy;
             end;
 
           finally
-            lEntrada.Destroy;
+            lEntradaDAO.Destroy;
           end;
 
+        finally
+          lEntrada.Destroy;
         end;
 
-      except
-        on E: Exception do
-        begin
-          raise Exception.Create(Format(TMensagem.getMensagem(4), ['Entrada', E.Message]));
-        end;
       end;
 
-    finally
-      lBolsaDAO.Destroy;
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create(Format(TMensagem.getMensagem(4), ['Entrada', E.Message]));
+      end;
     end;
 
   finally
@@ -249,36 +248,18 @@ begin
 end;
 
 procedure TFrmEntrada.EdtNumeroBolsaExit(Sender: TObject);
-var
-  lSaidaDAO: TSaidaDAO;
 begin
 
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
-    lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
-    try
+    if (Self.FBolsaDAO.getExiste(EdtNumeroBolsa.Text)) then
+    begin
 
-      try
+      Application.MessageBox('Número da bolsa já cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
 
-        if (lSaidaDAO.getIdSaidaByNumeroBolsa(EdtNumeroBolsa.Text) <> -1) then
-        begin
+      EdtNumeroBolsa.SetFocus;
 
-          Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
-          EdtNumeroBolsa.SetFocus;
-
-        end;
-
-      except
-        on E: Exception do
-        begin
-          raise Exception.Create('Erro ao verifica se o número da bolsa já esta vinculado a uma saída. Motivo ' +
-            E.Message);
-        end;
-      end;
-
-    finally
-      lSaidaDAO.Destroy;
     end;
 
   end;
@@ -306,6 +287,20 @@ begin
     EdtTipo.Text := 'CH';
 
   end;
+
+end;
+
+procedure TFrmEntrada.FormCreate(Sender: TObject);
+begin
+
+  Self.FBolsaDAO := TBolsaDAO.Create(DataModuleConexao.Conexao);
+
+end;
+
+procedure TFrmEntrada.FormDestroy(Sender: TObject);
+begin
+
+  Self.FBolsaDAO.Destroy;
 
 end;
 

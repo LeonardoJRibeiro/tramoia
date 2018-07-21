@@ -158,7 +158,7 @@ end;
 
 procedure TBolsa.setVolume(const pVOLUME: Integer);
 begin
-  Self.Volume := pVOLUME;
+  Self.FVolume := pVOLUME;
 end;
 
 end.

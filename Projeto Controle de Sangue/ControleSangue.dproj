@@ -187,6 +187,16 @@
         <DCCReference Include="Units\Relatorios\UBibliotecaRelatorio.pas"/>
         <DCCReference Include="Units\Class\Controll\UClassBolsa.pas"/>
         <DCCReference Include="Units\Class\DAO\UClassBolsaDao.pas"/>
+        <DCCReference Include="Units\Relatorios\Saída\Relatório\URlRelSaida.pas">
+            <Form>FrmRlRelSaida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Saída\Form\URelSaida.pas">
+            <Form>FrmRelSaida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Saída\Class\UClassRelSaida.pas"/>
+        <DCCReference Include="Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

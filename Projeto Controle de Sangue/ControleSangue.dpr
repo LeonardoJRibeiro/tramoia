@@ -44,7 +44,11 @@ uses
   URlRelEntrada in 'Units\Relatorios\Entrada\Relatorio\URlRelEntrada.pas' {FrmRlRelEntrada},
   UBibliotecaRelatorio in 'Units\Relatorios\UBibliotecaRelatorio.pas',
   UClassBolsa in 'Units\Class\Controll\UClassBolsa.pas',
-  UClassBolsaDao in 'Units\Class\DAO\UClassBolsaDao.pas';
+  UClassBolsaDao in 'Units\Class\DAO\UClassBolsaDao.pas',
+  URlRelSaida in 'Units\Relatorios\Saída\Relatório\URlRelSaida.pas' {FrmRlRelSaida},
+  URelSaida in 'Units\Relatorios\Saída\Form\URelSaida.pas' {FrmRelSaida},
+  UClassRelSaida in 'Units\Relatorios\Saída\Class\UClassRelSaida.pas',
+  UClassRelSaidaDAO in 'Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas';
 
 {$R *.res}
 

@@ -34,7 +34,7 @@ type
 
     function getProximoCodigo(const pENTIDADE: string; const pATRIBUTO: string): Integer;
 
-    class function getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: Integer;
+    class function getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: Variant;
       const pCONEXAO: TConexao): Variant;
 
     class function setValorAtributo(const pENTIDADE, pCAMPO_A_SER_ALTERADO, pIDENTIFICADOR: string;
@@ -119,7 +119,7 @@ begin
 end;
 
 class function TPersistencia.getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO, pIDENTIFICADOR: string;
-  const pCHAVE: Integer; const pCONEXAO: TConexao): Variant;
+  const pCHAVE: Variant; const pCONEXAO: TConexao): Variant;
 var
   lPersistencia: TPersistencia;
 begin
@@ -171,18 +171,18 @@ end;
 procedure TPersistencia.setParametro(const pATRIBUTO: string; pVALORATRIBUIDO: Integer);
 begin
 
-///  if (pVALORATRIBUIDO <> -1) then
- // begin
+  /// if (pVALORATRIBUIDO <> -1) then
+  // begin
 
-    Query.ParamByName(pATRIBUTO).AsInteger := pVALORATRIBUIDO;
+  Query.ParamByName(pATRIBUTO).AsInteger := pVALORATRIBUIDO;
 
-//  end
- // else
- // begin
+  // end
+  // else
+  // begin
 
- //   Query.ParamByName(pATRIBUTO).Value := null;
+  // Query.ParamByName(pATRIBUTO).Value := null;
 
- // end;
+  // end;
 
 end;
 

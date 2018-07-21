@@ -193,8 +193,11 @@ object FrmSaida: TFrmSaida
         Top = 78
         Width = 52
         Height = 21
+        TabStop = False
+        Enabled = False
         EditMask = '###,##;0;_'
         MaxLength = 6
+        ReadOnly = True
         TabOrder = 3
         Text = ''
       end

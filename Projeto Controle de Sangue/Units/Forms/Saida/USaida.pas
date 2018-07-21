@@ -50,9 +50,10 @@ type
 
     FId: Integer;
 
-    procedure CarregaSaida;
+    FIdBolsa: Integer;
 
-    procedure CarregaDadosBolsa(const pID_ENTRADA: Integer);
+    procedure CarregaSaida;
+    procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
 
   public
     class function getSaida(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer; const pID: Integer = -1): Boolean;
@@ -63,8 +64,8 @@ var
 
 implementation
 
-uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO, UBiblioteca,
-  UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms;
+uses System.Math, UDMConexao, UClassMensagem, UClassSaida, UClassSaidaDAO, UBiblioteca, UClassBibliotecaDao,
+  UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao;
 
 {$R *.dfm}
 { TFrmSaida }
@@ -97,17 +98,23 @@ begin
   try
 
     lSaida.Id := StrToIntDef(EdtId.Text, -1);
+
     lSaida.Id_Paciente := TClassBibliotecaDao.getValorAtributo('paciente', 'id', 'num_prontuario',
       StrToInt(SearchBoxRegistroPaciente.Text), DataModuleConexao.Conexao);
+
     lSaida.Id_Usuario := Self.FCodUsu;
-    lSaida.Id_Entrada := TClassBibliotecaDao.getValorAtributo('entrada', 'id', 'numero_da_bolsa',
-      StrToInt(EdtNumeroBolsa.Text), DataModuleConexao.Conexao);
+
+    lSaida.Id_Bolsa := Self.FIdBolsa;
+
     lSaida.Data_Saida := Now;
     lSaida.Hospital := EdtHospital.Text;
+
     lSaida.Pai := Copy(RadioGroupPai.Items[RadioGroupPai.ItemIndex], 1, 1);
-    lSaida.Volume := StrToCurr(EdtVolume.Text);
+
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);
+
     lSaida.Prova_Compatibilidade_Agh := Copy(RadioGroupAGH.Items[RadioGroupAGH.ItemIndex], 1, 1);
+
     lSaida.Prova_Compatibilidade_37 := Copy(RadioGroup37.Items[RadioGroup37.ItemIndex], 1, 1);
 
     lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
@@ -145,44 +152,45 @@ begin
   Close;
 end;
 
-procedure TFrmSaida.CarregaDadosBolsa(const pID_ENTRADA: Integer);
+procedure TFrmSaida.CarregaDadosBolsa(const pID_BOLSA: Integer);
 var
-  lEntrada: TEntrada;
-  lEntradaDAO: TEntradaDAO;
-
-  lIdEntrada: Integer;
+  lBolsa: TBolsa;
+  lBolsaDAO: TBolsaDAO;
 begin
 
-  lEntrada := TEntrada.Create;
+  lBolsa := TBolsa.Create;
   try
 
-    lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
+    lBolsaDAO := TBolsaDAO.Create(DataModuleConexao.Conexao);
     try
 
       try
 
-        if (lEntradaDAO.getObjeto(pID_ENTRADA, lEntrada)) then
+        if (lBolsaDAO.getObjeto(pID_BOLSA, lBolsa)) then
         begin
 
-          EdtNumeroBolsa.Text := lEntrada.Numero_Da_Bolsa;
-          EdtTipo.Text := lEntrada.Tipo;
-          EdtVolume.Text := CurrToStr(lEntrada.Volume); // FormatFloat('#,###,##0.0000', lEntrada.Volume);
+          EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          EdtTipo.Text := lBolsa.Tipo;
+          EdtVolume.Text := lBolsa.Volume.ToString;
 
         end;
 
       except
         on E: Exception do
         begin
-          raise Exception.Create(Format(TMensagem.getMensagem(5), ['Dados da bolsa', E.Message]));
+
+          raise Exception.Create(Format(TMensagem.getMensagem(5), ['dados da bolsa', E.Message]));
+          EdtNumeroBolsa.SetFocus;
+
         end;
       end;
 
     finally
-      lEntradaDAO.Destroy;
+      lBolsaDAO.Destroy;
     end;
 
   finally
-    lEntrada.Destroy;
+    lBolsa.Destroy;
   end;
 
 end;
@@ -205,13 +213,22 @@ begin
         begin
 
           EdtId.Text := lSaida.Id.ToString;
+
           SearchBoxRegistroPaciente.Text := lSaida.Id_Paciente.ToString;
-          Self.CarregaDadosBolsa(lSaida.Id_Entrada);
+
+          Self.FIdBolsa := lSaida.Id_Bolsa;
+          Self.CarregaDadosBolsa(lSaida.Id_Bolsa);
+
           DateTimePickerData.Date := lSaida.Data_Saida;
+
           EdtHospital.Text := lSaida.Hospital;
+
           RadioGroupPai.ItemIndex := IfThen(lSaida.Pai = 'P', 0, 1);
+
           RadioGroupTA.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Ta = 'P', 0, 1);
+
           RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'P', 0, 1);
+
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
 
           SearchBoxRegistroPaciente.SetFocus;
@@ -237,57 +254,41 @@ end;
 
 procedure TFrmSaida.EdtNumeroBolsaExit(Sender: TObject);
 var
-  lIdEntrada: Integer;
   lSaidaDAO: TSaidaDAO;
 begin
 
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
-    lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
-    try
+    // Verifica se a bolsa existe.
+    FIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_bolsa', EdtNumeroBolsa.Text,
+      DataModuleConexao.Conexao);
 
-      try
+    if (FIdBolsa <> -1) then
+    begin
 
-        lIdEntrada := lSaidaDAO.getIdEntradaByNumeroBolsa(EdtNumeroBolsa.Text);
+      // Verifica se bolsa já tem saída.
+      if (lSaidaDAO.getIdSaidaByNumeroBolsa(EdtNumeroBolsa.Text) = -1) then
+      begin
 
-        if (lIdEntrada <> -1) then
-        begin
+        Self.CarregaDadosBolsa(FIdBolsa);
 
-          if (not lSaidaDAO.getExisteNumBolsaSaida(lIdEntrada.ToString, 1)) then
-          begin
+      end
+      else
+      begin
 
-            Self.CarregaDadosBolsa(lIdEntrada);
+        Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
+        EdtNumeroBolsa.SetFocus;
 
-          end
-          else
-          begin
-
-            Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
-            EdtNumeroBolsa.SetFocus;
-
-          end;
-
-        end
-        else
-        begin
-
-          Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
-          EdtNumeroBolsa.SetFocus;
-
-        end;
-
-      except
-        on E: Exception do
-        begin
-          raise Exception.Create('Erro ao verifica se o número da bolsa já esta vinculado a uma saída. Motivo ' +
-            E.Message);
-          EdtNumeroBolsa.SetFocus;
-        end;
       end;
 
-    finally
-      lSaidaDAO.Destroy;
+    end
+    else
+    begin
+
+      Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
+      EdtNumeroBolsa.SetFocus;
+
     end;
 
   end;

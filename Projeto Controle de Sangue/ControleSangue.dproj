@@ -187,20 +187,32 @@
         <DCCReference Include="Units\Relatorios\UBibliotecaRelatorio.pas"/>
         <DCCReference Include="Units\Class\Controll\UClassBolsa.pas"/>
         <DCCReference Include="Units\Class\DAO\UClassBolsaDao.pas"/>
+<<<<<<< HEAD
         <DCCReference Include="Units\Relatorios\Saída\Form\URelSaida.pas">
             <Form>FrmRelSaida</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Units\Relatorios\Saída\Class\UClassRelSaida.pas"/>
         <DCCReference Include="Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas"/>
+=======
+>>>>>>> ef1875690992fce09c4fefb02aeb5a959db483ab
         <DCCReference Include="Units\Relatorios\Saída\Relatório\URlRelSaida.pas">
             <Form>FrmRlRelSaida</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< HEAD
         <DCCReference Include="Units\Forms\Usuario\UConsUsuario.pas">
             <Form>FrmCons1</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+=======
+        <DCCReference Include="Units\Relatorios\Saída\Form\URelSaida.pas">
+            <Form>FrmRelSaida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Saída\Class\UClassRelSaida.pas"/>
+        <DCCReference Include="Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas"/>
+>>>>>>> ef1875690992fce09c4fefb02aeb5a959db483ab
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

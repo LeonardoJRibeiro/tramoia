@@ -45,18 +45,15 @@ uses
   UBibliotecaRelatorio in 'Units\Relatorios\UBibliotecaRelatorio.pas',
   UClassBolsa in 'Units\Class\Controll\UClassBolsa.pas',
   UClassBolsaDao in 'Units\Class\DAO\UClassBolsaDao.pas',
-<<<<<<< HEAD
   URelSaida in 'Units\Relatorios\Saída\Form\URelSaida.pas' {FrmRelSaida},
   UClassRelSaida in 'Units\Relatorios\Saída\Class\UClassRelSaida.pas',
   UClassRelSaidaDAO in 'Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas',
   URlRelSaida in 'Units\Relatorios\Saída\Relatório\URlRelSaida.pas' {FrmRlRelSaida},
-  UConsUsuario in 'Units\Forms\Usuario\UConsUsuario.pas' {FrmCons1};
-=======
+  UConsUsuario in 'Units\Forms\Usuario\UConsUsuario.pas' {FrmCons1},
   URlRelSaida in 'Units\Relatorios\Saída\Relatório\URlRelSaida.pas' {FrmRlRelSaida},
   URelSaida in 'Units\Relatorios\Saída\Form\URelSaida.pas' {FrmRelSaida},
   UClassRelSaida in 'Units\Relatorios\Saída\Class\UClassRelSaida.pas',
   UClassRelSaidaDAO in 'Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas';
->>>>>>> ef1875690992fce09c4fefb02aeb5a959db483ab
 
 {$R *.res}
 

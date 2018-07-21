@@ -49,6 +49,8 @@ type
 
     FBolsaDAO: TBolsaDAO;
 
+    function getExisteSaida(const pNUMERO_BOLSA: string): Boolean;
+
   public
     class function getEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
   end;
@@ -253,11 +255,15 @@ begin
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
-    if (Self.FBolsaDAO.getExiste(EdtNumeroBolsa.Text)) then
+    if (Self.FBolsaDAO.getExiste( EdtNumeroBolsa.Text )) then
     begin
 
-      Application.MessageBox('Número da bolsa já cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
+    end;
 
+    if (Self.getExisteSaida(EdtNumeroBolsa.Text)) then
+    begin
+
+      Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
       EdtNumeroBolsa.SetFocus;
 
     end;
@@ -293,7 +299,7 @@ end;
 procedure TFrmEntrada.FormCreate(Sender: TObject);
 begin
 
-  Self.FBolsaDAO := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  Self.FBolsaDAO.Create(DataModuleConexao.Conexao);
 
 end;
 
@@ -349,6 +355,36 @@ begin
   finally
     FreeAndNil(FrmEntrada);
   end;
+
+end;
+
+function TFrmEntrada.getExisteSaida(const pNUMERO_BOLSA: string): Boolean;
+var
+  lSaidaDAO: TSaidaDAO;
+begin
+
+   lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
+    try
+
+      try
+
+          Result := lSaidaDAO.getIdSaidaByNumeroBolsa(EdtNumeroBolsa.Text) <> -1;
+
+      except
+        on E: Exception do
+        begin
+
+          Result := False;
+
+          raise Exception.Create('Erro ao verificar se o número da bolsa já esta vinculado a uma saída. Motivo ' +
+            E.Message);
+
+        end;
+      end;
+
+    finally
+      lSaidaDAO.Destroy;
+    end;
 
 end;
 

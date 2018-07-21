@@ -21,12 +21,6 @@ type
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure LabelNovoUsuarioClick(Sender: TObject);
-    procedure LabelNovoUsuarioMouseEnter(Sender: TObject);
-    procedure LabelNovoUsuarioMouseLeave(Sender: TObject);
-    procedure BtnLoginMouseEnter(Sender: TObject);
-    procedure BtnLoginMouseLeave(Sender: TObject);
-    procedure BtnSairMouseEnter(Sender: TObject);
-    procedure BtnSairMouseLeave(Sender: TObject);
   private
     FCodUsu: Integer;
     FNumTentativas: Integer;
@@ -90,39 +84,9 @@ begin
 
 end;
 
-procedure TFrmLogin.BtnLoginMouseEnter(Sender: TObject);
-begin
-
-  BtnLogin.Font.Style := [fsBold];
-
-end;
-
-procedure TFrmLogin.BtnLoginMouseLeave(Sender: TObject);
-begin
-
-  BtnLogin.Font.Style := [];
-
-end;
-
 procedure TFrmLogin.BtnSairClick(Sender: TObject);
 begin
-
   Close;
-
-end;
-
-procedure TFrmLogin.BtnSairMouseEnter(Sender: TObject);
-begin
-
-  BtnSair.Font.Style := [fsBold];
-
-end;
-
-procedure TFrmLogin.BtnSairMouseLeave(Sender: TObject);
-begin
-
-  BtnSair.Font.Style := [];
-
 end;
 
 procedure TFrmLogin.EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -200,20 +164,6 @@ end;
 procedure TFrmLogin.LabelNovoUsuarioClick(Sender: TObject);
 begin
   TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdULogin, -1);
-end;
-
-procedure TFrmLogin.LabelNovoUsuarioMouseEnter(Sender: TObject);
-begin
-
-  LabelNovoUsuario.Font.Height := -12;
-
-end;
-
-procedure TFrmLogin.LabelNovoUsuarioMouseLeave(Sender: TObject);
-begin
-
-  LabelNovoUsuario.Font.Height := -11;
-
 end;
 
 end.

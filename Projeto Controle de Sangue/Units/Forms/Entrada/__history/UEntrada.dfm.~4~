@@ -182,7 +182,7 @@ object FrmEntrada: TFrmEntrada
     TabOrder = 1
     object BtnGravar: TBitBtn
       Left = 10
-      Top = 9
+      Top = 6
       Width = 81
       Height = 25
       Caption = 'Gravar'

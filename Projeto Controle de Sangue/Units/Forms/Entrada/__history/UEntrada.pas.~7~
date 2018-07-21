@@ -258,8 +258,6 @@ begin
 
       Application.MessageBox('Número da bolsa já cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
 
-      EdtNumeroBolsa.SetFocus;
-
     end;
 
   end;
@@ -293,7 +291,7 @@ end;
 procedure TFrmEntrada.FormCreate(Sender: TObject);
 begin
 
-  Self.FBolsaDAO := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  Self.FBolsaDAO.Create(DataModuleConexao.Conexao);
 
 end;
 

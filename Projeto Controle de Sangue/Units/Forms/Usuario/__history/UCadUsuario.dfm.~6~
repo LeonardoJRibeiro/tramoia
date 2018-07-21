@@ -5,14 +5,13 @@ object FrmCadUsuario: TFrmCadUsuario
   BorderStyle = bsSingle
   Caption = 'Cadastro de Usu'#225'rio'
   ClientHeight = 173
-  ClientWidth = 258
+  ClientWidth = 252
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  KeyPreview = True
   OldCreateOrder = False
   Position = poDesktopCenter
   OnKeyDown = FormKeyDown
@@ -21,12 +20,11 @@ object FrmCadUsuario: TFrmCadUsuario
   object PanelBotoes: TPanel
     Left = 0
     Top = 138
-    Width = 258
+    Width = 252
     Height = 35
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 160
-    ExplicitWidth = 252
     object BtnGravar: TBitBtn
       Left = 1
       Top = 5
@@ -166,11 +164,11 @@ object FrmCadUsuario: TFrmCadUsuario
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 258
+    Width = 252
     Height = 138
     Align = alClient
     TabOrder = 1
-    ExplicitTop = -1
+    ExplicitHeight = 160
     object Label1: TLabel
       Left = 24
       Top = 65

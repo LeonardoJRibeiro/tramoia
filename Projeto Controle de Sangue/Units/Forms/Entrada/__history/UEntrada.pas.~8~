@@ -258,8 +258,6 @@ begin
 
       Application.MessageBox('Número da bolsa já cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
 
-      EdtNumeroBolsa.SetFocus;
-
     end;
 
   end;

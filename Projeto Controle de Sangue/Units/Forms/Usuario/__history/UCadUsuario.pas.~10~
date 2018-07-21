@@ -43,7 +43,7 @@ uses
   UClassUsuario, UClassUsuarioDao, UDMConexao, UBiblioteca, System.StrUtils, UClassMensagem;
 
 {$R *.dfm}
-{ TFrmCadUsuario }
+{ TForm1 }
 
 procedure TFrmCadUsuario.BtnNovoClick(Sender: TObject);
 begin
@@ -157,13 +157,6 @@ begin
 
       FrmCadUsuario.FForeignFormKey := pFOREIGNFORMKEY;
       FrmCadUsuario.FCodUsu := pCOD_USU;
-
-      if (pID <> -1) then
-      begin
-
-        FrmCadUsuario.CarregaUsuario(pID);
-
-      end;
 
       Result := FrmCadUsuario.ShowModal = mrOk;
 

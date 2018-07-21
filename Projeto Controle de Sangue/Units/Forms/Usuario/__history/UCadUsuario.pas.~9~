@@ -4,23 +4,21 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.Buttons;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls;
 
 type
   TFrmCadUsuario = class(TForm)
     PanelBotoes: TPanel;
+    BtnSair: TButton;
+    BtnGravar: TButton;
     Panel1: TPanel;
     EdtNome: TLabeledEdit;
     EdtSenha: TMaskEdit;
     Label1: TLabel;
     CheckBoxAdministrador: TCheckBox;
-    BtnGravar: TBitBtn;
-    BtnNovo: TBitBtn;
-    BtnSair: TBitBtn;
     procedure BtnSairClick(Sender: TObject);
     procedure BtnGravarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure BtnNovoClick(Sender: TObject);
   private
 
     FForeignFormKey: SmallInt;
@@ -43,16 +41,7 @@ uses
   UClassUsuario, UClassUsuarioDao, UDMConexao, UBiblioteca, System.StrUtils, UClassMensagem;
 
 {$R *.dfm}
-{ TFrmCadUsuario }
-
-procedure TFrmCadUsuario.BtnNovoClick(Sender: TObject);
-begin
-
-  EdtNome.Clear;
-  EdtSenha.Clear;
-  CheckBoxAdministrador.Checked := False;
-
-end;
+{ TForm1 }
 
 procedure TFrmCadUsuario.BtnSairClick(Sender: TObject);
 begin
@@ -157,13 +146,6 @@ begin
 
       FrmCadUsuario.FForeignFormKey := pFOREIGNFORMKEY;
       FrmCadUsuario.FCodUsu := pCOD_USU;
-
-      if (pID <> -1) then
-      begin
-
-        FrmCadUsuario.CarregaUsuario(pID);
-
-      end;
 
       Result := FrmCadUsuario.ShowModal = mrOk;
 

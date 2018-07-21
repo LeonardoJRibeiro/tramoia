@@ -158,13 +158,6 @@ begin
       FrmCadUsuario.FForeignFormKey := pFOREIGNFORMKEY;
       FrmCadUsuario.FCodUsu := pCOD_USU;
 
-      if (pID <> -1) then
-      begin
-
-        FrmCadUsuario.CarregaUsuario(pID);
-
-      end;
-
       Result := FrmCadUsuario.ShowModal = mrOk;
 
     except

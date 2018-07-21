@@ -193,42 +193,9 @@ begin
 end;
 
 function TBolsaDAO.getExiste(const pNUMERO_BOLSA: string): Boolean;
-var
-  lPersistencia: TPersistencia;
 begin
 
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  COUNT(id)');
-      lPersistencia.Query.SQL.Add('FROM bolsa');
-
-      lPersistencia.Query.SQL.Add('WHERE numero_bolsa = :pNumeroBolsa');
-      lPersistencia.setParametro('pNumeroBolsa', pNUMERO_BOLSA);
-
-      lPersistencia.Query.Open;
-
-      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
 end;
-
 
 function TBolsaDAO.getObjeto(const pID: Integer; var pObjeto: TBolsa): Boolean;
 var

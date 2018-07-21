@@ -1663,7 +1663,7 @@ object FrmPrincipal: TFrmPrincipal
     OnClick = BtnSaidaClick
   end
   object BtnPacientes: TSpeedButton
-    Left = 267
+    Left = 265
     Top = 0
     Width = 122
     Height = 104
@@ -45097,6 +45097,7 @@ object FrmPrincipal: TFrmPrincipal
       Caption = 'Pacientes'
       object Cadastrar1: TMenuItem
         Caption = 'Cadastrar'
+        OnClick = Cadastrar1Click
       end
       object Histrico1: TMenuItem
         Caption = 'Hist'#243'rico'
@@ -45106,9 +45107,11 @@ object FrmPrincipal: TFrmPrincipal
       Caption = 'Relat'#243'rios'
       object Entradas1: TMenuItem
         Caption = 'Entradas'
+        OnClick = Entradas1Click
       end
       object Sadas1: TMenuItem
         Caption = 'Sa'#237'das'
+        OnClick = Sadas1Click
       end
     end
     object Usurios1: TMenuItem

@@ -61,10 +61,6 @@ type
     RLDBTextCompatibilidadeTA: TRLDBText;
     RLDBTextCompatibilidadeAGH: TRLDBText;
     RLDBTextCompatibilidade37: TRLDBText;
-    RLLabelHospital: TRLLabel;
-    RLPanel22: TRLPanel;
-    RLPanel23: TRLPanel;
-    RLDBTextHospital: TRLDBText;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -207,7 +203,7 @@ begin
       on E: Exception do
       begin
         Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(1), ['saídas para gerar o relatório', E.Message]));
+        raise Exception.Create(Format(TMensagem.getMensagem(1), ['entradas para gerar o relatório', E.Message]));
       end;
     end;
 

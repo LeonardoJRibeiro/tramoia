@@ -155,9 +155,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelPaciente: TRLLabel
-        Left = 208
+        Left = 150
         Top = 8
-        Width = 450
+        Width = 508
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -175,9 +175,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelPacienteNome: TRLLabel
-        Left = 208
+        Left = 146
         Top = 34
-        Width = 392
+        Width = 454
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -189,9 +189,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Caption = 'Nome'
       end
       object RLPanel15: TRLPanel
-        Left = 205
+        Left = 141
         Top = 27
-        Width = 842
+        Width = 906
         Height = 1
         Color = clBlack
         ParentColor = False
@@ -390,27 +390,6 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentColor = False
         Transparent = False
       end
-      object RLLabelHospital: TRLLabel
-        Left = 145
-        Top = 20
-        Width = 58
-        Height = 16
-        Borders.Sides = sdCustom
-        Borders.DrawLeft = False
-        Borders.DrawTop = False
-        Borders.DrawRight = False
-        Borders.DrawBottom = False
-        Caption = 'Hospital'
-      end
-      object RLPanel22: TRLPanel
-        Left = 205
-        Top = -1
-        Width = 1
-        Height = 56
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
     end
     object RLBand1: TRLBand
       Left = 38
@@ -506,9 +485,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextPacienteNome: TRLDBText
-        Left = 208
+        Left = 146
         Top = 20
-        Width = 392
+        Width = 454
         Height = 16
         Alignment = taCenter
         DataField = 'nome'
@@ -539,7 +518,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 53
         Height = 16
         Alignment = taCenter
-        DataField = 'abo_pac'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -558,7 +537,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 108
         Height = 16
         Alignment = taCenter
-        DataField = 'numero_da_bolsa'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -568,7 +547,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 32
         Height = 16
         Alignment = taCenter
-        DataField = 'tipo'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -578,7 +557,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 53
         Height = 16
         Alignment = taCenter
-        DataField = 'abo_bol'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -588,7 +567,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 50
         Height = 16
         Alignment = taCenter
-        DataField = 'volume'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -598,7 +577,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 36
         Height = 16
         Alignment = taCenter
-        DataField = 'prova_compatibilidade_ta'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -608,7 +587,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 36
         Height = 16
         Alignment = taCenter
-        DataField = 'prova_compatibilidade_agh'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -618,26 +597,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 30
         Height = 16
         Alignment = taCenter
-        DataField = 'prova_compatibilidade_37'
-        DataSource = DataSource
-        Text = ''
-      end
-      object RLPanel23: TRLPanel
-        Left = 205
-        Top = -1
-        Width = 1
-        Height = 56
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLDBTextHospital: TRLDBText
-        Left = 145
-        Top = 20
-        Width = 58
-        Height = 16
-        Alignment = taCenter
-        DataField = 'hospital'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end

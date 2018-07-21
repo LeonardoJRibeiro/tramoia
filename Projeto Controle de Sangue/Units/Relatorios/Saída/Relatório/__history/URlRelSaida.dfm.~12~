@@ -539,7 +539,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 53
         Height = 16
         Alignment = taCenter
-        DataField = 'abo_pac'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -558,7 +558,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 108
         Height = 16
         Alignment = taCenter
-        DataField = 'numero_da_bolsa'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -568,7 +568,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 32
         Height = 16
         Alignment = taCenter
-        DataField = 'tipo'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -578,7 +578,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 53
         Height = 16
         Alignment = taCenter
-        DataField = 'abo_bol'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -588,7 +588,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 50
         Height = 16
         Alignment = taCenter
-        DataField = 'volume'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -598,7 +598,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 36
         Height = 16
         Alignment = taCenter
-        DataField = 'prova_compatibilidade_ta'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -608,7 +608,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 36
         Height = 16
         Alignment = taCenter
-        DataField = 'prova_compatibilidade_agh'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end
@@ -618,7 +618,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Width = 30
         Height = 16
         Alignment = taCenter
-        DataField = 'prova_compatibilidade_37'
+        DataField = 'data_saida'
         DataSource = DataSource
         Text = ''
       end

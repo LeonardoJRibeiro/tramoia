@@ -56,9 +56,6 @@ begin
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_37');
     pPersistencia.Query.SQL.Add('FROM saida s');
 
-    pPersistencia.Query.SQL.Add('LEFT JOIN paciente p');
-    pPersistencia.Query.SQL.Add('ON(s.id_paciente = p.id)');
-
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
     pPersistencia.Query.SQL.Add('ON(b.id = s.id_bolsa)');
 

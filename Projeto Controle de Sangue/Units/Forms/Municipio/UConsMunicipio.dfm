@@ -16,26 +16,27 @@ inherited FrmConsMunicpio: TFrmConsMunicpio
       Width = 492
       Height = 207
       DataSource = DataSource
+      OnDblClick = DBGridDblClick
       Columns = <
         item
           Expanded = False
           FieldName = 'codigo_ibge'
           Title.Caption = 'C'#243'digo IBGE'
-          Width = 89
+          Width = 66
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'nome'
           Title.Caption = 'Nome'
-          Width = 276
+          Width = 342
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'uf'
           Title.Caption = 'UF'
-          Width = 91
+          Width = 37
           Visible = True
         end>
     end

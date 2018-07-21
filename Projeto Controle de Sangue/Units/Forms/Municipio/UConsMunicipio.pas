@@ -13,6 +13,7 @@ type
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdtConsExit(Sender: TObject);
+    procedure DBGridDblClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
   public
@@ -28,6 +29,12 @@ implementation
 
 uses UClassMunicipioDao, UClassPersistencia, UDMConexao, UClassMensagem;
 { TFrmConsMunicpio }
+
+procedure TFrmConsMunicpio.DBGridDblClick(Sender: TObject);
+begin
+  inherited;
+  ModalResult := mrOk;
+end;
 
 procedure TFrmConsMunicpio.EdtConsExit(Sender: TObject);
 begin
@@ -103,7 +110,15 @@ begin
     try
       FrmConsMunicpio.FForeignFormKey := pFOREIGNFORMKEY;
 
-      FrmConsMunicpio.ShowModal;
+      Result := FrmConsMunicpio.ShowModal = mrOk;
+      if (Result) then
+      begin
+        pID := FrmConsMunicpio.FClientDataSet.FieldByName('codigo_ibge').AsInteger;
+      end
+      else
+      begin
+        pID := -1;
+      end;
 
     except
       on E: Exception do

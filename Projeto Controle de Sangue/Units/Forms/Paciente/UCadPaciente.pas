@@ -347,10 +347,12 @@ begin
 
   if (TFrmConsMunicpio.getConsMunicpio(TForeignKeyForms.FIdUConsMunicipio, lId)) then
   begin
-    if (lId.ToString <> '') then
+
+    if (lId > 0) then
     begin
       EdtCodMunicipio.Text := lId.ToString;
     end;
+
   end;
 
 end;

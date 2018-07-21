@@ -18,6 +18,7 @@ type
     BtnSair: TBitBtn;
     BtnImprimir: TBitBtn;
     BtnVisualizar: TBitBtn;
+    PanelFiltros: TPanel;
     PanelGrupoSanguineo: TPanel;
     GroupBoxGrupoSanguineo: TGroupBox;
     EdtGrupoSanguineo: TEdit;

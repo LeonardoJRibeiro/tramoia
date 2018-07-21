@@ -43,8 +43,17 @@ uses
   URelEntrada in 'Units\Relatorios\Entrada\Form\URelEntrada.pas' {FrmRelEntrada},
   URlRelEntrada in 'Units\Relatorios\Entrada\Relatorio\URlRelEntrada.pas' {FrmRlRelEntrada},
   UBibliotecaRelatorio in 'Units\Relatorios\UBibliotecaRelatorio.pas',
+  UClassBolsa in 'Units\Class\Controll\UClassBolsa.pas',
   UClassBolsaDao in 'Units\Class\DAO\UClassBolsaDao.pas',
-  UClassBolsa in 'Units\Class\Controll\UClassBolsa.pas';
+  URelSaida in 'Units\Relatorios\Saída\Form\URelSaida.pas' {FrmRelSaida},
+  UClassRelSaida in 'Units\Relatorios\Saída\Class\UClassRelSaida.pas',
+  UClassRelSaidaDAO in 'Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas',
+  URlRelSaida in 'Units\Relatorios\Saída\Relatório\URlRelSaida.pas' {FrmRlRelSaida},
+  UConsUsuario in 'Units\Forms\Usuario\UConsUsuario.pas' {FrmCons1},
+  URlRelSaida in 'Units\Relatorios\Saída\Relatório\URlRelSaida.pas' {FrmRlRelSaida},
+  URelSaida in 'Units\Relatorios\Saída\Form\URelSaida.pas' {FrmRelSaida},
+  UClassRelSaida in 'Units\Relatorios\Saída\Class\UClassRelSaida.pas',
+  UClassRelSaidaDAO in 'Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas';
 
 {$R *.res}
 
@@ -54,5 +63,8 @@ begin
   TStyleManager.TrySetStyle('Smokey Quartz Kamri');
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   Application.CreateForm(TFrmPrincipal, FrmPrincipal);
+  Application.CreateForm(TFrmRelSaida, FrmRelSaida);
+  Application.CreateForm(TFrmRlRelSaida, FrmRlRelSaida);
+  Application.CreateForm(TFrmCons1, FrmCons1);
   Application.Run;
 end.

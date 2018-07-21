@@ -10,11 +10,10 @@ type
     FId: Integer;
     FId_Paciente: Integer;
     FId_Usuario: Integer;
-    FId_Entrada: Integer;
+    FId_Bolsa: Integer;
     FData_Saida: TDate;
     FHospital: string[100];
     FPai: string[1];
-    FVolume: Currency;
     FProva_Compatibilidade_Ta: string[1];
     FProva_Compatibilidade_Agh: string[1];
     FProva_Compatibilidade_37: string[1];
@@ -22,11 +21,10 @@ type
     function getId: Integer;
     function getId_Paciente: Integer;
     function getId_Usuario: Integer;
-    function getId_Entrada: Integer;
+    function getId_Bolsa: Integer;
     function getData_Saida: TDate;
     function getHospital: string;
     function getPai: string;
-    function getVolume: Currency;
     function getProva_Compatibilidade_Ta: string;
     function getProva_Compatibilidade_Agh: string;
     function getProva_Compatibilidade_37: string;
@@ -34,11 +32,10 @@ type
     procedure setId(const pID: Integer);
     procedure setId_Paciente(const pID_PACIENTE: Integer);
     procedure setId_Usuario(const pID_USUARIO: Integer);
-    procedure setId_Entrada(const pID_ENTRADA: Integer);
+    procedure setId_Bolsa(const pID_BOLSA: Integer);
     procedure setData_Saida(const pDATA_SAIDA: TDate);
     procedure setHospital(const pHOSPITAL: string);
     procedure setPai(const pPAI: string);
-    procedure setVolume(const pVOLUME: Currency);
     procedure setProva_Compatibilidade_Ta(const pPROVA_COMPATIBILIDADE_TA: string);
     procedure setProva_Compatibilidade_Agh(const pPROVA_COMPATIBILIDADE_AGH: string);
     procedure setProva_Compatibilidade_37(const pPROVA_COMPATIBILIDADE_37: string);
@@ -47,11 +44,10 @@ type
     property Id: Integer read getId write setId;
     property Id_Paciente: Integer read getId_Paciente write setId_Paciente;
     property Id_Usuario: Integer read getId_Usuario write setId_Usuario;
-    property Id_Entrada: Integer read getId_Entrada write setId_Entrada;
+    property Id_Bolsa: Integer read getId_Bolsa write setId_Bolsa;
     property Data_Saida: TDate read getData_Saida write setData_Saida;
     property Hospital: string read getHospital write setHospital;
     property Pai: string read getPai write setPai;
-    property Volume: Currency read getVolume write setVolume;
     property Prova_Compatibilidade_Ta: string read getProva_Compatibilidade_Ta write setProva_Compatibilidade_Ta;
     property Prova_Compatibilidade_Agh: string read getProva_Compatibilidade_Agh write setProva_Compatibilidade_Agh;
     property Prova_Compatibilidade_37: string read getProva_Compatibilidade_37 write setProva_Compatibilidade_37;
@@ -89,9 +85,9 @@ begin
   Result := Self.FId_Usuario;
 end;
 
-function TSaida.getId_Entrada: Integer;
+function TSaida.getId_Bolsa: Integer;
 begin
-  Result := Self.FId_Entrada;
+  Result := Self.FId_Bolsa;
 end;
 
 function TSaida.getData_Saida: TDate;
@@ -107,11 +103,6 @@ end;
 function TSaida.getPai: string;
 begin
   Result := Self.FPai;
-end;
-
-function TSaida.getVolume: Currency;
-begin
-  Result := Self.FVolume;
 end;
 
 function TSaida.getProva_Compatibilidade_Ta: string;
@@ -144,9 +135,9 @@ begin
   Self.FId_Usuario:= pId_Usuario;
 end;
 
-procedure TSaida.setId_Entrada(const pID_ENTRADA: Integer);
+procedure TSaida.setId_Bolsa(const pID_BOLSA: Integer);
 begin
-  Self.FId_Entrada:= pId_Entrada;
+  Self.FId_Bolsa:= pId_Bolsa;
 end;
 
 procedure TSaida.setData_Saida(const pDATA_SAIDA: TDate);
@@ -162,11 +153,6 @@ end;
 procedure TSaida.setPai(const pPAI: string);
 begin
   Self.FPai:= pPai;
-end;
-
-procedure TSaida.setVolume(const pVOLUME: Currency);
-begin
-  Self.FVolume:= pVolume;
 end;
 
 procedure TSaida.setProva_Compatibilidade_Ta(const pPROVA_COMPATIBILIDADE_TA: string);

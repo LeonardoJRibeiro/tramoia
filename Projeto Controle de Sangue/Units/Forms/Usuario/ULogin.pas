@@ -13,14 +13,20 @@ type
     EdtSenha: TMaskEdit;
     BtnLogin: TBitBtn;
     BtnSair: TBitBtn;
-    Label1: TLabel;
+    LabelNovoUsuario: TLabel;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnLoginClick(Sender: TObject);
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
-    procedure Label1Click(Sender: TObject);
+    procedure LabelNovoUsuarioClick(Sender: TObject);
+    procedure LabelNovoUsuarioMouseEnter(Sender: TObject);
+    procedure LabelNovoUsuarioMouseLeave(Sender: TObject);
+    procedure BtnLoginMouseEnter(Sender: TObject);
+    procedure BtnLoginMouseLeave(Sender: TObject);
+    procedure BtnSairMouseEnter(Sender: TObject);
+    procedure BtnSairMouseLeave(Sender: TObject);
   private
     FCodUsu: Integer;
     FNumTentativas: Integer;
@@ -84,9 +90,39 @@ begin
 
 end;
 
+procedure TFrmLogin.BtnLoginMouseEnter(Sender: TObject);
+begin
+
+  BtnLogin.Font.Style := [fsBold];
+
+end;
+
+procedure TFrmLogin.BtnLoginMouseLeave(Sender: TObject);
+begin
+
+  BtnLogin.Font.Style := [];
+
+end;
+
 procedure TFrmLogin.BtnSairClick(Sender: TObject);
 begin
+
   Close;
+
+end;
+
+procedure TFrmLogin.BtnSairMouseEnter(Sender: TObject);
+begin
+
+  BtnSair.Font.Style := [fsBold];
+
+end;
+
+procedure TFrmLogin.BtnSairMouseLeave(Sender: TObject);
+begin
+
+  BtnSair.Font.Style := [];
+
 end;
 
 procedure TFrmLogin.EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -161,9 +197,23 @@ begin
 
 end;
 
-procedure TFrmLogin.Label1Click(Sender: TObject);
+procedure TFrmLogin.LabelNovoUsuarioClick(Sender: TObject);
 begin
   TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdULogin, -1);
+end;
+
+procedure TFrmLogin.LabelNovoUsuarioMouseEnter(Sender: TObject);
+begin
+
+  LabelNovoUsuario.Font.Height := -12;
+
+end;
+
+procedure TFrmLogin.LabelNovoUsuarioMouseLeave(Sender: TObject);
+begin
+
+  LabelNovoUsuario.Font.Height := -11;
+
 end;
 
 end.

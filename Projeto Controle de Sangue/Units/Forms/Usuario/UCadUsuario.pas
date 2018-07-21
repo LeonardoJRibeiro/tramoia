@@ -4,24 +4,33 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.Buttons;
 
 type
   TFrmCadUsuario = class(TForm)
     PanelBotoes: TPanel;
-    BtnFechar: TButton;
-    BtnSalvar: TButton;
     Panel1: TPanel;
     EdtNome: TLabeledEdit;
     EdtSenha: TMaskEdit;
     Label1: TLabel;
     CheckBoxAdministrador: TCheckBox;
-    procedure BtnFecharClick(Sender: TObject);
-    procedure BtnSalvarClick(Sender: TObject);
+    BtnGravar: TBitBtn;
+    BtnNovo: TBitBtn;
+    BtnSair: TBitBtn;
+    procedure BtnSairClick(Sender: TObject);
+    procedure BtnGravarClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnNovoClick(Sender: TObject);
   private
+
+    FForeignFormKey: SmallInt;
+    FCodUsu: Integer;
     FId: Integer;
+
+    procedure CarregaUsuario(const pID: Integer);
+
   public
-    class function getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
+    class function getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
       const pID: Integer = -1): Boolean;
   end;
 
@@ -34,14 +43,23 @@ uses
   UClassUsuario, UClassUsuarioDao, UDMConexao, UBiblioteca, System.StrUtils, UClassMensagem;
 
 {$R *.dfm}
-{ TForm1 }
+{ TFrmCadUsuario }
 
-procedure TFrmCadUsuario.BtnFecharClick(Sender: TObject);
+procedure TFrmCadUsuario.BtnNovoClick(Sender: TObject);
+begin
+
+  EdtNome.Clear;
+  EdtSenha.Clear;
+  CheckBoxAdministrador.Checked := False;
+
+end;
+
+procedure TFrmCadUsuario.BtnSairClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TFrmCadUsuario.BtnSalvarClick(Sender: TObject);
+procedure TFrmCadUsuario.BtnGravarClick(Sender: TObject);
 var
   lUsuario: TUsuario;
   lUsuarioDao: TUsuarioDao;
@@ -84,15 +102,71 @@ begin
 
 end;
 
-class function TFrmCadUsuario.getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
+procedure TFrmCadUsuario.CarregaUsuario(const pID: Integer);
+var
+  lUsuarioDao: TUsuarioDao;
+  lUsuario: TUsuario;
+begin
+
+  lUsuario := TUsuario.Create;
+  try
+
+    lUsuarioDao := TUsuarioDao.Create(DataModuleConexao.Conexao);
+    try
+
+      if (lUsuarioDao.getObjeto(pID, lUsuario)) then
+      begin
+
+        EdtNome.Text := lUsuario.Nome;
+        EdtSenha.Text := lUsuario.Senha;
+
+        CheckBoxAdministrador.Checked := lUsuario.Admin = 'S';
+
+      end;
+
+    finally
+      lUsuarioDao.Destroy;
+    end;
+
+  finally
+    lUsuario.Destroy;
+  end;
+
+end;
+
+procedure TFrmCadUsuario.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  if (Key = VK_ESCAPE) then
+  begin
+
+    BtnSairClick(Sender);
+
+  end;
+
+end;
+
+class function TFrmCadUsuario.getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
   const pID: Integer = -1): Boolean;
 begin
+
   Application.CreateForm(TFrmCadUsuario, FrmCadUsuario);
   try
 
     try
 
+      FrmCadUsuario.FForeignFormKey := pFOREIGNFORMKEY;
+      FrmCadUsuario.FCodUsu := pCOD_USU;
+
+      if (pID <> -1) then
+      begin
+
+        FrmCadUsuario.CarregaUsuario(pID);
+
+      end;
+
       Result := FrmCadUsuario.ShowModal = mrOk;
+
     except
       on E: Exception do
       begin

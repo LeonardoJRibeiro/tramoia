@@ -10,8 +10,8 @@ type
     FConexao: TConexao;
 
   public
-    class function getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: Integer;
-      const pCONEXAO: TConexao): Variant;
+    class function getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: Variant;
+      const pCONEXAO: TConexao): Variant; overload;
 
     class function setValorAtributo(const pEntidade, pCAMPO_A_SER_ALTERADO, pIDENTIFICADOR: string;
       const pCHAVE: Variant; const pALTERACAO: Variant; const pCONEXAO: TConexao): Boolean;
@@ -51,15 +51,18 @@ begin
 end;
 
 class function TClassBibliotecaDao.getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string;
-  const pCHAVE: Integer; const pCONEXAO: TConexao): Variant;
+  const pCHAVE: Variant; const pCONEXAO: TConexao): Variant;
 var
   lPersistencia: TPersistencia;
 begin
+
   lPersistencia := TPersistencia.Create(pCONEXAO);
   try
 
     try
+
       Result := lPersistencia.getValorAtributo(pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR, pCHAVE, pCONEXAO);
+
     except
       on E: Exception do
       begin

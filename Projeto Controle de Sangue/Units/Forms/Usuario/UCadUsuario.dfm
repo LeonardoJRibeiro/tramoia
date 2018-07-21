@@ -25,8 +25,6 @@ object FrmCadUsuario: TFrmCadUsuario
     Height = 35
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 160
-    ExplicitWidth = 252
     object BtnGravar: TBitBtn
       Left = 1
       Top = 5
@@ -170,7 +168,6 @@ object FrmCadUsuario: TFrmCadUsuario
     Height = 138
     Align = alClient
     TabOrder = 1
-    ExplicitTop = -1
     object Label1: TLabel
       Left = 24
       Top = 65

@@ -45122,6 +45122,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object Consultar1: TMenuItem
         Caption = 'Consultar'
+        OnClick = Consultar1Click
       end
     end
     object Logof: TMenuItem

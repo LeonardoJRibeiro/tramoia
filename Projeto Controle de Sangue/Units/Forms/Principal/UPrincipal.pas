@@ -45,6 +45,7 @@ type
     procedure Cadastrar1Click(Sender: TObject);
     procedure Entradas1Click(Sender: TObject);
     procedure Sadas1Click(Sender: TObject);
+    procedure Consultar1Click(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -60,7 +61,7 @@ implementation
 {$R *.dfm}
 
 uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
-  URelEntrada, URelSaida;
+  URelEntrada, URelSaida, UConsUsuario;
 
 procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
 begin
@@ -107,6 +108,11 @@ end;
 procedure TFrmPrincipal.Cadastrar2Click(Sender: TObject);
 begin
   TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
+procedure TFrmPrincipal.Consultar1Click(Sender: TObject);
+begin
+  TFrmConsUsuario.getConsUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.Entradas1Click(Sender: TObject);

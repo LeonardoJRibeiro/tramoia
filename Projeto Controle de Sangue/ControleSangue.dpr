@@ -49,11 +49,7 @@ uses
   UClassRelSaida in 'Units\Relatorios\Saída\Class\UClassRelSaida.pas',
   UClassRelSaidaDAO in 'Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas',
   URlRelSaida in 'Units\Relatorios\Saída\Relatório\URlRelSaida.pas' {FrmRlRelSaida},
-  UConsUsuario in 'Units\Forms\Usuario\UConsUsuario.pas' {FrmCons1},
-  URlRelSaida in 'Units\Relatorios\Saída\Relatório\URlRelSaida.pas' {FrmRlRelSaida},
-  URelSaida in 'Units\Relatorios\Saída\Form\URelSaida.pas' {FrmRelSaida},
-  UClassRelSaida in 'Units\Relatorios\Saída\Class\UClassRelSaida.pas',
-  UClassRelSaidaDAO in 'Units\Relatorios\Saída\Class\UClassRelSaidaDAO.pas';
+  UConsUsuario in 'Units\Forms\Usuario\UConsUsuario.pas' {FrmConsUsuario};
 
 {$R *.res}
 
@@ -65,6 +61,6 @@ begin
   Application.CreateForm(TFrmPrincipal, FrmPrincipal);
   Application.CreateForm(TFrmRelSaida, FrmRelSaida);
   Application.CreateForm(TFrmRlRelSaida, FrmRlRelSaida);
-  Application.CreateForm(TFrmCons1, FrmCons1);
+  Application.CreateForm(TFrmConsUsuario, FrmConsUsuario);
   Application.Run;
 end.

@@ -30,8 +30,7 @@ type
     procedure CarregaUsuario(const pID: Integer);
 
   public
-    class function getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
-      const pID: Integer = -1): Boolean;
+    class function getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer = -1): Boolean;
   end;
 
 var
@@ -71,7 +70,7 @@ begin
     try
 
       lUsuario.Id := Self.FId;
-      lUsuario.Nome := TBiblioteca.Crypt('C', Trim(EdtNome.Text));
+      lUsuario.Nome := Trim(EdtNome.Text);
       lUsuario.Senha := TBiblioteca.Crypt('C', Trim(EdtSenha.Text));
       lUsuario.Admin := IfThen(CheckBoxAdministrador.Checked, 'S', 'N');
 
@@ -146,8 +145,7 @@ begin
 
 end;
 
-class function TFrmCadUsuario.getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
-  const pID: Integer = -1): Boolean;
+class function TFrmCadUsuario.getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer = -1): Boolean;
 begin
 
   Application.CreateForm(TFrmCadUsuario, FrmCadUsuario);
@@ -156,13 +154,11 @@ begin
     try
 
       FrmCadUsuario.FForeignFormKey := pFOREIGNFORMKEY;
-      FrmCadUsuario.FCodUsu := pCOD_USU;
+      FrmCadUsuario.FId := pID_USUARIO;
 
-      if (pID <> -1) then
+      if (pID_USUARIO <> -1) then
       begin
-
-        FrmCadUsuario.CarregaUsuario(pID);
-
+        FrmCadUsuario.CarregaUsuario(pID_USUARIO);
       end;
 
       Result := FrmCadUsuario.ShowModal = mrOk;
@@ -171,7 +167,8 @@ begin
       on E: Exception do
       begin
         Result := False;
-        ShowMessage('Erro ao criar formulario. Motivo: ' + E.Message);
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), [FrmCadUsuario.Caption, E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
 
     end;

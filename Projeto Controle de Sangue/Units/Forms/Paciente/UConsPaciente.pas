@@ -186,6 +186,7 @@ begin
 
   lPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
   try
+
     lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
     try
 

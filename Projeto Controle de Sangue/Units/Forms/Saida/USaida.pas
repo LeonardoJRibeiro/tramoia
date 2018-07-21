@@ -100,12 +100,12 @@ begin
     lSaida.Id_Paciente := TClassBibliotecaDao.getValorAtributo('paciente', 'id', 'num_prontuario',
       StrToInt(SearchBoxRegistroPaciente.Text), DataModuleConexao.Conexao);
     lSaida.Id_Usuario := Self.FCodUsu;
-    lSaida.Id_Entrada := TClassBibliotecaDao.getValorAtributo('entrada', 'id', 'numero_da_bolsa',
-      StrToInt(EdtNumeroBolsa.Text), DataModuleConexao.Conexao);
+    //lSaida.Id_Entrada := TClassBibliotecaDao.getValorAtributo('entrada', 'id', 'numero_da_bolsa',
+    //  StrToInt(EdtNumeroBolsa.Text), DataModuleConexao.Conexao);
     lSaida.Data_Saida := Now;
     lSaida.Hospital := EdtHospital.Text;
     lSaida.Pai := Copy(RadioGroupPai.Items[RadioGroupPai.ItemIndex], 1, 1);
-    lSaida.Volume := StrToCurr(EdtVolume.Text);
+//    lSaida.Volume := StrToCurr(EdtVolume.Text);
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_Agh := Copy(RadioGroupAGH.Items[RadioGroupAGH.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_37 := Copy(RadioGroup37.Items[RadioGroup37.ItemIndex], 1, 1);
@@ -164,9 +164,9 @@ begin
         if (lEntradaDAO.getObjeto(pID_ENTRADA, lEntrada)) then
         begin
 
-          EdtNumeroBolsa.Text := lEntrada.Numero_Da_Bolsa;
-          EdtTipo.Text := lEntrada.Tipo;
-          EdtVolume.Text := CurrToStr(lEntrada.Volume); // FormatFloat('#,###,##0.0000', lEntrada.Volume);
+          //EdtNumeroBolsa.Text := lEntrada.Numero_Da_Bolsa;
+          //EdtTipo.Text := lEntrada.Tipo;
+          //EdtVolume.Text := CurrToStr(lEntrada.Volume); // FormatFloat('#,###,##0.0000', lEntrada.Volume);
 
         end;
 
@@ -206,7 +206,7 @@ begin
 
           EdtId.Text := lSaida.Id.ToString;
           SearchBoxRegistroPaciente.Text := lSaida.Id_Paciente.ToString;
-          Self.CarregaDadosBolsa(lSaida.Id_Entrada);
+//          Self.CarregaDadosBolsa(lSaida.Id_Entrada);
           DateTimePickerData.Date := lSaida.Data_Saida;
           EdtHospital.Text := lSaida.Hospital;
           RadioGroupPai.ItemIndex := IfThen(lSaida.Pai = 'P', 0, 1);
@@ -240,7 +240,7 @@ var
   lIdEntrada: Integer;
   lSaidaDAO: TSaidaDAO;
 begin
-
+ {
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
@@ -249,9 +249,9 @@ begin
 
       try
 
-        lIdEntrada := lSaidaDAO.getIdEntradaByNumeroBolsa(EdtNumeroBolsa.Text);
+        //lIdEntrada := lSaidaDAO.getIdEntradaByNumeroBolsa(EdtNumeroBolsa.Text);
 
-        if (lIdEntrada <> -1) then
+        {if (lIdEntrada <> -1) then
         begin
 
           if (not lSaidaDAO.getExisteNumBolsaSaida(lIdEntrada.ToString, 1)) then
@@ -290,7 +290,7 @@ begin
       lSaidaDAO.Destroy;
     end;
 
-  end;
+  end;}
 
 end;
 

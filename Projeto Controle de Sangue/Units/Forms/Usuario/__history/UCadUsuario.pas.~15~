@@ -4,21 +4,23 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.Buttons;
 
 type
   TFrmCadUsuario = class(TForm)
     PanelBotoes: TPanel;
-    BtnSair: TButton;
-    BtnGravar: TButton;
     Panel1: TPanel;
     EdtNome: TLabeledEdit;
     EdtSenha: TMaskEdit;
     Label1: TLabel;
     CheckBoxAdministrador: TCheckBox;
+    BtnGravar: TBitBtn;
+    BtnNovo: TBitBtn;
+    BtnSair: TBitBtn;
     procedure BtnSairClick(Sender: TObject);
     procedure BtnGravarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnNovoClick(Sender: TObject);
   private
 
     FForeignFormKey: SmallInt;
@@ -41,7 +43,16 @@ uses
   UClassUsuario, UClassUsuarioDao, UDMConexao, UBiblioteca, System.StrUtils, UClassMensagem;
 
 {$R *.dfm}
-{ TForm1 }
+{ TFrmCadUsuario }
+
+procedure TFrmCadUsuario.BtnNovoClick(Sender: TObject);
+begin
+
+  EdtNome.Clear;
+  EdtSenha.Clear;
+  CheckBoxAdministrador.Checked := False;
+
+end;
 
 procedure TFrmCadUsuario.BtnSairClick(Sender: TObject);
 begin
@@ -60,7 +71,7 @@ begin
     try
 
       lUsuario.Id := Self.FId;
-      lUsuario.Nome := TBiblioteca.Crypt('C', Trim(EdtNome.Text));
+      lUsuario.Nome := Trim(EdtNome.Text);
       lUsuario.Senha := TBiblioteca.Crypt('C', Trim(EdtSenha.Text));
       lUsuario.Admin := IfThen(CheckBoxAdministrador.Checked, 'S', 'N');
 
@@ -135,8 +146,7 @@ begin
 
 end;
 
-class function TFrmCadUsuario.getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
-  const pID: Integer = -1): Boolean;
+class function TFrmCadUsuario.getCadUsuario(const pFOREIGNFORMKEY: SmallInt; const pID: Integer = -1): Boolean;
 begin
 
   Application.CreateForm(TFrmCadUsuario, FrmCadUsuario);
@@ -146,6 +156,13 @@ begin
 
       FrmCadUsuario.FForeignFormKey := pFOREIGNFORMKEY;
       FrmCadUsuario.FCodUsu := pCOD_USU;
+
+      if (pID <> -1) then
+      begin
+
+        FrmCadUsuario.CarregaUsuario(pID);
+
+      end;
 
       Result := FrmCadUsuario.ShowModal = mrOk;
 

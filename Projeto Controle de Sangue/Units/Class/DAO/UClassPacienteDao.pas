@@ -29,7 +29,7 @@ type
 
 implementation
 
-uses System.StrUtils;
+uses System.StrUtils, System.Variants;
 
 constructor TPacienteDAO.Create(const pCONEXAO: TConexao);
 begin

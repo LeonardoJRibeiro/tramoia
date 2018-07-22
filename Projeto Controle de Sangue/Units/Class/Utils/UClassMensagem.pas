@@ -77,6 +77,11 @@ begin
       begin
         Result := 'CPF inválido.';
       end;
+
+    12:
+      begin
+        Result := 'Você não possui permissão para realizar a operação.';
+      end;
   end;
 
 end;

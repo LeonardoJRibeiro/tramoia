@@ -28,6 +28,8 @@ type
 
     FNumProntuario: Integer;
 
+    function getAdmin: Boolean;
+
   public
     class function getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
       var pNumProntuario: Integer): Boolean;
@@ -39,17 +41,26 @@ var
 implementation
 
 uses System.Math, UDMConexao, UClassMensagem, UClassPacienteDAO, UCadPaciente, UClassPersistencia,
-  UClassForeignKeyForms, UBiblioteca;
+  UClassForeignKeyForms, UBiblioteca, UClassUsuarioDao;
 
 {$R *.dfm}
 
 procedure TFrmConsPaciente.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
-  if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario,
-    Self.FClientDataSet.FieldByName('id').AsInteger)) then
+  if (Self.getAdmin) then
   begin
-    EdtConsInvokeSearch(Self);
+
+    if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario,
+      Self.FClientDataSet.FieldByName('id').AsInteger)) then
+    begin
+      EdtConsInvokeSearch(Self);
+    end;
+
+  end
+  else
+  begin
+    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
 end;
 
@@ -59,36 +70,42 @@ var
 begin
   inherited;
 
-  case Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['paciente'])), PChar('Cuidado'),
-    MB_YESNO + MB_ICONQUESTION) of
-    IDYES:
-      begin
+  if (Self.getAdmin) then
+  begin
 
-        lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+    if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['paciente'])), PChar('Cuidado'),
+      MB_YESNO + MB_ICONQUESTION) = IDYES) then
+    begin
+
+      lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+      try
+
         try
 
-          try
-
-            if (lPacienteDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-            begin
-              EdtConsInvokeSearch(Self);
-            end;
-
-          except
-            on E: Exception do
-            begin
-              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
-                MB_OK + MB_ICONSTOP);
-            end;
+          if (lPacienteDao.excluir(Self.FClientDataSet.FieldByName('id').AsInteger)) then
+          begin
+            EdtConsInvokeSearch(Self);
           end;
 
-        finally
-          lPacienteDao.Destroy;
+        except
+          on E: Exception do
+          begin
+            Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+              MB_OK + MB_ICONSTOP);
+          end;
         end;
 
+      finally
+        lPacienteDao.Destroy;
       end;
-  end;
 
+    end;
+
+  end
+  else
+  begin
+    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+  end;
 end;
 
 procedure TFrmConsPaciente.BtnNovoClick(Sender: TObject);
@@ -237,6 +254,30 @@ begin
   EdtConsInvokeSearch(Self);
 
   EdtCons.SetFocus;
+end;
+
+function TFrmConsPaciente.getAdmin: Boolean;
+var
+  lUsuaioDao: TUsuarioDAO;
+begin
+
+  lUsuaioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+      Result := lUsuaioDao.getAdmin(Self.FIdUsuario);
+    except
+      on E: Exception do
+      begin
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(12), ['inforção do usuário', E.Message])),
+          PChar('Erro'), MB_OK + MB_ICONERROR);
+      end;
+    end;
+
+  finally
+    lUsuaioDao.Destroy;
+  end;
+
 end;
 
 class function TFrmConsPaciente.getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;

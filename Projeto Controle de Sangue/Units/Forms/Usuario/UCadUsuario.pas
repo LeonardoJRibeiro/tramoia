@@ -117,7 +117,7 @@ begin
       begin
 
         EdtNome.Text := lUsuario.Nome;
-        EdtSenha.Text := lUsuario.Senha;
+        EdtSenha.Text := TBiblioteca.Crypt('D', Trim(lUsuario.Senha));
 
         CheckBoxAdministrador.Checked := lUsuario.Admin = 'S';
 

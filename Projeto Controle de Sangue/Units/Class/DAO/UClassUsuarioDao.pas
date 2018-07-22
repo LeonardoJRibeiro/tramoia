@@ -21,6 +21,8 @@ type
 
     function getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt; var pPersistencia: TPersistencia): Boolean;
 
+    function getExisteUsuariosCadastrados: Boolean;
+
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
@@ -151,6 +153,39 @@ begin
       lPersistencia.Query.SQL.Add('WHERE id = :pId');
 
       lPersistencia.setParametro('pId', pID);
+
+      lPersistencia.Query.Open;
+
+      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
+function TUsuarioDAO.getExisteUsuariosCadastrados: Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  count(*)');
+      lPersistencia.Query.SQL.Add('FROM usuario');
 
       lPersistencia.Query.Open;
 

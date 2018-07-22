@@ -4,14 +4,15 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.ComCtrls, Vcl.Buttons;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.ComCtrls, Vcl.Buttons,
+  sBitBtn;
 
 type
   TFrmCadPaciente = class(TForm)
     PageControl: TPageControl;
     PanelDadosPessoais: TPanel;
     PanelEndereco: TPanel;
-    Label7: TLabel;
+    LabelMunicipio: TLabel;
     Label8: TLabel;
     GroupBoxEndereco: TGroupBox;
     EdtLogradouro: TLabeledEdit;
@@ -23,10 +24,10 @@ type
     GroupBoxInfoComplementares: TGroupBox;
     TabSheetDadosGerais: TTabSheet;
     GroupBoxDadosPessoais: TGroupBox;
-    Label1: TLabel;
+    LabelSexo: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Label4: TLabel;
+    LabelDtNascimento: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     EdtNome: TLabeledEdit;
@@ -49,14 +50,14 @@ type
     EdtNomePai: TLabeledEdit;
     EdtNomeMae: TLabeledEdit;
     EdtSus: TMaskEdit;
-    EdtCodMunicipio: TSearchBox;
+    EdtCodMunicipio: TEdit;
     BtnSalvar: TSpeedButton;
     BtnSair: TSpeedButton;
+    BtnConsMunicipio: TSpeedButton;
     procedure BtnSalvarClick(Sender: TObject);
     procedure EdtCodMunicipioExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
-    procedure EdtCodMunicipioInvokeSearch(Sender: TObject);
     procedure EdtDataNascimentoExit(Sender: TObject);
     procedure s(Sender: TObject);
     procedure EdtNumProntuarioExit(Sender: TObject);
@@ -65,12 +66,14 @@ type
     procedure EdtTelefoneExit(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure EdtCpfExit(Sender: TObject);
+    procedure BtnConsMunicipioClick(Sender: TObject);
+    procedure EdtCodMunicipioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FIdPaciente: Integer;
 
     FNumeroProntuario: string;
 
-    function getObjeto: Boolean;
+    function CarregaPaciente: Boolean;
 
     function getIdMunicipio(): Integer;
 
@@ -212,7 +215,7 @@ begin
         Result := lPacienteDao.Salvar(lPaciente);
         if (Result) then
         begin
-          Self.FIdPaciente := lPaciente.Id;
+          Self.FIdPaciente := lPacienteDao.getId(lPaciente.Num_Prontuario);
         end;
 
       finally
@@ -223,13 +226,37 @@ begin
       on E: Exception do
       begin
         Result := False;
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['paciente', E.Message])), PChar('Erro'),
-          MB_OK + MB_ICONWARNING);
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['usuário', E.Message])), PChar('Erro'),
+          MB_OK + MB_ICONERROR);
       end;
     end;
 
   finally
     FreeAndNil(lPaciente);
+  end;
+
+end;
+
+procedure TFrmCadPaciente.BtnConsMunicipioClick(Sender: TObject);
+var
+  lId: Integer;
+begin
+
+  if (TFrmConsMunicipio.getConsMunicpio(TForeignKeyForms.FIdUConsMunicipio, lId)) then
+  begin
+
+    if (lId > 0) then
+    begin
+      EdtCodMunicipio.Text := lId.ToString;
+      EdtCodMunicipioExit(Self);
+
+      if (lId = 52112016) then
+      begin
+        EdtCep.Text := '76680000';
+      end;
+
+    end;
+
   end;
 
 end;
@@ -248,23 +275,23 @@ begin
 
   end;
 
-  if (EdtDataNascimento.Text = '  /  /    ') then
+  if (ComboboxSexo.ItemIndex = -1) then
   begin
 
-    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label4.Caption])), PChar('Informação'),
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelSexo.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
-    EdtDataNascimento.SetFocus;
+    ComboboxSexo.SetFocus;
+    ComboboxSexo.DroppedDown := True;
     Exit;
 
   end;
 
-  if (ComboboxSexo.ItemIndex = -1) then
+  if (EdtDataNascimento.Text = '  /  /    ') then
   begin
 
-    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label1.Caption])), PChar('Informação'),
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelDtNascimento.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
-    ComboboxSexo.SetFocus;
-    ComboboxSexo.DroppedDown := True;
+    EdtDataNascimento.SetFocus;
     Exit;
 
   end;
@@ -300,6 +327,16 @@ begin
 
   end;
 
+  if (Trim(EdtCodMunicipio.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelMunicipio.Caption])), PChar('Informação'),
+      MB_OK + MB_ICONINFORMATION);
+    EdtCodMunicipio.SetFocus;
+    Exit;
+
+  end;
+
   Result := True;
 end;
 
@@ -319,6 +356,7 @@ begin
       begin
         EdtNomeMunicipio.Text := lNome;
         EdtEstado.Text := lUf;
+
         if (EdtCodMunicipio.Text = '5211206') then
         begin
           EdtCep.Text := '766800000';
@@ -327,7 +365,8 @@ begin
       end
       else
       begin
-        ShowMessage('Municpio não existente');
+        Application.MessageBox(PChar(TMensagem.getMensagem(10)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+        EdtCodMunicipio.Clear;
         EdtNomeMunicipio.Clear;
         EdtEstado.Clear;
         EdtCodMunicipio.SetFocus;
@@ -337,22 +376,26 @@ begin
       FreeAndNil(lMunicipioDao);
     end;
 
+  end
+  else
+  begin
+    EdtCodMunicipio.Clear;
+    EdtCep.Clear;
+
+    if (GetKeyState(VK_RETURN) < 0) then
+    begin
+      BtnConsMunicipioClick(Self);
+    end;
+
   end;
 end;
 
-procedure TFrmCadPaciente.EdtCodMunicipioInvokeSearch(Sender: TObject);
-var
-  lId: Integer;
+procedure TFrmCadPaciente.EdtCodMunicipioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
-  if (TFrmConsMunicpio.getConsMunicpio(TForeignKeyForms.FIdUConsMunicipio, lId)) then
+  if (Key = VK_F2) then
   begin
-
-    if (lId > 0) then
-    begin
-      EdtCodMunicipio.Text := lId.ToString;
-    end;
-
+    BtnConsMunicipioClick(Self);
   end;
 
 end;
@@ -362,7 +405,7 @@ begin
 
   if (not TBiblioteca.IsCpfValido(EdtCpf.Text)) then
   begin
-    Application.MessageBox('Cpf invalido', 'Aviso', MB_ICONERROR + MB_OK);
+    Application.MessageBox(PChar(TMensagem.getMensagem(11)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
     EdtCpf.SetFocus;
   end;
 
@@ -482,7 +525,7 @@ begin
 
       if (FrmCadPaciente.FIdPaciente > 0) then
       begin
-        FrmCadPaciente.getObjeto;
+        FrmCadPaciente.CarregaPaciente;
       end;
 
       Result := FrmCadPaciente.ShowModal = mrOk;
@@ -490,9 +533,9 @@ begin
       on E: Exception do
       begin
         Result := False;
-        Application.MessageBox('Erro ao salvar', 'Erro', MB_ICONWARNING + MB_OK);
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), [FrmCadPaciente.Caption, E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
-
     end;
 
   finally
@@ -529,7 +572,7 @@ begin
 
 end;
 
-function TFrmCadPaciente.getObjeto: Boolean;
+function TFrmCadPaciente.CarregaPaciente: Boolean;
 var
   lPaciente: TPaciente;
   lPacienteDao: TPacienteDao;

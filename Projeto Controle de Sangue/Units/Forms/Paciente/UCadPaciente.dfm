@@ -66,7 +66,7 @@ object FrmCadPaciente: TFrmCadPaciente
           Font.Style = []
           ParentFont = False
           TabOrder = 0
-          object Label1: TLabel
+          object LabelSexo: TLabel
             Left = 365
             Top = 17
             Width = 38
@@ -93,7 +93,7 @@ object FrmCadPaciente: TFrmCadPaciente
             Height = 13
             Caption = 'R.G(*)'
           end
-          object Label4: TLabel
+          object LabelDtNascimento: TLabel
             Left = 441
             Top = 17
             Width = 102
@@ -149,7 +149,7 @@ object FrmCadPaciente: TFrmCadPaciente
           object EdtCpf: TMaskEdit
             Left = 10
             Top = 77
-            Width = 92
+            Width = 93
             Height = 21
             AutoSize = False
             EditMask = '000\.000\.000\-00;0;'
@@ -269,7 +269,7 @@ object FrmCadPaciente: TFrmCadPaciente
           Align = alTop
           Caption = 'Endere'#231'o'
           TabOrder = 0
-          object Label7: TLabel
+          object LabelMunicipio: TLabel
             Left = 10
             Top = 61
             Width = 57
@@ -282,6 +282,41 @@ object FrmCadPaciente: TFrmCadPaciente
             Width = 33
             Height = 13
             Caption = 'CEP(*)'
+          end
+          object BtnConsMunicipio: TSpeedButton
+            Left = 80
+            Top = 75
+            Width = 21
+            Height = 23
+            Flat = True
+            Glyph.Data = {
+              36030000424D3603000000000000360000002800000010000000100000000100
+              18000000000000030000C40E0000C40E00000000000000000000B3B4B1565755
+              565755ADAFACB8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9
+              B6B8B9B6B8B9B6B8B9B6565755050505050505343534A8A9A6B8B9B6B8B9B6B8
+              B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6353534080808
+              080808080808353534A8A9A6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9
+              B6B8B9B6B8B9B6B8B9B6A8A9A65657560B0B0B0B0B0B0B0B0B353535A2A3A0B8
+              B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B3B4B1
+              5757560E0E0E0E0E0E0E0E0E0E0E0EB8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9
+              B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B3B4B15758561212121212125758569B
+              9D9A5758561212121212121212125758569B9D9AB8B9B6B8B9B6B8B9B6B8B9B6
+              B8B9B6B3B4B17778766D6E6D7F807E1515151515155758576D6E6D5758571515
+              15151515878886B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B69C9D9B18181838
+              3838A2A3A1B8B9B6B8B9B6B8B9B6A2A3A13838381818189C9D9BB8B9B6B8B9B6
+              B8B9B6B8B9B6B8B9B65859581B1B1BA2A3A1B8B9B6B8B9B6B8B9B6B8B9B6B8B9
+              B6A2A3A11B1B1B585958B8B9B6B8B9B6B8B9B6B8B9B6B8B9B61E1E1E595A58B8
+              B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6595A581E1E1EB8B9B6B8B9B6
+              B8B9B6B8B9B6B8B9B6212121787977B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9
+              B6B8B9B6787977212121B8B9B6B8B9B6B8B9B6B8B9B6B8B9B62525255B5C5AB8
+              B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B65B5C5A252525B8B9B6B8B9B6
+              B8B9B6B8B9B6B8B9B65C5C5B282828A2A4A1B8B9B6B8B9B6B8B9B6B8B9B6B8B9
+              B6A2A4A12828285C5C5BB8B9B6B8B9B6B8B9B6B8B9B6B8B9B69C9E9B2B2B2B41
+              4141A2A4A1B8B9B6B8B9B6B8B9B6A2A4A14141412B2B2B9C9E9BB8B9B6B8B9B6
+              B8B9B6B8B9B6B8B9B6B8B9B6898A882E2E2E2E2E2E5E5E5D7273715E5E5D2E2E
+              2E2E2E2E898A88B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B6B8B9B69D
+              9E9C5F5F5E3131313131313131315F5F5E9D9E9CB8B9B6B8B9B6}
+            OnClick = BtnConsMunicipioClick
           end
           object EdtLogradouro: TLabeledEdit
             Left = 10
@@ -343,9 +378,9 @@ object FrmCadPaciente: TFrmCadPaciente
             Text = '76680000'
           end
           object EdtNomeMunicipio: TLabeledEdit
-            Left = 86
+            Left = 104
             Top = 76
-            Width = 304
+            Width = 286
             Height = 21
             Color = clInfoBk
             EditLabel.Width = 73
@@ -368,7 +403,7 @@ object FrmCadPaciente: TFrmCadPaciente
             TabOrder = 5
             Text = 'GO'
           end
-          object EdtCodMunicipio: TSearchBox
+          object EdtCodMunicipio: TEdit
             Left = 10
             Top = 76
             Width = 71
@@ -381,7 +416,7 @@ object FrmCadPaciente: TFrmCadPaciente
             TabOrder = 3
             Text = '5211206'
             OnExit = EdtCodMunicipioExit
-            OnInvokeSearch = EdtCodMunicipioInvokeSearch
+            OnKeyDown = EdtCodMunicipioKeyDown
           end
         end
       end

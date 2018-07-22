@@ -1,7 +1,8 @@
-inherited FrmConsMunicpio: TFrmConsMunicpio
+inherited FrmConsMunicipio: TFrmConsMunicipio
   Caption = 'Consulta de munic'#237'pios'
   ClientHeight = 323
   ClientWidth = 494
+  OnClose = FormClose
   OnShow = FormShow
   ExplicitWidth = 500
   ExplicitHeight = 352

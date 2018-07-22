@@ -2,6 +2,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
   Caption = 'Consulta do paciente'
   ClientHeight = 386
   ClientWidth = 802
+  OnClose = FormClose
   OnShow = FormShow
   ExplicitWidth = 808
   ExplicitHeight = 415
@@ -17,7 +18,6 @@ inherited FrmConsPaciente: TFrmConsPaciente
       Height = 271
       DataSource = DataSource
       OnDblClick = DBGridDblClick
-      OnKeyDown = DBGridKeyDown
       Columns = <
         item
           Alignment = taRightJustify
@@ -112,7 +112,6 @@ inherited FrmConsPaciente: TFrmConsPaciente
           Width = 102
           ItemIndex = 2
           Text = 'N'#250'm. Prontu'#225'rio'
-          OnChange = ComboBoxTipoConsChange
           Items.Strings = (
             'Palavra chave'
             'Nome'

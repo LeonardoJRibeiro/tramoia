@@ -65,7 +65,17 @@ begin
 
     9:
       begin
-        Result := 'Deseja realmente excluir o paciente?'
+        Result := 'Deseja realmente excluir o %s selecionado?'
+      end;
+
+    10:
+      begin
+        Result := 'Município não encontrado.';
+      end;
+
+    11:
+      begin
+        Result := 'CPF inválido.';
       end;
   end;
 

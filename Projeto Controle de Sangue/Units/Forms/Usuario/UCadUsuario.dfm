@@ -16,6 +16,7 @@ object FrmCadUsuario: TFrmCadUsuario
   OldCreateOrder = False
   Position = poDesktopCenter
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PanelBotoes: TPanel
@@ -183,7 +184,7 @@ object FrmCadUsuario: TFrmCadUsuario
       EditLabel.Width = 27
       EditLabel.Height = 13
       EditLabel.Caption = 'Nome'
-      MaxLength = 15
+      MaxLength = 20
       TabOrder = 0
     end
     object EdtSenha: TMaskEdit

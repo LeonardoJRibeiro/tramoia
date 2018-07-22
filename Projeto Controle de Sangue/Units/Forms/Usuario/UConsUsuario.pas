@@ -16,6 +16,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnExcluirClick(Sender: TObject);
     procedure BtnAlterarClick(Sender: TObject);
+    procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure DBGridDblClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -50,8 +52,8 @@ var
 begin
   inherited;
 
-  if (Application.MessageBox(PChar(TMensagem.getMensagem(9)), PChar('Cuidado'), MB_YESNO + MB_ICONQUESTION) = IDYES)
-  then
+  if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['usuário'])), PChar('Cuidado'),
+    MB_YESNO + MB_ICONQUESTION) = IDYES) then
   begin
 
     lUsuarioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
@@ -90,6 +92,29 @@ begin
 
 end;
 
+procedure TFrmConsUsuario.DBGridDblClick(Sender: TObject);
+begin
+  inherited;
+  BtnAlterarClick(Self);
+end;
+
+procedure TFrmConsUsuario.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  case (Key) of
+    VK_RETURN:
+      begin
+        BtnAlterarClick(Self);
+      end;
+
+    VK_DELETE:
+      begin
+        BtnExcluirClick(Self);
+      end;
+  end;
+
+end;
+
 procedure TFrmConsUsuario.EdtConsInvokeSearch(Sender: TObject);
 var
   lUsuarioDao: TUsuarioDAO;
@@ -123,7 +148,8 @@ begin
     except
       on E: Exception do
       begin
-        raise Exception.Create(Format(TMensagem.getMensagem(1), ['usuários', E.Message]));
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(1), ['usuários', E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
     end;
 
@@ -146,8 +172,11 @@ begin
   inherited;
   ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
     'FrmConsUsuario.ComboBoxTipoCons', '0').ToInteger;
+  ComboBoxTipoConsChange(Self);
 
   EdtConsInvokeSearch(Self);
+
+  EdtCons.SetFocus;
 end;
 
 class function TFrmConsUsuario.getConsUsuario(const pFOREIGNFORMKEY: SmallInt; var pID_USUARIO: Integer): Boolean;

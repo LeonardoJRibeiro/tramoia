@@ -30,6 +30,8 @@ type
   private
     FCodUsu: Integer;
     FNumTentativas: Integer;
+
+    function getExisteUsuariosCadastrados: Boolean;
   public
     class function getLogin(const pIDFORMULARIO: SmallInt; var pCod_Usu: Integer): Boolean;
   end;
@@ -164,8 +166,27 @@ end;
 procedure TFrmLogin.FormShow(Sender: TObject);
 begin
   Self.FNumTentativas := 0;
-
   EdtNome.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'USUARIO', 'nome usuario', '');
+  LabelNovoUsuario.Visible := not Self.getExisteUsuariosCadastrados;
+end;
+
+function TFrmLogin.getExisteUsuariosCadastrados: Boolean;
+var
+  lUsuarioDAO: TUsuarioDAO;
+begin
+  lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+      Result := lUsuarioDAO.getExisteUsuariosCadastrados;
+    except
+
+    end;
+
+  finally
+    FreeAndNil(lUsuarioDAO)
+  end;
+
 end;
 
 class function TFrmLogin.getLogin(const pIDFORMULARIO: SmallInt; var pCod_Usu: Integer): Boolean;
@@ -177,7 +198,6 @@ begin
     try
 
       Result := FrmLogin.ShowModal = mrOk;
-
       if (Result) then
       begin
         pCod_Usu := FrmLogin.FCodUsu;
@@ -205,14 +225,13 @@ end;
 procedure TFrmLogin.LabelNovoUsuarioMouseEnter(Sender: TObject);
 begin
 
-  LabelNovoUsuario.Font.Height := -12;
+  LabelNovoUsuario.Font.Size := 13;
 
 end;
 
 procedure TFrmLogin.LabelNovoUsuarioMouseLeave(Sender: TObject);
 begin
-
-  LabelNovoUsuario.Font.Height := -11;
+  LabelNovoUsuario.Font.Size := 11;
 
 end;
 

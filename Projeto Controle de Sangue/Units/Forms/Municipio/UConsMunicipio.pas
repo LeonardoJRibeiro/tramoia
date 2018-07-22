@@ -8,12 +8,13 @@ uses
   Vcl.DBGrids, Vcl.ExtCtrls;
 
 type
-  TFrmConsMunicpio = class(TFrmCons)
+  TFrmConsMunicipio = class(TFrmCons)
     DataSource: TDataSource;
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdtConsExit(Sender: TObject);
     procedure DBGridDblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FForeignFormKey: SmallInt;
   public
@@ -21,22 +22,22 @@ type
   end;
 
 var
-  FrmConsMunicpio: TFrmConsMunicpio;
+  FrmConsMunicipio: TFrmConsMunicipio;
 
 implementation
 
 {$R *.dfm}
 
-uses UClassMunicipioDao, UClassPersistencia, UDMConexao, UClassMensagem;
+uses UClassMunicipioDao, UClassPersistencia, UDMConexao, UClassMensagem, UBiblioteca;
 { TFrmConsMunicpio }
 
-procedure TFrmConsMunicpio.DBGridDblClick(Sender: TObject);
+procedure TFrmConsMunicipio.DBGridDblClick(Sender: TObject);
 begin
   inherited;
   ModalResult := mrOk;
 end;
 
-procedure TFrmConsMunicpio.EdtConsExit(Sender: TObject);
+procedure TFrmConsMunicipio.EdtConsExit(Sender: TObject);
 begin
   inherited;
   if (GetKeyState(VK_RETURN) < 0) then
@@ -45,7 +46,7 @@ begin
   end;
 end;
 
-procedure TFrmConsMunicpio.EdtConsInvokeSearch(Sender: TObject);
+procedure TFrmConsMunicipio.EdtConsInvokeSearch(Sender: TObject);
 var
   lMunicipioDao: TMunicipioDAO;
   lPersistencia: TPersistencia;
@@ -95,25 +96,38 @@ begin
 
 end;
 
-procedure TFrmConsMunicpio.FormShow(Sender: TObject);
+procedure TFrmConsMunicipio.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
-  EdtConsInvokeSearch(Self);
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox', 'FrmConsMunicipio.ComboBoxTipoCons',
+    ComboBoxTipoCons.ItemIndex.ToString);
 end;
 
-class function TFrmConsMunicpio.getConsMunicpio(const pFOREIGNFORMKEY: SmallInt; var pID: Integer): Boolean;
+procedure TFrmConsMunicipio.FormShow(Sender: TObject);
+begin
+  inherited;
+  ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
+    'FrmConsMunicipio.ComboBoxTipoCons', '0').ToInteger;
+  ComboBoxTipoConsChange(Self);
+
+  EdtConsInvokeSearch(Self);
+
+  EdtCons.SetFocus;
+end;
+
+class function TFrmConsMunicipio.getConsMunicpio(const pFOREIGNFORMKEY: SmallInt; var pID: Integer): Boolean;
 begin
 
-  Application.CreateForm(TFrmConsMunicpio, FrmConsMunicpio);
+  Application.CreateForm(TFrmConsMunicipio, FrmConsMunicipio);
   try
 
     try
-      FrmConsMunicpio.FForeignFormKey := pFOREIGNFORMKEY;
+      FrmConsMunicipio.FForeignFormKey := pFOREIGNFORMKEY;
 
-      Result := FrmConsMunicpio.ShowModal = mrOk;
+      Result := FrmConsMunicipio.ShowModal = mrOk;
       if (Result) then
       begin
-        pID := FrmConsMunicpio.FClientDataSet.FieldByName('codigo_ibge').AsInteger;
+        pID := FrmConsMunicipio.FClientDataSet.FieldByName('codigo_ibge').AsInteger;
       end
       else
       begin
@@ -129,7 +143,7 @@ begin
     end;
 
   finally
-    FreeAndNil(FrmConsMunicpio);
+    FreeAndNil(FrmConsMunicipio);
   end;
 
 end;

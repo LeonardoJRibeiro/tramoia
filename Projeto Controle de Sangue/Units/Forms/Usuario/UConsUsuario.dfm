@@ -11,11 +11,14 @@ inherited FrmConsUsuario: TFrmConsUsuario
   inherited PanelGrid: TPanel
     Width = 472
     Height = 166
-    ExplicitWidth = 490
+    ExplicitWidth = 472
+    ExplicitHeight = 166
     inherited DBGrid: TDBGrid
       Width = 470
       Height = 164
       DataSource = DataSource
+      OnDblClick = DBGridDblClick
+      OnKeyDown = DBGridKeyDown
       Columns = <
         item
           Alignment = taRightJustify
@@ -46,7 +49,8 @@ inherited FrmConsUsuario: TFrmConsUsuario
   inherited PanelBotoes: TPanel
     Top = 238
     Width = 472
-    ExplicitWidth = 490
+    ExplicitTop = 238
+    ExplicitWidth = 472
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick
     end
@@ -59,14 +63,14 @@ inherited FrmConsUsuario: TFrmConsUsuario
   end
   inherited PanelConsulta: TPanel
     Width = 472
-    ExplicitWidth = 490
+    ExplicitWidth = 472
     inherited GroupBoxConsulta: TGroupBox
-      Width = 450
-      ExplicitWidth = 450
+      Width = 455
+      ExplicitWidth = 455
       inherited EdtCons: TSearchBox
-        Width = 304
+        Width = 312
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitWidth = 304
+        ExplicitWidth = 312
       end
     end
   end

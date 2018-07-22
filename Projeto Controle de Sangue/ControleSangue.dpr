@@ -27,7 +27,7 @@ uses
   UCadPaciente in 'Units\Forms\Paciente\UCadPaciente.pas' {FrmCadPaciente},
   UConsPaciente in 'Units\Forms\Paciente\UConsPaciente.pas' {FrmConsPaciente},
   UClassForeignKeyForms in 'Units\Class\UClassForeignKeyForms.pas',
-  UConsMunicipio in 'Units\Forms\Municipio\UConsMunicipio.pas' {FrmConsMunicpio},
+  UConsMunicipio in 'Units\Forms\Municipio\UConsMunicipio.pas' {FrmConsMunicipio},
   UClassActiveControl in 'Units\Class\Utils\UClassActiveControl.pas',
   ULogin in 'Units\Forms\Usuario\ULogin.pas' {FrmLogin},
   UBiblioteca in 'Units\Class\Utils\UBiblioteca.pas',

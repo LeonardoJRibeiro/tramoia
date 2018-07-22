@@ -46,6 +46,7 @@ function TPacienteDAO.Excluir(const pID: Integer): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
+
   lPersistencia := TPersistencia.Create(Self.FConexao);
   try
 
@@ -148,6 +149,7 @@ function TPacienteDAO.getExiste(const pID: Integer): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
+
   lPersistencia := TPersistencia.Create(Self.FConexao);
   try
 
@@ -171,7 +173,6 @@ begin
         Result := False;
         raise Exception.Create(E.Message);
       end;
-
     end;
 
   finally
@@ -298,17 +299,17 @@ function TPacienteDAO.Salvar(var pObjeto: TPaciente): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
+
   lPersistencia := TPersistencia.Create(Self.FConexao);
   try
+
     try
       lPersistencia.IniciaTransacao;
 
       if (not Self.getExiste(pObjeto.Id)) then
       begin
 
-        pObjeto.Id := lPersistencia.getProximoCodigo('paciente', 'id');
         lPersistencia.Query.SQL.Add('INSERT INTO paciente (');
-        lPersistencia.Query.SQL.Add('  id,');
         lPersistencia.Query.SQL.Add('  nome,');
         lPersistencia.Query.SQL.Add('  nome_pai,');
         lPersistencia.Query.SQL.Add('  nome_mae,');
@@ -323,7 +324,6 @@ begin
         lPersistencia.Query.SQL.Add('  sus,');
         lPersistencia.Query.SQL.Add('  observacao');
         lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pId,');
         lPersistencia.Query.SQL.Add('  :pNome,');
         lPersistencia.Query.SQL.Add('  :pNome_Pai,');
         lPersistencia.Query.SQL.Add('  :pNome_Mae,');
@@ -342,24 +342,24 @@ begin
       else
       begin
         lPersistencia.Query.SQL.Add('UPDATE paciente SET');
-        lPersistencia.Query.SQL.Add('  nome= :pNome,');
-        lPersistencia.Query.SQL.Add('  nome_pai= :pNome_Pai,');
-        lPersistencia.Query.SQL.Add('  nome_mae= :pNome_Mae,');
-        lPersistencia.Query.SQL.Add('  data_nascimento= :pData_Nascimento,');
-        lPersistencia.Query.SQL.Add('  sexo= :pSexo,');
-        lPersistencia.Query.SQL.Add('  num_prontuario= :pNum_Prontuario,');
-        lPersistencia.Query.SQL.Add('  abo= :pAbo,');
-        lPersistencia.Query.SQL.Add('  rh= :pRh,');
-        lPersistencia.Query.SQL.Add('  cpf= :pCpf,');
-        lPersistencia.Query.SQL.Add('  rg= :pRg,');
-        lPersistencia.Query.SQL.Add('  telefone= :pTelefone,');
-        lPersistencia.Query.SQL.Add('  sus= :pSus,');
-        lPersistencia.Query.SQL.Add('  observacao= :pObservacao');
+        lPersistencia.Query.SQL.Add('  nome = :pNome,');
+        lPersistencia.Query.SQL.Add('  nome_pai = :pNome_Pai,');
+        lPersistencia.Query.SQL.Add('  nome_mae = :pNome_Mae,');
+        lPersistencia.Query.SQL.Add('  data_nascimento = :pData_Nascimento,');
+        lPersistencia.Query.SQL.Add('  sexo = :pSexo,');
+        lPersistencia.Query.SQL.Add('  num_prontuario = :pNum_Prontuario,');
+        lPersistencia.Query.SQL.Add('  abo = :pAbo,');
+        lPersistencia.Query.SQL.Add('  rh = :pRh,');
+        lPersistencia.Query.SQL.Add('  cpf = :pCpf,');
+        lPersistencia.Query.SQL.Add('  rg = :pRg,');
+        lPersistencia.Query.SQL.Add('  telefone = :pTelefone,');
+        lPersistencia.Query.SQL.Add('  sus = :pSus,');
+        lPersistencia.Query.SQL.Add('  observacao = :pObservacao');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
+        lPersistencia.setParametro('pId', pObjeto.Id);
       end;
 
-      lPersistencia.setParametro('pId', pObjeto.Id);
       lPersistencia.setParametro('pNome', pObjeto.Nome);
       lPersistencia.setParametro('pNome_Pai', pObjeto.Nome_Pai);
       lPersistencia.setParametro('pNome_Mae', pObjeto.Nome_Mae);

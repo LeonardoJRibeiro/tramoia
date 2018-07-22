@@ -128,7 +128,7 @@ end;
 
 procedure TBolsa.setNumeroBolsa(const pNUMERO_DA_BOLSA: string);
 begin
-  Self.FNumeroBolsa := pNUMERO_DA_BOLSA;
+  Self.FNumeroBolsa := pNUMERO_BOLSA;
 end;
 
 procedure TBolsa.setOrigem(const pORIGEM: string);

@@ -192,7 +192,7 @@ begin
 
 end;
 
-function TBolsaDAO.getExiste(const pNUMERO_DA_BOLSA: string): Boolean;
+function TBolsaDAO.getExiste(const pNUMERO_BOLSA: string): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
@@ -208,7 +208,7 @@ begin
       lPersistencia.Query.SQL.Add('FROM bolsa');
 
       lPersistencia.Query.SQL.Add('WHERE numero_da_bolsa = :pNumeroBolsa');
-      lPersistencia.setParametro('pNumeroBolsa', pNUMERO_DA_BOLSA);
+      lPersistencia.setParametro('pNumeroBolsa', pNUMERO_BOLSA);
 
       lPersistencia.Query.Open;
 

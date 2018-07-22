@@ -12,7 +12,7 @@ type
   public
 
     function getExiste(const pID: Integer): Boolean; overload;
-    function getExiste(const pNUMERO_DA_BOLSA: string): Boolean; overload;
+    function getExiste(const pNUMERO_BOLSA: string): Boolean; overload;
 
     function Excluir(const pID: Integer): Boolean;
     function Salvar(var pObjeto: TBolsa): Boolean;
@@ -136,7 +136,7 @@ begin
         lPersistencia.Query.SQL.Add('  possui_estoque');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pId,');
-        lPersistencia.Query.SQL.Add('  :pNumero_Da_Bolsa,');
+        lPersistencia.Query.SQL.Add('  :pNumero_Bolsa,');
         lPersistencia.Query.SQL.Add('  :pTipo,');
         lPersistencia.Query.SQL.Add('  :pAbo,');
         lPersistencia.Query.SQL.Add('  :pRh,');
@@ -151,7 +151,7 @@ begin
       begin
 
         lPersistencia.Query.SQL.Add('UPDATE bolsa SET');
-        lPersistencia.Query.SQL.Add('  numero_da_bolsa= :pNumero_Da_Bolsa,');
+        lPersistencia.Query.SQL.Add('  numero_da_bolsa= :pNumero_Bolsa,');
         lPersistencia.Query.SQL.Add('  tipo= :pTipo,');
         lPersistencia.Query.SQL.Add('  abo= :pAbo,');
         lPersistencia.Query.SQL.Add('  rh= :pRh,');
@@ -164,7 +164,7 @@ begin
       end;
 
       lPersistencia.setParametro('pId', pObjeto.Id);
-      lPersistencia.setParametro('pNumero_Da_Bolsa', pObjeto.NumeroBolsa);
+      lPersistencia.setParametro('pNumero_Bolsa', pObjeto.NumeroBolsa);
       lPersistencia.setParametro('pTipo', pObjeto.Tipo);
       lPersistencia.setParametro('pAbo', pObjeto.Abo);
       lPersistencia.setParametro('pRh', pObjeto.Rh);
@@ -192,7 +192,7 @@ begin
 
 end;
 
-function TBolsaDAO.getExiste(const pNUMERO_DA_BOLSA: string): Boolean;
+function TBolsaDAO.getExiste(const pNUMERO_BOLSA: string): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
@@ -208,7 +208,7 @@ begin
       lPersistencia.Query.SQL.Add('FROM bolsa');
 
       lPersistencia.Query.SQL.Add('WHERE numero_da_bolsa = :pNumeroBolsa');
-      lPersistencia.setParametro('pNumeroBolsa', pNUMERO_DA_BOLSA);
+      lPersistencia.setParametro('pNumeroBolsa', pNUMERO_BOLSA);
 
       lPersistencia.Query.Open;
 

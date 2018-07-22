@@ -176,13 +176,13 @@ end;
 procedure TFrmRelSaida.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 
-  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelSaida.RadioGroupFiltroTipo',
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelEntrada.RadioGroupFiltroTipo',
     RadioGroupFiltroTipo.ItemIndex.ToString);
 
-  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelSaida.RadioGroupFiltroGrupoSanguineo',
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelEntrada.RadioGroupFiltroGrupoSanguineo',
     RadioGroupFiltroGrupoSanguineo.ItemIndex.ToString);
 
-  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelSaida.RadioGroupFiltroVolume',
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexRadioGroup', 'FrmRelEntrada.RadioGroupFiltroVolume',
     RadioGroupFiltroVolume.ItemIndex.ToString);
 
   Action := caFree;

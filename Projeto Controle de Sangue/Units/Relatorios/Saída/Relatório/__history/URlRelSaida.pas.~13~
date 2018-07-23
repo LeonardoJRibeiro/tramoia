@@ -67,7 +67,7 @@ type
     RLDBTextHospital: TRLDBText;
     RLDBTextPacienteNumProntuario: TRLDBText;
     RLPanel24: TRLPanel;
-    RLLabelPacienteCPF: TRLLabel;
+    RLLabelPacienteNumProntuario: TRLLabel;
     RLPanel26: TRLPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

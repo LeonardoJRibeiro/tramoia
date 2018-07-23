@@ -235,12 +235,12 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextNumeroBolsa: TRLDBText
-        Left = 166
+        Left = 156
         Top = 20
-        Width = 86
+        Width = 106
         Height = 16
         Alignment = taCenter
-        DataField = 'numero_bolsa'
+        DataField = 'numero_da_bolsa'
         DataSource = DataSource
         Text = ''
       end

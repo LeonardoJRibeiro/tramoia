@@ -46,7 +46,6 @@ begin
     pPersistencia.Query.SQL.Add('  s.data_saida,');
     pPersistencia.Query.SQL.Add('  s.hospital,');
     pPersistencia.Query.SQL.Add('  p.nome,');
-    pPersistencia.Query.SQL.Add('  p.cpf,');
     pPersistencia.Query.SQL.Add('  concat(p.abo,p.rh) as abo_pac,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');

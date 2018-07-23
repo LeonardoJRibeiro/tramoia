@@ -198,9 +198,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelBolsa: TRLLabel
-        Left = 667
+        Left = 650
         Top = 6
-        Width = 250
+        Width = 282
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -218,9 +218,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelBolsaNumero: TRLLabel
-        Left = 663
-        Top = 34
-        Width = 135
+        Left = 647
+        Top = 33
+        Width = 148
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -229,7 +229,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        Caption = '01234567890123456789'
+        Caption = 'N'#250'mero'
       end
       object RLPanel4: TRLPanel
         Left = 799
@@ -408,9 +408,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelPacienteCPF: TRLLabel
-        Left = 516
-        Top = 34
-        Width = 75
+        Left = 514
+        Top = 33
+        Width = 76
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -419,7 +419,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        Caption = '70033041121'
+        Caption = 'CPF'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -476,7 +476,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel9: TRLPanel
-        Left = 661
+        Left = 648
         Top = -1
         Width = 1
         Height = 56
@@ -485,7 +485,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel10: TRLPanel
-        Left = 870
+        Left = 883
         Top = -1
         Width = 1
         Height = 56
@@ -541,7 +541,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLPanel5: TRLPanel
-        Left = 775
+        Left = 799
         Top = -1
         Width = 1
         Height = 56
@@ -550,7 +550,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel18: TRLPanel
-        Left = 813
+        Left = 829
         Top = -1
         Width = 1
         Height = 56
@@ -559,9 +559,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLDBTextPacienteABO: TRLDBText
-        Left = 605
+        Left = 595
         Top = 20
-        Width = 53
+        Width = 52
         Height = 16
         Alignment = taCenter
         DataField = 'abo_pac'
@@ -569,7 +569,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLPanel21: TRLPanel
-        Left = 602
+        Left = 593
         Top = -1
         Width = 1
         Height = 56
@@ -578,9 +578,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLDBTextBolsaNumero: TRLDBText
-        Left = 665
+        Left = 650
         Top = 20
-        Width = 108
+        Width = 148
         Height = 16
         Alignment = taCenter
         DataField = 'numero_da_bolsa'
@@ -588,9 +588,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaTipo: TRLDBText
-        Left = 778
+        Left = 801
         Top = 20
-        Width = 32
+        Width = 28
         Height = 16
         Alignment = taCenter
         DataField = 'tipo'
@@ -598,9 +598,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaABO: TRLDBText
-        Left = 815
+        Left = 831
         Top = 20
-        Width = 53
+        Width = 51
         Height = 16
         Alignment = taCenter
         DataField = 'abo_bol'
@@ -608,9 +608,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaVolume: TRLDBText
-        Left = 874
+        Left = 884
         Top = 20
-        Width = 50
+        Width = 48
         Height = 16
         Alignment = taCenter
         DataField = 'volume'

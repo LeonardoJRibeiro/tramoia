@@ -29,7 +29,6 @@ object FrmRelSaida: TFrmRelSaida
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 960
     object GroupBoxDataSaida: TGroupBox
       AlignWithMargins = True
       Left = 3
@@ -46,7 +45,6 @@ object FrmRelSaida: TFrmRelSaida
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 954
       object LabelA: TLabel
         Left = 475
         Top = 28
@@ -83,8 +81,6 @@ object FrmRelSaida: TFrmRelSaida
     BevelInner = bvLowered
     BevelWidth = 2
     TabOrder = 1
-    ExplicitTop = 267
-    ExplicitWidth = 960
     object BtnSair: TBitBtn
       Left = 550
       Top = 9
@@ -360,6 +356,7 @@ object FrmRelSaida: TFrmRelSaida
           'Omitir '
           'Todos')
         TabOrder = 2
+        OnClick = RadioGroupFiltroGrupoSanguineoClick
       end
       object ListBoxGrupoSanguineo: TListBox
         Left = 10
@@ -371,6 +368,7 @@ object FrmRelSaida: TFrmRelSaida
         ShowHint = False
         Sorted = True
         TabOrder = 3
+        OnKeyDown = ListBoxGrupoSanguineoKeyDown
       end
     end
   end
@@ -448,6 +446,7 @@ object FrmRelSaida: TFrmRelSaida
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
         TabOrder = 1
+        OnClick = BtnAddTipoClick
       end
       object RadioGroupFiltroTipo: TRadioGroup
         Left = 10
@@ -462,6 +461,7 @@ object FrmRelSaida: TFrmRelSaida
           'Omitir '
           'Todos')
         TabOrder = 2
+        OnClick = RadioGroupFiltroTipoClick
       end
       object ListBoxTipo: TListBox
         Left = 10
@@ -471,6 +471,7 @@ object FrmRelSaida: TFrmRelSaida
         ItemHeight = 13
         Sorted = True
         TabOrder = 3
+        OnKeyDown = ListBoxTipoKeyDown
       end
     end
   end
@@ -541,6 +542,7 @@ object FrmRelSaida: TFrmRelSaida
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
         TabOrder = 1
+        OnClick = BtnAddVolumeClick
       end
       object RadioGroupFiltroVolume: TRadioGroup
         Left = 10
@@ -555,6 +557,7 @@ object FrmRelSaida: TFrmRelSaida
           'Omitir '
           'Todos')
         TabOrder = 2
+        OnClick = RadioGroupFiltroVolumeClick
       end
       object ListBoxVolume: TListBox
         Left = 10
@@ -566,6 +569,7 @@ object FrmRelSaida: TFrmRelSaida
         ShowHint = False
         Sorted = True
         TabOrder = 3
+        OnKeyDown = ListBoxVolumeKeyDown
       end
     end
   end

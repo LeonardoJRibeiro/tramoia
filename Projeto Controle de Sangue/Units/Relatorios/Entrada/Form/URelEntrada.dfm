@@ -93,6 +93,8 @@ object FrmRelEntrada: TFrmRelEntrada
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      ExplicitLeft = 4
+      ExplicitTop = 4
       object EdtTipo: TEdit
         Left = 10
         Top = 24

@@ -142,14 +142,16 @@ begin
       lAuxStringList := TStringList.Create;
       try
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroTipo), ListBoxTipo, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroTipo, ListBoxTipo, lAuxStringList);
         lRelEntrada.ListTipo.Text := lAuxStringList.Text;
+        lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroGrupoSanguineo), ListBoxGrupoSanguineo,
+        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroGrupoSanguineo, ListBoxGrupoSanguineo,
           lAuxStringList);
         lRelEntrada.ListGrupoSanguineo.Text := lAuxStringList.Text;
+        lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroVolume), ListBoxVolume, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroVolume, ListBoxVolume, lAuxStringList);
         lRelEntrada.ListVolume.Text := lAuxStringList.Text;
 
       finally

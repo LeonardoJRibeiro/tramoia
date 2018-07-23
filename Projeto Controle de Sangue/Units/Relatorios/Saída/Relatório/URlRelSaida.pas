@@ -145,6 +145,8 @@ begin
       FrmRlRelSaida.FCodUsu := pCOD_USU;
       FrmRlRelSaida.FRelSaida := pRELSAIDA;
 
+      Result := False;
+
       if (FrmRlRelSaida.PreparaRelatorio) then
       begin
 

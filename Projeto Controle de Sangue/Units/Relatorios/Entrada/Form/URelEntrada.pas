@@ -121,6 +121,7 @@ var
 
   // Uso esse objeto auxiliar por que o Delphi da erro de compilação se eu passar a property do StringList.
   lAuxStringList: TStringList;
+  lAux: string;
 begin
 
   lRelEntrada := TRelEntrada.Create;
@@ -158,7 +159,10 @@ begin
         lAuxStringList.Destroy;
       end;
 
-      TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada);
+      if not (TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada)) then
+      begin
+        MessageBox(self.Handle, 'Não há registros na sua busca', 'Aviso', MB_OK);
+      end;
 
     except
       on E: Exception do

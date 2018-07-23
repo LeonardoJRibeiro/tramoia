@@ -37,7 +37,6 @@ object FrmRelSaida: TFrmRelSaida
       Height = 59
       Align = alClient
       Caption = 'Data de sa'#237'da'
-      Enabled = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

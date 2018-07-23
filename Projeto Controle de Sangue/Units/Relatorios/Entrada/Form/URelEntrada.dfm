@@ -93,8 +93,6 @@ object FrmRelEntrada: TFrmRelEntrada
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitLeft = 4
-      ExplicitTop = 4
       object EdtTipo: TEdit
         Left = 10
         Top = 24
@@ -150,8 +148,8 @@ object FrmRelEntrada: TFrmRelEntrada
         OnClick = BtnAddTipoClick
       end
       object RadioGroupFiltroTipo: TRadioGroup
-        Left = 10
-        Top = 51
+        Left = 15
+        Top = 53
         Width = 306
         Height = 38
         Caption = 'Filtro'
@@ -546,7 +544,7 @@ object FrmRelEntrada: TFrmRelEntrada
         OnClick = BtnAddVolumeClick
       end
       object RadioGroupFiltroVolume: TRadioGroup
-        Left = 10
+        Left = 3
         Top = 51
         Width = 290
         Height = 38

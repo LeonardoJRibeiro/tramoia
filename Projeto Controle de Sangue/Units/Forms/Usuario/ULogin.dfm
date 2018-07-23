@@ -33542,7 +33542,7 @@ object FrmLogin: TFrmLogin
   end
   object LabelNovoUsuario: TLabel
     Left = 59
-    Top = 452
+    Top = 451
     Width = 179
     Height = 18
     Cursor = crHandPoint

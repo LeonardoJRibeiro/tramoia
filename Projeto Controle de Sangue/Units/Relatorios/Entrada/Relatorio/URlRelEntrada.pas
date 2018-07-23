@@ -117,6 +117,8 @@ begin
       FrmRlRelEntrada.FCodUsu := pCOD_USU;
       FrmRlRelEntrada.FRelEntrada := pRELENTRADA;
 
+      Result := False;
+
       if (FrmRlRelEntrada.PreparaRelatorio) then
       begin
 

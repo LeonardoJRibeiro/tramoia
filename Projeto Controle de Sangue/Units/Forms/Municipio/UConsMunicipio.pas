@@ -15,7 +15,6 @@ type
     procedure EdtConsExit(Sender: TObject);
     procedure DBGridDblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FForeignFormKey: SmallInt;
   public
@@ -36,17 +35,6 @@ procedure TFrmConsMunicipio.DBGridDblClick(Sender: TObject);
 begin
   inherited;
   ModalResult := mrOk;
-end;
-
-procedure TFrmConsMunicipio.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  inherited;
-
-  if (Key = VK_RETURN) then
-  begin
-    DBGridDblClick(Self);
-  end;
-
 end;
 
 procedure TFrmConsMunicipio.EdtConsExit(Sender: TObject);

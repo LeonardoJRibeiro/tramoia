@@ -11,25 +11,29 @@ type
     Image: TImage;
     EdtNome: TEdit;
     EdtSenha: TMaskEdit;
+    BtnLogin: TBitBtn;
+    BtnSair: TBitBtn;
     LabelNovoUsuario: TLabel;
-    ImagemLogin: TImage;
-    ImagemSair: TImage;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtnLoginClick(Sender: TObject);
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnSairClick(Sender: TObject);
     procedure LabelNovoUsuarioClick(Sender: TObject);
     procedure LabelNovoUsuarioMouseEnter(Sender: TObject);
     procedure LabelNovoUsuarioMouseLeave(Sender: TObject);
-    procedure ImagemLoginClick(Sender: TObject);
-    procedure ImagemSairClick(Sender: TObject);
+    procedure BtnLoginMouseEnter(Sender: TObject);
+    procedure BtnLoginMouseLeave(Sender: TObject);
+    procedure BtnSairMouseEnter(Sender: TObject);
+    procedure BtnSairMouseLeave(Sender: TObject);
   private
-    FIdUsuario: Integer;
+    FCodUsu: Integer;
     FNumTentativas: Integer;
 
     function getExisteUsuariosCadastrados: Boolean;
   public
-    class function getLogin(const pIDFORMULARIO: SmallInt; var pId_Usuario: Integer): Boolean;
+    class function getLogin(const pIDFORMULARIO: SmallInt; var pCod_Usu: Integer): Boolean;
   end;
 
 var
@@ -41,12 +45,96 @@ implementation
 
 uses UDMConexao, UClassUsuarioDao, UBiblioteca, UClassMensagem, UCadUsuario, UClassForeignKeyForms;
 
+procedure TFrmLogin.BtnLoginClick(Sender: TObject);
+var
+  lUsuarioDAO: TUsuarioDAO;
+  lId: Integer;
+begin
+
+  lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+
+      if (lUsuarioDAO.getLogin(Trim(EdtNome.Text), Trim(EdtSenha.Text), lId)) then
+      begin
+
+        Self.FCodUsu := lId;
+        ModalResult := mrOk;
+
+      end
+      else
+      begin
+
+        Self.FNumTentativas := Self.FNumTentativas + 1;
+
+        ShowMessage('Senha ou usuário incorreto.');
+
+        if (Self.FNumTentativas = 3) then
+        begin
+          Application.Terminate;
+        end;
+
+        EdtNome.SetFocus;
+
+      end;
+
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create('Erro ao fazer login. Motivo: ' + E.Message);
+      end;
+    end;
+
+  finally
+    lUsuarioDAO.Destroy;
+  end;
+
+end;
+
+procedure TFrmLogin.BtnLoginMouseEnter(Sender: TObject);
+begin
+
+  BtnLogin.Font.Style := [fsBold];
+
+end;
+
+procedure TFrmLogin.BtnLoginMouseLeave(Sender: TObject);
+begin
+
+  BtnLogin.Font.Style := [];
+
+end;
+
+procedure TFrmLogin.BtnSairClick(Sender: TObject);
+begin
+
+  Close;
+
+end;
+
+procedure TFrmLogin.BtnSairMouseEnter(Sender: TObject);
+begin
+
+  BtnSair.Font.Style := [fsBold];
+
+end;
+
+procedure TFrmLogin.BtnSairMouseLeave(Sender: TObject);
+begin
+
+  BtnSair.Font.Style := [];
+
+end;
+
 procedure TFrmLogin.EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
   if (Key = VK_RETURN) then
   begin
-    ImagemLoginClick(Sender);
+
+    BtnLoginClick(Sender);
+
   end;
 
 end;
@@ -56,7 +144,9 @@ begin
 
   if (not Trim(EdtNome.Text).IsEmpty) then
   begin
+
     TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'USUARIO', 'nome usuario', Trim(EdtNome.Text));
+
   end;
 
 end;
@@ -84,18 +174,13 @@ function TFrmLogin.getExisteUsuariosCadastrados: Boolean;
 var
   lUsuarioDAO: TUsuarioDAO;
 begin
-
   lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
   try
 
     try
       Result := lUsuarioDAO.getExisteUsuariosCadastrados;
     except
-      on E: Exception do
-      begin
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(1), ['informações dos usuários', E.Message])),
-          PChar('Erro'), MB_OK + MB_ICONERROR);
-      end;
+
     end;
 
   finally
@@ -104,7 +189,7 @@ begin
 
 end;
 
-class function TFrmLogin.getLogin(const pIDFORMULARIO: SmallInt; var pId_Usuario: Integer): Boolean;
+class function TFrmLogin.getLogin(const pIDFORMULARIO: SmallInt; var pCod_Usu: Integer): Boolean;
 begin
 
   Application.CreateForm(TFrmLogin, FrmLogin);
@@ -115,15 +200,14 @@ begin
       Result := FrmLogin.ShowModal = mrOk;
       if (Result) then
       begin
-        pId_Usuario := FrmLogin.FIdUsuario;
+        pCod_Usu := FrmLogin.FCodUsu;
       end;
 
     except
       on E: Exception do
       begin
         Result := False;
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), ['de login', E.Message])), PChar('Erro'),
-          MB_OK + MB_ICONERROR);
+        raise Exception.Create(Format(TMensagem.getMensagem(0), ['de login', E.Message]));
       end;
     end;
 
@@ -133,58 +217,6 @@ begin
 
 end;
 
-procedure TFrmLogin.ImagemLoginClick(Sender: TObject);
-var
-  lUsuarioDAO: TUsuarioDAO;
-  lId: Integer;
-begin
-
-  lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
-  try
-
-    try
-
-      if (lUsuarioDAO.getLogin(Trim(EdtNome.Text), Trim(EdtSenha.Text), lId)) then
-      begin
-
-        Self.FIdUsuario := lId;
-        ModalResult := mrOk;
-
-      end
-      else
-      begin
-
-        Self.FNumTentativas := Self.FNumTentativas + 1;
-
-        Application.MessageBox(PChar(TMensagem.getMensagem(13)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
-
-        if (Self.FNumTentativas = 3) then
-        begin
-          Application.Terminate;
-        end;
-
-        EdtNome.SetFocus;
-
-      end;
-
-    except
-      on E: Exception do
-      begin
-        Application.MessageBox(PChar(TMensagem.getMensagem(14)), PChar('Erro'), MB_OK + MB_ICONERROR);
-      end;
-    end;
-
-  finally
-    lUsuarioDAO.Destroy;
-  end;
-
-end;
-
-procedure TFrmLogin.ImagemSairClick(Sender: TObject);
-begin
-  Close;
-end;
-
 procedure TFrmLogin.LabelNovoUsuarioClick(Sender: TObject);
 begin
   TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdULogin, -1);
@@ -192,12 +224,15 @@ end;
 
 procedure TFrmLogin.LabelNovoUsuarioMouseEnter(Sender: TObject);
 begin
+
   LabelNovoUsuario.Font.Size := 13;
+
 end;
 
 procedure TFrmLogin.LabelNovoUsuarioMouseLeave(Sender: TObject);
 begin
   LabelNovoUsuario.Font.Size := 11;
+
 end;
 
 end.

@@ -117,6 +117,7 @@ begin
     tfEntre:
       begin
 
+
         pStringList.Add(pLISTBOX.Items[0]);
         pStringList.Add(pLISTBOX.Items[1]);
 
@@ -128,7 +129,7 @@ begin
         for lCount := 0 to pLISTBOX.Items.Count - 1 do
         begin
 
-          pStringList.Add(pLISTBOX.Items[lCount] + IfThen(lCount < pLISTBOX.Items.Count, ',', ''));
+          pStringList.Add(Trim(pLISTBOX.Items[lCount] + IfThen(lCount < pLISTBOX.Items.Count-1, ',', '')));
 
         end;
 

@@ -49,8 +49,6 @@ type
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
-
-    function getAdmin: Boolean;
   public
 
   end;
@@ -63,7 +61,7 @@ implementation
 {$R *.dfm}
 
 uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
-  URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem;
+  URelEntrada, URelSaida, UConsUsuario;
 
 procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
 begin
@@ -109,27 +107,12 @@ end;
 
 procedure TFrmPrincipal.Cadastrar2Click(Sender: TObject);
 begin
-  if (Self.getAdmin) then
-  begin
-    TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
-  end
-  else
-  begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
-  end;
+  TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.Consultar1Click(Sender: TObject);
 begin
-  if (Self.getAdmin) then
-  begin
-    TFrmConsUsuario.getConsUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
-  end
-  else
-  begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
-  end;
-
+  TFrmConsUsuario.getConsUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.Entradas1Click(Sender: TObject);
@@ -158,30 +141,6 @@ end;
 procedure TFrmPrincipal.FormShow(Sender: TObject);
 begin
   TimerLogin.Enabled := True;
-end;
-
-function TFrmPrincipal.getAdmin: Boolean;
-var
-  lUsuaioDao: TUsuarioDAO;
-begin
-
-  lUsuaioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
-  try
-
-    try
-      Result := lUsuaioDao.getAdmin(Self.FIdUsuario);
-    except
-      on E: Exception do
-      begin
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(12), ['inforção do usuário', E.Message])),
-          PChar('Erro'), MB_OK + MB_ICONERROR);
-      end;
-    end;
-
-  finally
-    lUsuaioDao.Destroy;
-  end;
-
 end;
 
 procedure TFrmPrincipal.LogofClick(Sender: TObject);

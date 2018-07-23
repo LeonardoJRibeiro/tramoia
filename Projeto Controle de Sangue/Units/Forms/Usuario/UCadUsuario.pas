@@ -45,7 +45,7 @@ uses
 
 procedure TFrmCadUsuario.BtnNovoClick(Sender: TObject);
 begin
-  Self.FIdUsuario := -1;
+
   EdtNome.Clear;
   EdtSenha.Clear;
   CheckBoxAdministrador.Checked := False;
@@ -117,7 +117,7 @@ begin
       begin
 
         EdtNome.Text := lUsuario.Nome;
-        EdtSenha.Text := TBiblioteca.Crypt('D', Trim(lUsuario.Senha));
+        EdtSenha.Text := lUsuario.Senha;
 
         CheckBoxAdministrador.Checked := lUsuario.Admin = 'S';
 

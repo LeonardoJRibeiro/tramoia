@@ -23,8 +23,6 @@ type
 
     function getExisteUsuariosCadastrados: Boolean;
 
-    function getAdmin(const pID: Integer): Boolean;
-
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
@@ -70,41 +68,6 @@ begin
         raise Exception.Create(E.Message);
       end;
 
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TUsuarioDAO.getAdmin(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  admin');
-      lPersistencia.Query.SQL.Add('FROM usuario');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      Result := lPersistencia.Query.FieldByName('admin').AsString = 'S';
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
     end;
 
   finally
@@ -246,7 +209,6 @@ end;
 function TUsuarioDAO.getLogin(const pNOME, pSENHA: string; var pID: Integer): Boolean;
 var
   lPersistencia: TPersistencia;
-  lSenha: string;
 begin
   Result := False;
 
@@ -268,8 +230,7 @@ begin
       while (not lPersistencia.Query.Eof) do
       begin
 
-        lSenha := TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('senha').AsString.Trim);
-        if (lSenha = pSENHA.Trim) then
+        if (TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('senha').Asstring.Trim) = pSENHA.Trim) then
         begin
           pID := lPersistencia.Query.FieldByName('id').AsInteger;
           Result := True;
@@ -312,7 +273,7 @@ begin
 
       if (not lPersistencia.Query.IsEmpty) then
       begin
-        Result := TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('nome').AsString);
+        Result := TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('nome').Asstring);
       end;
 
     except
@@ -404,9 +365,9 @@ begin
       lPersistencia.Query.Open;
 
       pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').AsString;
-      pObjeto.Senha := lPersistencia.Query.FieldByName('senha').AsString;
-      pObjeto.Admin := lPersistencia.Query.FieldByName('admin').AsString;
+      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').Asstring;
+      pObjeto.Senha := lPersistencia.Query.FieldByName('senha').Asstring;
+      pObjeto.Admin := lPersistencia.Query.FieldByName('admin').Asstring;
 
       Result := True;
 

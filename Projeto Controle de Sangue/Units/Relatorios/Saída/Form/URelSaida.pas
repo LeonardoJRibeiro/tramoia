@@ -144,26 +144,31 @@ begin
       lAuxStringList := TStringList.Create;
       try
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroTipo), ListBoxTipo, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelSaida.FiltroTipo, ListBoxTipo, lAuxStringList);
         lRelSaida.ListTipo.Text := lAuxStringList.Text;
+        lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroGrupoSanguineo), ListBoxGrupoSanguineo,
+        TBibliotecaRelatorio.PreparaStringList(lRelSaida.FiltroGrupoSanguineo, ListBoxGrupoSanguineo,
           lAuxStringList);
         lRelSaida.ListGrupoSanguineo.Text := lAuxStringList.Text;
+        lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroVolume), ListBoxVolume, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelSaida.FiltroVolume, ListBoxVolume, lAuxStringList);
         lRelSaida.ListVolume.Text := lAuxStringList.Text;
 
       finally
         lAuxStringList.Destroy;
       end;
 
-      TFrmRlRelSaida.getRlRelSaida(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelSaida);
+      if not (TFrmRlRelSaida.getRlRelSaida(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelSaida)) then
+      begin
+        MessageBox(self.Handle, 'Não há registros na sua busca', 'Aviso', MB_OK);
+      end;
 
     except
       on E: Exception do
       begin
-        raise Exception.Create(Format(TMensagem.getMensagem(7), ['relatório de entrada', E.Message]));
+        raise Exception.Create(Format(TMensagem.getMensagem(7), ['relatório de saída', E.Message]));
       end;
     end;
 

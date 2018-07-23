@@ -11,29 +11,25 @@ type
     Image: TImage;
     EdtNome: TEdit;
     EdtSenha: TMaskEdit;
-    BtnLogin: TBitBtn;
-    BtnSair: TBitBtn;
     LabelNovoUsuario: TLabel;
+    ImagemLogin: TImage;
+    ImagemSair: TImage;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure BtnLoginClick(Sender: TObject);
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure BtnSairClick(Sender: TObject);
     procedure LabelNovoUsuarioClick(Sender: TObject);
     procedure LabelNovoUsuarioMouseEnter(Sender: TObject);
     procedure LabelNovoUsuarioMouseLeave(Sender: TObject);
-    procedure BtnLoginMouseEnter(Sender: TObject);
-    procedure BtnLoginMouseLeave(Sender: TObject);
-    procedure BtnSairMouseEnter(Sender: TObject);
-    procedure BtnSairMouseLeave(Sender: TObject);
+    procedure ImagemLoginClick(Sender: TObject);
+    procedure ImagemSairClick(Sender: TObject);
   private
     FCodUsu: Integer;
     FNumTentativas: Integer;
 
     function getExisteUsuariosCadastrados: Boolean;
   public
-    class function getLogin(const pIDFORMULARIO: SmallInt; var pCod_Usu: Integer): Boolean;
+    class function getLogin(const pIDFORMULARIO: SmallInt; var pId_Usuario: Integer): Boolean;
   end;
 
 var
@@ -45,7 +41,98 @@ implementation
 
 uses UDMConexao, UClassUsuarioDao, UBiblioteca, UClassMensagem, UCadUsuario, UClassForeignKeyForms;
 
-procedure TFrmLogin.BtnLoginClick(Sender: TObject);
+procedure TFrmLogin.EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  if (Key = VK_RETURN) then
+  begin
+
+    ImagemLoginClick(Sender);
+
+  end;
+
+end;
+
+procedure TFrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+
+  if (not Trim(EdtNome.Text).IsEmpty) then
+  begin
+
+    TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'USUARIO', 'nome usuario', Trim(EdtNome.Text));
+
+  end;
+
+end;
+
+procedure TFrmLogin.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  case (Key) of
+    VK_ESCAPE:
+      begin
+        Close;
+      end;
+  end;
+
+end;
+
+procedure TFrmLogin.FormShow(Sender: TObject);
+begin
+  Self.FNumTentativas := 0;
+  EdtNome.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'USUARIO', 'nome usuario', '');
+  LabelNovoUsuario.Visible := not Self.getExisteUsuariosCadastrados;
+end;
+
+function TFrmLogin.getExisteUsuariosCadastrados: Boolean;
+var
+  lUsuarioDAO: TUsuarioDAO;
+begin
+  lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+      Result := lUsuarioDAO.getExisteUsuariosCadastrados;
+    except
+
+    end;
+
+  finally
+    FreeAndNil(lUsuarioDAO)
+  end;
+
+end;
+
+class function TFrmLogin.getLogin(const pIDFORMULARIO: SmallInt; var pId_Usuario: Integer): Boolean;
+begin
+
+  Application.CreateForm(TFrmLogin, FrmLogin);
+  try
+
+    try
+
+      Result := FrmLogin.ShowModal = mrOk;
+      if (Result) then
+      begin
+        pId_Usuario := FrmLogin.FCodUsu;
+      end;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), ['de login', E.Message])), PChar('Erro'),
+          MB_OK + MB_ICONERROR);
+      end;
+    end;
+
+  finally
+    FreeAndNil(FrmLogin);
+  end;
+
+end;
+
+procedure TFrmLogin.ImagemLoginClick(Sender: TObject);
 var
   lUsuarioDAO: TUsuarioDAO;
   lId: Integer;
@@ -92,116 +179,9 @@ begin
 
 end;
 
-procedure TFrmLogin.BtnLoginMouseEnter(Sender: TObject);
+procedure TFrmLogin.ImagemSairClick(Sender: TObject);
 begin
-
-  BtnLogin.Font.Style := [fsBold];
-
-end;
-
-procedure TFrmLogin.BtnLoginMouseLeave(Sender: TObject);
-begin
-
-  BtnLogin.Font.Style := [];
-
-end;
-
-procedure TFrmLogin.BtnSairClick(Sender: TObject);
-begin
-
   Close;
-
-end;
-
-procedure TFrmLogin.BtnSairMouseEnter(Sender: TObject);
-begin
-
-  BtnSair.Font.Style := [fsBold];
-
-end;
-
-procedure TFrmLogin.BtnSairMouseLeave(Sender: TObject);
-begin
-
-  BtnSair.Font.Style := [];
-
-end;
-
-procedure TFrmLogin.EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-
-  if (Key = VK_RETURN) then
-  begin
-
-    BtnLoginClick(Sender);
-
-  end;
-
-end;
-
-procedure TFrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-
-  if (not Trim(EdtNome.Text).IsEmpty) then
-  begin
-
-    TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'USUARIO', 'nome usuario', Trim(EdtNome.Text));
-
-  end;
-
-end;
-
-procedure TFrmLogin.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-
-  case (Key) of
-    VK_ESCAPE:
-      begin
-        Close;
-      end;
-  end;
-
-end;
-
-procedure TFrmLogin.FormShow(Sender: TObject);
-begin
-  Self.FNumTentativas := 0;
-  EdtNome.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'USUARIO', 'nome usuario', '');
-end;
-
-function TFrmLogin.getExisteUsuariosCadastrados: Boolean;
-var
-  lUsuarioDAO: TUsuarioDAO;
-begin
-
-end;
-
-class function TFrmLogin.getLogin(const pIDFORMULARIO: SmallInt; var pCod_Usu: Integer): Boolean;
-begin
-
-  Application.CreateForm(TFrmLogin, FrmLogin);
-  try
-
-    try
-
-      Result := FrmLogin.ShowModal = mrOk;
-      if (Result) then
-      begin
-        pCod_Usu := FrmLogin.FCodUsu;
-      end;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(0), ['de login', E.Message]));
-      end;
-    end;
-
-  finally
-    FreeAndNil(FrmLogin);
-  end;
-
 end;
 
 procedure TFrmLogin.LabelNovoUsuarioClick(Sender: TObject);

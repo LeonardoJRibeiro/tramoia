@@ -123,13 +123,12 @@ begin
 
   Self.FPersistencia.Destroy;
 
-
   Self.FClientDataSet.Destroy;
 
 end;
 
-class function TFrmRlRelSaida.getRlRelSaida(const pFOREIGNFORMKEY: SmallInt;
-  const pCOD_USU: Integer; const pRELSAIDA: TRelSaida): Boolean;
+class function TFrmRlRelSaida.getRlRelSaida(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+  const pRELSAIDA: TRelSaida): Boolean;
 begin
 
   Application.CreateForm(TFrmRlRelSaida, FrmRlRelSaida);
@@ -146,6 +145,10 @@ begin
 
         if (pRELSAIDA.Visualizar) then
         begin
+          if (FrmRlRelSaida.DataSource.DataSet.IsEmpty) then
+          begin
+            ShowMessage('Vazio');
+          end;
 
           Result := FrmRlRelSaida.RLReport.PreviewModal;
 
@@ -184,7 +187,7 @@ begin
 
     try
 
-      if(lRelSaidaDAO.getRelatorio(Self.FPersistencia, Self.FRelSaida))then
+      if (lRelSaidaDAO.getRelatorio(Self.FPersistencia, Self.FRelSaida)) then
       begin
 
         Result := not Self.FPersistencia.Query.IsEmpty;

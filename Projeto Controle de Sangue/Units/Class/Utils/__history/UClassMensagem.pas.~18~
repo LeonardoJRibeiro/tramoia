@@ -65,7 +65,32 @@ begin
 
     9:
       begin
-        Result := 'Deseja realmente excluir o paciente selecionado?'
+        Result := 'Deseja realmente excluir o %s selecionado?'
+      end;
+
+    10:
+      begin
+        Result := 'Município não encontrado.';
+      end;
+
+    11:
+      begin
+        Result := 'CPF inválido.';
+      end;
+
+    12:
+      begin
+        Result := 'Você não possui permissão para realizar a operação.';
+      end;
+
+    13:
+      begin
+        Result := 'Senha ou usuário incorreto.';
+      end;
+
+    14:
+      begin
+        Result := 'Erro ao realizar o login. Motivo: ';
       end;
   end;
 

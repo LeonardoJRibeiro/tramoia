@@ -82,6 +82,16 @@ begin
       begin
         Result := 'Você não possui permissão para realizar a operação.';
       end;
+
+    13:
+      begin
+        Result := 'Senha ou usuário incorreto.';
+      end;
+
+    14:
+      begin
+        Result := 'Erro ao realizar o login. Motivo: %S';
+      end;
   end;
 
 end;

@@ -45,8 +45,6 @@ inherited FrmConsMunicipio: TFrmConsMunicipio
   inherited PanelBotoes: TPanel
     Top = 281
     Width = 494
-    Enabled = False
-    Visible = False
     ExplicitTop = 281
     ExplicitWidth = 494
   end

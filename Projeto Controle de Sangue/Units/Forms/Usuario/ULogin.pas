@@ -78,6 +78,7 @@ begin
   Self.FNumTentativas := 0;
   EdtNome.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'USUARIO', 'nome usuario', '');
   LabelNovoUsuario.Visible := not Self.getExisteUsuariosCadastrados;
+  EdtNome.Top:= 265;
 end;
 
 function TFrmLogin.getExisteUsuariosCadastrados: Boolean;

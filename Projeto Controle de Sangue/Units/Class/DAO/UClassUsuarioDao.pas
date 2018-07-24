@@ -23,6 +23,8 @@ type
 
     function getExisteUsuariosCadastrados: Boolean;
 
+    function getAdmin(const pID: Integer): Boolean;
+
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
@@ -68,6 +70,41 @@ begin
         raise Exception.Create(E.Message);
       end;
 
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
+function TUsuarioDAO.getAdmin(const pID: Integer): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  admin');
+      lPersistencia.Query.SQL.Add('FROM usuario');
+      lPersistencia.Query.SQL.Add('WHERE id = :pId');
+
+      lPersistencia.setParametro('pId', pID);
+
+      lPersistencia.Query.Open;
+
+      Result := lPersistencia.Query.FieldByName('admin').AsString = 'S';
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
     end;
 
   finally

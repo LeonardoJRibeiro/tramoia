@@ -122,6 +122,7 @@ var
   // Uso esse objeto auxiliar por que o Delphi da erro de compilação se eu passar a property do StringList.
   lAuxStringList: TStringList;
   lAux: string;
+
 begin
 
   lRelEntrada := TRelEntrada.Create;
@@ -141,6 +142,7 @@ begin
       lRelEntrada.Visualizar := pSENDER = BtnVisualizar;
 
       lAuxStringList := TStringList.Create;
+
       try
 
         TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroTipo, ListBoxTipo, lAuxStringList);

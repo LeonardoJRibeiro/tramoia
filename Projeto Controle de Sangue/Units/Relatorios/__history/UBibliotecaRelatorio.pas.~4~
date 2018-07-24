@@ -26,9 +26,6 @@ type
     class procedure setSqlFiltro(const pATRIBUTO: string; const pTIPOFILTRO: TTipoFiltro;
       const pLISTFILTRO: TStringList; const pPersistencia: TPersistencia);
 
-    class function ValidaFiltro(const pTIPOFILTRO: TTipoFiltro; const pLISTBOX: TListBox; const pEDIT: TEdit;
-      var pMensagem: string): Boolean;
-
     constructor Create;
     destructor Destroy; override;
 
@@ -203,39 +200,6 @@ begin
         pPersistencia.setParametro('pListFiltro', pLISTFILTRO.Text.Trim);
 
       end;
-
-  end;
-
-end;
-
-class function TBibliotecaRelatorio.ValidaFiltro(const pTIPOFILTRO: TTipoFiltro; const pLISTBOX: TListBox;
-  const pEDIT: TEdit; var pMensagem: string): Boolean;
-begin
-
-  case (pTIPOFILTRO) of
-
-    tfEntre:
-      begin
-
-        Result := pLISTBOX.Count = 2;
-
-      end;
-    tfSomente, tfOmitir:
-      begin
-
-        Result := pLISTBOX.Count > 1;
-
-      end;
-
-  end;
-
-  if (not Result) then
-  begin
-
-    pMensagem := IfThen(pTIPOFILTRO = tfEntre, 'É necessário dois selecionar dois registros para o filtro',
-      'É necessário selecionar mais de um registro para filtro');
-
-    pEDIT.SetFocus;
 
   end;
 

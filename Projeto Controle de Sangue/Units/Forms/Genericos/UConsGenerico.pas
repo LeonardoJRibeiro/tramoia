@@ -59,13 +59,13 @@ begin
     0: // Palavra Chave
       begin
         EdtCons.NumbersOnly := False;
-        EdtCons.MaxLength := 0;
+        EdtCons.MaxLength := 20;
       end;
 
     1: // Nome
       begin
         EdtCons.NumbersOnly := False;
-        EdtCons.MaxLength := 0;
+        EdtCons.MaxLength := 20;
       end;
 
     2: // Código

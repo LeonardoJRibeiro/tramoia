@@ -243,11 +243,15 @@ object FrmCons: TFrmCons
     Align = alTop
     TabOrder = 2
     object GroupBoxConsulta: TGroupBox
-      Left = 7
-      Top = 6
-      Width = 482
+      Left = 1
+      Top = 7
+      Width = 498
       Height = 64
+      Align = alBottom
       TabOrder = 0
+      ExplicitLeft = 7
+      ExplicitTop = 6
+      ExplicitWidth = 482
       object GroupBoxTipoCons: TGroupBox
         Left = 9
         Top = 7
@@ -275,7 +279,7 @@ object FrmCons: TFrmCons
       object EdtCons: TSearchBox
         Left = 129
         Top = 24
-        Width = 336
+        Width = 350
         Height = 21
         AutoSize = False
         CharCase = ecUpperCase

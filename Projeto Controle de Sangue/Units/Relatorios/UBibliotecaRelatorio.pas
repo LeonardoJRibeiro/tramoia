@@ -117,7 +117,6 @@ begin
     tfEntre:
       begin
 
-
         pStringList.Add(pLISTBOX.Items[0]);
         pStringList.Add(pLISTBOX.Items[1]);
 
@@ -129,7 +128,7 @@ begin
         for lCount := 0 to pLISTBOX.Items.Count - 1 do
         begin
 
-          pStringList.Add(Trim(pLISTBOX.Items[lCount] + IfThen(lCount < pLISTBOX.Items.Count-1, ',', '')));
+          pStringList.Add(Trim(pLISTBOX.Items[lCount] + IfThen(lCount < pLISTBOX.Items.Count - 1, ',', '')));
 
         end;
 
@@ -188,7 +187,7 @@ begin
         pPersistencia.Query.SQL.Add('AND ' + pATRIBUTO + ' BETWEEN :pOpcao1 AND :pOpcao2');
 
         pPersistencia.setParametro('pOpcao1', pLISTFILTRO[0]);
-        pPersistencia.setParametro('pOpcao2', pLISTFILTRO[0]);
+        pPersistencia.setParametro('pOpcao2', pLISTFILTRO[1]);
 
       end;
 
@@ -198,7 +197,7 @@ begin
         pPersistencia.Query.SQL.Add('AND ' + pATRIBUTO + IfThen(pTIPOFILTRO = tfOmitir, 'NOT', '') +
           ' IN (:pListFiltro)');
 
-        pPersistencia.setParametro('pListFiltro', pLISTFILTRO.Text);
+        pPersistencia.setParametro('pListFiltro', pLISTFILTRO.Text.Trim);
 
       end;
 

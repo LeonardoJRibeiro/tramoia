@@ -4,7 +4,7 @@ object FrmCadPaciente: TFrmCadPaciente
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Cadastro de paciente'
-  ClientHeight = 486
+  ClientHeight = 474
   ClientWidth = 580
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -38,24 +38,27 @@ object FrmCadPaciente: TFrmCadPaciente
     Left = 0
     Top = 0
     Width = 580
-    Height = 452
+    Height = 440
     ActivePage = TabSheetDadosGerais
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 452
     object TabSheetDadosGerais: TTabSheet
       Caption = 'Dados gerais'
+      ExplicitHeight = 424
       object PanelDadosPessoais: TPanel
         Left = 0
         Top = 0
         Width = 572
-        Height = 174
+        Height = 161
         Align = alTop
+        BevelOuter = bvNone
         TabOrder = 0
         object GroupBoxDadosPessoais: TGroupBox
           AlignWithMargins = True
-          Left = 4
-          Top = 4
-          Width = 564
+          Left = 3
+          Top = 3
+          Width = 566
           Height = 153
           Align = alTop
           Caption = 'Dados Pessoais'
@@ -66,6 +69,9 @@ object FrmCadPaciente: TFrmCadPaciente
           Font.Style = []
           ParentFont = False
           TabOrder = 0
+          ExplicitLeft = 4
+          ExplicitTop = 4
+          ExplicitWidth = 564
           object LabelSexo: TLabel
             Left = 365
             Top = 17
@@ -255,20 +261,23 @@ object FrmCadPaciente: TFrmCadPaciente
       end
       object PanelEndereco: TPanel
         Left = 0
-        Top = 174
+        Top = 161
         Width = 572
         Height = 168
         Align = alTop
+        BevelOuter = bvNone
         TabOrder = 1
+        ExplicitTop = 174
         object GroupBoxEndereco: TGroupBox
           AlignWithMargins = True
-          Left = 4
-          Top = 4
-          Width = 564
+          Left = 3
+          Top = 3
+          Width = 566
           Height = 158
           Align = alTop
           Caption = 'Endere'#231'o'
           TabOrder = 0
+          ExplicitTop = 2
           object LabelMunicipio: TLabel
             Left = 10
             Top = 61
@@ -382,11 +391,12 @@ object FrmCadPaciente: TFrmCadPaciente
             Top = 76
             Width = 286
             Height = 21
+            TabStop = False
             Color = clInfoBk
             EditLabel.Width = 73
             EditLabel.Height = 13
             EditLabel.Caption = 'Nome Munic'#237'pio'
-            Enabled = False
+            ReadOnly = True
             TabOrder = 4
             Text = 'ITAPURANGA'
           end
@@ -395,11 +405,12 @@ object FrmCadPaciente: TFrmCadPaciente
             Top = 76
             Width = 57
             Height = 21
+            TabStop = False
             Color = clInfoBk
             EditLabel.Width = 33
             EditLabel.Height = 13
             EditLabel.Caption = 'Estado'
-            Enabled = False
+            ReadOnly = True
             TabOrder = 5
             Text = 'GO'
           end
@@ -422,20 +433,25 @@ object FrmCadPaciente: TFrmCadPaciente
       end
       object PanelInformacoesComplementares: TPanel
         Left = 0
-        Top = 342
+        Top = 329
         Width = 572
-        Height = 82
+        Height = 83
         Align = alClient
+        BevelOuter = bvNone
         TabOrder = 2
+        ExplicitHeight = 95
         object GroupBoxInfoComplementares: TGroupBox
           AlignWithMargins = True
-          Left = 4
-          Top = 4
-          Width = 564
+          Left = 3
+          Top = 3
+          Width = 566
           Height = 69
           Align = alTop
           Caption = 'Informa'#231#245'es Complementares'
           TabOrder = 0
+          ExplicitLeft = 4
+          ExplicitTop = 4
+          ExplicitWidth = 564
           object Label12: TLabel
             Left = 10
             Top = 20
@@ -461,11 +477,12 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
+      ExplicitHeight = 424
       object MemoObservacoes: TMemo
         Left = 16
-        Top = 16
+        Top = 10
         Width = 537
-        Height = 425
+        Height = 391
         MaxLength = 1000
         TabOrder = 0
       end
@@ -473,11 +490,12 @@ object FrmCadPaciente: TFrmCadPaciente
   end
   object PanelBotoes: TPanel
     Left = 0
-    Top = 452
+    Top = 440
     Width = 580
     Height = 34
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 452
     object BtnSalvar: TSpeedButton
       Left = 166
       Top = 1

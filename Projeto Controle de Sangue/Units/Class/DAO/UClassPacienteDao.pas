@@ -2,7 +2,7 @@ unit UClassPacienteDAO;
 
 interface
 
-uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassPaciente;
+uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassPaciente, System.Variants;
 
 type
   TPacienteDAO = class(TInterfacedPersistent, IInterfaceDao<TPaciente>)
@@ -131,7 +131,11 @@ begin
         end;
     end;
 
+    pPersistencia.Query.SQL.Add('LIMIT 1000');
+
     pPersistencia.Query.Open;
+
+
 
     Result := True;
 
@@ -369,7 +373,15 @@ begin
       lPersistencia.setParametro('pAbo', pObjeto.Abo);
       lPersistencia.setParametro('pRh', pObjeto.Rh);
       lPersistencia.setParametro('pCpf', pObjeto.Cpf);
-      lPersistencia.setParametro('pRg', pObjeto.Rg);
+      if (Trim(pObjeto.Rg) = '') then
+      begin
+      lPersistencia.setParametro('pRg', null);
+      end
+      else
+      begin
+        lPersistencia.setParametro('pRg', pObjeto.Rg);
+      end;
+
       lPersistencia.setParametro('pTelefone', pObjeto.Telefone);
       lPersistencia.setParametro('pSus', pObjeto.Sus);
       lPersistencia.setParametro('pObservacao', pObjeto.Observacao);

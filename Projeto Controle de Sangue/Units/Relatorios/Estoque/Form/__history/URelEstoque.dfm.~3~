@@ -1,0 +1,45 @@
+﻿object FrmRelEstoque: TFrmRelEstoque
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Relat'#243'rio de Estoque'
+  ClientHeight = 292
+  ClientWidth = 740
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PanelTipoRelatorio: TPanel
+    Left = 0
+    Top = 0
+    Width = 740
+    Height = 65
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 0
+    ExplicitWidth = 730
+    object RadioGroupTipoRelatório: TRadioGroup
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 734
+      Height = 59
+      Align = alClient
+      Caption = 'Tipo de Relat'#243'rio'
+      Columns = 5
+      Items.Strings = (
+        'Resumo por ABO/Rh')
+      TabOrder = 0
+      ExplicitLeft = 537
+      ExplicitTop = 15
+      ExplicitWidth = 42
+      ExplicitHeight = 185
+    end
+  end
+end

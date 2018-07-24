@@ -4,7 +4,7 @@ object FrmSelRelatorio: TFrmSelRelatorio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Selecionar relat'#243'rio'
-  ClientHeight = 122
+  ClientHeight = 161
   ClientWidth = 245
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -25,7 +25,7 @@ object FrmSelRelatorio: TFrmSelRelatorio
     Left = 0
     Top = 0
     Width = 245
-    Height = 81
+    Height = 120
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -203,10 +203,20 @@ object FrmSelRelatorio: TFrmSelRelatorio
       TabOrder = 1
       OnClick = BtnRelSaidaSangueClick
     end
+    object BtnRelEstoque: TBitBtn
+      Left = 2
+      Top = 80
+      Width = 241
+      Height = 39
+      Align = alTop
+      Caption = 'Bolsas em estoque'
+      TabOrder = 2
+      OnClick = BtnRelEstoqueClick
+    end
   end
   object PanelBotoes: TPanel
     Left = 0
-    Top = 81
+    Top = 120
     Width = 245
     Height = 41
     Align = alBottom

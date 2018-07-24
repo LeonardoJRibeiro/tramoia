@@ -98,8 +98,6 @@ procedure TFrmRlRelEntrada.FormDestroy(Sender: TObject);
 begin
 
   Self.FPersistencia.Destroy;
-
-
   Self.FClientDataSet.Destroy;
 
 end;

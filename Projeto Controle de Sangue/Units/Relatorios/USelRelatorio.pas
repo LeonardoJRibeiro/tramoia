@@ -13,6 +13,7 @@ type
     BtnSair: TBitBtn;
     BtnRelEntradaSangue: TBitBtn;
     BtnRelSaidaSangue: TBitBtn;
+    BtnRelEstoque: TBitBtn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -20,6 +21,7 @@ type
     procedure BtnRelSaidaSangueClick(Sender: TObject);
     procedure BtnRelEntradaSangueClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure BtnRelEstoqueClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
@@ -32,7 +34,8 @@ var
 
 implementation
 
-uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida;
+uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida,
+  URelEstoque;
 
 {$R *.dfm}
 { TFrmSelRelatorio }
@@ -42,6 +45,11 @@ begin
 
   TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUSelRelatorio, Self.FCodUsu);
 
+end;
+
+procedure TFrmSelRelatorio.BtnRelEstoqueClick(Sender: TObject);
+begin
+  TFrmRelEstoque.getRelEstoque(TForeignKeyForms.FIdUSelRelatorio, Self.FCodUsu);
 end;
 
 procedure TFrmSelRelatorio.BtnRelSaidaSangueClick(Sender: TObject);

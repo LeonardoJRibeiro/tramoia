@@ -21,6 +21,7 @@ type
     FIdULogin: Byte = 8;
     FIdURelSaida: Byte = 9;
     FIdUConsUsuario: Byte = 10;
+    FIdURelEstoque: Byte = 11;
 
   end;
 

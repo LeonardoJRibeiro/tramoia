@@ -123,7 +123,39 @@ var
   lAuxStringList: TStringList;
   lAux: string;
 
+  lMensagem: string;
+
 begin
+
+  if (not TBibliotecaRelatorio.ValidaFiltro(TTipoFiltro(RadioGroupFiltroTipo.ItemIndex), ListBoxTipo, EdtTipo,
+    lMensagem)) then
+  begin
+
+    Application.MessageBox(PWideChar(lMensagem), 'Aviso', mb_Ok + mb_IconExclamation);
+
+    Exit;
+
+  end;
+
+  if (not TBibliotecaRelatorio.ValidaFiltro(TTipoFiltro(RadioGroupFiltroGrupoSanguineo.ItemIndex),
+    ListBoxGrupoSanguineo, EdtGrupoSanguineo, lMensagem)) then
+  begin
+
+    Application.MessageBox(PWideChar(lMensagem), 'Aviso', mb_Ok + mb_IconExclamation);
+
+    Exit;
+
+  end;
+
+  if (not TBibliotecaRelatorio.ValidaFiltro(TTipoFiltro(RadioGroupFiltroVolume.ItemIndex), ListBoxVolume, EdtVolume,
+    lMensagem)) then
+  begin
+
+    Application.MessageBox(PWideChar(lMensagem), 'Aviso', mb_Ok + mb_IconExclamation);
+
+    Exit;
+
+  end;
 
   lRelEntrada := TRelEntrada.Create;
   try
@@ -149,8 +181,7 @@ begin
         lRelEntrada.ListTipo.Text := lAuxStringList.Text;
         lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroGrupoSanguineo, ListBoxGrupoSanguineo,
-          lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroGrupoSanguineo, ListBoxGrupoSanguineo, lAuxStringList);
         lRelEntrada.ListGrupoSanguineo.Text := lAuxStringList.Text;
         lAuxStringList.Clear;
 
@@ -161,9 +192,9 @@ begin
         lAuxStringList.Destroy;
       end;
 
-      if not (TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada)) then
+      if not(TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada)) then
       begin
-        MessageBox(self.Handle, 'Não há registros na sua busca', 'Aviso', MB_OK);
+        MessageBox(Self.Handle, 'Não há registros na sua busca', 'Aviso', mb_Ok);
       end;
 
     except

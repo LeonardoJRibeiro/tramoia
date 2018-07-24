@@ -121,6 +121,8 @@ var
 
   // Uso esse objeto auxiliar por que o Delphi da erro de compilação se eu passar a property do StringList.
   lAuxStringList: TStringList;
+  lAux: string;
+
 begin
 
   lRelEntrada := TRelEntrada.Create;
@@ -140,23 +142,29 @@ begin
       lRelEntrada.Visualizar := pSENDER = BtnVisualizar;
 
       lAuxStringList := TStringList.Create;
+
       try
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroTipo), ListBoxTipo, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroTipo, ListBoxTipo, lAuxStringList);
         lRelEntrada.ListTipo.Text := lAuxStringList.Text;
+        lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroGrupoSanguineo), ListBoxGrupoSanguineo,
+        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroGrupoSanguineo, ListBoxGrupoSanguineo,
           lAuxStringList);
         lRelEntrada.ListGrupoSanguineo.Text := lAuxStringList.Text;
+        lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(TTipoFiltro(RadioGroupFiltroVolume), ListBoxVolume, lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelEntrada.FiltroVolume, ListBoxVolume, lAuxStringList);
         lRelEntrada.ListVolume.Text := lAuxStringList.Text;
 
       finally
         lAuxStringList.Destroy;
       end;
 
-      TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada);
+      if not (TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada)) then
+      begin
+        MessageBox(self.Handle, 'Não há registros na sua busca', 'Aviso', MB_OK);
+      end;
 
     except
       on E: Exception do

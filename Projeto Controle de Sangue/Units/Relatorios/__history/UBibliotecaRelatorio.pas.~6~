@@ -212,8 +212,6 @@ class function TBibliotecaRelatorio.ValidaFiltro(const pTIPOFILTRO: TTipoFiltro;
   const pEDIT: TEdit; var pMensagem: string): Boolean;
 begin
 
-  Result := True;
-
   case (pTIPOFILTRO) of
 
     tfEntre:
@@ -231,7 +229,7 @@ begin
 
   end;
 
-  if (not Result) and (pTIPOFILTRO in [tfEntre, tfSomente, tfOmitir]) then
+  if (not Result) and (pTIPOFILTRO in (tfEntre, tfSomente, tfOmitir)) then
   begin
 
     pMensagem := IfThen(pTIPOFILTRO = tfEntre, 'É necessário dois selecionar dois registros para o filtro',

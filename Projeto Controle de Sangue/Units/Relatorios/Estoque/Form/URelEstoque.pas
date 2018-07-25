@@ -118,10 +118,41 @@ end;
 procedure TFrmRelEstoque.ChamaRelatorio(const pSENDER: TObject);
 var
   lRelEstoque: TRelEstoque;
+  lMensagem: string;
 
   // Uso esse objeto auxiliar por que o Delphi da erro de compilação se eu passar a property do StringList.
   lAuxStringList: TStringList;
 begin
+
+  if (not TBibliotecaRelatorio.ValidaFiltro(TTipoFiltro(RadioGroupFiltroTipo.ItemIndex), ListBoxTipo, EdtTipo,
+    lMensagem)) then
+  begin
+
+    Application.MessageBox(PWideChar(lMensagem), 'Aviso', mb_Ok + mb_IconExclamation);
+
+    Exit;
+
+  end;
+
+  if (not TBibliotecaRelatorio.ValidaFiltro(TTipoFiltro(RadioGroupFiltroGrupoSanguineo.ItemIndex),
+    ListBoxGrupoSanguineo, EdtGrupoSanguineo, lMensagem)) then
+  begin
+
+    Application.MessageBox(PWideChar(lMensagem), 'Aviso', mb_Ok + mb_IconExclamation);
+
+    Exit;
+
+  end;
+
+  if (not TBibliotecaRelatorio.ValidaFiltro(TTipoFiltro(RadioGroupFiltroVolume.ItemIndex), ListBoxVolume, EdtVolume,
+    lMensagem)) then
+  begin
+
+    Application.MessageBox(PWideChar(lMensagem), 'Aviso', mb_Ok + mb_IconExclamation);
+
+    Exit;
+
+  end;
 
   lRelEstoque := TRelEstoque.Create;
   try

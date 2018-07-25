@@ -212,8 +212,6 @@ class function TBibliotecaRelatorio.ValidaFiltro(const pTIPOFILTRO: TTipoFiltro;
   const pEDIT: TEdit; var pMensagem: string): Boolean;
 begin
 
-  Result := True;
-
   case (pTIPOFILTRO) of
 
     tfEntre:

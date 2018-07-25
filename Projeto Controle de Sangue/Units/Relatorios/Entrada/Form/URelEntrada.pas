@@ -121,8 +121,6 @@ var
 
   // Uso esse objeto auxiliar por que o Delphi da erro de compilação se eu passar a property do StringList.
   lAuxStringList: TStringList;
-  lAux: string;
-
   lMensagem: string;
 
 begin

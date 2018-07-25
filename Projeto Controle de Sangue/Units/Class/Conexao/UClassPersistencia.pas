@@ -170,26 +170,13 @@ end;
 
 procedure TPersistencia.setParametro(const pATRIBUTO: string; pVALORATRIBUIDO: Integer);
 begin
-
-  /// if (pVALORATRIBUIDO <> -1) then
-  // begin
-
   Query.ParamByName(pATRIBUTO).AsInteger := pVALORATRIBUIDO;
-
-  // end
-  // else
-  // begin
-
-  // Query.ParamByName(pATRIBUTO).Value := null;
-
-  // end;
-
 end;
 
 procedure TPersistencia.setParametro(const pATRIBUTO: string; pVALORATRIBUIDO: string);
 begin
 
-  if (pVALORATRIBUIDO <> '-1') then
+  if (pVALORATRIBUIDO <> '') then
   begin
 
     Query.ParamByName(pATRIBUTO).AsString := pVALORATRIBUIDO;
@@ -197,7 +184,6 @@ begin
   end
   else
   begin
-
     Query.ParamByName(pATRIBUTO).Value := null;
 
   end;

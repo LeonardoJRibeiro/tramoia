@@ -4,6 +4,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
   ClientWidth = 802
   OnClose = FormClose
   OnShow = FormShow
+  ExplicitLeft = -4
   ExplicitWidth = 808
   ExplicitHeight = 415
   PixelsPerInch = 96
@@ -25,7 +26,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
           FieldName = 'num_prontuario'
           Title.Alignment = taCenter
           Title.Caption = 'Registro'
-          Width = 94
+          Width = 115
           Visible = True
         end
         item
@@ -33,7 +34,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
           FieldName = 'nome'
           Title.Alignment = taCenter
           Title.Caption = 'Nome'
-          Width = 260
+          Width = 250
           Visible = True
         end
         item
@@ -59,7 +60,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
           FieldName = 'rg'
           Title.Alignment = taCenter
           Title.Caption = 'RG'
-          Width = 62
+          Width = 56
           Visible = True
         end
         item
@@ -68,7 +69,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
           FieldName = 'telefone'
           Title.Alignment = taCenter
           Title.Caption = 'Telefone'
-          Width = 84
+          Width = 81
           Visible = True
         end
         item
@@ -103,27 +104,29 @@ inherited FrmConsPaciente: TFrmConsPaciente
     Width = 802
     ExplicitWidth = 802
     inherited GroupBoxConsulta: TGroupBox
-      Width = 578
-      ExplicitWidth = 578
+      Width = 800
+      ExplicitWidth = 800
       inherited GroupBoxTipoCons: TGroupBox
-        Width = 119
-        ExplicitWidth = 119
+        Width = 136
+        ExplicitWidth = 136
         inherited ComboBoxTipoCons: TComboBox
-          Width = 102
+          Width = 118
           ItemIndex = 2
           Text = 'N'#250'm. Prontu'#225'rio'
           Items.Strings = (
             'Palavra chave'
             'Nome'
             'N'#250'm. Prontu'#225'rio')
-          ExplicitWidth = 102
+          ExplicitWidth = 118
         end
       end
       inherited EdtCons: TSearchBox
-        Left = 138
+        Left = 151
+        Width = 610
         OnExit = EdtConsExit
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitLeft = 138
+        ExplicitLeft = 151
+        ExplicitWidth = 610
       end
     end
   end

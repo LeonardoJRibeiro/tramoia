@@ -18,7 +18,6 @@ inherited FrmConsUsuario: TFrmConsUsuario
       Height = 164
       DataSource = DataSource
       OnDblClick = DBGridDblClick
-      OnKeyDown = DBGridKeyDown
       Columns = <
         item
           Alignment = taRightJustify
@@ -65,12 +64,12 @@ inherited FrmConsUsuario: TFrmConsUsuario
     Width = 472
     ExplicitWidth = 472
     inherited GroupBoxConsulta: TGroupBox
-      Width = 455
-      ExplicitWidth = 455
+      Width = 470
+      ExplicitWidth = 470
       inherited EdtCons: TSearchBox
-        Width = 312
+        Width = 297
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitWidth = 312
+        ExplicitWidth = 297
       end
     end
   end

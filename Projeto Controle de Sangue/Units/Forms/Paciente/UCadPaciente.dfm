@@ -42,10 +42,8 @@ object FrmCadPaciente: TFrmCadPaciente
     ActivePage = TabSheetDadosGerais
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 580
     object TabSheetDadosGerais: TTabSheet
       Caption = 'Dados gerais'
-      ExplicitWidth = 572
       object PanelDadosPessoais: TPanel
         Left = 0
         Top = 0
@@ -54,7 +52,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 572
         object GroupBoxDadosPessoais: TGroupBox
           AlignWithMargins = True
           Left = 3
@@ -70,7 +67,6 @@ object FrmCadPaciente: TFrmCadPaciente
           Font.Style = []
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 566
           object LabelSexo: TLabel
             Left = 365
             Top = 17
@@ -266,7 +262,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 572
         object GroupBoxEndereco: TGroupBox
           AlignWithMargins = True
           Left = 3
@@ -276,7 +271,6 @@ object FrmCadPaciente: TFrmCadPaciente
           Align = alTop
           Caption = 'Endere'#231'o'
           TabOrder = 0
-          ExplicitWidth = 566
           object LabelMunicipio: TLabel
             Left = 10
             Top = 61
@@ -438,7 +432,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitWidth = 572
         object GroupBoxInfoComplementares: TGroupBox
           AlignWithMargins = True
           Left = 3
@@ -448,7 +441,6 @@ object FrmCadPaciente: TFrmCadPaciente
           Align = alTop
           Caption = 'Informa'#231#245'es Complementares'
           TabOrder = 0
-          ExplicitWidth = 566
           object Label12: TLabel
             Left = 10
             Top = 20
@@ -474,10 +466,6 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object MemoObservacoes: TMemo
         Left = 16
         Top = 10
@@ -495,10 +483,9 @@ object FrmCadPaciente: TFrmCadPaciente
     Height = 34
     Align = alBottom
     TabOrder = 1
-    ExplicitWidth = 580
     object BtnSalvar: TSpeedButton
-      Left = 166
-      Top = 1
+      Left = 169
+      Top = 2
       Width = 106
       Height = 31
       HelpType = htKeyword

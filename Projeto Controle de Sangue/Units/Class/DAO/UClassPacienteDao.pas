@@ -135,8 +135,6 @@ begin
 
     pPersistencia.Query.Open;
 
-
-
     Result := True;
 
   except
@@ -373,15 +371,7 @@ begin
       lPersistencia.setParametro('pAbo', pObjeto.Abo);
       lPersistencia.setParametro('pRh', pObjeto.Rh);
       lPersistencia.setParametro('pCpf', pObjeto.Cpf);
-      if (Trim(pObjeto.Rg) = '') then
-      begin
-      lPersistencia.setParametro('pRg', null);
-      end
-      else
-      begin
-        lPersistencia.setParametro('pRg', pObjeto.Rg);
-      end;
-
+      lPersistencia.setParametro('pRg', pObjeto.Rg);
       lPersistencia.setParametro('pTelefone', pObjeto.Telefone);
       lPersistencia.setParametro('pSus', pObjeto.Sus);
       lPersistencia.setParametro('pObservacao', pObjeto.Observacao);

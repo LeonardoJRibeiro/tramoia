@@ -41,6 +41,9 @@ type
     RLPanel16: TRLPanel;
     RLPanel17: TRLPanel;
     RLPanel18: TRLPanel;
+    RLBand2: TRLBand;
+    RLLabelTotalEntradas: TRLLabel;
+    RLDBResultTotalEntradas: TRLDBResult;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

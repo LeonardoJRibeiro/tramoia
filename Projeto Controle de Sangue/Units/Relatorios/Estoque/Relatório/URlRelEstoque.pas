@@ -33,9 +33,20 @@ type
     RLPanel8: TRLPanel;
     RLPanel9: TRLPanel;
     RLPanel10: TRLPanel;
+    RLBand2: TRLBand;
+    RLLabelQuantidadeTotal: TRLLabel;
+    RLDBResultQuantidadeTotal: TRLDBResult;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure RLDBResult1Compute(Sender: TObject; var Value: Variant;
+      var AText: string; var ComputeIt: Boolean);
+    procedure RLDBResultVolumeTotalCompute(Sender: TObject; var Value: Variant;
+      var AText: string; var ComputeIt: Boolean);
+    procedure RLDBResultVolumeTotalBeforePrint(Sender: TObject;
+      var AText: string; var PrintIt: Boolean);
+    procedure RLDBResultQuantidadeTotalCompute(Sender: TObject;
+      var Value: Variant; var AText: string; var ComputeIt: Boolean);
   private
 
     FForeignFormKey: SmallInt;
@@ -185,6 +196,30 @@ begin
     lRelEstoqueDAO.Destroy;
   end;
 
+end;
+
+procedure TFrmRlRelEstoque.RLDBResult1Compute(Sender: TObject;
+  var Value: Variant; var AText: string; var ComputeIt: Boolean);
+begin
+  Value := DataSource.DataSet.FieldByName('quantidade').AsCurrency;
+end;
+
+procedure TFrmRlRelEstoque.RLDBResultQuantidadeTotalCompute(Sender: TObject;
+  var Value: Variant; var AText: string; var ComputeIt: Boolean);
+begin
+  Value := DataSource.DataSet.FieldByName('quantidade').AsCurrency;
+end;
+
+procedure TFrmRlRelEstoque.RLDBResultVolumeTotalBeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+  AText := AText + ' mL';
+end;
+
+procedure TFrmRlRelEstoque.RLDBResultVolumeTotalCompute(Sender: TObject;
+  var Value: Variant; var AText: string; var ComputeIt: Boolean);
+begin
+  Value := Copy(DataSource.DataSet.FieldByName('volume').AsString, 0, 3).ToInteger;
 end;
 
 end.

@@ -47,11 +47,11 @@ begin
     pPersistencia.Query.SQL.Add('  s.hospital,');
     pPersistencia.Query.SQL.Add('  p.nome,');
     pPersistencia.Query.SQL.Add('  p.cpf,');
-    pPersistencia.Query.SQL.Add('  concat(p.abo,' + QuotedStr('/') + ',p.rh) as abo_pac,');
+    pPersistencia.Query.SQL.Add('  concat(p.abo,' + QuotedStr('/') + ',p.rh) AS abo_pac,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  concat(b.abo,' + QuotedStr('/') + ', b.rh) as abo_bol,');
-    pPersistencia.Query.SQL.Add('  b.volume,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo,' + QuotedStr('/') + ', b.rh) AS abo_bol,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_ta,');
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_agh,');
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_37');

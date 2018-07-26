@@ -218,15 +218,17 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       Left = 38
       Top = 153
       Width = 1047
-      Height = 55
+      Height = 30
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
-      Borders.DrawTop = False
+      Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
+      Borders.FixedTop = True
+      Borders.FixedBottom = True
       object RLDBTextDataEntrada: TRLDBText
         Left = 12
-        Top = 20
+        Top = 7
         Width = 80
         Height = 16
         Alignment = taCenter
@@ -236,7 +238,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLDBTextNumeroBolsa: TRLDBText
         Left = 156
-        Top = 20
+        Top = 7
         Width = 106
         Height = 16
         Alignment = taCenter
@@ -246,7 +248,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLDBTextOrigem: TRLDBText
         Left = 324
-        Top = 20
+        Top = 7
         Width = 44
         Height = 16
         Alignment = taCenter
@@ -256,7 +258,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLDBTextTipo: TRLDBText
         Left = 400
-        Top = 20
+        Top = 7
         Width = 26
         Height = 16
         Alignment = taCenter
@@ -266,7 +268,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLDBTextVolume: TRLDBText
         Left = 466
-        Top = 20
+        Top = 7
         Width = 44
         Height = 16
         Alignment = taCenter
@@ -276,7 +278,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLDBTextAboRh: TRLDBText
         Left = 551
-        Top = 20
+        Top = 7
         Width = 36
         Height = 16
         Alignment = taCenter
@@ -286,7 +288,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLDBTextObservacao: TRLDBText
         Left = 795
-        Top = 20
+        Top = 7
         Width = 70
         Height = 16
         Alignment = taCenter
@@ -298,7 +300,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Left = 102
         Top = -2
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -307,7 +309,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Left = 311
         Top = -3
         Width = 1
-        Height = 57
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -316,7 +318,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Left = 384
         Top = -2
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -325,7 +327,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Left = 446
         Top = -2
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -334,7 +336,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Left = 533
         Top = -2
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -343,15 +345,40 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Left = 606
         Top = -1
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
       end
     end
+    object RLBand2: TRLBand
+      Left = 38
+      Top = 183
+      Width = 1047
+      Height = 27
+      BandType = btColumnFooter
+      Borders.Sides = sdAll
+      object RLLabelTotalEntradas: TRLLabel
+        Left = 426
+        Top = 5
+        Width = 176
+        Height = 16
+        Caption = 'Total de Entradas no Per'#237'odo:'
+      end
+      object RLDBResultTotalEntradas: TRLDBResult
+        Left = 608
+        Top = 5
+        Width = 46
+        Height = 16
+        DataField = 'numero_da_bolsa'
+        DataSource = DataSource
+        Info = riCount
+        Text = ''
+      end
+    end
   end
   object DataSource: TDataSource
-    Left = 576
-    Top = 232
+    Left = 944
+    Top = 40
   end
 end

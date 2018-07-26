@@ -114,7 +114,7 @@ begin
     FrmSelRelatorio.FForeignFormKey := pFOREIGNFORMKEY;
     FrmSelRelatorio.FCodUsu := pCOD_USU;
 
-    FrmSelRelatorio.Show;
+    FrmSelRelatorio.ShowModal;
 
     Result := True;
 

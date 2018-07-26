@@ -54,7 +54,7 @@ begin
     pPersistencia.Query.SQL.Add('  b.rh,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo,' + QuotedStr('/') + ', b.rh) AS aborh,');
     pPersistencia.Query.SQL.Add('  b.origem,');
-    pPersistencia.Query.SQL.Add('  b.volume,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
     pPersistencia.Query.SQL.Add('  b.sorologia');
     pPersistencia.Query.SQL.Add('FROM entrada e');
 

@@ -42,9 +42,9 @@ begin
     pPersistencia.IniciaTransacao;
 
     pPersistencia.Query.SQL.Add('SELECT');
-    pPersistencia.Query.SQL.Add('  count(b.id) as quantidade,');
-    pPersistencia.Query.SQL.Add('  sum(b.volume) as volume,');
-    pPersistencia.Query.SQL.Add('  concat(b.abo, ' + QuotedStr('/') + ', b.rh) as abo,');
+    pPersistencia.Query.SQL.Add('  COUNT(b.id) as quantidade,');
+    pPersistencia.Query.SQL.Add('  CONCAT(sum(b.volume), ' + QuotedStr(' mL') + ') as volume,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) as abo,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.sorologia');
     pPersistencia.Query.SQL.Add('FROM bolsa b');

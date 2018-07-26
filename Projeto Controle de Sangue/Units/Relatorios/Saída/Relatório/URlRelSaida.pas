@@ -69,6 +69,9 @@ type
     RLPanel24: TRLPanel;
     RLLabelPacienteCPF: TRLLabel;
     RLPanel26: TRLPanel;
+    RLBand2: TRLBand;
+    RLLabelTotalSaidas: TRLLabel;
+    RLDBResult1: TRLDBResult;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

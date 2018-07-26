@@ -28,6 +28,7 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
     Borders.DrawTop = False
     Borders.DrawRight = False
     Borders.DrawBottom = False
+    Borders.Style = bsBDiagonal
     DataSource = DataSource
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
@@ -68,9 +69,9 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
       Borders.DrawRight = True
       Borders.DrawBottom = True
       object RLLabelQuantidade: TRLLabel
-        Left = 29
+        Left = 302
         Top = 20
-        Width = 123
+        Width = 172
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -79,10 +80,16 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        Caption = 'Quantidade'
+        Caption = 'Quantidade Total'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object RLPanel1: TRLPanel
-        Left = 166
+        Left = 94
         Top = 0
         Width = 1
         Height = 56
@@ -91,9 +98,9 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Transparent = False
       end
       object RLLabelVolume: TRLLabel
-        Left = 209
+        Left = 113
         Top = 20
-        Width = 103
+        Width = 154
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -102,10 +109,16 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        Caption = 'Volume'
+        Caption = 'Volume Total'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object RLPanel2: TRLPanel
-        Left = 359
+        Left = 283
         Top = 0
         Width = 1
         Height = 57
@@ -114,17 +127,24 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Transparent = False
       end
       object RLLabelABO: TRLLabel
-        Left = 404
+        Left = 19
         Top = 20
-        Width = 52
+        Width = 58
         Height = 16
         Alignment = taCenter
+        AutoSize = False
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
         Caption = 'ABO/Rh'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object RLPanel3: TRLPanel
         Left = 491
@@ -138,7 +158,7 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
       object RLLabelTipo: TRLLabel
         Left = 512
         Top = 20
-        Width = 73
+        Width = 74
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -148,6 +168,12 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Borders.DrawRight = False
         Borders.DrawBottom = False
         Caption = 'Tipo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object RLPanel4: TRLPanel
         Left = 606
@@ -171,22 +197,30 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Borders.DrawRight = False
         Borders.DrawBottom = False
         Caption = 'Sorologia'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
     end
     object RLBand1: TRLBand
       Left = 38
       Top = 153
       Width = 718
-      Height = 55
+      Height = 30
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
-      Borders.DrawTop = False
+      Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
+      Borders.FixedTop = True
+      Borders.FixedBottom = True
       object RLDBTextQuantidade: TRLDBText
-        Left = 29
-        Top = 20
-        Width = 123
+        Left = 302
+        Top = 7
+        Width = 172
         Height = 16
         Alignment = taCenter
         DataField = 'quantidade'
@@ -194,9 +228,9 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Text = ''
       end
       object RLDBTextVolume: TRLDBText
-        Left = 209
-        Top = 20
-        Width = 103
+        Left = 167
+        Top = 7
+        Width = 44
         Height = 16
         Alignment = taCenter
         DataField = 'volume'
@@ -204,9 +238,9 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Text = ''
       end
       object RLDBTextABO: TRLDBText
-        Left = 404
-        Top = 20
-        Width = 52
+        Left = 19
+        Top = 7
+        Width = 58
         Height = 16
         Alignment = taCenter
         DataField = 'abo'
@@ -215,7 +249,7 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
       end
       object RLDBTextTipo: TRLDBText
         Left = 512
-        Top = 20
+        Top = 7
         Width = 73
         Height = 16
         Alignment = taCenter
@@ -225,7 +259,7 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
       end
       object RLDBTextSorologia: TRLDBText
         Left = 626
-        Top = 20
+        Top = 7
         Width = 72
         Height = 16
         Alignment = taCenter
@@ -234,19 +268,19 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Text = ''
       end
       object RLPanel7: TRLPanel
-        Left = 166
+        Left = 94
         Top = 0
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
       end
       object RLPanel8: TRLPanel
-        Left = 359
+        Left = 283
         Top = 0
         Width = 1
-        Height = 57
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -255,7 +289,7 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Left = 491
         Top = 0
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -264,10 +298,34 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Left = 606
         Top = 0
         Width = 1
-        Height = 56
+        Height = 30
         Color = clBlack
         ParentColor = False
         Transparent = False
+      end
+    end
+    object RLBand2: TRLBand
+      Left = 38
+      Top = 183
+      Width = 718
+      Height = 27
+      BandType = btColumnFooter
+      Borders.Sides = sdAll
+      object RLLabelQuantidadeTotal: TRLLabel
+        Left = 246
+        Top = 6
+        Width = 168
+        Height = 16
+        Caption = 'Quantidade Total de Bolsas:'
+      end
+      object RLDBResultQuantidadeTotal: TRLDBResult
+        Left = 420
+        Top = 6
+        Width = 43
+        Height = 16
+        Info = riSum
+        Text = ''
+        OnCompute = RLDBResultQuantidadeTotalCompute
       end
     end
   end

@@ -72,6 +72,8 @@ uses System.DateUtils, UBiblioteca, UBibliotecaRelatorio, UClassMensagem, UClass
 
 {$R *.dfm}
 
+{ TFrmRelEstoque }
+
 procedure TFrmRelEstoque.BtnAddGrupoSanguineoClick(Sender: TObject);
 begin
 

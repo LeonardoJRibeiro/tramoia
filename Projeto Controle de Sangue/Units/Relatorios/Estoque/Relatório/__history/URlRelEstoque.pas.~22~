@@ -33,16 +33,31 @@ type
     RLPanel8: TRLPanel;
     RLPanel9: TRLPanel;
     RLPanel10: TRLPanel;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
-    { Private declarations }
+
+    FForeignFormKey: SmallInt;
+    FCodUsu: Integer;
+    FRelEstoque: TRelEstoque;
+    FPersistencia: TPersistencia;
+    FClientDataSet: TClientDataSet;
+
+    function PreparaRelatorio: Boolean;
+
   public
-    { Public declarations }
+    class function getRlRelEstoque(const pFOREIGNFORMKEY: SmallInt;
+      const pCOD_USU: Integer; const pRELESTOQUE: TRelEstoque): Boolean; static;
+
   end;
 
 var
   FrmRlRelEstoque: TFrmRlRelEstoque;
 
 implementation
+
+uses UClassMensagem, UDMConexao, UClassRelEstoqueDAO;
 
 {$R *.dfm}
 
@@ -75,8 +90,6 @@ procedure TFrmRlRelEstoque.FormDestroy(Sender: TObject);
 begin
 
   Self.FPersistencia.Destroy;
-
-
   Self.FClientDataSet.Destroy;
 
 end;
@@ -162,7 +175,7 @@ begin
       on E: Exception do
       begin
         Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(1), ['entradas para gerar o relatório', E.Message]));
+        raise Exception.Create(Format(TMensagem.getMensagem(1), ['estoque para gerar o relatório', E.Message]));
       end;
     end;
 
@@ -171,6 +184,5 @@ begin
   end;
 
 end;
-
 
 end.

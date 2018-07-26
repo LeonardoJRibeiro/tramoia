@@ -116,9 +116,9 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
       object RLLabelABO: TRLLabel
         Left = 404
         Top = 20
-        Width = 52
+        Width = 46
         Height = 16
-        Alignment = taCenter
+        AutoSize = False
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
         Borders.DrawTop = False
@@ -136,11 +136,10 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Transparent = False
       end
       object RLLabelTipo: TRLLabel
-        Left = 512
+        Left = 536
         Top = 20
-        Width = 73
+        Width = 27
         Height = 16
-        Alignment = taCenter
         AutoSize = False
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
@@ -206,7 +205,7 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
       object RLDBTextABO: TRLDBText
         Left = 404
         Top = 20
-        Width = 52
+        Width = 46
         Height = 16
         Alignment = taCenter
         DataField = 'abo'
@@ -214,9 +213,9 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
         Text = ''
       end
       object RLDBTextTipo: TRLDBText
-        Left = 512
+        Left = 536
         Top = 20
-        Width = 73
+        Width = 27
         Height = 16
         Alignment = taCenter
         DataField = 'tipo'

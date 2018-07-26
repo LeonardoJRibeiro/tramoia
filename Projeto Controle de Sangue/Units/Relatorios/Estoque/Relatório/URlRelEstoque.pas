@@ -61,6 +61,8 @@ uses UClassMensagem, UDMConexao, UClassRelEstoqueDAO;
 
 {$R *.dfm}
 
+{ TFrmRlRelEstoque }
+
 procedure TFrmRlRelEstoque.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 

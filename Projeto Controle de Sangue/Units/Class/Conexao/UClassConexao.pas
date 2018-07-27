@@ -2,11 +2,7 @@ unit UClassConexao;
 
 interface
 
-uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
-  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.DApt, Vcl.Grids, Vcl.DBGrids, FireDAC.Comp.DataSet;
+uses System.SysUtils, System.Classes, FireDAC.Comp.Client;
 
 type
   TConexao = class(TPersistent)
@@ -24,8 +20,6 @@ type
 
 implementation
 
-// uses UBiblioteca;
-
 uses UBiblioteca;
 { TConexao }
 
@@ -41,7 +35,7 @@ end;
 
 destructor TConexao.Destroy;
 begin
-
+  FreeAndNil(Self.FDConnection);
   inherited;
 end;
 
@@ -79,7 +73,7 @@ begin
     on E: Exception do
     begin
       Result := False;
-      raise Exception.Create('Erro ao conectar no banco de dados: ' + E.Message);
+      raise Exception.Create('Erro ao conectar no banco de dados. Motivo: ' + E.Message);
     end;
   end;
 

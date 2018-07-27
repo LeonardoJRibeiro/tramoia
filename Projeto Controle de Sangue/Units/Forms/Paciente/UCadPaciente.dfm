@@ -80,7 +80,7 @@ object FrmCadPaciente: TFrmCadPaciente
             Font.Style = []
             ParentFont = False
           end
-          object Label2: TLabel
+          object LabelCpf: TLabel
             Left = 10
             Top = 61
             Width = 33
@@ -150,14 +150,16 @@ object FrmCadPaciente: TFrmCadPaciente
           object EdtCpf: TMaskEdit
             Left = 10
             Top = 77
-            Width = 93
+            Width = 91
             Height = 21
             AutoSize = False
-            EditMask = '000\.000\.000\-00;0;'
+            EditMask = '999\.999\.999\-99;0;'
             MaxLength = 14
             TabOrder = 3
             Text = ''
+            OnEnter = EdtCpfEnter
             OnExit = EdtCpfExit
+            OnKeyPress = EdtCpfKeyPress
           end
           object ComboboxSexo: TComboBox
             Left = 365
@@ -166,7 +168,7 @@ object FrmCadPaciente: TFrmCadPaciente
             Height = 22
             Style = csOwnerDrawFixed
             TabOrder = 1
-            OnEnter = s
+            OnEnter = ComboboxSexoEnter
             Items.Strings = (
               'Masculino'
               'Feminino')
@@ -183,9 +185,9 @@ object FrmCadPaciente: TFrmCadPaciente
           object EdtDataNascimento: TMaskEdit
             Left = 441
             Top = 32
-            Width = 92
+            Width = 86
             Height = 21
-            EditMask = '00/00/0000;1;_'
+            EditMask = '!99/99/9999;1;_'
             MaxLength = 10
             TabOrder = 2
             Text = '  /  /    '
@@ -208,6 +210,7 @@ object FrmCadPaciente: TFrmCadPaciente
             Height = 22
             Style = csOwnerDrawFixed
             TabOrder = 7
+            OnEnter = ComboBoxABOEnter
             Items.Strings = (
               'A+'
               'A-'
@@ -244,13 +247,16 @@ object FrmCadPaciente: TFrmCadPaciente
           end
           object EdtSus: TMaskEdit
             Left = 362
-            Top = 77
-            Width = 115
+            Top = 80
+            Width = 111
             Height = 21
-            EditMask = '00000000000 0000 0;0;_'
+            EditMask = '!999 9999 9999 9999;0;_'
             MaxLength = 18
             TabOrder = 6
             Text = ''
+            OnEnter = EdtSusEnter
+            OnExit = EdtSusExit
+            OnKeyPress = EdtSusKeyPress
           end
         end
       end
@@ -449,8 +455,8 @@ object FrmCadPaciente: TFrmCadPaciente
             Caption = 'Contato'
           end
           object EdtTelefone: TMaskEdit
-            Left = 10
-            Top = 36
+            Left = 3
+            Top = 39
             Width = 87
             Height = 21
             Alignment = taCenter
@@ -458,7 +464,9 @@ object FrmCadPaciente: TFrmCadPaciente
             MaxLength = 14
             TabOrder = 0
             Text = ''
+            OnEnter = EdtTelefoneEnter
             OnExit = EdtTelefoneExit
+            OnKeyPress = EdtTelefoneKeyPress
           end
         end
       end

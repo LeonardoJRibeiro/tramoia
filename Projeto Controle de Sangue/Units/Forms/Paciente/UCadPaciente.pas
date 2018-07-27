@@ -25,7 +25,7 @@ type
     TabSheetDadosGerais: TTabSheet;
     GroupBoxDadosPessoais: TGroupBox;
     LabelSexo: TLabel;
-    Label2: TLabel;
+    LabelCpf: TLabel;
     Label3: TLabel;
     LabelDtNascimento: TLabel;
     Label5: TLabel;
@@ -59,7 +59,6 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure EdtDataNascimentoExit(Sender: TObject);
-    procedure s(Sender: TObject);
     procedure EdtNumProntuarioExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EdtNumeroExit(Sender: TObject);
@@ -68,6 +67,15 @@ type
     procedure EdtCpfExit(Sender: TObject);
     procedure BtnConsMunicipioClick(Sender: TObject);
     procedure EdtCodMunicipioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ComboboxSexoEnter(Sender: TObject);
+    procedure ComboBoxABOEnter(Sender: TObject);
+    procedure EdtSusEnter(Sender: TObject);
+    procedure EdtSusExit(Sender: TObject);
+    procedure EdtTelefoneEnter(Sender: TObject);
+    procedure EdtCpfEnter(Sender: TObject);
+    procedure EdtTelefoneKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtCpfKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSusKeyPress(Sender: TObject; var Key: Char);
   private
     FIdPaciente: Integer;
 
@@ -77,13 +85,15 @@ type
 
     function getIdMunicipio(): Integer;
 
-    function getCodgioMunicipio(const pID: Integer): Integer;
+    function getCodigoMunicipio(const pID: Integer): Integer;
 
     function ValidaCampos: Boolean;
 
     function SalvaPaciente: Boolean;
 
     function SalvaEndereco: Boolean;
+
+    procedure MaskEditKeyPressGeral(var pKey: Char);
 
   public
     class function getCadPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
@@ -95,8 +105,9 @@ var
 
 implementation
 
-uses System.math, UClassMensagem, UClassPaciente, UClassPacienteDao, UDMConexao, UClassEndereco, UClassEnderecoDao,
-  UClassMunicipioDao, UClassMunicipio, UConsMunicipio, UClassForeignKeyForms, UClassBibliotecaDao, UBiblioteca;
+uses System.StrUtils, System.Math, UClassMensagem, UClassPaciente, UClassPacienteDao, UDMConexao, UClassEndereco,
+  UClassEnderecoDao, UClassMunicipioDao, UClassMunicipio, UConsMunicipio, UClassForeignKeyForms, UClassBibliotecaDao,
+  UBiblioteca;
 {$R *.dfm}
 { TFrmCadPaciente }
 
@@ -127,18 +138,6 @@ begin
       end;
 
     end;
-
-  end;
-
-end;
-
-procedure TFrmCadPaciente.s(Sender: TObject);
-begin
-
-  if (ComboboxSexo.ItemIndex = -1) then
-  begin
-
-    ComboboxSexo.DroppedDown := True;
 
   end;
 
@@ -296,6 +295,16 @@ begin
 
   end;
 
+  if (Trim(EdtCpf.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelCpf.Caption])), PChar('Informação'),
+      MB_OK + MB_ICONINFORMATION);
+    EdtCpf.SetFocus;
+    Exit;
+
+  end;
+
   if (Trim(EdtNumProntuario.Text).IsEmpty) then
   begin
 
@@ -338,6 +347,7 @@ begin
   end;
 
   Result := True;
+
 end;
 
 procedure TFrmCadPaciente.EdtCodMunicipioExit(Sender: TObject);
@@ -400,14 +410,42 @@ begin
 
 end;
 
+procedure TFrmCadPaciente.EdtCpfEnter(Sender: TObject);
+begin
+
+  // EdtCpf.EditMask := '';
+
+end;
+
 procedure TFrmCadPaciente.EdtCpfExit(Sender: TObject);
 begin
 
-  if (not TBiblioteca.IsCpfValido(EdtCpf.Text)) then
+  if (not Trim(EdtCpf.Text).IsEmpty) then
   begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(11)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
-    EdtCpf.SetFocus;
+
+    if (not TBiblioteca.IsCpfValido(EdtCpf.Text)) then
+    begin
+
+      Application.MessageBox(PChar(TMensagem.getMensagem(11)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+
+      EdtCpf.SetFocus;
+
+    end
+    else
+    begin
+
+      // EdtCpf.EditMask := '000\.000\.000\-00;0;';
+
+    end;
+
   end;
+
+end;
+
+procedure TFrmCadPaciente.EdtCpfKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  // Self.MaskEditKeyPressGeral(Key);
 
 end;
 
@@ -477,13 +515,79 @@ begin
 
 end;
 
+procedure TFrmCadPaciente.EdtSusEnter(Sender: TObject);
+begin
+
+  // EdtSus.EditMask := '';
+
+end;
+
+procedure TFrmCadPaciente.EdtSusExit(Sender: TObject);
+begin
+
+  if (not Trim(EdtSus.Text).IsEmpty) then
+  begin
+
+    if (Trim(EdtSus.Text).Length = 15) then
+    begin
+
+      // EdtSus.EditMask := '000 0000 0000 0000;0;_';
+
+    end
+    else
+    begin
+
+      Application.MessageBox('Cartão SUS inválido', 'Atenção', MB_ICONWARNING + MB_OK);
+
+      EdtSus.SetFocus;
+
+    end;
+
+  end;
+
+end;
+
+procedure TFrmCadPaciente.EdtSusKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  // Self.MaskEditKeyPressGeral(Key);
+
+end;
+
+procedure TFrmCadPaciente.EdtTelefoneEnter(Sender: TObject);
+begin
+
+  EdtTelefone.EditMask := '';
+
+  EdtTelefone.Text := IfThen(Trim(EdtTelefone.Text).IsEmpty, '62', EdtTelefone.Text);
+
+end;
+
 procedure TFrmCadPaciente.EdtTelefoneExit(Sender: TObject);
 begin
+
+  if (not Trim(EdtTelefone.Text).IsEmpty) then
+  begin
+
+    // Máscara para celular e número fixo.
+    // EdtTelefone.EditMask := IfThen(Trim(EdtTelefone.Text).Length = 11, '!\(99\)00000-0000;0;_', '!\(99\)0000-0000;0;_');
+    EdtTelefone.EditMask := IfThen(Trim(EdtTelefone.Text).Length = 11, '!\(99\)99999-9999;0;_', '!(99)9999-9999;0;_');
+
+  end;
+
   if (GetKeyState(VK_RETURN) < 0) then
   begin
     PageControl.TabIndex := 1;
     MemoObservacoes.SetFocus;
   end;
+
+end;
+
+procedure TFrmCadPaciente.EdtTelefoneKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  Self.MaskEditKeyPressGeral(Key);
+
 end;
 
 procedure TFrmCadPaciente.FormCreate(Sender: TObject);
@@ -544,7 +648,7 @@ begin
 
 end;
 
-function TFrmCadPaciente.getCodgioMunicipio(const pID: Integer): Integer;
+function TFrmCadPaciente.getCodigoMunicipio(const pID: Integer): Integer;
 var
   lMunicipioDao: TMunicipioDAO;
 begin
@@ -572,6 +676,16 @@ begin
 
 end;
 
+procedure TFrmCadPaciente.MaskEditKeyPressGeral(var pKey: Char);
+begin
+
+  if (not(pKey in ['0' .. '9'])) and (pKey <> #8) then
+  begin
+    pKey := #0;
+  end;
+
+end;
+
 function TFrmCadPaciente.CarregaPaciente: Boolean;
 var
   lPaciente: TPaciente;
@@ -588,7 +702,7 @@ begin
       if (lPacienteDao.getObjeto(Self.FIdPaciente, lPaciente)) then
       begin
         EdtNome.Text := lPaciente.Nome;
-        ComboboxSexo.ItemIndex := ifthen(lPaciente.Sexo = 'M', 0, 1);
+        ComboboxSexo.ItemIndex := IfThen(lPaciente.Sexo = 'M', 0, 1);
         EdtDataNascimento.Text := DateToStr(lPaciente.Data_Nascimento);
         EdtCpf.Text := lPaciente.Cpf;
         EdtRg.Text := lPaciente.Rg;
@@ -617,7 +731,7 @@ begin
               if (lEndereco.Id_Municipio > 0) then
               begin
 
-                EdtCodMunicipio.Text := Self.getCodgioMunicipio(lEndereco.Id_Municipio).ToString;
+                EdtCodMunicipio.Text := Self.getCodigoMunicipio(lEndereco.Id_Municipio).ToString;
                 if (EdtCodMunicipio.Text <> '') then
                 begin
                   EdtCodMunicipioExit(Self);
@@ -647,6 +761,20 @@ begin
   finally
     FreeAndNil(lPaciente)
   end;
+
+end;
+
+procedure TFrmCadPaciente.ComboBoxABOEnter(Sender: TObject);
+begin
+
+  ComboBoxABO.DroppedDown := ComboBoxABO.ItemIndex = -1;
+
+end;
+
+procedure TFrmCadPaciente.ComboboxSexoEnter(Sender: TObject);
+begin
+
+  ComboboxSexo.DroppedDown := ComboboxSexo.ItemIndex = -1;
 
 end;
 

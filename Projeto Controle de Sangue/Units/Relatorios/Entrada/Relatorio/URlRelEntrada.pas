@@ -163,7 +163,7 @@ begin
 
     try
 
-      if(lRelEntradaDAO.getRelatorio(Self.FPersistencia, Self.FRelEntrada))then
+      if (lRelEntradaDAO.getRelatorio(Self.FPersistencia, Self.FRelEntrada)) then
       begin
 
         Result := not Self.FPersistencia.Query.IsEmpty;
@@ -172,11 +172,7 @@ begin
         begin
 
           // Usa o ClientDataSet pra não dar erro com o TSQLQuery qnd for gerar o relatório.
-          Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
-          Self.FClientDataSet.Open;
-          Self.FClientDataSet.Active := True;
-
-          DataSource.DataSet := Self.FClientDataSet;
+          DataSource.DataSet := Self.FPersistencia.Query;
 
         end;
 

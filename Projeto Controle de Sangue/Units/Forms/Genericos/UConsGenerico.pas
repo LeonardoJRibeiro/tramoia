@@ -30,7 +30,6 @@ type
   protected
     FPersistencia: TPersistencia;
 
-    FClientDataSet: TClientDataSet;
   private
 
   end;
@@ -90,24 +89,13 @@ end;
 procedure TFrmCons.FormCreate(Sender: TObject);
 begin
 
-  Self.FClientDataSet := TClientDataSet.Create(nil);
-  Self.FClientDataSet.Aggregates.Clear;
-  Self.FClientDataSet.Params.Clear;
-  Self.FClientDataSet.AggregatesActive := False;
-  Self.FClientDataSet.AutoCalcFields := True;
-  Self.FClientDataSet.FetchOnDemand := True;
-  Self.FClientDataSet.ObjectView := True;
-
   Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
 
-  Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
 
 end;
 
 procedure TFrmCons.FormDestroy(Sender: TObject);
 begin
-
-  Self.FClientDataSet.Destroy;
 
   Self.FPersistencia.Destroy;
 

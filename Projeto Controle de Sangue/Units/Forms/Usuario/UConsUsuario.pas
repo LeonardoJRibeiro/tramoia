@@ -39,7 +39,7 @@ uses UClassMensagem, UClassUsuarioDao, UClassUsuario, UDMConexao, UCadUsuario,
 procedure TFrmConsUsuario.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
-  if (TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUConsUsuario, Self.FClientDataSet.FieldByName('id').AsInteger))
+  if (TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUConsUsuario, Self.FPersistencia.Query.FieldByName('id').AsInteger))
   then
   begin
     EdtConsInvokeSearch(Self);
@@ -61,7 +61,7 @@ begin
 
       try
 
-        if (lUsuarioDao.Excluir(Self.FClientDataSet.FieldByName('id').AsInteger)) then
+        if (lUsuarioDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
         begin
           EdtConsInvokeSearch(Self);
         end;
@@ -126,15 +126,12 @@ begin
 
     try
 
-      Self.FClientDataSet.Close;
+
       if (lUsuarioDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
       begin
-        Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
-        Self.FClientDataSet.Open;
-        Self.FClientDataSet.Active := True;
-        DataSource.DataSet := Self.FClientDataSet;
+        DataSource.DataSet := Self.FPersistencia.Query;
 
-        if (not Self.FClientDataSet.IsEmpty) then
+        if (not Self.FPersistencia.Query.IsEmpty) then
         begin
           DBGrid.SetFocus;
         end

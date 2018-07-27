@@ -2,25 +2,27 @@ unit UClassPersistencia;
 
 interface
 
-uses System.Classes, System.SysUtils, IBX.IBDatabase, Data.DB,
-  IBX.IBCustomDataSet, UClassConexao, Data.SqlExpr, Datasnap.Provider;
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Vcl.Grids, Vcl.DBGrids, FireDAC.Comp.DataSet, UClassConexao;
 
 type
   TPersistencia = class(TPersistent)
   private
-    FQuery: TSQLQuery;
-    FDataSetProvider: TDataSetProvider;
-    FTransacao: TIBTransaction;
+
+    FQuery: TFDQuery;
+    FTransacao: TFDTransaction;
 
     FConexao: TConexao;
   protected
 
   public
-    property Query: TSQLQuery read FQuery write FQuery;
+    property Query: TFDQuery read FQuery write FQuery;
 
-    property DataSetProvider: TDataSetProvider read FDataSetProvider write FDataSetProvider;
-
-    property Transacao: TIBTransaction read FTransacao write FTransacao;
+    property Transacao: TFDTransaction read FTransacao write FTransacao;
 
     procedure IniciaTransacao;
 
@@ -48,23 +50,13 @@ type
 
 implementation
 
-uses System.Variants;
-
 { TClassPersistencia }
 
 constructor TPersistencia.Create(const pCONEXAO: TConexao);
 begin
   Self.FConexao := pCONEXAO;
-
-  Self.FQuery := TSQLQuery.Create(nil);
-  Self.FQuery.MaxBlobSize := -1;
-
-  Self.FQuery.SQLConnection := Self.FConexao.SQLConnection;
-
-  Self.FDataSetProvider := TDataSetProvider.Create(nil);
-  Self.FDataSetProvider.UpdateMode := upWhereKeyOnly;
-  Self.FDataSetProvider.DataSet := Self.FQuery;
-
+  Self.FQuery := TFDQuery.Create(nil);
+  Self.FQuery.Connection := Self.FConexao.Connection;
 end;
 
 destructor TPersistencia.Destroy;
@@ -74,14 +66,6 @@ begin
   begin
     Self.Query.Close;
     FreeAndNil(Self.FQuery);
-  end;
-
-  if (Self.FDataSetProvider <> nil) then
-  begin
-
-    Self.FDataSetProvider.DataSet := nil;
-    FreeAndNil(Self.FDataSetProvider);
-
   end;
 
 end;
@@ -165,6 +149,7 @@ end;
 
 procedure TPersistencia.setParametro(const pATRIBUTO: string; pVALORATRIBUIDO: Variant);
 begin
+  Query.ParamByName(pATRIBUTO).DataType := ftVariant;
   Query.ParamByName(pATRIBUTO).Value := pVALORATRIBUIDO;
 end;
 
@@ -184,6 +169,8 @@ begin
   end
   else
   begin
+
+    Query.ParamByName(pATRIBUTO).DataType := ftString;
     Query.ParamByName(pATRIBUTO).Value := null;
 
   end;

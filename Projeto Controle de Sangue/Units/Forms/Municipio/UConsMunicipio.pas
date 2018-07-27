@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UConsGenerico, Data.DB, Vcl.StdCtrls, Vcl.Buttons, Vcl.WinXCtrls, Vcl.Grids,
-  Vcl.DBGrids, Vcl.ExtCtrls;
+  Vcl.DBGrids, Vcl.ExtCtrls, UClassPersistencia;
 
 type
   TFrmConsMunicipio = class(TFrmCons)
@@ -29,7 +29,7 @@ implementation
 
 {$R *.dfm}
 
-uses UClassMunicipioDao, UClassPersistencia, UDMConexao, UClassMensagem, UBiblioteca;
+uses UClassMunicipioDao, UDMConexao, UClassMensagem, UBiblioteca;
 { TFrmConsMunicpio }
 
 procedure TFrmConsMunicipio.DBGridDblClick(Sender: TObject);
@@ -38,8 +38,7 @@ begin
   ModalResult := mrOk;
 end;
 
-procedure TFrmConsMunicipio.DBGridKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TFrmConsMunicipio.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   inherited;
   if (Key = VK_RETURN) then
@@ -60,26 +59,23 @@ end;
 procedure TFrmConsMunicipio.EdtConsInvokeSearch(Sender: TObject);
 var
   lMunicipioDao: TMunicipioDAO;
-  lPersistencia: TPersistencia;
+  lPersistencia: Tpersistencia;
 begin
   inherited;
 
-  lPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+  lPersistencia := Tpersistencia.Create(DataModuleConexao.Conexao);
   try
     lMunicipioDao := TMunicipioDAO.Create(DataModuleConexao.Conexao);
     try
 
       try
 
-        Self.FClientDataSet.Close;
         if (lMunicipioDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, lPersistencia)) then
         begin
-          Self.FClientDataSet.SetProvider(lPersistencia.DataSetProvider);
-          Self.FClientDataSet.Open;
-          Self.FClientDataSet.Active := True;
-          DataSource.DataSet := Self.FClientDataSet;
 
-          if (not Self.FClientDataSet.IsEmpty) then
+          DataSource.DataSet := Self.FPersistencia.Query;
+
+          if (not Self.FPersistencia.Query.IsEmpty) then
           begin
             DBGrid.SetFocus;
           end
@@ -138,7 +134,7 @@ begin
       Result := FrmConsMunicipio.ShowModal = mrOk;
       if (Result) then
       begin
-        pID := FrmConsMunicipio.FClientDataSet.FieldByName('codigo_ibge').AsInteger;
+        pID := FrmConsMunicipio.FPersistencia.Query.FieldByName('codigo_ibge').AsInteger;
       end
       else
       begin

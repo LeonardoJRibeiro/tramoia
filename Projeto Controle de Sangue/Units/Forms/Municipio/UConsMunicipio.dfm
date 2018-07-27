@@ -53,10 +53,9 @@ inherited FrmConsMunicipio: TFrmConsMunicipio
     Width = 494
     ExplicitWidth = 494
     inherited GroupBoxConsulta: TGroupBox
-      Left = 1
-      Top = 7
       Width = 492
-      Align = alBottom
+      ExplicitLeft = 1
+      ExplicitTop = 7
       ExplicitWidth = 474
       inherited EdtCons: TSearchBox
         Top = 20

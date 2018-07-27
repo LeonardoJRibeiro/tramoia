@@ -2,20 +2,21 @@ unit UClassConexao;
 
 interface
 
-uses System.SysUtils, System.Classes, Data.DB, Data.DBXMySQL, Data.SqlExpr;
+uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Vcl.Grids, Vcl.DBGrids, FireDAC.Comp.DataSet;
 
 type
   TConexao = class(TPersistent)
   private
-
-    FSqlConnection: TSQLConnection;
-    FSqlDataset: TSQLDataset;
-
+    FDConnection: TFDConnection;
   public
 
     function PreparaConexao(): Boolean;
 
-    property SqlConnection: TSQLConnection read FSqlConnection write FSqlConnection;
+    property Connection: TFDConnection read FDConnection write FDConnection;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -23,17 +24,18 @@ type
 
 implementation
 
-uses UBiblioteca;
+// uses UBiblioteca;
 
+uses UBiblioteca;
 { TConexao }
 
 constructor TConexao.Create;
 begin
   inherited;
 
-  Self.FSqlConnection := TSQLConnection.Create(nil);
+  Self.FDConnection := TFDConnection.Create(nil);
 
-  Self.FSqlDataset := TSQLDataset.Create(nil);
+  Self.PreparaConexao;
 
 end;
 
@@ -48,42 +50,28 @@ begin
 
   try
 
-    Self.FSqlConnection.Connected := False;
+    Self.FDConnection.Connected := False;
 
-    Self.FSqlConnection.ConnectionName := 'MySQLConnection';
+    Self.FDConnection.LoginPrompt := False;
 
-    Self.FSqlConnection.DriverName := 'MySQL';
+    Self.FDConnection.Params.Clear;
 
-    Self.FSqlConnection.ParamsLoaded := True;
+    Self.FDConnection.Params.Add('DriverID=MySQL');
 
-    Self.FSqlConnection.LoadParamsOnConnect := False;
-
-    Self.FSqlConnection.GetDriverFunc := 'getSQLDriverMYSQL';
-
-    Self.FSqlConnection.LibraryName := 'dbxmys.dll';
-
-    Self.FSqlConnection.VendorLib := 'LIBMYSQL.dll';
-
-    Self.FSqlConnection.LoginPrompt := False;
-
-    Self.FSqlConnection.Params.Clear;
-
-    Self.FSqlConnection.Params.Add('servercharset=utf8');
-
-    Self.FSqlConnection.Params.Add('hostname=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
+    Self.FDConnection.Params.Add('hostname=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
       'hostname', ''));
 
-    Self.FSqlConnection.Params.Add('user_name=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
+    Self.FDConnection.Params.Add('user_name=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
       'user_name', ''));
 
-    Self.FSqlConnection.Params.Add('password=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
+    Self.FDConnection.Params.Add('password=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
       'password', ''));
 
-    Self.FSqlConnection.Params.Add('port=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'port', ''));
+    Self.FDConnection.Params.Add('port=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'port', ''));
 
-    Self.FSqlConnection.Params.Add('Database=banco');
+    Self.FDConnection.Params.Add('Database=banco');
 
-    Self.FSqlConnection.Connected := True;
+    Self.FDConnection.Connected := True;
 
     Result := True;
 

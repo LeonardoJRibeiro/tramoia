@@ -39,27 +39,24 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure RLDBResult1Compute(Sender: TObject; var Value: Variant;
-      var AText: string; var ComputeIt: Boolean);
-    procedure RLDBResultVolumeTotalCompute(Sender: TObject; var Value: Variant;
-      var AText: string; var ComputeIt: Boolean);
-    procedure RLDBResultVolumeTotalBeforePrint(Sender: TObject;
-      var AText: string; var PrintIt: Boolean);
-    procedure RLDBResultQuantidadeTotalCompute(Sender: TObject;
-      var Value: Variant; var AText: string; var ComputeIt: Boolean);
+    procedure RLDBResult1Compute(Sender: TObject; var Value: Variant; var AText: string; var ComputeIt: Boolean);
+    procedure RLDBResultVolumeTotalCompute(Sender: TObject; var Value: Variant; var AText: string;
+      var ComputeIt: Boolean);
+    procedure RLDBResultVolumeTotalBeforePrint(Sender: TObject; var AText: string; var PrintIt: Boolean);
+    procedure RLDBResultQuantidadeTotalCompute(Sender: TObject; var Value: Variant; var AText: string;
+      var ComputeIt: Boolean);
   private
 
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
     FRelEstoque: TRelEstoque;
     FPersistencia: TPersistencia;
-    FClientDataSet: TClientDataSet;
 
     function PreparaRelatorio: Boolean;
 
   public
-    class function getRlRelEstoque(const pFOREIGNFORMKEY: SmallInt;
-      const pCOD_USU: Integer; const pRELESTOQUE: TRelEstoque): Boolean; static;
+    class function getRlRelEstoque(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+      const pRELESTOQUE: TRelEstoque): Boolean; static;
 
   end;
 
@@ -71,14 +68,10 @@ implementation
 uses UClassMensagem, UDMConexao, UClassRelEstoqueDAO;
 
 {$R *.dfm}
-
 { TFrmRlRelEstoque }
 
 procedure TFrmRlRelEstoque.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-
-  Self.FClientDataSet.Close;
-  Self.FClientDataSet.Active := False;
 
   DataSource.DataSet := nil;
 
@@ -89,21 +82,12 @@ begin
 
   Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
 
-  Self.FClientDataSet := TClientDataSet.Create(nil);
-  Self.FClientDataSet.Aggregates.Clear;
-  Self.FClientDataSet.Params.Clear;
-  Self.FClientDataSet.AggregatesActive := False;
-  Self.FClientDataSet.AutoCalcFields := True;
-  Self.FClientDataSet.FetchOnDemand := True;
-  Self.FClientDataSet.ObjectView := True;
-
 end;
 
 procedure TFrmRlRelEstoque.FormDestroy(Sender: TObject);
 begin
 
   Self.FPersistencia.Destroy;
-  Self.FClientDataSet.Destroy;
 
 end;
 
@@ -165,7 +149,7 @@ begin
 
     try
 
-      if(lRelEstoqueDAO.getRelatorio(Self.FPersistencia, Self.FRelEstoque))then
+      if (lRelEstoqueDAO.getRelatorio(Self.FPersistencia, Self.FRelEstoque)) then
       begin
 
         Result := not Self.FPersistencia.Query.IsEmpty;
@@ -173,12 +157,7 @@ begin
         if (Result) then
         begin
 
-          // Usa o ClientDataSet pra não dar erro com o TSQLQuery qnd for gerar o relatório.
-          Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
-          Self.FClientDataSet.Open;
-          Self.FClientDataSet.Active := True;
-
-          DataSource.DataSet := Self.FClientDataSet;
+          DataSource.DataSet := Self.FPersistencia.Query;
 
         end;
 
@@ -198,26 +177,25 @@ begin
 
 end;
 
-procedure TFrmRlRelEstoque.RLDBResult1Compute(Sender: TObject;
-  var Value: Variant; var AText: string; var ComputeIt: Boolean);
+procedure TFrmRlRelEstoque.RLDBResult1Compute(Sender: TObject; var Value: Variant; var AText: string;
+  var ComputeIt: Boolean);
 begin
   Value := DataSource.DataSet.FieldByName('quantidade').AsCurrency;
 end;
 
-procedure TFrmRlRelEstoque.RLDBResultQuantidadeTotalCompute(Sender: TObject;
-  var Value: Variant; var AText: string; var ComputeIt: Boolean);
+procedure TFrmRlRelEstoque.RLDBResultQuantidadeTotalCompute(Sender: TObject; var Value: Variant; var AText: string;
+  var ComputeIt: Boolean);
 begin
   Value := DataSource.DataSet.FieldByName('quantidade').AsCurrency;
 end;
 
-procedure TFrmRlRelEstoque.RLDBResultVolumeTotalBeforePrint(Sender: TObject;
-  var AText: string; var PrintIt: Boolean);
+procedure TFrmRlRelEstoque.RLDBResultVolumeTotalBeforePrint(Sender: TObject; var AText: string; var PrintIt: Boolean);
 begin
   AText := AText + ' mL';
 end;
 
-procedure TFrmRlRelEstoque.RLDBResultVolumeTotalCompute(Sender: TObject;
-  var Value: Variant; var AText: string; var ComputeIt: Boolean);
+procedure TFrmRlRelEstoque.RLDBResultVolumeTotalCompute(Sender: TObject; var Value: Variant; var AText: string;
+  var ComputeIt: Boolean);
 begin
   Value := Copy(DataSource.DataSet.FieldByName('volume').AsString, 0, 3).ToInteger;
 end;

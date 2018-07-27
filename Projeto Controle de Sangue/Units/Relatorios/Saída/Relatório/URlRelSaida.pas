@@ -81,7 +81,6 @@ type
     FCodUsu: Integer;
     FRelSaida: TRelSaida;
     FPersistencia: TPersistencia;
-    FClientDataSet: TClientDataSet;
 
     function PreparaRelatorio: Boolean;
 
@@ -103,9 +102,6 @@ uses UClassMensagem, UDMConexao, UClassRelSaidaDAO;
 procedure TFrmRlRelSaida.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 
-  Self.FClientDataSet.Close;
-  Self.FClientDataSet.Active := False;
-
   DataSource.DataSet := nil;
 
 end;
@@ -115,14 +111,6 @@ begin
 
   Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
 
-  Self.FClientDataSet := TClientDataSet.Create(nil);
-  Self.FClientDataSet.Aggregates.Clear;
-  Self.FClientDataSet.Params.Clear;
-  Self.FClientDataSet.AggregatesActive := False;
-  Self.FClientDataSet.AutoCalcFields := True;
-  Self.FClientDataSet.FetchOnDemand := True;
-  Self.FClientDataSet.ObjectView := True;
-
 end;
 
 procedure TFrmRlRelSaida.FormDestroy(Sender: TObject);
@@ -130,13 +118,10 @@ begin
 
   Self.FPersistencia.Destroy;
 
-
-  Self.FClientDataSet.Destroy;
-
 end;
 
-class function TFrmRlRelSaida.getRlRelSaida(const pFOREIGNFORMKEY: SmallInt;
-  const pCOD_USU: Integer; const pRELSAIDA: TRelSaida): Boolean;
+class function TFrmRlRelSaida.getRlRelSaida(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+  const pRELSAIDA: TRelSaida): Boolean;
 begin
 
   Application.CreateForm(TFrmRlRelSaida, FrmRlRelSaida);
@@ -193,7 +178,7 @@ begin
 
     try
 
-      if(lRelSaidaDAO.getRelatorio(Self.FPersistencia, Self.FRelSaida))then
+      if (lRelSaidaDAO.getRelatorio(Self.FPersistencia, Self.FRelSaida)) then
       begin
 
         Result := not Self.FPersistencia.Query.IsEmpty;
@@ -201,12 +186,7 @@ begin
         if (Result) then
         begin
 
-          // Usa o ClientDataSet pra não dar erro com o TSQLQuery qnd for gerar o relatório.
-          Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
-          Self.FClientDataSet.Open;
-          Self.FClientDataSet.Active := True;
-
-          DataSource.DataSet := Self.FClientDataSet;
+          DataSource.DataSet := Self.FPersistencia.Query;
 
         end;
 

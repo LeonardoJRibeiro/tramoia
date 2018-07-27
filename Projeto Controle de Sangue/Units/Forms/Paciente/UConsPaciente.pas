@@ -53,7 +53,7 @@ begin
   begin
 
     if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario,
-      Self.FClientDataSet.FieldByName('id').AsInteger)) then
+      Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
     begin
       EdtConsInvokeSearch(Self);
     end;
@@ -84,7 +84,7 @@ begin
 
         try
 
-          if (lPacienteDao.excluir(Self.FClientDataSet.FieldByName('id').AsInteger)) then
+          if (lPacienteDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
           begin
             EdtConsInvokeSearch(Self);
           end;
@@ -164,7 +164,7 @@ begin
   else
   begin
 
-    Self.FNumProntuario := Self.FClientDataSet.FieldByName('num_prontuario').AsInteger;
+    Self.FNumProntuario := Self.FPersistencia.Query.FieldByName('num_prontuario').AsInteger;
     ModalResult := mrOk;
 
   end;
@@ -208,15 +208,10 @@ begin
 
     try
 
-      Self.FClientDataSet.Close;
       if (lPacienteDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
       begin
-        Self.FClientDataSet.SetProvider(Self.FPersistencia.DataSetProvider);
-        Self.FClientDataSet.Open;
-        Self.FClientDataSet.Active := True;
-        DataSource.DataSet := Self.FClientDataSet;
-
-        if (not Self.FClientDataSet.IsEmpty) then
+        DataSource.DataSet := Self.FPersistencia.Query;
+        if (not Self.FPersistencia.Query.IsEmpty) then
         begin
           DBGrid.SetFocus;
         end

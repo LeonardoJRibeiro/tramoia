@@ -559,7 +559,13 @@ begin
 
   EdtTelefone.EditMask := '';
 
-  EdtTelefone.Text := IfThen(Trim(EdtTelefone.Text).IsEmpty, '62', EdtTelefone.Text);
+  if (Trim(EdtTelefone.Text).IsEmpty) then
+  begin
+
+    EdtTelefone.Text := '62';
+    EdtTelefone.SelStart :=  3;
+
+  end;
 
 end;
 

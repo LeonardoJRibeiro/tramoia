@@ -35,8 +35,6 @@ begin
 
   Self.FSqlDataset := TSQLDataset.Create(nil);
 
-  Self.PreparaConexao;
-
 end;
 
 destructor TConexao.Destroy;

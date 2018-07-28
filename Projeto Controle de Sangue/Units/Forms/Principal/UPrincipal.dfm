@@ -45125,6 +45125,10 @@ object FrmPrincipal: TFrmPrincipal
         OnClick = Consultar1Click
       end
     end
+    object MenuItemSobre: TMenuItem
+      Caption = 'Sobre'
+      OnClick = MenuItemSobreClick
+    end
     object Logof: TMenuItem
       Caption = 'Logoff'
       OnClick = LogofClick

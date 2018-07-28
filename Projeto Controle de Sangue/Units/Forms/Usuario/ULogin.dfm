@@ -13,7 +13,7 @@ object FrmLogin: TFrmLogin
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnShow = FormShow

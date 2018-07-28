@@ -87,7 +87,7 @@
         <DCC_ExeOutput>..\Projeto Controle de Sangue\exe\</DCC_ExeOutput>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Locale>1046</VerInfo_Locale>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <BT_BuildType>Debug</BT_BuildType>
@@ -211,6 +211,10 @@
         </DCCReference>
         <DCCReference Include="Units\Relatorios\Estoque\Class\UClassRelEstoque.pas"/>
         <DCCReference Include="Units\Relatorios\Estoque\Class\UClassRelEstoqueDAO.pas"/>
+        <DCCReference Include="Units\Forms\Sobre\USobre.pas">
+            <Form>FrmSobre</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,126 +1,128 @@
 unit UPrincipal;
 
- interface
+interface
 
- uses
-   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, UClassActiveControl, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
-   Vcl.Menus, acPNG;
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, UClassActiveControl, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
+  Vcl.Menus, acPNG;
 
- type
-   TFrmPrincipal = class(TForm)
-     BtnEntrada: TSpeedButton;
-     BtnSaida: TSpeedButton;
-     BtnPacientes: TSpeedButton;
-     Panel1: TPanel;
-     Panel2: TPanel;
-     BtnSair: TSpeedButton;
-     Panel3: TPanel;
-     MainMenu: TMainMenu;
-     Paciente1: TMenuItem;
-     Cadastrar1: TMenuItem;
-     Histrico1: TMenuItem;
-     Relatrios1: TMenuItem;
-     Entradas1: TMenuItem;
-     Sadas1: TMenuItem;
-     Usurios1: TMenuItem;
-     Cadastrar2: TMenuItem;
-     Consultar1: TMenuItem;
-     BtnRelatorios: TSpeedButton;
-     Panel4: TPanel;
-     TimerLogin: TTimer;
-     Logof: TMenuItem;
-     ImageUEG: TImage;
-     procedure FormCreate(Sender: TObject);
-     procedure FormDestroy(Sender: TObject);
-     procedure BtnPacientesClick(Sender: TObject);
-     procedure BtnSairClick(Sender: TObject);
-     procedure TimerLoginTimer(Sender: TObject);
-     procedure FormShow(Sender: TObject);
-     procedure LogofClick(Sender: TObject);
-     procedure BtnSaidaClick(Sender: TObject);
-     procedure BtnEntradaClick(Sender: TObject);
-     procedure BtnRelatoriosClick(Sender: TObject);
-     procedure Cadastrar2Click(Sender: TObject);
-     procedure Cadastrar1Click(Sender: TObject);
-     procedure Entradas1Click(Sender: TObject);
-     procedure Sadas1Click(Sender: TObject);
-     procedure Consultar1Click(Sender: TObject);
-   private
-     FActiveControl: TActiveControl;
-     FIdUsuario: Integer;
+type
+  TFrmPrincipal = class(TForm)
+    BtnEntrada: TSpeedButton;
+    BtnSaida: TSpeedButton;
+    BtnPacientes: TSpeedButton;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    BtnSair: TSpeedButton;
+    Panel3: TPanel;
+    MainMenu: TMainMenu;
+    Paciente1: TMenuItem;
+    Cadastrar1: TMenuItem;
+    Histrico1: TMenuItem;
+    Relatrios1: TMenuItem;
+    Entradas1: TMenuItem;
+    Sadas1: TMenuItem;
+    Usurios1: TMenuItem;
+    Cadastrar2: TMenuItem;
+    Consultar1: TMenuItem;
+    BtnRelatorios: TSpeedButton;
+    Panel4: TPanel;
+    TimerLogin: TTimer;
+    Logof: TMenuItem;
+    ImageUEG: TImage;
+    MenuItemSobre: TMenuItem;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure BtnPacientesClick(Sender: TObject);
+    procedure BtnSairClick(Sender: TObject);
+    procedure TimerLoginTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure LogofClick(Sender: TObject);
+    procedure BtnSaidaClick(Sender: TObject);
+    procedure BtnEntradaClick(Sender: TObject);
+    procedure BtnRelatoriosClick(Sender: TObject);
+    procedure Cadastrar2Click(Sender: TObject);
+    procedure Cadastrar1Click(Sender: TObject);
+    procedure Entradas1Click(Sender: TObject);
+    procedure Sadas1Click(Sender: TObject);
+    procedure Consultar1Click(Sender: TObject);
+    procedure MenuItemSobreClick(Sender: TObject);
+  private
+    FActiveControl: TActiveControl;
+    FIdUsuario: Integer;
 
     function getAdmin: Boolean;
-   public
+  public
 
-   end;
+  end;
 
- var
-   FrmPrincipal: TFrmPrincipal;
+var
+  FrmPrincipal: TFrmPrincipal;
 
- implementation
+implementation
 
- {$R *.dfm}
+{$R *.dfm}
 
- uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
-  URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem;
+uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
+  URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre;
 
- procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
- begin
+procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
+begin
 
-   TFrmEntrada.getEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+  TFrmEntrada.getEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
- end;
+end;
 
- procedure TFrmPrincipal.BtnPacientesClick(Sender: TObject);
- var
-   lRegistro: string;
- begin
+procedure TFrmPrincipal.BtnPacientesClick(Sender: TObject);
+var
+  lRegistro: string;
+begin
 
-   TFrmConsPaciente.getConsPaciente(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario, lRegistro);
+  TFrmConsPaciente.getConsPaciente(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario, lRegistro);
 
- end;
+end;
 
- procedure TFrmPrincipal.BtnRelatoriosClick(Sender: TObject);
- begin
+procedure TFrmPrincipal.BtnRelatoriosClick(Sender: TObject);
+begin
 
-   TFrmSelRelatorio.getSelRelatorio(TForeignKeyForms.FIdUSelRelatorio, Self.FIdUsuario);
+  TFrmSelRelatorio.getSelRelatorio(TForeignKeyForms.FIdUSelRelatorio, Self.FIdUsuario);
 
- end;
+end;
 
- procedure TFrmPrincipal.BtnSaidaClick(Sender: TObject);
- begin
+procedure TFrmPrincipal.BtnSaidaClick(Sender: TObject);
+begin
 
-   TFrmSaida.getSaida(TForeignKeyForms.FIdUPrincipal, 1);
+  TFrmSaida.getSaida(TForeignKeyForms.FIdUPrincipal, 1);
 
- end;
+end;
 
- procedure TFrmPrincipal.BtnSairClick(Sender: TObject);
- begin
-   Close;
- end;
+procedure TFrmPrincipal.BtnSairClick(Sender: TObject);
+begin
+  Close;
+end;
 
- procedure TFrmPrincipal.Cadastrar1Click(Sender: TObject);
- begin
+procedure TFrmPrincipal.Cadastrar1Click(Sender: TObject);
+begin
 
-   TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario);
+  TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario);
 
- end;
+end;
 
- procedure TFrmPrincipal.Cadastrar2Click(Sender: TObject);
- begin
+procedure TFrmPrincipal.Cadastrar2Click(Sender: TObject);
+begin
   if (Self.getAdmin) then
   begin
     TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
   end
   else
   begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'),MB_OK + MB_ICONINFORMATION);
+    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
- end;
+end;
 
- procedure TFrmPrincipal.Consultar1Click(Sender: TObject);
- begin
+procedure TFrmPrincipal.Consultar1Click(Sender: TObject);
+begin
   if (Self.getAdmin) then
   begin
     TFrmConsUsuario.getConsUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
@@ -130,35 +132,35 @@ unit UPrincipal;
     Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
 
- end;
+end;
 
- procedure TFrmPrincipal.Entradas1Click(Sender: TObject);
- begin
+procedure TFrmPrincipal.Entradas1Click(Sender: TObject);
+begin
 
-   TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+  TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
- end;
+end;
 
- procedure TFrmPrincipal.FormCreate(Sender: TObject);
- begin
+procedure TFrmPrincipal.FormCreate(Sender: TObject);
+begin
 
-   Self.FActiveControl := TActiveControl.Create;
+  Self.FActiveControl := TActiveControl.Create;
 
-   Application.OnMessage := Self.FActiveControl.OnMessage;
+  Application.OnMessage := Self.FActiveControl.OnMessage;
 
- end;
+end;
 
- procedure TFrmPrincipal.FormDestroy(Sender: TObject);
- begin
+procedure TFrmPrincipal.FormDestroy(Sender: TObject);
+begin
 
-   Self.FActiveControl.Destroy;
+  Self.FActiveControl.Destroy;
 
- end;
+end;
 
- procedure TFrmPrincipal.FormShow(Sender: TObject);
- begin
-   TimerLogin.Enabled := True;
- end;
+procedure TFrmPrincipal.FormShow(Sender: TObject);
+begin
+  TimerLogin.Enabled := True;
+end;
 
 function TFrmPrincipal.getAdmin: Boolean;
 var
@@ -184,28 +186,35 @@ begin
 
 end;
 
- procedure TFrmPrincipal.LogofClick(Sender: TObject);
- begin
-   TimerLogin.Enabled := True;
- end;
+procedure TFrmPrincipal.LogofClick(Sender: TObject);
+begin
+  TimerLogin.Enabled := True;
+end;
 
- procedure TFrmPrincipal.Sadas1Click(Sender: TObject);
- begin
+procedure TFrmPrincipal.MenuItemSobreClick(Sender: TObject);
+begin
 
-   TFrmRelSaida.getRelSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+  TFrmSobre.getSobre(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
- end;
+end;
 
- procedure TFrmPrincipal.TimerLoginTimer(Sender: TObject);
- begin
+procedure TFrmPrincipal.Sadas1Click(Sender: TObject);
+begin
 
-   TimerLogin.Enabled := False;
+  TFrmRelSaida.getRelSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
-   if (not TFrmLogin.getLogin(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario)) then
-   begin
-     Close;
-   end;
+end;
 
- end;
+procedure TFrmPrincipal.TimerLoginTimer(Sender: TObject);
+begin
 
- end.
+  TimerLogin.Enabled := False;
+
+  if (not TFrmLogin.getLogin(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario)) then
+  begin
+    Close;
+  end;
+
+end;
+
+end.

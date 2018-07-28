@@ -65,11 +65,13 @@ inherited FrmConsUsuario: TFrmConsUsuario
     ExplicitWidth = 472
     inherited GroupBoxConsulta: TGroupBox
       Width = 470
+      ExplicitLeft = 1
+      ExplicitTop = 7
       ExplicitWidth = 470
       inherited EdtCons: TSearchBox
-        Width = 297
+        Width = 328
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitWidth = 297
+        ExplicitWidth = 328
       end
     end
   end

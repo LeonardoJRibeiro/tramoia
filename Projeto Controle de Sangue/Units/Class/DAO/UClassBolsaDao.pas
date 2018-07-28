@@ -13,10 +13,11 @@ type
 
     function getExiste(const pID: Integer): Boolean; overload;
     function getExiste(const pNUMERO_DA_BOLSA: string): Boolean; overload;
-
     function Excluir(const pID: Integer): Boolean;
     function Salvar(var pObjeto: TBolsa): Boolean;
     function getObjeto(const pID: Integer; var pObjeto: TBolsa): Boolean;
+
+    function getIdBolsa(const pNUMERO_DA_BOLSA: string): Integer;
 
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
@@ -123,9 +124,7 @@ begin
       if (not Self.getExiste(pObjeto.Id)) then
       begin
 
-        pObjeto.Id := lPersistencia.getProximoCodigo('bolsa', 'id');
         lPersistencia.Query.SQL.Add('INSERT INTO bolsa (');
-        lPersistencia.Query.SQL.Add('  id,');
         lPersistencia.Query.SQL.Add('  numero_da_bolsa,');
         lPersistencia.Query.SQL.Add('  tipo,');
         lPersistencia.Query.SQL.Add('  abo,');
@@ -135,7 +134,6 @@ begin
         lPersistencia.Query.SQL.Add('  sorologia,');
         lPersistencia.Query.SQL.Add('  possui_estoque');
         lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pId,');
         lPersistencia.Query.SQL.Add('  :pNumero_Da_Bolsa,');
         lPersistencia.Query.SQL.Add('  :pTipo,');
         lPersistencia.Query.SQL.Add('  :pAbo,');
@@ -161,9 +159,10 @@ begin
         lPersistencia.Query.SQL.Add('  possui_estoque= :pPossui_Estoque');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
+        lPersistencia.setParametro('pId', pObjeto.Id);
+
       end;
 
-      lPersistencia.setParametro('pId', pObjeto.Id);
       lPersistencia.setParametro('pNumero_Da_Bolsa', pObjeto.NumeroBolsa);
       lPersistencia.setParametro('pTipo', pObjeto.Tipo);
       lPersistencia.setParametro('pAbo', pObjeto.Abo);
@@ -229,6 +228,46 @@ begin
 
 end;
 
+function TBolsaDAO.getIdBolsa(const pNUMERO_DA_BOLSA: string): Integer;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  id');
+      lPersistencia.Query.SQL.Add('FROM bolsa');
+
+      lPersistencia.Query.SQL.Add('WHERE numero_da_bolsa = :pNumeroBolsa');
+      lPersistencia.setParametro('pNumeroBolsa', pNUMERO_DA_BOLSA);
+
+      lPersistencia.Query.Open;
+
+      Result := -1;
+      if (not lPersistencia.Query.IsEmpty) then
+      begin
+        Result := lPersistencia.Query.FieldByName('id').AsInteger;
+      end;
+
+    except
+      on E: Exception do
+      begin
+        Result := -1;
+        raise Exception.Create(E.Message);
+      end;
+
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
 
 function TBolsaDAO.getObjeto(const pID: Integer; var pObjeto: TBolsa): Boolean;
 var
@@ -243,15 +282,15 @@ begin
       lPersistencia.IniciaTransacao;
 
       lPersistencia.Query.SQL.Add('SELECT');
-        lPersistencia.Query.SQL.Add('  id,');
-        lPersistencia.Query.SQL.Add('  numero_da_bolsa,');
-        lPersistencia.Query.SQL.Add('  tipo,');
-        lPersistencia.Query.SQL.Add('  abo,');
-        lPersistencia.Query.SQL.Add('  rh,');
-        lPersistencia.Query.SQL.Add('  origem,');
-        lPersistencia.Query.SQL.Add('  volume,');
-        lPersistencia.Query.SQL.Add('  sorologia,');
-        lPersistencia.Query.SQL.Add('  possui_estoque');
+      lPersistencia.Query.SQL.Add('  id,');
+      lPersistencia.Query.SQL.Add('  numero_da_bolsa,');
+      lPersistencia.Query.SQL.Add('  tipo,');
+      lPersistencia.Query.SQL.Add('  abo,');
+      lPersistencia.Query.SQL.Add('  rh,');
+      lPersistencia.Query.SQL.Add('  origem,');
+      lPersistencia.Query.SQL.Add('  volume,');
+      lPersistencia.Query.SQL.Add('  sorologia,');
+      lPersistencia.Query.SQL.Add('  possui_estoque');
       lPersistencia.Query.SQL.Add('FROM bolsa');
 
       lPersistencia.Query.SQL.Add('WHERE id= :pId');

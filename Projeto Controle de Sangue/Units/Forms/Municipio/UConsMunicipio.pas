@@ -59,46 +59,39 @@ end;
 procedure TFrmConsMunicipio.EdtConsInvokeSearch(Sender: TObject);
 var
   lMunicipioDao: TMunicipioDAO;
-  lPersistencia: Tpersistencia;
 begin
   inherited;
 
-  lPersistencia := Tpersistencia.Create(DataModuleConexao.Conexao);
+  lMunicipioDao := TMunicipioDAO.Create(DataModuleConexao.Conexao);
   try
-    lMunicipioDao := TMunicipioDAO.Create(DataModuleConexao.Conexao);
+
     try
 
-      try
+      if (lMunicipioDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
+      begin
 
-        if (lMunicipioDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, lPersistencia)) then
+        DataSource.DataSet := Self.FPersistencia.Query;
+
+        if (not Self.FPersistencia.Query.IsEmpty) then
         begin
-
-          DataSource.DataSet := Self.FPersistencia.Query;
-
-          if (not Self.FPersistencia.Query.IsEmpty) then
-          begin
-            DBGrid.SetFocus;
-          end
-          else
-          begin
-            EdtCons.SetFocus;
-          end
-
-        end;
-
-      except
-        on E: Exception do
+          DBGrid.SetFocus;
+        end
+        else
         begin
-          raise Exception.Create(Format(TMensagem.getMensagem(1), ['municípios(s)', E.Message]));
-        end;
+          EdtCons.SetFocus;
+        end
+
       end;
 
-    finally
-      lMunicipioDao.Destroy;
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create(Format(TMensagem.getMensagem(1), ['municípios(s)', E.Message]));
+      end;
     end;
 
   finally
-    lPersistencia.Destroy;
+    lMunicipioDao.Destroy;
   end;
 
 end;

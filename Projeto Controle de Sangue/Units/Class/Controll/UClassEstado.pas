@@ -8,23 +8,23 @@ type
   TEstado = class(TPersistent)
   private
     FId: Integer;
-    FUf_Codigo: Integer;
+    FCodigo_Uf: Integer;
     FNome: string[50];
     FUf: string[2];
 
     function getId: Integer;
-    function getUf_Codigo: Integer;
+    function getCodigo_Uf: Integer;
     function getNome: string;
     function getUf: string;
 
     procedure setId(const pID: Integer);
-    procedure setUf_Codigo(const pUF_CODIGO: Integer);
+    procedure setCodigo_Uf(const pCODIGO_UF: Integer);
     procedure setNome(const pNOME: string);
     procedure setUf(const pUF: string);
 
   public
     property Id: Integer read getId write setId;
-    property Uf_Codigo: Integer read getUf_Codigo write setUf_Codigo;
+    property Codigo_Uf: Integer read getCodigo_Uf write setCodigo_Uf;
     property Nome: string read getNome write setNome;
     property Uf: string read getUf write setUf;
 
@@ -51,9 +51,9 @@ begin
   Result := Self.FId;
 end;
 
-function TEstado.getUf_Codigo: Integer;
+function TEstado.getCodigo_Uf: Integer;
 begin
-  Result := Self.FUf_Codigo;
+  Result := Self.FCodigo_Uf;
 end;
 
 function TEstado.getNome: string;
@@ -71,9 +71,9 @@ begin
   Self.FId:= pId;
 end;
 
-procedure TEstado.setUf_Codigo(const pUF_CODIGO: Integer);
+procedure TEstado.setCodigo_Uf(const pCODIGO_UF: Integer);
 begin
-  Self.FUf_Codigo:= pUf_Codigo;
+  Self.FCodigo_Uf:= pCodigo_Uf;
 end;
 
 procedure TEstado.setNome(const pNOME: string);

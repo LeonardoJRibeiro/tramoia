@@ -301,18 +301,16 @@ begin
       if (not Self.getExiste(pObjeto.Id)) then
       begin
 
-        pObjeto.Id := lPersistencia.getProximoCodigo('municipio', 'id');
         lPersistencia.Query.SQL.Add('INSERT INTO municipio (');
-        lPersistencia.Query.SQL.Add('  id,');
         lPersistencia.Query.SQL.Add('  id_estado,');
         lPersistencia.Query.SQL.Add('  codigo_ibge,');
         lPersistencia.Query.SQL.Add('  nome');
         lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pId,');
         lPersistencia.Query.SQL.Add('  :pId_Estado,');
         lPersistencia.Query.SQL.Add('  :pCodigo_Ibge,');
         lPersistencia.Query.SQL.Add('  :pNome');
         lPersistencia.Query.SQL.Add(');');
+
       end
       else
       begin
@@ -322,9 +320,10 @@ begin
         lPersistencia.Query.SQL.Add('  nome= :pNome');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
+        lPersistencia.setParametro('pId', pObjeto.Id);
+
       end;
 
-      lPersistencia.setParametro('pId', pObjeto.Id);
       lPersistencia.setParametro('pId_Estado', pObjeto.Id_Estado);
       lPersistencia.setParametro('pCodigo_Ibge', pObjeto.Codigo_Ibge);
       lPersistencia.setParametro('pNome', pObjeto.Nome);

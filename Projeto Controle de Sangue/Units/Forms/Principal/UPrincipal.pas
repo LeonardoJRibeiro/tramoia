@@ -74,7 +74,7 @@ unit UPrincipal;
 
  procedure TFrmPrincipal.BtnPacientesClick(Sender: TObject);
  var
-   lRegistro: Integer;
+   lRegistro: string;
  begin
 
    TFrmConsPaciente.getConsPaciente(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario, lRegistro);

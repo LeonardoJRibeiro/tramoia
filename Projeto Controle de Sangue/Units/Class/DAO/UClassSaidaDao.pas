@@ -16,6 +16,8 @@ type
     function Salvar(var pObjeto: TSaida): Boolean;
     function getObjeto(const pID: Integer; var pObjeto: TSaida): Boolean;
 
+    function getExisteBolsaVinculada(const pID_BOLSA: Integer): Boolean;
+
     function getIdSaidaByNumeroBolsa(const pNUMERO_DA_BOLSA: string): Integer;
 
     constructor Create(const pCONEXAO: TConexao); overload;
@@ -86,6 +88,43 @@ begin
 
       lPersistencia.Query.SQL.Add('WHERE id = :pId');
       lPersistencia.setParametro('pId', pID);
+
+      lPersistencia.Query.Open;
+
+      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
+function TSaidaDAO.getExisteBolsaVinculada(const pID_BOLSA: Integer): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  COUNT(id)');
+      lPersistencia.Query.SQL.Add('FROM saida s');
+
+      lPersistencia.Query.SQL.Add('WHERE id_bolsa = :pId_Bolsa');
+      lPersistencia.setParametro('pId_Bolsa', pID_BOLSA);
 
       lPersistencia.Query.Open;
 

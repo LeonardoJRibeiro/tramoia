@@ -115,11 +115,11 @@ begin
       begin
 
         lPersistencia.Query.SQL.Add('INSERT INTO estado (');
-        lPersistencia.Query.SQL.Add('  uf_codigo,');
+        lPersistencia.Query.SQL.Add('  codigo_uf,');
         lPersistencia.Query.SQL.Add('  nome,');
         lPersistencia.Query.SQL.Add('  uf');
         lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pUf_Codigo,');
+        lPersistencia.Query.SQL.Add('  :pCodigo_Uf,');
         lPersistencia.Query.SQL.Add('  :pNome,');
         lPersistencia.Query.SQL.Add('  :pUf');
         lPersistencia.Query.SQL.Add(');');
@@ -127,7 +127,7 @@ begin
       else
       begin
         lPersistencia.Query.SQL.Add('UPDATE estado SET');
-        lPersistencia.Query.SQL.Add('  uf_codigo= :pUf_Codigo,');
+        lPersistencia.Query.SQL.Add('  codigo_uf= :pCodigo_Uf,');
         lPersistencia.Query.SQL.Add('  nome= :pNome,');
         lPersistencia.Query.SQL.Add('  uf= :pUf');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
@@ -136,7 +136,7 @@ begin
 
       end;
 
-      lPersistencia.setParametro('pUf_Codigo', pObjeto.Uf_Codigo);
+      lPersistencia.setParametro('pCodigo_Uf', pObjeto.Codigo_Uf);
       lPersistencia.setParametro('pNome', pObjeto.Nome);
       lPersistencia.setParametro('pUf', pObjeto.Uf);
 
@@ -178,7 +178,7 @@ begin
       lPersistencia.Query.Open;
 
       pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Uf_Codigo := lPersistencia.Query.FieldByName('uf_codigo').AsInteger;
+      pObjeto.Codigo_Uf := lPersistencia.Query.FieldByName('codigo_uf').AsInteger;
       pObjeto.Nome := lPersistencia.Query.FieldByName('nome').Asstring;
       pObjeto.Uf := lPersistencia.Query.FieldByName('uf').Asstring;
 

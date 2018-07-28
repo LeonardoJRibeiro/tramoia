@@ -26,13 +26,13 @@ type
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
 
-    FNumProntuario: Integer;
+    FNumProntuario: string;
 
     function getAdmin: Boolean;
 
   public
     class function getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
-      var pNumProntuario: Integer): Boolean;
+      var pNumProntuario: string): Boolean;
   end;
 
 var
@@ -164,7 +164,7 @@ begin
   else
   begin
 
-    Self.FNumProntuario := Self.FPersistencia.Query.FieldByName('num_prontuario').AsInteger;
+    Self.FNumProntuario := Self.FPersistencia.Query.FieldByName('num_prontuario').AsString;
     ModalResult := mrOk;
 
   end;
@@ -281,7 +281,7 @@ begin
 end;
 
 class function TFrmConsPaciente.getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
-  var pNumProntuario: Integer): Boolean;
+  var pNumProntuario: string): Boolean;
 begin
 
   Application.CreateForm(TFrmConsPaciente, FrmConsPaciente);

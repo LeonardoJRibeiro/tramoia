@@ -7,22 +7,22 @@ uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersis
 type
   TEntradaDAO = class(TInterfacedPersistent, IInterfaceDao<TEntrada>)
   private
-    FConexao : TConexao;
+    FConexao: TConexao;
 
   public
-    function getExiste(const pID: Integer) : Boolean;
-    function Excluir(const pID: Integer) : Boolean;
-    function Salvar(var pObjeto: TEntrada) : Boolean;
-    function getObjeto(const pID: Integer; var pObjeto: TEntrada) : Boolean;
+    function getExiste(const pID: Integer): Boolean;
+    function Excluir(const pID: Integer): Boolean;
+    function Salvar(var pObjeto: TEntrada): Boolean;
+    function getObjeto(const pID: Integer; var pObjeto: TEntrada): Boolean;
 
-    constructor Create(const pCONEXAO : TConexao); overload;
+    constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
   end;
 
 implementation
 
-constructor TEntradaDAO.Create(const pCONEXAO : TConexao);
+constructor TEntradaDAO.Create(const pCONEXAO: TConexao);
 begin
   Self.FConexao := pCONEXAO;
 end;
@@ -87,7 +87,6 @@ begin
 
       Result := lPersistencia.Query.Fields[0].AsInteger > 0;
 
-
     except
       on E: Exception do
       begin
@@ -103,7 +102,7 @@ begin
 
 end;
 
-function TEntradaDAO.Salvar(var pObjeto : TEntrada): Boolean;
+function TEntradaDAO.Salvar(var pObjeto: TEntrada): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
@@ -115,15 +114,12 @@ begin
       if (not Self.getExiste(pObjeto.Id)) then
       begin
 
-        pObjeto.Id:= lPersistencia.getProximoCodigo('entrada','id');
         lPersistencia.Query.SQL.Add('INSERT INTO entrada (');
-        lPersistencia.Query.SQL.Add('  id,');
         lPersistencia.Query.SQL.Add('  id_usuario,');
         lPersistencia.Query.SQL.Add('  id_bolsa,');
         lPersistencia.Query.SQL.Add('  data_entrada,');
         lPersistencia.Query.SQL.Add('  observacao');
         lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pId,');
         lPersistencia.Query.SQL.Add('  :pId_Usuario,');
         lPersistencia.Query.SQL.Add('  :pId_Bolsa,');
         lPersistencia.Query.SQL.Add('  :pData_Entrada,');
@@ -139,17 +135,18 @@ begin
         lPersistencia.Query.SQL.Add('  observacao= :pObservacao');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
+        lPersistencia.setParametro('pId', pObjeto.Id);
+
       end;
 
-      lPersistencia.setParametro('pId', pObjeto.Id);
       lPersistencia.setParametro('pId_Usuario', pObjeto.IdUsuario);
       lPersistencia.setParametro('pId_Bolsa', pObjeto.IdBolsa);
       lPersistencia.setParametro('pData_Entrada', pObjeto.DataEntrada);
       lPersistencia.setParametro('pObservacao', pObjeto.Observacao);
- 
+
       lPersistencia.Query.ExecSQL;
- 
-      Result:= True;
+
+      Result := True;
 
     except
       on E: Exception do
@@ -189,9 +186,8 @@ begin
       pObjeto.IdBolsa := lPersistencia.Query.FieldByName('id_bolsa').AsInteger;
       pObjeto.DataEntrada := lPersistencia.Query.FieldByName('data_entrada').AsDateTime;
       pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').Asstring;
- 
- 
-      Result:= True;
+
+      Result := True;
 
     except
       on E: Exception do

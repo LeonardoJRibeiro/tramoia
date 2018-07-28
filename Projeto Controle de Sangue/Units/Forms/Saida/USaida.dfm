@@ -5,7 +5,7 @@ object FrmSaida: TFrmSaida
   BorderStyle = bsSingle
   Caption = 'Sa'#237'da de sangue'
   ClientHeight = 465
-  ClientWidth = 322
+  ClientWidth = 330
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,13 +22,14 @@ object FrmSaida: TFrmSaida
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 322
+    Width = 330
     Height = 424
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitWidth = 322
     object LabelId: TLabel
       Left = 9
       Top = 7
@@ -38,7 +39,7 @@ object FrmSaida: TFrmSaida
     end
     object GroupBoxSangue: TGroupBox
       Left = 9
-      Top = 127
+      Top = 123
       Width = 306
       Height = 300
       Caption = 'Bolsa de sangue'
@@ -129,9 +130,9 @@ object FrmSaida: TFrmSaida
         TabOrder = 2
       end
       object RadioGroupPai: TRadioGroup
-        Left = 3
+        Left = 10
         Top = 105
-        Width = 294
+        Width = 287
         Height = 37
         Caption = 'Pai'
         Columns = 2
@@ -149,7 +150,7 @@ object FrmSaida: TFrmSaida
         Caption = 'Prova de compatibilidade'
         TabOrder = 7
         object RadioGroupTA: TRadioGroup
-          Left = 6
+          Left = 7
           Top = 11
           Width = 274
           Height = 41
@@ -162,8 +163,8 @@ object FrmSaida: TFrmSaida
           TabOrder = 0
         end
         object RadioGroupAGH: TRadioGroup
-          Left = 6
-          Top = 58
+          Left = 7
+          Top = 57
           Width = 274
           Height = 41
           Caption = 'AGH'
@@ -175,7 +176,7 @@ object FrmSaida: TFrmSaida
           TabOrder = 1
         end
         object RadioGroup37: TRadioGroup
-          Left = 6
+          Left = 7
           Top = 100
           Width = 274
           Height = 41
@@ -193,8 +194,6 @@ object FrmSaida: TFrmSaida
         Top = 78
         Width = 52
         Height = 21
-        EditMask = '###,##;0;_'
-        MaxLength = 6
         TabOrder = 3
         Text = ''
       end
@@ -255,13 +254,14 @@ object FrmSaida: TFrmSaida
   object PanelBottom: TPanel
     Left = 0
     Top = 424
-    Width = 322
+    Width = 330
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitWidth = 322
     object BtnGravar: TBitBtn
       Left = 24
       Top = 9

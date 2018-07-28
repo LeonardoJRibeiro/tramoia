@@ -93,7 +93,7 @@ end;
 procedure TFrmPrincipal.BtnSaidaClick(Sender: TObject);
 begin
 
-  TFrmSaida.getSaida(TForeignKeyForms.FIdUPrincipal, 1);
+  TFrmSaida.getSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
 end;
 

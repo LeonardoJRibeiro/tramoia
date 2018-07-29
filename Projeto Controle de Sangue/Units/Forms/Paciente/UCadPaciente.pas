@@ -69,13 +69,8 @@ type
     procedure EdtCodMunicipioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ComboboxSexoEnter(Sender: TObject);
     procedure ComboBoxABOEnter(Sender: TObject);
-    procedure EdtSusEnter(Sender: TObject);
     procedure EdtSusExit(Sender: TObject);
     procedure EdtTelefoneEnter(Sender: TObject);
-    procedure EdtCpfEnter(Sender: TObject);
-    procedure EdtTelefoneKeyPress(Sender: TObject; var Key: Char);
-    procedure EdtCpfKeyPress(Sender: TObject; var Key: Char);
-    procedure EdtSusKeyPress(Sender: TObject; var Key: Char);
   private
     FIdPaciente: Integer;
 
@@ -92,8 +87,6 @@ type
     function SalvaPaciente: Boolean;
 
     function SalvaEndereco: Boolean;
-
-    procedure MaskEditKeyPressGeral(var pKey: Char);
 
   public
     class function getCadPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
@@ -117,11 +110,6 @@ begin
 end;
 
 procedure TFrmCadPaciente.BtnSalvarClick(Sender: TObject);
-var
-  lPaciente: TPaciente;
-  lPacienteDao: TPacienteDao;
-  lEndereco: TEndereco;
-  lEnderecoDao: TEnderecoDao;
 begin
 
   if (Self.ValidaCampos) then
@@ -168,8 +156,12 @@ begin
         Result := lEnderecoDao.Salvar(lEndereco);
 
       except
-        Result := False;
-
+        on E: Exception do
+        begin
+          Result := False;
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['endereço', E.Message])), PChar('Erro'),
+            MB_OK + MB_ICONERROR);
+        end;
       end;
 
     finally
@@ -225,7 +217,7 @@ begin
       on E: Exception do
       begin
         Result := False;
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['usuário', E.Message])), PChar('Erro'),
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['paciente', E.Message])), PChar('Erro'),
           MB_OK + MB_ICONERROR);
       end;
     end;
@@ -285,7 +277,7 @@ begin
 
   end;
 
-  if (EdtDataNascimento.Text = '  /  /    ') then
+  if (Trim(EdtDataNascimento.Text) = '/  /') then
   begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelDtNascimento.Caption])), PChar('Informação'),
@@ -410,13 +402,6 @@ begin
 
 end;
 
-procedure TFrmCadPaciente.EdtCpfEnter(Sender: TObject);
-begin
-
-  // EdtCpf.EditMask := '';
-
-end;
-
 procedure TFrmCadPaciente.EdtCpfExit(Sender: TObject);
 begin
 
@@ -430,29 +415,16 @@ begin
 
       EdtCpf.SetFocus;
 
-    end
-    else
-    begin
-
-      // EdtCpf.EditMask := '000\.000\.000\-00;0;';
-
     end;
 
   end;
 
 end;
 
-procedure TFrmCadPaciente.EdtCpfKeyPress(Sender: TObject; var Key: Char);
-begin
-
-  // Self.MaskEditKeyPressGeral(Key);
-
-end;
-
 procedure TFrmCadPaciente.EdtDataNascimentoExit(Sender: TObject);
 begin
 
-  if (not Trim(EdtDataNascimento.Text).IsEmpty) then
+  if (not(Trim(EdtDataNascimento.Text) = '/  /')) then
   begin
 
     try
@@ -515,26 +487,13 @@ begin
 
 end;
 
-procedure TFrmCadPaciente.EdtSusEnter(Sender: TObject);
-begin
-
-  // EdtSus.EditMask := '';
-
-end;
-
 procedure TFrmCadPaciente.EdtSusExit(Sender: TObject);
 begin
 
   if (not Trim(EdtSus.Text).IsEmpty) then
   begin
 
-    if (Trim(EdtSus.Text).Length = 15) then
-    begin
-
-      // EdtSus.EditMask := '000 0000 0000 0000;0;_';
-
-    end
-    else
+    if (Trim(EdtSus.Text).Length <> 15) then
     begin
 
       Application.MessageBox('Cartão SUS inválido', 'Atenção', MB_ICONWARNING + MB_OK);
@@ -547,13 +506,6 @@ begin
 
 end;
 
-procedure TFrmCadPaciente.EdtSusKeyPress(Sender: TObject; var Key: Char);
-begin
-
-  // Self.MaskEditKeyPressGeral(Key);
-
-end;
-
 procedure TFrmCadPaciente.EdtTelefoneEnter(Sender: TObject);
 begin
 
@@ -563,7 +515,7 @@ begin
   begin
 
     EdtTelefone.Text := '62';
-    EdtTelefone.SelStart :=  3;
+    EdtTelefone.SelStart := 3;
 
   end;
 
@@ -586,13 +538,6 @@ begin
     PageControl.TabIndex := 1;
     MemoObservacoes.SetFocus;
   end;
-
-end;
-
-procedure TFrmCadPaciente.EdtTelefoneKeyPress(Sender: TObject; var Key: Char);
-begin
-
-  Self.MaskEditKeyPressGeral(Key);
 
 end;
 
@@ -620,7 +565,7 @@ end;
 
 procedure TFrmCadPaciente.FormShow(Sender: TObject);
 begin
-  EdtNome.SetFocus;
+  EdtNumProntuario.SetFocus;
 end;
 
 class function TFrmCadPaciente.getCadPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
@@ -678,16 +623,6 @@ begin
     Result := lMunicipioDao.getIdMunicipio(StrToInt(EdtCodMunicipio.Text));
   finally
     FreeAndNil(lMunicipioDao);
-  end;
-
-end;
-
-procedure TFrmCadPaciente.MaskEditKeyPressGeral(var pKey: Char);
-begin
-
-  if (not(pKey in ['0' .. '9'])) and (pKey <> #8) then
-  begin
-    pKey := #0;
   end;
 
 end;

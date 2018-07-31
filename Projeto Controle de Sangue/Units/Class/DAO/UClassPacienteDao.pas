@@ -20,7 +20,7 @@ type
 
     function getExisteProntuario(const pNUM_PRONTUARIO: string): Boolean;
 
-    function getExisteCpf(const pCPF: Integer): Integer;
+    function getExisteCpf(const pCPF: string): Boolean;
 
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
@@ -183,7 +183,7 @@ begin
 
 end;
 
-function TPacienteDAO.getExisteCpf(const pCPF: Integer): Integer;
+function TPacienteDAO.getExisteCpf(const pCPF: string): Boolean;
 var
   lPersistencia: TPersistencia;
 begin
@@ -203,16 +203,16 @@ begin
 
       lPersistencia.Query.Open;
 
-      Result := -1;
+      Result := False;
       if (not lPersistencia.Query.IsEmpty) then
       begin
-        Result := lPersistencia.Query.FieldByName('id').AsInteger;
+        Result := lPersistencia.Query.FieldByName('id').AsInteger > 0;
       end;
 
     except
       on E: Exception do
       begin
-        Result := -1;
+        Result := False;
         raise Exception.Create(E.Message);
       end;
 

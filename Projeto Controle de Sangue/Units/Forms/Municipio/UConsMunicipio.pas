@@ -10,12 +10,16 @@ uses
 type
   TFrmConsMunicipio = class(TFrmCons)
     DataSource: TDataSource;
+    Panel: TPanel;
+    SpeedButton1: TSpeedButton;
+    SpeedButton4: TSpeedButton;
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdtConsExit(Sender: TObject);
     procedure DBGridDblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
   public
@@ -146,6 +150,12 @@ begin
     FreeAndNil(FrmConsMunicipio);
   end;
 
+end;
+
+procedure TFrmConsMunicipio.SpeedButton1Click(Sender: TObject);
+begin
+  inherited;
+  ModalResult := mrOk;
 end;
 
 end.

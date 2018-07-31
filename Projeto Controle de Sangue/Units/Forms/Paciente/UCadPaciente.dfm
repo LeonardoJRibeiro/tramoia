@@ -42,10 +42,8 @@ object FrmCadPaciente: TFrmCadPaciente
     ActivePage = TabSheetDadosGerais
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 574
     object TabSheetDadosGerais: TTabSheet
       Caption = 'Dados gerais'
-      ExplicitWidth = 566
       object PanelDadosPessoais: TPanel
         Left = 0
         Top = 0
@@ -54,7 +52,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 566
         object GroupBoxDadosPessoais: TGroupBox
           AlignWithMargins = True
           Left = 3
@@ -70,7 +67,6 @@ object FrmCadPaciente: TFrmCadPaciente
           Font.Style = []
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 560
           object LabelSexo: TLabel
             Left = 10
             Top = 62
@@ -120,7 +116,7 @@ object FrmCadPaciente: TFrmCadPaciente
             Caption = 'S.U.S(*)'
           end
           object Label11: TLabel
-            Left = 481
+            Left = 484
             Top = 61
             Width = 43
             Height = 13
@@ -183,6 +179,7 @@ object FrmCadPaciente: TFrmCadPaciente
             MaxLength = 7
             NumbersOnly = True
             TabOrder = 5
+            OnExit = EdtRgExit
           end
           object EdtDataNascimento: TMaskEdit
             Left = 83
@@ -206,9 +203,9 @@ object FrmCadPaciente: TFrmCadPaciente
             OnExit = EdtNumProntuarioExit
           end
           object ComboBoxABO: TComboBox
-            Left = 481
+            Left = 484
             Top = 77
-            Width = 52
+            Width = 49
             Height = 22
             Style = csOwnerDrawFixed
             TabOrder = 7
@@ -250,9 +247,9 @@ object FrmCadPaciente: TFrmCadPaciente
           object EdtSus: TMaskEdit
             Left = 365
             Top = 77
-            Width = 111
+            Width = 113
             Height = 21
-            EditMask = '!999 9999 9999 9999;0;_'
+            EditMask = '!99999999999 9999 9;0;_'
             MaxLength = 18
             TabOrder = 6
             Text = ''
@@ -268,7 +265,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 566
         object GroupBoxEndereco: TGroupBox
           AlignWithMargins = True
           Left = 3
@@ -278,7 +274,6 @@ object FrmCadPaciente: TFrmCadPaciente
           Align = alTop
           Caption = 'Endere'#231'o'
           TabOrder = 0
-          ExplicitWidth = 560
           object LabelMunicipio: TLabel
             Left = 10
             Top = 61
@@ -440,7 +435,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitWidth = 566
         object GroupBoxInfoComplementares: TGroupBox
           AlignWithMargins = True
           Left = 3
@@ -450,7 +444,6 @@ object FrmCadPaciente: TFrmCadPaciente
           Align = alTop
           Caption = 'Informa'#231#245'es Complementares'
           TabOrder = 0
-          ExplicitWidth = 560
           object Label12: TLabel
             Left = 10
             Top = 20
@@ -477,7 +470,6 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
-      ExplicitWidth = 566
       object MemoObservacoes: TMemo
         Left = 16
         Top = 10
@@ -495,7 +487,6 @@ object FrmCadPaciente: TFrmCadPaciente
     Height = 34
     Align = alBottom
     TabOrder = 1
-    ExplicitWidth = 574
     object BtnSalvar: TSpeedButton
       Left = 169
       Top = 2

@@ -71,10 +71,13 @@ type
     procedure ComboBoxABOEnter(Sender: TObject);
     procedure EdtSusExit(Sender: TObject);
     procedure EdtTelefoneEnter(Sender: TObject);
+    procedure EdtRgExit(Sender: TObject);
   private
     FIdPaciente: Integer;
 
     FNumeroProntuario: string;
+
+    FCpf: string;
 
     function CarregaPaciente: Boolean;
 
@@ -87,6 +90,8 @@ type
     function SalvaPaciente: Boolean;
 
     function SalvaEndereco: Boolean;
+
+    function getExisteCpf: Boolean;
 
   public
     class function getCadPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
@@ -415,6 +420,21 @@ begin
 
       EdtCpf.SetFocus;
 
+    end
+    else
+    begin
+
+      if ((Trim(EdtCpf.Text) <> '') and (Self.FCpf <> Trim(EdtCpf.Text))) then
+      begin
+
+        if (Self.getExisteCpf) then
+        begin
+          Application.MessageBox(PChar(TMensagem.getMensagem(16)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+          EdtCpf.SetFocus;
+        end;
+
+      end;
+
     end;
 
   end;
@@ -487,16 +507,33 @@ begin
 
 end;
 
+procedure TFrmCadPaciente.EdtRgExit(Sender: TObject);
+begin
+  if (not Trim(EdtRg.Text).IsEmpty) then
+  begin
+
+    if (Trim(EdtRg.Text).Length <> 7) then
+    begin
+
+      Application.MessageBox(PChar(TMensagem.getMensagem(18)), 'Atenção', MB_ICONWARNING + MB_OK);
+
+      EdtRg.SetFocus;
+
+    end;
+
+  end;
+end;
+
 procedure TFrmCadPaciente.EdtSusExit(Sender: TObject);
 begin
 
   if (not Trim(EdtSus.Text).IsEmpty) then
   begin
 
-    if (Trim(EdtSus.Text).Length <> 15) then
+    if (Trim(EdtSus.Text).Length <> 16) then
     begin
 
-      Application.MessageBox('Cartão SUS inválido', 'Atenção', MB_ICONWARNING + MB_OK);
+      Application.MessageBox(PChar(TMensagem.getMensagem(17)), 'Atenção', MB_ICONWARNING + MB_OK);
 
       EdtSus.SetFocus;
 
@@ -545,6 +582,7 @@ procedure TFrmCadPaciente.FormCreate(Sender: TObject);
 begin
 
   Self.FNumeroProntuario := '-1';
+  Self.FCpf := '-1';
 
 end;
 
@@ -613,6 +651,30 @@ begin
 
 end;
 
+function TFrmCadPaciente.getExisteCpf: Boolean;
+var
+  lPacienteDao: TPacienteDao;
+begin
+
+  lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+      Result := lPacienteDao.getExisteCpf(Trim(EdtCpf.Text));
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(15), [E.Message])), 'Erro', MB_ICONERROR + MB_OK);
+      end;
+    end;
+
+  finally
+    FreeAndNil(lPacienteDao);
+  end;
+
+end;
+
 function TFrmCadPaciente.getIdMunicipio: Integer;
 var
   lMunicipioDao: TMunicipioDAO;
@@ -645,6 +707,7 @@ begin
         EdtNome.Text := lPaciente.Nome;
         ComboboxSexo.ItemIndex := IfThen(lPaciente.Sexo = 'M', 0, 1);
         EdtDataNascimento.Text := DateToStr(lPaciente.Data_Nascimento);
+        Self.FCpf := lPaciente.Cpf;
         EdtCpf.Text := lPaciente.Cpf;
         EdtRg.Text := lPaciente.Rg;
         Self.FNumeroProntuario := lPaciente.Num_Prontuario;

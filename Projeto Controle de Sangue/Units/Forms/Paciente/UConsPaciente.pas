@@ -46,6 +46,8 @@ uses System.Math, UDMConexao, UClassMensagem, UClassPacienteDAO, UCadPaciente, U
 {$R *.dfm}
 
 procedure TFrmConsPaciente.BtnAlterarClick(Sender: TObject);
+var
+  lPosicaoQuery: TBookmark;
 begin
   inherited;
 
@@ -55,7 +57,9 @@ begin
     if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario,
       Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
     begin
+
       EdtConsInvokeSearch(Self);
+
     end;
 
   end

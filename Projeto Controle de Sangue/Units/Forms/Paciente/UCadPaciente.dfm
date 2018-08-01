@@ -5,7 +5,7 @@ object FrmCadPaciente: TFrmCadPaciente
   BorderStyle = bsSingle
   Caption = 'Cadastro de paciente'
   ClientHeight = 474
-  ClientWidth = 574
+  ClientWidth = 566
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -37,7 +37,7 @@ object FrmCadPaciente: TFrmCadPaciente
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 574
+    Width = 566
     Height = 440
     ActivePage = TabSheetDadosGerais
     Align = alClient
@@ -47,7 +47,7 @@ object FrmCadPaciente: TFrmCadPaciente
       object PanelDadosPessoais: TPanel
         Left = 0
         Top = 0
-        Width = 566
+        Width = 558
         Height = 161
         Align = alTop
         BevelOuter = bvNone
@@ -56,7 +56,7 @@ object FrmCadPaciente: TFrmCadPaciente
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 560
+          Width = 552
           Height = 153
           Align = alTop
           Caption = 'Dados Pessoais'
@@ -68,8 +68,8 @@ object FrmCadPaciente: TFrmCadPaciente
           ParentFont = False
           TabOrder = 0
           object LabelSexo: TLabel
-            Left = 365
-            Top = 17
+            Left = 10
+            Top = 62
             Width = 38
             Height = 13
             Caption = 'Sexo(*)'
@@ -81,42 +81,42 @@ object FrmCadPaciente: TFrmCadPaciente
             ParentFont = False
           end
           object LabelCpf: TLabel
-            Left = 10
-            Top = 61
+            Left = 175
+            Top = 62
             Width = 33
             Height = 13
             Caption = 'CPF(*)'
           end
           object Label3: TLabel
-            Left = 109
-            Top = 61
+            Left = 271
+            Top = 62
             Width = 32
             Height = 13
             Caption = 'R.G(*)'
           end
           object LabelDtNascimento: TLabel
-            Left = 441
-            Top = 17
-            Width = 102
+            Left = 83
+            Top = 62
+            Width = 87
             Height = 13
-            Caption = 'Dt. de Nascimento(*)'
+            Caption = 'Dt. Nascimento(*)'
           end
           object Label5: TLabel
-            Left = 213
-            Top = 61
+            Left = 10
+            Top = 16
             Width = 64
             Height = 13
             Caption = 'Prontu'#225'rio(*)'
           end
           object Label6: TLabel
-            Left = 362
+            Left = 365
             Top = 62
             Width = 41
             Height = 13
             Caption = 'S.U.S(*)'
           end
           object Label11: TLabel
-            Left = 481
+            Left = 484
             Top = 61
             Width = 43
             Height = 13
@@ -129,9 +129,9 @@ object FrmCadPaciente: TFrmCadPaciente
             ParentFont = False
           end
           object EdtNome: TLabeledEdit
-            Left = 10
+            Left = 163
             Top = 32
-            Width = 349
+            Width = 370
             Height = 21
             AutoSize = False
             CharCase = ecUpperCase
@@ -145,68 +145,67 @@ object FrmCadPaciente: TFrmCadPaciente
             EditLabel.Font.Style = []
             EditLabel.ParentFont = False
             MaxLength = 100
-            TabOrder = 0
+            TabOrder = 1
           end
           object EdtCpf: TMaskEdit
-            Left = 10
+            Left = 175
             Top = 77
             Width = 91
             Height = 21
             AutoSize = False
             EditMask = '999\.999\.999\-99;0;'
             MaxLength = 14
-            TabOrder = 3
+            TabOrder = 4
             Text = ''
-            OnEnter = EdtCpfEnter
             OnExit = EdtCpfExit
-            OnKeyPress = EdtCpfKeyPress
           end
           object ComboboxSexo: TComboBox
-            Left = 365
-            Top = 32
+            Left = 10
+            Top = 77
             Width = 70
             Height = 22
             Style = csOwnerDrawFixed
-            TabOrder = 1
+            TabOrder = 2
             OnEnter = ComboboxSexoEnter
             Items.Strings = (
               'Masculino'
               'Feminino')
           end
           object EdtRg: TEdit
-            Left = 109
+            Left = 271
             Top = 77
-            Width = 99
+            Width = 87
             Height = 21
             MaxLength = 7
             NumbersOnly = True
-            TabOrder = 4
+            TabOrder = 5
+            OnExit = EdtRgExit
           end
           object EdtDataNascimento: TMaskEdit
-            Left = 441
-            Top = 32
+            Left = 83
+            Top = 77
             Width = 86
             Height = 21
             EditMask = '!99/99/9999;1;_'
             MaxLength = 10
-            TabOrder = 2
+            TabOrder = 3
             Text = '  /  /    '
             OnExit = EdtDataNascimentoExit
           end
           object EdtNumProntuario: TEdit
-            Left = 213
-            Top = 77
+            Left = 10
+            Top = 32
             Width = 146
             Height = 21
             MaxLength = 20
             NumbersOnly = True
-            TabOrder = 5
+            TabOrder = 0
             OnExit = EdtNumProntuarioExit
           end
           object ComboBoxABO: TComboBox
-            Left = 481
+            Left = 484
             Top = 77
-            Width = 52
+            Width = 49
             Height = 22
             Style = csOwnerDrawFixed
             TabOrder = 7
@@ -246,24 +245,22 @@ object FrmCadPaciente: TFrmCadPaciente
             TabOrder = 9
           end
           object EdtSus: TMaskEdit
-            Left = 362
-            Top = 80
-            Width = 111
+            Left = 365
+            Top = 77
+            Width = 113
             Height = 21
-            EditMask = '!999 9999 9999 9999;0;_'
+            EditMask = '!99999999999 9999 9;0;_'
             MaxLength = 18
             TabOrder = 6
             Text = ''
-            OnEnter = EdtSusEnter
             OnExit = EdtSusExit
-            OnKeyPress = EdtSusKeyPress
           end
         end
       end
       object PanelEndereco: TPanel
         Left = 0
         Top = 161
-        Width = 566
+        Width = 558
         Height = 168
         Align = alTop
         BevelOuter = bvNone
@@ -272,7 +269,7 @@ object FrmCadPaciente: TFrmCadPaciente
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 560
+          Width = 552
           Height = 158
           Align = alTop
           Caption = 'Endere'#231'o'
@@ -329,7 +326,7 @@ object FrmCadPaciente: TFrmCadPaciente
           object EdtLogradouro: TLabeledEdit
             Left = 10
             Top = 32
-            Width = 267
+            Width = 256
             Height = 21
             CharCase = ecUpperCase
             EditLabel.Width = 69
@@ -351,9 +348,9 @@ object FrmCadPaciente: TFrmCadPaciente
             TabOrder = 7
           end
           object EdtBairro: TLabeledEdit
-            Left = 283
+            Left = 272
             Top = 32
-            Width = 207
+            Width = 204
             Height = 21
             CharCase = ecUpperCase
             EditLabel.Width = 42
@@ -362,9 +359,9 @@ object FrmCadPaciente: TFrmCadPaciente
             TabOrder = 1
           end
           object EdtNumero: TLabeledEdit
-            Left = 496
+            Left = 484
             Top = 32
-            Width = 36
+            Width = 49
             Height = 21
             EditLabel.Width = 51
             EditLabel.Height = 13
@@ -376,14 +373,14 @@ object FrmCadPaciente: TFrmCadPaciente
           object EdtCep: TMaskEdit
             Left = 460
             Top = 76
-            Width = 72
+            Width = 70
             Height = 21
             Alignment = taCenter
             AutoSize = False
-            EditMask = '00000-000;0;_'
+            EditMask = '99999-999;0;_'
             MaxLength = 9
             TabOrder = 6
-            Text = '76680000'
+            Text = ''
           end
           object EdtNomeMunicipio: TLabeledEdit
             Left = 104
@@ -433,7 +430,7 @@ object FrmCadPaciente: TFrmCadPaciente
       object PanelInformacoesComplementares: TPanel
         Left = 0
         Top = 329
-        Width = 566
+        Width = 558
         Height = 83
         Align = alClient
         BevelOuter = bvNone
@@ -442,7 +439,7 @@ object FrmCadPaciente: TFrmCadPaciente
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 560
+          Width = 552
           Height = 69
           Align = alTop
           Caption = 'Informa'#231#245'es Complementares'
@@ -455,8 +452,8 @@ object FrmCadPaciente: TFrmCadPaciente
             Caption = 'Contato'
           end
           object EdtTelefone: TMaskEdit
-            Left = 3
-            Top = 39
+            Left = 10
+            Top = 37
             Width = 87
             Height = 21
             Alignment = taCenter
@@ -466,7 +463,6 @@ object FrmCadPaciente: TFrmCadPaciente
             Text = ''
             OnEnter = EdtTelefoneEnter
             OnExit = EdtTelefoneExit
-            OnKeyPress = EdtTelefoneKeyPress
           end
         end
       end
@@ -491,7 +487,7 @@ object FrmCadPaciente: TFrmCadPaciente
   object PanelBotoes: TPanel
     Left = 0
     Top = 440
-    Width = 574
+    Width = 566
     Height = 34
     Align = alBottom
     TabOrder = 1

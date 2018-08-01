@@ -1,87 +1,87 @@
 unit UClassMensagem;
 
- interface
+interface
 
- uses System.SysUtils, System.Classes;
+uses System.SysUtils, System.Classes;
 
- type
-   TMensagem = class(TComponent)
-   public
-     class function getMensagem(const pMSG: SmallInt): string;
-   end;
+type
+  TMensagem = class(TComponent)
+  public
+    class function getMensagem(const pMSG: SmallInt): string;
+  end;
 
- implementation
+implementation
 
- { TMensagem }
+{ TMensagem }
 
- class function TMensagem.getMensagem(const pMSG: SmallInt): string;
- begin
+class function TMensagem.getMensagem(const pMSG: SmallInt): string;
+begin
 
-   case (pMSG) of
-     0:
-       begin
-         Result := 'Erro ao criar janela %S: %S.';
-       end;
+  case (pMSG) of
+    0:
+      begin
+        Result := 'Erro ao criar janela %S: %S.';
+      end;
 
-     1:
-       begin
-         Result := 'Erro ao consultar %S: %S.';
-       end;
+    1:
+      begin
+        Result := 'Erro ao consultar %S: %S.';
+      end;
 
-     2:
-       begin
-         Result := 'Erro ao excluir %s. Motivo: %s.';
-       end;
+    2:
+      begin
+        Result := 'Erro ao excluir %s. Motivo: %s.';
+      end;
 
-     3:
-       begin
-         Result := 'Campo "%S" é obrigatório e não foi informado.';
-       end;
+    3:
+      begin
+        Result := 'Campo "%S" é obrigatório e não foi informado.';
+      end;
 
-     4:
-       begin
-         Result := 'Erro ao salvar %S. Motivo: %S.';
-       end;
+    4:
+      begin
+        Result := 'Erro ao salvar %S. Motivo: %S.';
+      end;
 
-     5:
-       begin
-         Result := 'Erro ao pesquisar %S. Motivo: %S.';
-       end;
+    5:
+      begin
+        Result := 'Erro ao pesquisar %S. Motivo: %S.';
+      end;
 
-     6:
-       begin
-         Result := '%S não cadastrado.';
-       end;
+    6:
+      begin
+        Result := '%S não cadastrado.';
+      end;
 
-     7:
-       begin
-         Result := 'Erro ao preparar %S. Motivo %S.';
-       end;
+    7:
+      begin
+        Result := 'Erro ao preparar %S. Motivo %S.';
+      end;
 
-     8:
-       begin
-         Result := '%s salvo com sucesso!'
-       end;
+    8:
+      begin
+        Result := '%s salvo com sucesso!'
+      end;
 
-     9:
-       begin
-         Result := 'Deseja realmente excluir o %s selecionado?'
-       end;
+    9:
+      begin
+        Result := 'Deseja realmente excluir o %s selecionado?'
+      end;
 
-     10:
-       begin
-         Result := 'Município não encontrado.';
-       end;
+    10:
+      begin
+        Result := 'Município não encontrado.';
+      end;
 
-     11:
-       begin
-         Result := 'CPF inválido.';
-       end;
+    11:
+      begin
+        Result := 'CPF inválido.';
+      end;
 
-     12:
-       begin
-         Result := 'Você não possui permissão para realizar a operação.';
-       end;
+    12:
+      begin
+        Result := 'Você não possui permissão para realizar a operação.';
+      end;
 
     13:
       begin
@@ -90,10 +90,30 @@ unit UClassMensagem;
 
     14:
       begin
-         Result := 'Erro ao realizar o login. Motivo: %S';
+        Result := 'Erro ao realizar o login. Motivo: %S';
       end;
-   end;
 
- end;
+    15:
+      begin
+        Result := 'Erro ao verificar a existência do CPF no cadastro de pacientes. Motivo %s'
+      end;
 
- end.
+    16:
+      begin
+        Result := 'CPF já cadastrado na base de dados.';
+      end;
+
+    17:
+      begin
+        Result := 'Cartão SUS inválido.';
+      end;
+
+    18:
+      begin
+        Result := 'Número de RG inválido.';
+      end;
+  end;
+
+end;
+
+end.

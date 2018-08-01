@@ -4,6 +4,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
   ClientWidth = 802
   OnClose = FormClose
   OnShow = FormShow
+  ExplicitLeft = 0
   ExplicitWidth = 808
   ExplicitHeight = 415
   PixelsPerInch = 96
@@ -120,12 +121,12 @@ inherited FrmConsPaciente: TFrmConsPaciente
         end
       end
       inherited EdtCons: TSearchBox
-        Left = 151
-        Width = 610
+        Left = 154
+        Width = 627
         OnExit = EdtConsExit
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitLeft = 151
-        ExplicitWidth = 610
+        ExplicitLeft = 154
+        ExplicitWidth = 627
       end
     end
   end

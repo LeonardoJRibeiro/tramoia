@@ -69,9 +69,9 @@ inherited FrmConsUsuario: TFrmConsUsuario
       ExplicitTop = 7
       ExplicitWidth = 470
       inherited EdtCons: TSearchBox
-        Width = 328
+        Width = 324
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitWidth = 328
+        ExplicitWidth = 324
       end
     end
   end

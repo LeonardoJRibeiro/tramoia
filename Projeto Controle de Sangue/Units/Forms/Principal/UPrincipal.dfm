@@ -844,7 +844,7 @@ object FrmPrincipal: TFrmPrincipal
     OnClick = BtnEntradaClick
   end
   object BtnSaida: TSpeedButton
-    Left = 136
+    Left = 134
     Top = 0
     Width = 122
     Height = 104
@@ -1663,7 +1663,7 @@ object FrmPrincipal: TFrmPrincipal
     OnClick = BtnSaidaClick
   end
   object BtnPacientes: TSpeedButton
-    Left = 265
+    Left = 269
     Top = 0
     Width = 122
     Height = 104
@@ -45059,7 +45059,7 @@ object FrmPrincipal: TFrmPrincipal
       000000000000}
   end
   object Panel1: TPanel
-    Left = 129
+    Left = 127
     Top = 0
     Width = 1
     Height = 104
@@ -45067,7 +45067,7 @@ object FrmPrincipal: TFrmPrincipal
     TabOrder = 0
   end
   object Panel2: TPanel
-    Left = 263
+    Left = 261
     Top = 0
     Width = 1
     Height = 104

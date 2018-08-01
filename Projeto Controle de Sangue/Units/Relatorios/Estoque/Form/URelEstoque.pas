@@ -40,12 +40,9 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
-    procedure ListBoxGrupoSanguineoKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure ListBoxTipoKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure ListBoxVolumeKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure ListBoxGrupoSanguineoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ListBoxTipoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ListBoxVolumeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure RadioGroupFiltroGrupoSanguineoClick(Sender: TObject);
     procedure RadioGroupFiltroTipoClick(Sender: TObject);
     procedure RadioGroupFiltroVolumeClick(Sender: TObject);
@@ -57,8 +54,7 @@ type
 
   public
 
-    class function getRelEstoque(const pFOREIGNFORMKEY: SmallInt;
-      const pCOD_USU: Integer): Boolean;
+    class function getRelEstoque(const pFOREIGNFORMKEY: Smallint; const pCOD_USU: Integer): Boolean;
 
   end;
 
@@ -71,7 +67,6 @@ uses System.DateUtils, UBiblioteca, UBibliotecaRelatorio, UClassMensagem, UClass
   UEnumsRelatorio, UClassForeignKeyForms;
 
 {$R *.dfm}
-
 { TFrmRelEstoque }
 
 procedure TFrmRelEstoque.BtnAddGrupoSanguineoClick(Sender: TObject);
@@ -176,8 +171,7 @@ begin
         lRelEstoque.ListTipo.Text := lAuxStringList.Text;
         lAuxStringList.Clear;
 
-        TBibliotecaRelatorio.PreparaStringList(lRelEstoque.FiltroGrupoSanguineo, ListBoxGrupoSanguineo,
-          lAuxStringList);
+        TBibliotecaRelatorio.PreparaStringList(lRelEstoque.FiltroGrupoSanguineo, ListBoxGrupoSanguineo, lAuxStringList);
         lRelEstoque.ListGrupoSanguineo.Text := lAuxStringList.Text;
         lAuxStringList.Clear;
 
@@ -188,10 +182,7 @@ begin
         lAuxStringList.Destroy;
       end;
 
-      if not (TFrmRlRelEstoque.getRlRelEstoque(TForeignKeyForms.FIdURelEstoque, Self.FCodUsu, lRelEstoque)) then
-      begin
-        MessageBox(self.Handle, 'Não há registros na sua busca', 'Aviso', MB_OK);
-      end;
+      TFrmRlRelEstoque.getRlRelEstoque(TForeignKeyForms.FIdURelEstoque, Self.FCodUsu, lRelEstoque);
 
     except
       on E: Exception do
@@ -253,7 +244,7 @@ begin
 
 end;
 
-class function TFrmRelEstoque.getRelEstoque(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+class function TFrmRelEstoque.getRelEstoque(const pFOREIGNFORMKEY: Smallint; const pCOD_USU: Integer): Boolean;
 begin
 
   if (FrmRelEstoque = nil) then

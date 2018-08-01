@@ -39,7 +39,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure RLDBResult1Compute(Sender: TObject; var Value: Variant; var AText: string; var ComputeIt: Boolean);
     procedure RLDBResultVolumeTotalCompute(Sender: TObject; var Value: Variant; var AText: string;
       var ComputeIt: Boolean);
     procedure RLDBResultVolumeTotalBeforePrint(Sender: TObject; var AText: string; var PrintIt: Boolean);
@@ -159,6 +158,12 @@ begin
 
           DataSource.DataSet := Self.FPersistencia.Query;
 
+        end
+        else
+        begin
+
+          MessageBox(Self.Handle, 'Não há registros na sua busca', 'Aviso', MB_OK);
+
         end;
 
       end;
@@ -175,12 +180,6 @@ begin
     lRelEstoqueDAO.Destroy;
   end;
 
-end;
-
-procedure TFrmRlRelEstoque.RLDBResult1Compute(Sender: TObject; var Value: Variant; var AText: string;
-  var ComputeIt: Boolean);
-begin
-  Value := DataSource.DataSet.FieldByName('quantidade').AsCurrency;
 end;
 
 procedure TFrmRlRelEstoque.RLDBResultQuantidadeTotalCompute(Sender: TObject; var Value: Variant; var AText: string;

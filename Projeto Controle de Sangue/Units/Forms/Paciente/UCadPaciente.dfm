@@ -474,6 +474,10 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object MemoObservacoes: TMemo
         Left = 16
         Top = 10

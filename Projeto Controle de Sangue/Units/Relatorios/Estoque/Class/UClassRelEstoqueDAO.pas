@@ -46,11 +46,12 @@ begin
     pPersistencia.Query.SQL.Add('  CONCAT(sum(b.volume), ' + QuotedStr(' mL') + ') as volume,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) as abo,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  b.sorologia');
+    pPersistencia.Query.SQL.Add('IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
+      ') AS sorologia');
     pPersistencia.Query.SQL.Add('FROM bolsa b');
 
     // Se parar parâmetro pro SQL da erro.
-    pPersistencia.Query.SQL.Add('WHERE b.possui_estoque = '+QuotedStr('S'));
+    pPersistencia.Query.SQL.Add('WHERE b.possui_estoque = ' + QuotedStr('S'));
 
     TBibliotecaRelatorio.setSqlFiltro('b.tipo', pRELESTOQUE.FiltroTipo, pRELESTOQUE.ListTipo, pPersistencia);
 

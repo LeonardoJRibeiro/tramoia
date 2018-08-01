@@ -563,7 +563,7 @@ begin
   begin
 
     EdtTelefone.Text := '62';
-    EdtTelefone.SelStart :=  3;
+    EdtTelefone.SelStart := 3;
 
   end;
 
@@ -605,6 +605,14 @@ end;
 
 procedure TFrmCadPaciente.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
+
+  if (Shift = [ssCtrl]) and (Key = Ord('A')) then
+  begin
+
+    PageControl.SelectNextPage(True);
+
+  end;
+
   case (Key) of
     VK_ESCAPE:
       begin

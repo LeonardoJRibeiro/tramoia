@@ -14,7 +14,7 @@ object FrmCadUsuario: TFrmCadUsuario
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96

@@ -12,10 +12,7 @@ type
     BtnEntrada: TSpeedButton;
     BtnSaida: TSpeedButton;
     BtnPacientes: TSpeedButton;
-    Panel1: TPanel;
-    Panel2: TPanel;
     BtnSair: TSpeedButton;
-    Panel3: TPanel;
     MainMenu: TMainMenu;
     Paciente1: TMenuItem;
     Cadastrar1: TMenuItem;
@@ -27,11 +24,11 @@ type
     Cadastrar2: TMenuItem;
     Consultar1: TMenuItem;
     BtnRelatorios: TSpeedButton;
-    Panel4: TPanel;
     TimerLogin: TTimer;
     Logof: TMenuItem;
     ImageUEG: TImage;
     MenuItemSobre: TMenuItem;
+    Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);

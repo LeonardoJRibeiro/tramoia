@@ -14,7 +14,7 @@ object FrmCadPaciente: TFrmCadPaciente
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow

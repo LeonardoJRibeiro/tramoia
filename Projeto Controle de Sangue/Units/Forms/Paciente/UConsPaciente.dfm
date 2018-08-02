@@ -4,7 +4,6 @@ inherited FrmConsPaciente: TFrmConsPaciente
   ClientWidth = 802
   OnClose = FormClose
   OnShow = FormShow
-  ExplicitLeft = 0
   ExplicitWidth = 808
   ExplicitHeight = 415
   PixelsPerInch = 96

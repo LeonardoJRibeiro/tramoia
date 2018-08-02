@@ -112,6 +112,16 @@ begin
       begin
         Result := 'Número de RG inválido.';
       end;
+
+    19:
+      begin
+        Result := 'Não é possível excluir o paciente. Motivo: Paciente já possui histórico.'
+      end;
+
+    20:
+      begin
+        Result := 'Não foi possivel realizar o cadastro do usuário. Motivo: Usuário já cadastrado no sistema.';
+      end;
   end;
 
 end;

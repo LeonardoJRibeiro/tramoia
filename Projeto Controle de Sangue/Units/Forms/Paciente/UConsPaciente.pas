@@ -30,6 +30,8 @@ type
 
     function getAdmin: Boolean;
 
+    function getExisteRelacionamento: Boolean;
+
   public
     class function getConsPaciente(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
       var pNumProntuario: string): Boolean;
@@ -41,7 +43,7 @@ var
 implementation
 
 uses System.Math, UDMConexao, UClassMensagem, UClassPacienteDAO, UCadPaciente, UClassPersistencia,
-  UClassForeignKeyForms, UBiblioteca, UClassUsuarioDao;
+  UClassForeignKeyForms, UBiblioteca, UClassUsuarioDao, UClassSaidaDao;
 
 {$R *.dfm}
 
@@ -88,9 +90,18 @@ begin
 
         try
 
-          if (lPacienteDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+          if (not Self.getExisteRelacionamento) then
           begin
-            EdtConsInvokeSearch(Self);
+
+            if (lPacienteDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+            begin
+              EdtConsInvokeSearch(Self);
+            end;
+
+          end
+          else
+          begin
+            Application.MessageBox(PChar(TMensagem.getMensagem(19)), 'Aviso', MB_OK + MB_ICONWARNING);
           end;
 
         except
@@ -315,6 +326,30 @@ begin
 
   finally
     FreeAndNil(FrmConsPaciente);
+  end;
+
+end;
+
+function TFrmConsPaciente.getExisteRelacionamento: Boolean;
+var
+  lSaidaDao: TSaidaDAO;
+begin
+
+  lSaidaDao := TSaidaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+      Result := lSaidaDao.getExisteSaidaPaciente(Self.FPersistencia.Query.FieldByName('id').AsInteger);
+    except
+      on E: Exception do
+      begin
+        Result := False;
+
+      end;
+    end;
+
+  finally
+    lSaidaDao.Destroy
   end;
 
 end;

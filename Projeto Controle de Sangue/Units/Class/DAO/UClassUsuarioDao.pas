@@ -10,7 +10,8 @@ type
     FConexao: TConexao;
 
   public
-    function getExiste(const pID: Integer): Boolean;
+    function getExiste(const pID: Integer): Boolean; overload;
+    function getExiste(const pNOME: string): Boolean; overload;
     function Excluir(const pID: Integer): Boolean;
     function Salvar(var pObjeto: TUsuario): Boolean;
     function getObjeto(const pID: Integer; var pObjeto: TUsuario): Boolean;
@@ -210,6 +211,42 @@ begin
 
 end;
 
+function TUsuarioDAO.getExiste(const pNOME: string): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  count(id)');
+      lPersistencia.Query.SQL.Add('FROM usuario');
+      lPersistencia.Query.SQL.Add('WHERE nome = :pNome');
+
+      lPersistencia.setParametro('pNome', pNOME);
+
+      lPersistencia.Query.Open;
+
+      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
 function TUsuarioDAO.getExisteUsuariosCadastrados: Boolean;
 var
   lPersistencia: TPersistencia;
@@ -267,7 +304,7 @@ begin
       while (not lPersistencia.Query.Eof) do
       begin
 
-        if (TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('senha').Asstring.Trim) = pSENHA.Trim) then
+        if (TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('senha').AsString.Trim) = pSENHA.Trim) then
         begin
           pID := lPersistencia.Query.FieldByName('id').AsInteger;
           Result := True;
@@ -310,13 +347,14 @@ begin
 
       if (not lPersistencia.Query.IsEmpty) then
       begin
-        Result := TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('nome').Asstring);
+        Result := TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('nome').AsString);
       end;
 
     except
       on E: Exception do
       begin
-
+        Result := '';
+        raise Exception.Create(E.Message);
       end;
     end;
 
@@ -402,9 +440,9 @@ begin
       lPersistencia.Query.Open;
 
       pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').Asstring;
-      pObjeto.Senha := lPersistencia.Query.FieldByName('senha').Asstring;
-      pObjeto.Admin := lPersistencia.Query.FieldByName('admin').Asstring;
+      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').AsString;
+      pObjeto.Senha := lPersistencia.Query.FieldByName('senha').AsString;
+      pObjeto.Admin := lPersistencia.Query.FieldByName('admin').AsString;
 
       Result := True;
 

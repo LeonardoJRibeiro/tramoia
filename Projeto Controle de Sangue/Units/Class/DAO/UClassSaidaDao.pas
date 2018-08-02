@@ -20,6 +20,8 @@ type
 
     function getIdSaidaByNumeroBolsa(const pNUMERO_DA_BOLSA: string): Integer;
 
+    function getExisteSaidaPaciente(const pID_PACIENTE: Integer): Boolean;
+
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
@@ -125,6 +127,42 @@ begin
 
       lPersistencia.Query.SQL.Add('WHERE id_bolsa = :pId_Bolsa');
       lPersistencia.setParametro('pId_Bolsa', pID_BOLSA);
+
+      lPersistencia.Query.Open;
+
+      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
+function TSaidaDAO.getExisteSaidaPaciente(const pID_PACIENTE: Integer): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  count(id)');
+      lPersistencia.Query.SQL.Add('FROM saida');
+      lPersistencia.Query.SQL.Add('WHERE id_paciente = :pId_Paciente');
+
+      lPersistencia.setParametro('pId_Paciente', pID_PACIENTE);
 
       lPersistencia.Query.Open;
 

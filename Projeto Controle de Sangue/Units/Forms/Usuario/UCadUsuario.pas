@@ -26,6 +26,8 @@ type
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
 
+    FNomeUsuario: string;
+
     procedure CarregaUsuario;
 
   public
@@ -76,11 +78,28 @@ begin
       lUsuarioDao := TUsuarioDao.Create(DataModuleConexao.Conexao);
       try
 
-        if (lUsuarioDao.Salvar(lUsuario)) then
+        if (Trim(EdtNome.Text) <> Trim(Self.FNomeUsuario)) then
         begin
-          Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Usuário'])), PChar('Informação'),
-            MB_OK + MB_ICONINFORMATION);
-          ModalResult := mrOk;
+
+          if (lUsuarioDao.getExiste(lUsuario.Nome)) then
+          begin
+
+            Application.MessageBox(PChar(TMensagem.getMensagem(20)), PChar('Aviso'), MB_OK + MB_ICONWARNING);
+            EdtNome.SetFocus;
+
+          end;
+
+        end
+        else
+        begin
+
+          if (lUsuarioDao.Salvar(lUsuario)) then
+          begin
+            Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Usuário'])), PChar('Informação'),
+              MB_OK + MB_ICONINFORMATION);
+            ModalResult := mrOk;
+          end;
+
         end;
 
       finally
@@ -116,6 +135,7 @@ begin
       if (lUsuarioDao.getObjeto(Self.FIdUsuario, lUsuario)) then
       begin
 
+        Self.FNomeUsuario := lUsuario.Nome;
         EdtNome.Text := lUsuario.Nome;
         EdtSenha.Text := TBiblioteca.Crypt('D', Trim(lUsuario.Senha));
 

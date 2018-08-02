@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Datasnap.DBClient, Data.DB, UClassRelEntrada,
-  UClassPersistencia;
+  UClassPersistencia, RLFilters, RLPDFFilter;
 
 type
   TFrmRlRelEntrada = class(TForm)
@@ -44,9 +44,11 @@ type
     RLBand2: TRLBand;
     RLLabelTotalEntradas: TRLLabel;
     RLDBResultTotalEntradas: TRLDBResult;
+    RLPDFFilter: TRLPDFFilter;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure RLReportBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
 
     FForeignFormKey: SmallInt;
@@ -174,6 +176,12 @@ begin
           // Usa o ClientDataSet pra não dar erro com o TSQLQuery qnd for gerar o relatório.
           DataSource.DataSet := Self.FPersistencia.Query;
 
+        end
+        else
+        begin
+
+          MessageBox(Self.Handle, 'Não há registros na sua busca', 'Aviso', mb_Ok);
+
         end;
 
       end;
@@ -189,6 +197,13 @@ begin
   finally
     lRelEntradaDAO.Destroy;
   end;
+
+end;
+
+procedure TFrmRlRelEntrada.RLReportBeforePrint(Sender: TObject; var PrintIt: Boolean);
+begin
+
+  SelectedFilter := RLPDFFilter;
 
 end;
 

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Datasnap.DBClient, Data.DB, UClassRelEstoque,
-  UClassPersistencia;
+  UClassPersistencia, RLFilters, RLPDFFilter;
 
 type
   TFrmRlRelEstoque = class(TForm)
@@ -36,6 +36,7 @@ type
     RLBand2: TRLBand;
     RLLabelQuantidadeTotal: TRLLabel;
     RLDBResultQuantidadeTotal: TRLDBResult;
+    RLPDFFilter: TRLPDFFilter;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -44,6 +45,7 @@ type
     procedure RLDBResultVolumeTotalBeforePrint(Sender: TObject; var AText: string; var PrintIt: Boolean);
     procedure RLDBResultQuantidadeTotalCompute(Sender: TObject; var Value: Variant; var AText: string;
       var ComputeIt: Boolean);
+    procedure RLReportBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
 
     FForeignFormKey: SmallInt;
@@ -197,6 +199,13 @@ procedure TFrmRlRelEstoque.RLDBResultVolumeTotalCompute(Sender: TObject; var Val
   var ComputeIt: Boolean);
 begin
   Value := Copy(DataSource.DataSet.FieldByName('volume').AsString, 0, 3).ToInteger;
+end;
+
+procedure TFrmRlRelEstoque.RLReportBeforePrint(Sender: TObject; var PrintIt: Boolean);
+begin
+
+  SelectedFilter := RLPDFFilter;
+
 end;
 
 end.

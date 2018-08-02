@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Datasnap.DBClient, Data.DB, UClassRelSaida,
-  UClassPersistencia;
+  UClassPersistencia, RLFilters, RLPDFFilter;
 
 type
   TFrmRlRelSaida = class(TForm)
@@ -72,9 +72,11 @@ type
     RLBand2: TRLBand;
     RLLabelTotalSaidas: TRLLabel;
     RLDBResult1: TRLDBResult;
+    RLPDFFilter: TRLPDFFilter;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure RLReportBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
 
     FForeignFormKey: SmallInt;
@@ -203,6 +205,13 @@ begin
   finally
     lRelSaidaDAO.Destroy;
   end;
+
+end;
+
+procedure TFrmRlRelSaida.RLReportBeforePrint(Sender: TObject; var PrintIt: Boolean);
+begin
+
+  SelectedFilter := RLPDFFilter;
 
 end;
 

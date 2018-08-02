@@ -36,6 +36,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
     Font.Style = []
     PageSetup.Orientation = poLandscape
     PreviewOptions.Caption = 'Relat'#243'rio de entrada'
+    BeforePrint = RLReportBeforePrint
     object RLBandHeader: TRLBand
       Left = 38
       Top = 38
@@ -380,5 +381,13 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
   object DataSource: TDataSource
     Left = 944
     Top = 40
+  end
+  object RLPDFFilter: TRLPDFFilter
+    DocumentInfo.Creator = 
+      'FortesReport Community Edition v4.0 \251 Copyright '#169' 1999-2016 F' +
+      'ortes Inform'#225'tica'
+    DisplayName = 'Documento PDF'
+    Left = 552
+    Top = 248
   end
 end

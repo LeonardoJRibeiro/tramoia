@@ -36,6 +36,7 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
     Font.Name = 'Arial'
     Font.Style = []
     PreviewOptions.Caption = 'Relat'#243'rio de entrada'
+    BeforePrint = RLReportBeforePrint
     object RLBandHeader: TRLBand
       Left = 38
       Top = 38
@@ -332,5 +333,13 @@ object FrmRlRelEstoque: TFrmRlRelEstoque
   object DataSource: TDataSource
     Left = 695
     Top = 48
+  end
+  object RLPDFFilter: TRLPDFFilter
+    DocumentInfo.Creator = 
+      'FortesReport Community Edition v4.0 \251 Copyright '#169' 1999-2016 F' +
+      'ortes Inform'#225'tica'
+    DisplayName = 'Documento PDF'
+    Left = 392
+    Top = 248
   end
 end

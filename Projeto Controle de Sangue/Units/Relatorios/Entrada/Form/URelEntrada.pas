@@ -190,10 +190,7 @@ begin
         lAuxStringList.Destroy;
       end;
 
-      if not(TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada)) then
-      begin
-        MessageBox(Self.Handle, 'Não há registros na sua busca', 'Aviso', mb_Ok);
-      end;
+      TFrmRlRelEntrada.getRlRelEntrada(TForeignKeyForms.FIdURelEntrada, Self.FCodUsu, lRelEntrada);
 
     except
       on E: Exception do

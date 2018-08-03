@@ -14,27 +14,27 @@ type
     BtnPacientes: TSpeedButton;
     BtnSair: TSpeedButton;
     MainMenu: TMainMenu;
-    Paciente1: TMenuItem;
-    Cadastrar1: TMenuItem;
-    Histrico1: TMenuItem;
-    Relatrios1: TMenuItem;
-    Entradas1: TMenuItem;
-    Sadas1: TMenuItem;
-    Usurios1: TMenuItem;
-    Cadastrar2: TMenuItem;
-    Consultar1: TMenuItem;
+    MenuItemPaciente: TMenuItem;
+    MenuItemCadPaciente: TMenuItem;
+    MenuItemCadHistorico: TMenuItem;
+    MenuItemRelatorios: TMenuItem;
+    MenuItemRelEntradas: TMenuItem;
+    MenuItemRelSaida: TMenuItem;
+    MenuItemUsuarios: TMenuItem;
+    MenuItemCadastrarUsuario: TMenuItem;
+    MenuItemConsultarUsuario: TMenuItem;
     BtnRelatorios: TSpeedButton;
     TimerLogin: TTimer;
-    Logof: TMenuItem;
+    MenuItemLogoff: TMenuItem;
     MenuItemSobre: TMenuItem;
     Panel1: TPanel;
-    Entradas2: TMenuItem;
-    Cadastro1: TMenuItem;
-    Consulta1: TMenuItem;
-    Sair1: TMenuItem;
-    Sadas2: TMenuItem;
-    Cadastro2: TMenuItem;
-    Consulta2: TMenuItem;
+    MenuItemEntradas: TMenuItem;
+    MenuItemCadEntrada: TMenuItem;
+    MenuItemConsultarEntrada: TMenuItem;
+    MenuItemSair: TMenuItem;
+    MenuItemSaidas: TMenuItem;
+    MenuItemCadastrarSaida: TMenuItem;
+    MenuItemConsultarSaida: TMenuItem;
     StatusBar: TStatusBar;
     ImageUEG: TImage;
     procedure FormCreate(Sender: TObject);
@@ -43,19 +43,19 @@ type
     procedure BtnSairClick(Sender: TObject);
     procedure TimerLoginTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure LogofClick(Sender: TObject);
+    procedure MenuItemLogoffClick(Sender: TObject);
     procedure BtnSaidaClick(Sender: TObject);
     procedure BtnEntradaClick(Sender: TObject);
     procedure BtnRelatoriosClick(Sender: TObject);
-    procedure Cadastrar2Click(Sender: TObject);
-    procedure Cadastrar1Click(Sender: TObject);
-    procedure Entradas1Click(Sender: TObject);
-    procedure Sadas1Click(Sender: TObject);
-    procedure Consultar1Click(Sender: TObject);
+    procedure MenuItemCadastrarUsuarioClick(Sender: TObject);
+    procedure MenuItemCadPacienteClick(Sender: TObject);
+    procedure MenuItemRelEntradasClick(Sender: TObject);
+    procedure MenuItemRelSaidaClick(Sender: TObject);
+    procedure MenuItemConsultarUsuarioClick(Sender: TObject);
     procedure MenuItemSobreClick(Sender: TObject);
-    procedure Consulta1Click(Sender: TObject);
-    procedure Sair1Click(Sender: TObject);
-    procedure Consulta2Click(Sender: TObject);
+    procedure MenuItemConsultarEntradaClick(Sender: TObject);
+    procedure MenuItemSairClick(Sender: TObject);
+    procedure MenuItemConsultarSaidaClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -112,14 +112,14 @@ begin
   Close;
 end;
 
-procedure TFrmPrincipal.Cadastrar1Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemCadPacienteClick(Sender: TObject);
 begin
 
   TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario);
 
 end;
 
-procedure TFrmPrincipal.Cadastrar2Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemCadastrarUsuarioClick(Sender: TObject);
 begin
   if (Self.getAdmin) then
   begin
@@ -131,17 +131,17 @@ begin
   end;
 end;
 
-procedure TFrmPrincipal.Consulta1Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemConsultarEntradaClick(Sender: TObject);
 begin
   TFrmConsEntrada.getConsEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
-procedure TFrmPrincipal.Consulta2Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemConsultarSaidaClick(Sender: TObject);
 begin
   TFrmConsSaidas.getConsSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
-procedure TFrmPrincipal.Consultar1Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemConsultarUsuarioClick(Sender: TObject);
 begin
   if (Self.getAdmin) then
   begin
@@ -154,7 +154,7 @@ begin
 
 end;
 
-procedure TFrmPrincipal.Entradas1Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemRelEntradasClick(Sender: TObject);
 begin
 
   TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
@@ -206,7 +206,7 @@ begin
 
 end;
 
-procedure TFrmPrincipal.LogofClick(Sender: TObject);
+procedure TFrmPrincipal.MenuItemLogoffClick(Sender: TObject);
 begin
   TimerLogin.Enabled := True;
 end;
@@ -218,14 +218,14 @@ begin
 
 end;
 
-procedure TFrmPrincipal.Sadas1Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemRelSaidaClick(Sender: TObject);
 begin
 
   TFrmRelSaida.getRelSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
 end;
 
-procedure TFrmPrincipal.Sair1Click(Sender: TObject);
+procedure TFrmPrincipal.MenuItemSairClick(Sender: TObject);
 begin
   Close;
 end;

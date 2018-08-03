@@ -48635,74 +48635,73 @@ object FrmPrincipal: TFrmPrincipal
         Text = '1.0.0.0'
         Width = 50
       end>
-    ExplicitTop = -11
   end
   object MainMenu: TMainMenu
     Left = 40
     Top = 152
-    object Paciente1: TMenuItem
+    object MenuItemPaciente: TMenuItem
       Caption = 'Pacientes'
-      object Cadastrar1: TMenuItem
+      object MenuItemCadPaciente: TMenuItem
         Caption = 'Cadastrar'
-        OnClick = Cadastrar1Click
+        OnClick = MenuItemCadPacienteClick
       end
-      object Histrico1: TMenuItem
+      object MenuItemCadHistorico: TMenuItem
         Caption = 'Hist'#243'rico'
       end
     end
-    object Entradas2: TMenuItem
+    object MenuItemEntradas: TMenuItem
       Caption = 'Entradas'
-      object Cadastro1: TMenuItem
+      object MenuItemCadEntrada: TMenuItem
         Caption = 'Cadastrar'
       end
-      object Consulta1: TMenuItem
+      object MenuItemConsultarEntrada: TMenuItem
         Caption = 'Consultar'
-        OnClick = Consulta1Click
+        OnClick = MenuItemConsultarEntradaClick
       end
     end
-    object Sadas2: TMenuItem
+    object MenuItemSaidas: TMenuItem
       Caption = 'Sa'#237'das'
-      object Cadastro2: TMenuItem
+      object MenuItemCadastrarSaida: TMenuItem
         Caption = 'Cadastrar'
       end
-      object Consulta2: TMenuItem
+      object MenuItemConsultarSaida: TMenuItem
         Caption = 'Consultar'
-        OnClick = Consulta2Click
+        OnClick = MenuItemConsultarSaidaClick
       end
     end
-    object Relatrios1: TMenuItem
+    object MenuItemRelatorios: TMenuItem
       Caption = 'Relat'#243'rios'
-      object Entradas1: TMenuItem
+      object MenuItemRelEntradas: TMenuItem
         Caption = 'Entradas'
-        OnClick = Entradas1Click
+        OnClick = MenuItemRelEntradasClick
       end
-      object Sadas1: TMenuItem
+      object MenuItemRelSaida: TMenuItem
         Caption = 'Sa'#237'das'
-        OnClick = Sadas1Click
+        OnClick = MenuItemRelSaidaClick
       end
     end
-    object Usurios1: TMenuItem
+    object MenuItemUsuarios: TMenuItem
       Caption = 'Usu'#225'rios'
-      object Cadastrar2: TMenuItem
+      object MenuItemCadastrarUsuario: TMenuItem
         Caption = 'Cadastrar'
-        OnClick = Cadastrar2Click
+        OnClick = MenuItemCadastrarUsuarioClick
       end
-      object Consultar1: TMenuItem
+      object MenuItemConsultarUsuario: TMenuItem
         Caption = 'Consultar'
-        OnClick = Consultar1Click
+        OnClick = MenuItemConsultarUsuarioClick
       end
     end
     object MenuItemSobre: TMenuItem
       Caption = 'Sobre'
       OnClick = MenuItemSobreClick
     end
-    object Logof: TMenuItem
+    object MenuItemLogoff: TMenuItem
       Caption = 'Logoff'
-      OnClick = LogofClick
+      OnClick = MenuItemLogoffClick
     end
-    object Sair1: TMenuItem
+    object MenuItemSair: TMenuItem
       Caption = 'Sair'
-      OnClick = Sair1Click
+      OnClick = MenuItemSairClick
     end
   end
   object TimerLogin: TTimer

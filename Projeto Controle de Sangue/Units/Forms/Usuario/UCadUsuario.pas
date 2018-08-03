@@ -63,6 +63,8 @@ procedure TFrmCadUsuario.BtnGravarClick(Sender: TObject);
 var
   lUsuario: TUsuario;
   lUsuarioDao: TUsuarioDao;
+
+  lUsuarioCadastrado: Boolean;
 begin
 
   lUsuario := TUsuario.Create;
@@ -89,16 +91,23 @@ begin
 
           end;
 
+          lUsuarioCadastrado := lUsuarioDao.Salvar(lUsuario);
+
         end
         else
         begin
 
-          if (lUsuarioDao.Salvar(lUsuario)) then
-          begin
-            Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Usuário'])), PChar('Informação'),
-              MB_OK + MB_ICONINFORMATION);
-            ModalResult := mrOk;
-          end;
+          lUsuarioCadastrado := lUsuarioDao.Salvar(lUsuario);
+
+        end;
+
+        if (lUsuarioCadastrado) then
+        begin
+
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Usuário'])), PChar('Informação'),
+            MB_OK + MB_ICONINFORMATION);
+
+          ModalResult := mrOk;
 
         end;
 

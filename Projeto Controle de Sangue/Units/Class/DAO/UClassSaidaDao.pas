@@ -22,6 +22,8 @@ type
 
     function getExisteSaidaPaciente(const pID_PACIENTE: Integer): Boolean;
 
+    function getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt; var pPersistencia: TPersistencia): Boolean;
+
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
@@ -68,6 +70,79 @@ begin
 
   finally
     lPersistencia.Destroy;
+  end;
+
+end;
+
+function TSaidaDAO.getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt;
+  var pPersistencia: TPersistencia): Boolean;
+begin
+
+  try
+
+    pPersistencia.IniciaTransacao;
+
+    pPersistencia.Query.SQL.Add('SELECT');
+    pPersistencia.Query.SQL.Add('  s.id,');
+    pPersistencia.Query.SQL.Add('  s.data_saida,');
+    pPersistencia.Query.SQL.Add('  p.num_prontuario,');
+    pPersistencia.Query.SQL.Add('  p.nome,');
+    pPersistencia.Query.SQL.Add('  concat(p.abo, p.rh) tipo_sangue,');
+    pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
+    pPersistencia.Query.SQL.Add('  b.tipo,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue_bolsa');
+    pPersistencia.Query.SQL.Add('FROM saida s');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
+    pPersistencia.Query.SQL.Add('ON (s.id_bolsa = b.id)');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN paciente p');
+    pPersistencia.Query.SQL.Add('ON (s.id_paciente = p.id)');
+
+    pPersistencia.Query.SQL.Add('WHERE 0=0');
+
+    { case (pTIPOCONS) of
+      0, 1: // Palavra chave e Nome
+      begin
+
+      if (not pCHAVE.Trim.IsEmpty) then
+      begin
+
+      pPersistencia.Query.SQL.Add('AND nome LIKE :pChave');
+      pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
+
+      end;
+
+      pPersistencia.Query.SQL.Add('ORDER BY nome');
+
+      end;
+
+      2: // Id
+      begin
+
+      if (not pCHAVE.Trim.IsEmpty) then
+      begin
+
+      pPersistencia.Query.SQL.Add('AND id = :pChave');
+      pPersistencia.setParametro('pChave', pCHAVE);
+
+      end;
+
+      pPersistencia.Query.SQL.Add('ORDER BY id');
+
+      end;
+      end; }
+
+    pPersistencia.Query.Open;
+
+    Result := True;
+
+  except
+    on E: Exception do
+    begin
+      Result := False;
+      raise Exception.Create(E.Message);
+    end;
   end;
 
 end;

@@ -347,7 +347,7 @@ begin
 
       if (not lPersistencia.Query.IsEmpty) then
       begin
-        Result := TBiblioteca.Crypt('D', lPersistencia.Query.FieldByName('nome').AsString);
+        Result := lPersistencia.Query.FieldByName('nome').AsString;
       end;
 
     except

@@ -22,7 +22,7 @@ object FrmPrincipal: TFrmPrincipal
   TextHeight = 13
   object ImageUEG: TImage
     Left = 0
-    Top = 8
+    Top = -11
     Width = 1008
     Height = 701
     ParentCustomHint = False
@@ -41447,12 +41447,13 @@ object FrmPrincipal: TFrmPrincipal
       000000000000}
     ShowHint = False
     Transparent = True
+    ExplicitTop = 8
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 1008
-    Height = 168
+    Height = 148
     Align = alTop
     BevelEdges = []
     BevelOuter = bvNone
@@ -41462,7 +41463,7 @@ object FrmPrincipal: TFrmPrincipal
     TabOrder = 0
     object BtnEntrada: TSpeedButton
       Left = 14
-      Top = 16
+      Top = 14
       Width = 128
       Height = 128
       Cursor = crHandPoint
@@ -43086,7 +43087,7 @@ object FrmPrincipal: TFrmPrincipal
     end
     object BtnPacientes: TSpeedButton
       Left = 300
-      Top = 16
+      Top = 14
       Width = 128
       Height = 128
       Cursor = crHandPoint
@@ -44707,7 +44708,7 @@ object FrmPrincipal: TFrmPrincipal
     end
     object BtnRelatorios: TSpeedButton
       Left = 448
-      Top = 16
+      Top = 14
       Width = 128
       Height = 128
       Cursor = crHandPoint
@@ -46327,7 +46328,7 @@ object FrmPrincipal: TFrmPrincipal
     end
     object BtnSaida: TSpeedButton
       Left = 156
-      Top = 16
+      Top = 14
       Width = 128
       Height = 128
       Cursor = crHandPoint
@@ -47949,7 +47950,7 @@ object FrmPrincipal: TFrmPrincipal
     end
     object BtnSair: TSpeedButton
       Left = 592
-      Top = 16
+      Top = 14
       Width = 128
       Height = 128
       Cursor = crHandPoint
@@ -48606,6 +48607,36 @@ object FrmPrincipal: TFrmPrincipal
       OnClick = BtnSairClick
     end
   end
+  object StatusBar: TStatusBar
+    Left = 0
+    Top = 690
+    Width = 1008
+    Height = 19
+    Panels = <
+      item
+        Text = 'Usu'#225'rio:'
+        Width = 50
+      end
+      item
+        Width = 300
+      end
+      item
+        Text = 'Data:'
+        Width = 50
+      end
+      item
+        Width = 100
+      end
+      item
+        Text = 'Vers'#227'o:'
+        Width = 50
+      end
+      item
+        Text = '1.0.0.0'
+        Width = 50
+      end>
+    ExplicitTop = -11
+  end
   object MainMenu: TMainMenu
     Left = 40
     Top = 152
@@ -48617,6 +48648,26 @@ object FrmPrincipal: TFrmPrincipal
       end
       object Histrico1: TMenuItem
         Caption = 'Hist'#243'rico'
+      end
+    end
+    object Entradas2: TMenuItem
+      Caption = 'Entradas'
+      object Cadastro1: TMenuItem
+        Caption = 'Cadastrar'
+      end
+      object Consulta1: TMenuItem
+        Caption = 'Consultar'
+        OnClick = Consulta1Click
+      end
+    end
+    object Sadas2: TMenuItem
+      Caption = 'Sa'#237'das'
+      object Cadastro2: TMenuItem
+        Caption = 'Cadastrar'
+      end
+      object Consulta2: TMenuItem
+        Caption = 'Consultar'
+        OnClick = Consulta2Click
       end
     end
     object Relatrios1: TMenuItem
@@ -48648,6 +48699,10 @@ object FrmPrincipal: TFrmPrincipal
     object Logof: TMenuItem
       Caption = 'Logoff'
       OnClick = LogofClick
+    end
+    object Sair1: TMenuItem
+      Caption = 'Sair'
+      OnClick = Sair1Click
     end
   end
   object TimerLogin: TTimer

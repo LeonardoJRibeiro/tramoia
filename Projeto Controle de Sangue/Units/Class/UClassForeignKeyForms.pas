@@ -23,6 +23,8 @@ type
     FIdUConsUsuario: Byte = 10;
     FIdURelEstoque: Byte = 11;
     FIdUSobre: Byte = 12;
+    FIdUConsEntrada: Byte = 13;
+    FIdUConsSaida: Byte = 14;
 
   end;
 

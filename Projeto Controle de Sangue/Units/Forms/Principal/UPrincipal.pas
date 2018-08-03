@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, UClassActiveControl, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
-  Vcl.Menus, acPNG;
+  Vcl.Menus, acPNG, Vcl.ComCtrls;
 
 type
   TFrmPrincipal = class(TForm)
@@ -26,9 +26,17 @@ type
     BtnRelatorios: TSpeedButton;
     TimerLogin: TTimer;
     Logof: TMenuItem;
-    ImageUEG: TImage;
     MenuItemSobre: TMenuItem;
     Panel1: TPanel;
+    Entradas2: TMenuItem;
+    Cadastro1: TMenuItem;
+    Consulta1: TMenuItem;
+    Sair1: TMenuItem;
+    Sadas2: TMenuItem;
+    Cadastro2: TMenuItem;
+    Consulta2: TMenuItem;
+    StatusBar: TStatusBar;
+    ImageUEG: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -45,11 +53,15 @@ type
     procedure Sadas1Click(Sender: TObject);
     procedure Consultar1Click(Sender: TObject);
     procedure MenuItemSobreClick(Sender: TObject);
+    procedure Consulta1Click(Sender: TObject);
+    procedure Sair1Click(Sender: TObject);
+    procedure Consulta2Click(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
 
     function getAdmin: Boolean;
+
   public
 
   end;
@@ -62,7 +74,8 @@ implementation
 {$R *.dfm}
 
 uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
-  URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre;
+  URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
+  UClassBibliotecaDao;
 
 procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
 begin
@@ -116,6 +129,16 @@ begin
   begin
     Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
+end;
+
+procedure TFrmPrincipal.Consulta1Click(Sender: TObject);
+begin
+  TFrmConsEntrada.getConsEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
+procedure TFrmPrincipal.Consulta2Click(Sender: TObject);
+begin
+  TFrmConsSaidas.getConsSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.Consultar1Click(Sender: TObject);
@@ -202,12 +225,22 @@ begin
 
 end;
 
+procedure TFrmPrincipal.Sair1Click(Sender: TObject);
+begin
+  Close;
+end;
+
 procedure TFrmPrincipal.TimerLoginTimer(Sender: TObject);
 begin
 
   TimerLogin.Enabled := False;
 
-  if (not TFrmLogin.getLogin(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario)) then
+  if (TFrmLogin.getLogin(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario)) then
+  begin
+    StatusBar.Panels.Items[1].Text := TClassBibliotecaDao.getNomeUsuario(Self.FIdUsuario, DataModuleConexao.Conexao);
+    StatusBar.Panels.Items[3].Text := DateToStr(now);
+  end
+  else
   begin
     Close;
   end;

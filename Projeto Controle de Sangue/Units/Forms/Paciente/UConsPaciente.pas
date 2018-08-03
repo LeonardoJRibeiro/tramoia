@@ -214,7 +214,6 @@ end;
 procedure TFrmConsPaciente.EdtConsInvokeSearch(Sender: TObject);
 var
   lPacienteDao: TPacienteDAO;
-  lPersistencia: TPersistencia;
 begin
   inherited;
 

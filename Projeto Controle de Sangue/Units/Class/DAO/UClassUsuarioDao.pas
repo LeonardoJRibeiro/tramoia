@@ -16,6 +16,8 @@ type
     function Salvar(var pObjeto: TUsuario): Boolean;
     function getObjeto(const pID: Integer; var pObjeto: TUsuario): Boolean;
 
+    function getPermiteExclusao(const pID: Integer; var pMensagem: string): Boolean;
+
     function getLogin(const pNOME, pSENHA: string; var pID: Integer): Boolean;
 
     function getNomeUsuario(const pID: Integer): string;
@@ -33,7 +35,7 @@ type
 
 implementation
 
-uses UBiblioteca, System.StrUtils;
+uses UBiblioteca, UClassBibliotecaDAO, System.StrUtils;
 
 constructor TUsuarioDAO.Create(const pCONEXAO: TConexao);
 begin
@@ -431,10 +433,13 @@ begin
       lPersistencia.IniciaTransacao;
 
       lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  *');
+      lPersistencia.Query.SQL.Add('  id,');
+      lPersistencia.Query.SQL.Add('  nome,');
+      lPersistencia.Query.SQL.Add('  senha,');
+      lPersistencia.Query.SQL.Add('  admin');
       lPersistencia.Query.SQL.Add('FROM usuario');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
 
+      lPersistencia.Query.SQL.Add('WHERE id = :pId');
       lPersistencia.setParametro('pId', pID);
 
       lPersistencia.Query.Open;
@@ -457,6 +462,52 @@ begin
   finally
     lPersistencia.Destroy;
   end;
+
+end;
+
+function TUsuarioDAO.getPermiteExclusao(const pID: Integer; var pMensagem: string): Boolean;
+var
+  lExisteVinculoSaida: Boolean;
+  lExisteVinculoEntrada: Boolean;
+begin
+
+    try
+
+      lExisteVinculoSaida :=  TClassBibliotecaDao.getValorAtributo('saida', 'id', 'id_usuario', pID, Self.FConexao) <> -1;
+      lExisteVinculoEntrada := TClassBibliotecaDao.getValorAtributo('entrada', 'id', 'id_usuario', pID, Self.FConexao) <> -1;
+
+      Result := (not lExisteVinculoSaida) and (not lExisteVinculoEntrada);
+
+      if (not Result) then
+      begin
+
+        pMensagem := 'Usuário possui';
+
+        if (lExisteVinculoSaida) then
+        begin
+
+          pMensagem := pMensagem + ' saída(s)';
+
+        end;
+
+        if ( lExisteVinculoEntrada) then
+        begin
+
+          pMensagem := pMensagem + IfThen(lExisteVinculoSaida, ',', '') + ' entrada(s)';
+
+        end;
+
+        pMensagem := pMensagem + ' vinculadas';
+
+      end;
+
+    except
+      on E:Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+    end;
 
 end;
 

@@ -51,13 +51,17 @@ inherited FrmConsUsuario: TFrmConsUsuario
     ExplicitTop = 238
     ExplicitWidth = 472
     inherited BtnNovo: TSpeedButton
+      Left = 5
       OnClick = BtnNovoClick
+      ExplicitLeft = 5
     end
     inherited BtnAlterar: TSpeedButton
       OnClick = BtnAlterarClick
     end
     inherited BtnExcluir: TSpeedButton
+      Left = 163
       OnClick = BtnExcluirClick
+      ExplicitLeft = 163
     end
   end
   inherited PanelConsulta: TPanel

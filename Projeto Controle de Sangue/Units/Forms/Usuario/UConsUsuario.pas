@@ -39,8 +39,8 @@ uses UClassMensagem, UClassUsuarioDao, UClassUsuario, UDMConexao, UCadUsuario,
 procedure TFrmConsUsuario.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
-  if (TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUConsUsuario, Self.FPersistencia.Query.FieldByName('id').AsInteger))
-  then
+  if (TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUConsUsuario, Self.FPersistencia.Query.FieldByName('id')
+    .AsInteger)) then
   begin
     EdtConsInvokeSearch(Self);
   end;
@@ -49,6 +49,7 @@ end;
 procedure TFrmConsUsuario.BtnExcluirClick(Sender: TObject);
 var
   lUsuarioDao: TUsuarioDAO;
+  lMensagem: string;
 begin
   inherited;
 
@@ -61,9 +62,23 @@ begin
 
       try
 
-        if (lUsuarioDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+        if (lUsuarioDao.getPermiteExclusao(Self.FPersistencia.Query.FieldByName('id').AsInteger, lMensagem)) then
         begin
-          EdtConsInvokeSearch(Self);
+
+          if (lUsuarioDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+          begin
+
+            EdtConsInvokeSearch(Self);
+
+          end;
+
+        end
+        else
+        begin
+
+          Application.MessageBox(PChar('Não é possível excluir o usuário, ' + lMensagem), 'Aviso',
+            MB_ICONWARNING + MB_OK);
+
         end;
 
       except
@@ -125,7 +140,6 @@ begin
   try
 
     try
-
 
       if (lUsuarioDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
       begin

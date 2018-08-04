@@ -67,6 +67,8 @@ var
   lUsuarioCadastrado: Boolean;
 begin
 
+  lUsuarioCadastrado := False;
+
   lUsuario := TUsuario.Create;
   try
 

@@ -12,7 +12,6 @@ type
     GroupBoxSangue: TGroupBox;
     GroupBoxPaciente: TGroupBox;
     LabelRegistroPaciente: TLabel;
-    SearchBoxRegistroPaciente: TSearchBox;
     EdtNomePaciente: TEdit;
     DateTimePickerData: TDateTimePicker;
     EdtAboBolsa: TEdit;
@@ -37,13 +36,15 @@ type
     EdtId: TEdit;
     LabelId: TLabel;
     EdtVolume: TMaskEdit;
+    BtnConsPaciente: TSpeedButton;
+    EdtRegistroPaciente: TEdit;
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure EdtNumeroBolsaExit(Sender: TObject);
-    procedure SearchBoxRegistroPacienteInvokeSearch(Sender: TObject);
-    procedure SearchBoxRegistroPacienteExit(Sender: TObject);
+    procedure BtnConsPacienteClick(Sender: TObject);
+    procedure EdtRegistroPacienteExit(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -73,17 +74,52 @@ uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, U
 {$R *.dfm}
 { TFrmSaida }
 
+procedure TFrmSaida.BtnConsPacienteClick(Sender: TObject);
+var
+  lRegistro: string;
+begin
+
+  if (TFrmConsPaciente.getConsPaciente(TForeignKeyForms.FIdUSaida, Self.FIdUsuario, lRegistro)) then
+  begin
+
+    EdtRegistroPaciente.Text := lRegistro;
+
+    // Tratamento para pesquisar o nome do paciente apenas uma vez.
+    if (not EdtRegistroPaciente.Focused) then
+    begin
+
+      EdtRegistroPacienteExit(Sender);
+
+    end
+    else
+    begin
+
+      // Se tiver focado no EdtRegistroPaciente, vai disparar o OnExit.
+      EdtNumeroBolsa.SetFocus;
+
+    end;
+
+  end
+  else
+  begin
+
+    EdtRegistroPaciente.SetFocus;
+
+  end;
+
+end;
+
 procedure TFrmSaida.BtnGravarClick(Sender: TObject);
 var
   lIdBolsa: Integer;
 begin
 
-  if (Trim(SearchBoxRegistroPaciente.Text).IsEmpty) then
+  if (Trim(EdtRegistroPaciente.Text).IsEmpty) then
   begin
 
     MessageDlg(Format(TMensagem.getMensagem(3), [LabelRegistroPaciente.Caption]), mtWarning, [mbOK], -1);
 
-    SearchBoxRegistroPaciente.SetFocus;
+    EdtRegistroPaciente.SetFocus;
 
     exit;
 
@@ -168,7 +204,7 @@ begin
         begin
 
           EdtId.Text := lSaida.Id.ToString;
-          SearchBoxRegistroPaciente.Text := lSaida.Id_Paciente.ToString;
+          EdtRegistroPaciente.Text := lSaida.Id_Paciente.ToString;
           Self.CarregaDadosBolsa(lSaida.Id_Bolsa);
           DateTimePickerData.Date := lSaida.Data_Saida;
           EdtHospital.Text := lSaida.Hospital;
@@ -177,7 +213,7 @@ begin
           RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'P', 0, 1);
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
 
-          SearchBoxRegistroPaciente.SetFocus;
+          EdtRegistroPaciente.SetFocus;
 
         end;
 
@@ -266,6 +302,35 @@ begin
 
 end;
 
+procedure TFrmSaida.EdtRegistroPacienteExit(Sender: TObject);
+var
+  lNomePaciente: string;
+begin
+
+  if (not Trim(EdtRegistroPaciente.Text).IsEmpty) then
+  begin
+
+    lNomePaciente := TClassBibliotecaDao.getValorAtributo('paciente', 'nome', 'num_prontuario',
+      EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
+
+    if (lNomePaciente <> '-1') then
+    begin
+
+      EdtNomePaciente.Text := lNomePaciente;
+
+    end
+    else
+    begin
+
+      MessageDlg(Format(TMensagem.getMensagem(6), ['Paciente']), mtWarning, [mbOK], -1);
+      EdtRegistroPaciente.SetFocus;
+
+    end;
+
+  end;
+
+end;
+
 procedure TFrmSaida.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
@@ -327,7 +392,7 @@ begin
 
     lSaida.Id := StrToIntDef(EdtId.Text, -1);
     lSaida.Id_Paciente := TClassBibliotecaDao.getValorAtributo('paciente', 'id', 'num_prontuario',
-      SearchBoxRegistroPaciente.Text, DataModuleConexao.Conexao);
+      EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
     lSaida.Id_Usuario := Self.FIdUsuario;
     lSaida.Id_Bolsa := Self.FIdBolsa;
     lSaida.Data_Saida := Now;
@@ -346,7 +411,7 @@ begin
         begin
 
           TBiblioteca.LimparCampos;
-          SearchBoxRegistroPaciente.SetFocus;
+          EdtRegistroPaciente.SetFocus;
 
         end;
 
@@ -363,56 +428,6 @@ begin
 
   finally
     lSaida.Destroy;
-  end;
-
-end;
-
-procedure TFrmSaida.SearchBoxRegistroPacienteExit(Sender: TObject);
-var
-  lNomePaciente: string;
-begin
-
-  if (not Trim(SearchBoxRegistroPaciente.Text).IsEmpty) then
-  begin
-
-    lNomePaciente := TClassBibliotecaDao.getValorAtributo('paciente', 'nome', 'num_prontuario',
-      SearchBoxRegistroPaciente.Text, DataModuleConexao.Conexao);
-
-    if (lNomePaciente <> '-1') then
-    begin
-
-      EdtNomePaciente.Text := lNomePaciente;
-
-    end
-    else
-    begin
-
-      MessageDlg(Format(TMensagem.getMensagem(6), ['Paciente']), mtWarning, [mbOK], -1);
-      SearchBoxRegistroPaciente.SetFocus;
-
-    end;
-
-  end;
-
-end;
-
-procedure TFrmSaida.SearchBoxRegistroPacienteInvokeSearch(Sender: TObject);
-var
-  lRegistro: string;
-begin
-
-  if (TFrmConsPaciente.getConsPaciente(TForeignKeyForms.FIdUSaida, Self.FIdUsuario, lRegistro)) then
-  begin
-
-    SearchBoxRegistroPaciente.Text := lRegistro;
-    SearchBoxRegistroPacienteExit(Sender);
-
-  end
-  else
-  begin
-
-    SearchBoxRegistroPaciente.SetFocus;
-
   end;
 
 end;

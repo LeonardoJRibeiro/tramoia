@@ -14,6 +14,8 @@ type
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
+    procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnAlterarClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -31,6 +33,13 @@ implementation
 {$R *.dfm}
 
 uses UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UBiblioteca, UClassForeignKeyForms, UClassUsuarioDao;
+
+procedure TFrmConsEntrada.BtnAlterarClick(Sender: TObject);
+begin
+  inherited;
+  TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario);
+  EdtConsInvokeSearch(Self);
+end;
 
 procedure TFrmConsEntrada.BtnExcluirClick(Sender: TObject);
 var
@@ -86,6 +95,16 @@ begin
 
 end;
 
+procedure TFrmConsEntrada.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_DELETE) then
+  begin
+    BtnExcluirClick(Self);
+  end;
+
+end;
+
 procedure TFrmConsEntrada.EdtConsInvokeSearch(Sender: TObject);
 var
   lEntradaDao: TEntradaDAO;
@@ -100,6 +119,7 @@ begin
       if (lEntradaDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
       begin
 
+        Self.FPersistencia.Query.Last;
         DataSource.DataSet := Self.FPersistencia.Query;
         if (not Self.FPersistencia.Query.IsEmpty) then
         begin
@@ -162,7 +182,6 @@ begin
   end;
 
 end;
-
 
 class function TFrmConsEntrada.getConsEntrada(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer): Boolean;
 begin

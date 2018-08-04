@@ -3,7 +3,7 @@ unit UClassActiveControl;
 interface
 
 uses System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Grids, Vcl.StdCtrls, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Winapi.Windows, Winapi.Messages, Vcl.WinXCtrls;
+  Winapi.Windows, Winapi.Messages, Vcl.WinXCtrls, Vcl.Buttons;
 
 type
   TActiveControl = class(TPersistent)
@@ -39,7 +39,7 @@ begin
 
   try
     if not((Screen.ActiveControl is TCustomMemo) or (Screen.ActiveControl is TCustomGrid) or
-      (Screen.ActiveForm.ClassName = 'TMessageForm')) then
+      (Screen.ActiveControl is TBitBtn) or (Screen.ActiveForm.ClassName = 'TMessageForm')) then
     begin
 
       if (Msg.message = WM_KEYDOWN) then

@@ -268,6 +268,7 @@ object FrmEntrada: TFrmEntrada
         A8004A7EA8004A7EA800497DA7004579A400709BBE00B5D2EA00C3DAEF58CDE3
         F5FB3F75A1FF}
       TabOrder = 2
+      TabStop = False
       OnClick = BtnSairClick
     end
     object BtnNovo: TBitBtn

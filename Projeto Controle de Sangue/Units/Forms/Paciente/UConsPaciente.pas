@@ -48,8 +48,6 @@ uses System.Math, UDMConexao, UClassMensagem, UClassPacienteDAO, UCadPaciente, U
 {$R *.dfm}
 
 procedure TFrmConsPaciente.BtnAlterarClick(Sender: TObject);
-var
-  lPosicaoQuery: TBookmark;
 begin
   inherited;
 
@@ -319,7 +317,8 @@ begin
       on E: Exception do
       begin
         Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(0), ['Consulta de paciente', E.Message]));
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), [FrmConsPaciente.Caption, E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
     end;
 
@@ -343,7 +342,7 @@ begin
       on E: Exception do
       begin
         Result := False;
-
+        raise Exception.Create(E.Message);
       end;
     end;
 

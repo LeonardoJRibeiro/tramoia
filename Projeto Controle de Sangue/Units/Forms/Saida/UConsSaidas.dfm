@@ -3,7 +3,6 @@ inherited FrmConsSaidas: TFrmConsSaidas
   ClientHeight = 323
   ClientWidth = 742
   OnShow = FormShow
-  ExplicitTop = -23
   ExplicitWidth = 748
   ExplicitHeight = 352
   PixelsPerInch = 96
@@ -11,6 +10,8 @@ inherited FrmConsSaidas: TFrmConsSaidas
   inherited PanelGrid: TPanel
     Width = 742
     Height = 209
+    ExplicitWidth = 742
+    ExplicitHeight = 209
     inherited DBGrid: TDBGrid
       Width = 740
       Height = 207
@@ -79,6 +80,8 @@ inherited FrmConsSaidas: TFrmConsSaidas
   inherited PanelBotoes: TPanel
     Top = 281
     Width = 742
+    ExplicitTop = 281
+    ExplicitWidth = 742
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick
     end
@@ -88,8 +91,10 @@ inherited FrmConsSaidas: TFrmConsSaidas
   end
   inherited PanelConsulta: TPanel
     Width = 742
+    ExplicitWidth = 742
     inherited GroupBoxConsulta: TGroupBox
       Width = 740
+      ExplicitWidth = 740
       inherited EdtCons: TSearchBox
         Width = 592
         OnInvokeSearch = EdtConsInvokeSearch

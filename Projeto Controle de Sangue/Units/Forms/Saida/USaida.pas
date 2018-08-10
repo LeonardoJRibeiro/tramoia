@@ -327,6 +327,17 @@ begin
 
     end;
 
+  end
+  else
+  begin
+    EdtRegistroPaciente.Clear;
+    EdtNomePaciente.Clear;
+
+    if (GetKeyState(VK_RETURN) < 0) then
+    begin
+      BtnConsPacienteClick(Self);
+    end;
+
   end;
 
 end;

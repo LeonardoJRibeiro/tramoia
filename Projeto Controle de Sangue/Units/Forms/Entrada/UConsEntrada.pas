@@ -98,9 +98,17 @@ end;
 procedure TFrmConsEntrada.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   inherited;
-  if (Key = VK_DELETE) then
-  begin
-    BtnExcluirClick(Self);
+
+  case (Key) of
+    VK_RETURN:
+      begin
+        BtnAlterarClick(Self);
+      end;
+
+    VK_DELETE:
+      begin
+        BtnExcluirClick(Self);
+      end;
   end;
 
 end;
@@ -200,7 +208,8 @@ begin
       on E: Exception do
       begin
         Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(0), ['Consulta de entradas', E.Message]));
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), [FrmConsEntrada.Caption, E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
     end;
 

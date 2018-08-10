@@ -179,7 +179,8 @@ begin
       on E: Exception do
       begin
         Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(0), ['Consulta de saídas', E.Message]));
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), [FrmConsSaidas.Caption, E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
     end;
 

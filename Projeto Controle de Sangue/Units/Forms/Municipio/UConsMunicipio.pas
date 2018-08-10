@@ -142,7 +142,8 @@ begin
       on E: Exception do
       begin
         Result := False;
-
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), [FrmConsMunicipio.Caption, E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
     end;
 

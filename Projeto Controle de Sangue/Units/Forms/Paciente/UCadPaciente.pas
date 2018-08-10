@@ -367,6 +367,10 @@ begin
         if (EdtCodMunicipio.Text = '5211206') then
         begin
           EdtCep.Text := '766800000';
+        end
+        else
+        begin
+          EdtCep.Text := '';
         end;
 
       end
@@ -377,6 +381,7 @@ begin
         EdtNomeMunicipio.Clear;
         EdtEstado.Clear;
         EdtCodMunicipio.SetFocus;
+        EdtCep.Text := '';
       end;
 
     finally

@@ -13,14 +13,12 @@ type
     GroupBoxPaciente: TGroupBox;
     LabelRegistroPaciente: TLabel;
     EdtNomePaciente: TEdit;
-    DateTimePickerData: TDateTimePicker;
     EdtAboBolsa: TEdit;
     EdtNumeroBolsa: TEdit;
     EdtHospital: TEdit;
     EdtTipo: TEdit;
     LabelVolume: TLabel;
     LabelAboSangue: TLabel;
-    LabelData: TLabel;
     LabelNumeroBolsa: TLabel;
     LabelHospital: TLabel;
     LabelTipo: TLabel;
@@ -38,6 +36,9 @@ type
     EdtVolume: TMaskEdit;
     BtnConsPaciente: TSpeedButton;
     EdtRegistroPaciente: TEdit;
+    DateTimePickerData: TDateTimePicker;
+    LabelData: TLabel;
+    BtnNovo: TBitBtn;
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -45,6 +46,8 @@ type
     procedure EdtNumeroBolsaExit(Sender: TObject);
     procedure BtnConsPacienteClick(Sender: TObject);
     procedure EdtRegistroPacienteExit(Sender: TObject);
+    procedure EdtRegistroPacienteKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnNovoClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -137,6 +140,26 @@ begin
   end;
 
   Self.SalvaSaida;
+
+end;
+
+procedure TFrmSaida.BtnNovoClick(Sender: TObject);
+begin
+
+  EdtId.Clear;
+  DateTimePickerData.Date := now;
+  EdtRegistroPaciente.Clear;
+  EdtNomePaciente.Clear;
+  EdtNumeroBolsa.Clear;
+  EdtAboBolsa.Clear;
+  EdtTipo.Clear;
+  EdtVolume.Clear;
+  EdtHospital.Clear;
+  RadioGroupPai.ItemIndex := 1;
+  RadioGroupTA.ItemIndex := 1;
+  RadioGroupAGH.ItemIndex := 1;
+  RadioGroup37.ItemIndex := 1;
+  EdtRegistroPaciente.SetFocus;
 
 end;
 
@@ -342,6 +365,14 @@ begin
 
 end;
 
+procedure TFrmSaida.EdtRegistroPacienteKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if (Key = VK_F2) then
+  begin
+    BtnConsPacienteClick(Self);
+  end;
+end;
+
 procedure TFrmSaida.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
@@ -358,6 +389,11 @@ begin
   if (Self.FId <> -1) then
   begin
     Self.CarregaSaida;
+  end
+  else
+  begin
+    DateTimePickerData.Date := now;
+    EdtRegistroPaciente.SetFocus;
   end;
 
 end;
@@ -406,7 +442,7 @@ begin
       EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
     lSaida.Id_Usuario := Self.FIdUsuario;
     lSaida.Id_Bolsa := Self.FIdBolsa;
-    lSaida.Data_Saida := Now;
+    lSaida.Data_Saida := now;
     lSaida.Hospital := EdtHospital.Text;
     lSaida.Pai := Copy(RadioGroupPai.Items[RadioGroupPai.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);
@@ -421,8 +457,11 @@ begin
         if (lSaidaDAO.Salvar(lSaida)) then
         begin
 
-          TBiblioteca.LimparCampos;
-          EdtRegistroPaciente.SetFocus;
+          EdtId.Text := lSaida.Id.ToString;
+
+          BtnGravar.Enabled := False;
+
+          BtnNovo.SetFocus;
 
         end;
 

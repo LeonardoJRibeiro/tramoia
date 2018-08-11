@@ -49602,7 +49602,6 @@ object FrmPrincipal: TFrmPrincipal
         Text = '1.0.0.0'
         Width = 50
       end>
-    ExplicitTop = 690
   end
   object MainMenu: TMainMenu
     Left = 40
@@ -49621,6 +49620,7 @@ object FrmPrincipal: TFrmPrincipal
       Caption = 'Entradas'
       object MenuItemCadEntrada: TMenuItem
         Caption = 'Cadastrar'
+        OnClick = MenuItemCadEntradaClick
       end
       object MenuItemConsultarEntrada: TMenuItem
         Caption = 'Consultar'
@@ -49631,6 +49631,7 @@ object FrmPrincipal: TFrmPrincipal
       Caption = 'Sa'#237'das'
       object MenuItemCadastrarSaida: TMenuItem
         Caption = 'Cadastrar'
+        OnClick = MenuItemCadastrarSaidaClick
       end
       object MenuItemConsultarSaida: TMenuItem
         Caption = 'Consultar'

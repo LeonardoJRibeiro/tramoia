@@ -4,8 +4,8 @@ object FrmEntrada: TFrmEntrada
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Entrada de sangue'
-  ClientHeight = 198
-  ClientWidth = 283
+  ClientHeight = 235
+  ClientWidth = 297
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,73 +24,75 @@ object FrmEntrada: TFrmEntrada
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 283
-    Height = 157
+    Width = 297
+    Height = 194
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitWidth = 283
+    ExplicitHeight = 157
     object LabelData: TLabel
-      Left = 9
-      Top = 8
+      Left = 91
+      Top = 11
       Width = 23
       Height = 13
       Caption = 'Data'
     end
     object LabelNumeroBolsa: TLabel
       Left = 10
-      Top = 54
+      Top = 57
       Width = 80
       Height = 13
       Caption = 'N'#250'mero da bolsa'
     end
     object LabelOrigem: TLabel
       Left = 10
-      Top = 103
+      Top = 105
       Width = 34
       Height = 13
       Caption = 'Origem'
     end
     object LabelTipo: TLabel
-      Left = 106
-      Top = 54
+      Left = 129
+      Top = 57
       Width = 20
       Height = 13
       Caption = 'Tipo'
     end
     object LabelAboSangue: TLabel
-      Left = 203
-      Top = 55
+      Left = 216
+      Top = 58
       Width = 64
       Height = 13
       Caption = 'ABO da Bolsa'
     end
     object LabelObservacao: TLabel
-      Left = 107
-      Top = 103
+      Left = 10
+      Top = 152
       Width = 58
       Height = 13
       Caption = 'Observa'#231#227'o'
     end
     object LabelVolume: TLabel
-      Left = 147
-      Top = 54
+      Left = 165
+      Top = 57
       Width = 34
       Height = 13
       Caption = 'Volume'
     end
     object LabelOrdemSaida: TLabel
-      Left = 107
-      Top = 8
+      Left = 10
+      Top = 11
       Width = 32
       Height = 13
       Caption = 'Ordem'
     end
     object DateTimePickerData: TDateTimePicker
-      Left = 9
-      Top = 24
-      Width = 89
+      Left = 91
+      Top = 27
+      Width = 97
       Height = 21
       Date = 43248.939316319450000000
       Time = 43248.939316319450000000
@@ -98,10 +100,10 @@ object FrmEntrada: TFrmEntrada
     end
     object EdtNumeroBolsa: TEdit
       Left = 10
-      Top = 70
-      Width = 88
+      Top = 72
+      Width = 114
       Height = 21
-      MaxLength = 13
+      MaxLength = 20
       NumbersOnly = True
       TabOrder = 2
       OnExit = EdtNumeroBolsaExit
@@ -109,16 +111,17 @@ object FrmEntrada: TFrmEntrada
     object EdtOrigem: TEdit
       Left = 10
       Top = 120
-      Width = 88
+      Width = 270
       Height = 21
       CharCase = ecUpperCase
+      MaxLength = 15
       TabOrder = 6
       OnEnter = EdtOrigemEnter
     end
     object EdtTipo: TEdit
-      Left = 108
-      Top = 70
-      Width = 33
+      Left = 129
+      Top = 72
+      Width = 31
       Height = 21
       CharCase = ecUpperCase
       MaxLength = 3
@@ -126,24 +129,25 @@ object FrmEntrada: TFrmEntrada
       OnEnter = EdtTipoEnter
     end
     object EdtObservacao: TEdit
-      Left = 107
-      Top = 120
-      Width = 160
+      Left = 10
+      Top = 167
+      Width = 270
       Height = 21
+      MaxLength = 100
       TabOrder = 7
     end
     object EdtVolume: TEdit
-      Left = 147
-      Top = 70
-      Width = 49
+      Left = 165
+      Top = 72
+      Width = 46
       Height = 21
       NumbersOnly = True
       TabOrder = 4
     end
     object EdtOrdemSaida: TEdit
-      Left = 107
-      Top = 24
-      Width = 58
+      Left = 10
+      Top = 27
+      Width = 71
       Height = 21
       Color = clInfoBk
       Enabled = False
@@ -151,8 +155,8 @@ object FrmEntrada: TFrmEntrada
       TabOrder = 1
     end
     object ComboBoxAboBolsa: TComboBox
-      Left = 203
-      Top = 70
+      Left = 216
+      Top = 72
       Width = 64
       Height = 21
       CharCase = ecUpperCase
@@ -172,14 +176,16 @@ object FrmEntrada: TFrmEntrada
   end
   object PanelBottom: TPanel
     Left = 0
-    Top = 157
-    Width = 283
+    Top = 194
+    Width = 297
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitTop = 157
+    ExplicitWidth = 283
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9

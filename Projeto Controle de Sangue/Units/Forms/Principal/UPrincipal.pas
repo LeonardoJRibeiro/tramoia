@@ -56,6 +56,8 @@ type
     procedure MenuItemConsultarEntradaClick(Sender: TObject);
     procedure MenuItemSairClick(Sender: TObject);
     procedure MenuItemConsultarSaidaClick(Sender: TObject);
+    procedure MenuItemCadEntradaClick(Sender: TObject);
+    procedure MenuItemCadastrarSaidaClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -119,6 +121,11 @@ begin
 
 end;
 
+procedure TFrmPrincipal.MenuItemCadastrarSaidaClick(Sender: TObject);
+begin
+  TFrmSaida.getSaida(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
 procedure TFrmPrincipal.MenuItemCadastrarUsuarioClick(Sender: TObject);
 begin
   if (Self.getAdmin) then
@@ -129,6 +136,11 @@ begin
   begin
     Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
+end;
+
+procedure TFrmPrincipal.MenuItemCadEntradaClick(Sender: TObject);
+begin
+  TFrmEntrada.getEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.MenuItemConsultarEntradaClick(Sender: TObject);

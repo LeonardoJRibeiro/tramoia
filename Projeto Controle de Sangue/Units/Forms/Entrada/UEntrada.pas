@@ -46,11 +46,18 @@ type
 
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
+    FId: Integer;
+    FIdBolsa: Integer;
 
     FBolsaDAO: TBolsaDAO;
 
+    function CarregaObjetos: Boolean;
+    function CarregaEntrada: Boolean;
+    function CarregaBolsa(const pID_BOLSA: Integer): Boolean;
+
   public
-    class function getEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+    class function getEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+      const pID: Integer = -1): Boolean;
   end;
 
 var
@@ -211,7 +218,7 @@ begin
   EdtOrigem.Clear;
   EdtObservacao.Clear;
 
-  DateTimePickerData.SetFocus;
+  EdtNumeroBolsa.SetFocus;
 
 end;
 
@@ -219,6 +226,91 @@ procedure TFrmEntrada.BtnSairClick(Sender: TObject);
 begin
 
   Close;
+
+end;
+
+function TFrmEntrada.CarregaBolsa(const pID_BOLSA: Integer): Boolean;
+var
+  lBolsaDao: TBolsaDAO;
+  lBolsa: TBolsa;
+begin
+
+  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    lBolsa := TBolsa.Create;
+    try
+
+      try
+
+        Result := lBolsaDao.getObjeto(pID_BOLSA, lBolsa);
+        if (Result) then
+        begin
+          EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          EdtTipo.Text := lBolsa.Tipo;
+          EdtVolume.Text := lBolsa.Volume.ToString;
+          EdtOrigem.Text := lBolsa.Origem;
+          ComboBoxAboBolsa.ItemIndex := (ComboBoxAboBolsa.Items.IndexOf(Trim(lBolsa.Tipo)));
+        end;
+
+      except
+
+      end;
+
+    finally
+      lBolsa.Destroy;
+    end;
+
+  finally
+    lBolsaDao.Destroy;
+  end;
+
+end;
+
+function TFrmEntrada.CarregaEntrada: Boolean;
+var
+  lEntradaDAO: TEntradaDAO;
+  lEntrada: TEntrada;
+begin
+
+  lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    lEntrada := TEntrada.Create;
+    try
+
+      try
+
+        Result := lEntradaDAO.getObjeto(Self.FId, lEntrada);
+        if (Result) then
+        begin
+          EdtOrdemSaida.Text := lEntrada.Id.ToString;
+          DateTimePickerData.DateTime := lEntrada.DataEntrada;
+          EdtObservacao.Text := lEntrada.Observacao;
+          Self.FIdBolsa := lEntrada.IdBolsa;
+        end;
+
+      except
+
+      end;
+
+    finally
+      lEntrada.Destroy;
+    end;
+
+  finally
+    lEntradaDAO.Destroy;
+  end;
+
+end;
+
+function TFrmEntrada.CarregaObjetos: Boolean;
+begin
+
+  if (Self.CarregaEntrada) then
+  begin
+    Self.CarregaBolsa(Self.FIdBolsa);
+  end;
 
 end;
 
@@ -319,13 +411,23 @@ end;
 procedure TFrmEntrada.FormShow(Sender: TObject);
 begin
 
-  DateTimePickerData.DateTime := Now;
+  if (Self.FId > 0) then
+  begin
+    Self.CarregaObjetos;
+  end
+  else
+  begin
 
-  EdtNumeroBolsa.SetFocus;
+    DateTimePickerData.DateTime := Now;
+
+    EdtNumeroBolsa.SetFocus;
+
+  end;
 
 end;
 
-class function TFrmEntrada.getEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
+class function TFrmEntrada.getEntrada(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer;
+  const pID: Integer = -1): Boolean;
 begin
 
   Application.CreateForm(TFrmEntrada, FrmEntrada);
@@ -335,6 +437,7 @@ begin
 
       FrmEntrada.FForeignFormKey := pFOREIGNFORMKEY;
       FrmEntrada.FCodUsu := pCOD_USU;
+      FrmEntrada.FId := pID;
 
       Result := FrmEntrada.ShowModal = mrOk;
 

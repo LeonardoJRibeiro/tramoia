@@ -16,6 +16,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
       Width = 743
       Height = 254
       DataSource = DataSource
+      OnDblClick = DBGridDblClick
       Columns = <
         item
           Alignment = taRightJustify
@@ -102,8 +103,6 @@ inherited FrmConsEntrada: TFrmConsEntrada
     ExplicitWidth = 745
     inherited GroupBoxConsulta: TGroupBox
       Width = 743
-      ExplicitLeft = 1
-      ExplicitTop = 7
       ExplicitWidth = 743
       inherited EdtCons: TSearchBox
         Width = 592

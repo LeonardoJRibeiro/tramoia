@@ -5,7 +5,7 @@ object FrmSaida: TFrmSaida
   BorderStyle = bsSingle
   Caption = 'Sa'#237'da de sangue'
   ClientHeight = 465
-  ClientWidth = 330
+  ClientWidth = 367
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,47 +22,49 @@ object FrmSaida: TFrmSaida
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 330
+    Width = 367
     Height = 424
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitTop = 3
+    ExplicitWidth = 365
     object LabelId: TLabel
-      Left = 9
-      Top = 7
+      Left = 19
+      Top = 8
       Width = 32
       Height = 13
       Caption = 'Ordem'
     end
+    object LabelData: TLabel
+      Left = 85
+      Top = 8
+      Width = 23
+      Height = 13
+      Caption = 'Data'
+    end
     object GroupBoxSangue: TGroupBox
       Left = 9
       Top = 123
-      Width = 306
+      Width = 342
       Height = 300
       Caption = 'Bolsa de sangue'
-      TabOrder = 2
+      TabOrder = 3
       object LabelVolume: TLabel
-        Left = 56
+        Left = 10
         Top = 63
         Width = 34
         Height = 13
         Caption = 'Volume'
       end
       object LabelAboSangue: TLabel
-        Left = 124
-        Top = 63
+        Left = 223
+        Top = 18
         Width = 64
         Height = 13
         Caption = 'ABO da Bolsa'
-      end
-      object LabelData: TLabel
-        Left = 124
-        Top = 18
-        Width = 23
-        Height = 13
-        Caption = 'Data'
       end
       object LabelNumeroBolsa: TLabel
         Left = 10
@@ -72,66 +74,59 @@ object FrmSaida: TFrmSaida
         Caption = 'N'#250'mero da bolsa(*)'
       end
       object LabelHospital: TLabel
-        Left = 219
+        Left = 101
         Top = 63
         Width = 38
         Height = 13
         Caption = 'Hospital'
       end
       object LabelTipo: TLabel
-        Left = 8
-        Top = 63
+        Left = 294
+        Top = 18
         Width = 20
         Height = 13
         Caption = 'Tipo'
       end
-      object DateTimePickerData: TDateTimePicker
-        Left = 124
-        Top = 33
-        Width = 79
-        Height = 21
-        Date = 43248.939316319450000000
-        Time = 43248.939316319450000000
-        TabOrder = 1
-      end
       object EdtAboBolsa: TEdit
-        Left = 124
-        Top = 78
-        Width = 79
+        Left = 223
+        Top = 33
+        Width = 64
         Height = 21
         Enabled = False
-        TabOrder = 4
+        TabOrder = 3
       end
       object EdtNumeroBolsa: TEdit
         Left = 10
         Top = 33
-        Width = 98
+        Width = 206
         Height = 21
+        MaxLength = 20
         NumbersOnly = True
         TabOrder = 0
         OnExit = EdtNumeroBolsaExit
       end
       object EdtHospital: TEdit
-        Left = 219
+        Left = 101
         Top = 78
-        Width = 78
+        Width = 228
         Height = 21
         CharCase = ecUpperCase
-        TabOrder = 5
+        MaxLength = 100
+        TabOrder = 4
         Text = 'HMI'
       end
       object EdtTipo: TEdit
-        Left = 10
-        Top = 78
-        Width = 30
+        Left = 294
+        Top = 33
+        Width = 35
         Height = 21
         Enabled = False
-        TabOrder = 2
+        TabOrder = 1
       end
       object RadioGroupPai: TRadioGroup
         Left = 10
         Top = 105
-        Width = 287
+        Width = 319
         Height = 37
         Caption = 'Pai'
         Columns = 2
@@ -139,19 +134,19 @@ object FrmSaida: TFrmSaida
         Items.Strings = (
           'Positivo'
           'Negativo')
-        TabOrder = 6
+        TabOrder = 5
       end
       object GroupBoxProvaCompatibilidade: TGroupBox
         Left = 10
-        Top = 145
-        Width = 287
-        Height = 148
+        Top = 144
+        Width = 319
+        Height = 149
         Caption = 'Prova de compatibilidade'
-        TabOrder = 7
+        TabOrder = 6
         object RadioGroupTA: TRadioGroup
           Left = 7
-          Top = 11
-          Width = 274
+          Top = 14
+          Width = 305
           Height = 41
           Caption = 'TA'
           Columns = 2
@@ -164,7 +159,7 @@ object FrmSaida: TFrmSaida
         object RadioGroupAGH: TRadioGroup
           Left = 7
           Top = 57
-          Width = 274
+          Width = 305
           Height = 41
           Caption = 'AGH'
           Columns = 2
@@ -177,7 +172,7 @@ object FrmSaida: TFrmSaida
         object RadioGroup37: TRadioGroup
           Left = 7
           Top = 100
-          Width = 274
+          Width = 305
           Height = 41
           Caption = '37'
           Columns = 2
@@ -189,21 +184,22 @@ object FrmSaida: TFrmSaida
         end
       end
       object EdtVolume: TMaskEdit
-        Left = 56
+        Left = 10
         Top = 78
-        Width = 52
+        Width = 84
         Height = 21
-        TabOrder = 3
+        MaxLength = 9
+        TabOrder = 2
         Text = ''
       end
     end
     object GroupBoxPaciente: TGroupBox
       Left = 9
       Top = 50
-      Width = 306
+      Width = 343
       Height = 65
       Caption = 'Paciente'
-      TabOrder = 1
+      TabOrder = 2
       object LabelRegistroPaciente: TLabel
         Left = 10
         Top = 18
@@ -212,14 +208,14 @@ object FrmSaida: TFrmSaida
         Caption = 'Prontu'#225'rio(*)'
       end
       object LabelNomePaciente: TLabel
-        Left = 115
+        Left = 123
         Top = 18
         Width = 86
         Height = 13
         Caption = 'Nome do paciente'
       end
       object BtnConsPaciente: TSpeedButton
-        Left = 90
+        Left = 99
         Top = 33
         Width = 23
         Height = 21
@@ -262,27 +258,29 @@ object FrmSaida: TFrmSaida
         OnClick = BtnConsPacienteClick
       end
       object EdtNomePaciente: TEdit
-        Left = 115
+        Left = 123
         Top = 33
-        Width = 182
+        Width = 206
         Height = 21
         Color = clInfoBk
         Enabled = False
         TabOrder = 0
       end
       object EdtRegistroPaciente: TEdit
-        Left = 11
+        Left = 10
         Top = 33
-        Width = 77
+        Width = 88
         Height = 21
         HelpType = htKeyword
+        MaxLength = 20
         NumbersOnly = True
         TabOrder = 1
         OnExit = EdtRegistroPacienteExit
+        OnKeyDown = EdtRegistroPacienteKeyDown
       end
     end
     object EdtId: TEdit
-      Left = 9
+      Left = 19
       Top = 23
       Width = 59
       Height = 21
@@ -292,19 +290,29 @@ object FrmSaida: TFrmSaida
       ReadOnly = True
       TabOrder = 0
     end
+    object DateTimePickerData: TDateTimePicker
+      Left = 85
+      Top = 23
+      Width = 102
+      Height = 21
+      Date = 43248.939316319450000000
+      Time = 43248.939316319450000000
+      TabOrder = 1
+    end
   end
   object PanelBottom: TPanel
     Left = 0
     Top = 424
-    Width = 330
+    Width = 367
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitWidth = 330
     object BtnGravar: TBitBtn
-      Left = 24
+      Left = 9
       Top = 9
       Width = 109
       Height = 25
@@ -349,7 +357,7 @@ object FrmSaida: TFrmSaida
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 171
+      Left = 243
       Top = 9
       Width = 109
       Height = 25
@@ -390,8 +398,53 @@ object FrmSaida: TFrmSaida
         F2FF4279A5FF4A7CA5004A7CA5004A7CA5004A7CA5004A7EA7004A7EA8004A7E
         A8004A7EA8004A7EA800497DA7004579A400709BBE00B5D2EA00C3DAEF58CDE3
         F5FB3F75A1FF}
-      TabOrder = 1
+      TabOrder = 2
       OnClick = BtnSairClick
+    end
+    object BtnNovo: TBitBtn
+      Left = 126
+      Top = 9
+      Width = 109
+      Height = 25
+      Caption = 'Novo'
+      Glyph.Data = {
+        42040000424D4204000000000000420000002800000010000000100000000100
+        20000300000000040000120B0000120B000000000000000000000000FF0000FF
+        0000FF0000000000002300000033000000330000003300000033000000330000
+        0033000000330000003300000033000000330000003300000033000000330000
+        001E00000000A4A4A2C0AFAFADFFAEAEABFFADADABFFADADABFFADADABFFADAD
+        ABFFAEAEACFFB3B0AFFFC5B5B9FF529F7AFF008B48FF008B49FF008C4CFF007E
+        45AC0000001EB0B0ADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF6DC29BFF009452FF00BA84FF77E0C6FF00BB86FF0099
+        5CFF007E45ACAEAEABFFFFFFFFFFFDFDFDFFFCFCFDFFFCFCFDFFFCFCFDFFFCFC
+        FDFFFFFEFFFFFFFFFFFF007F36FF00BE88FF00BC83FFFFFFFFFF00BC83FF00C1
+        8DFF008C4CFFADADABFFFFFFFFFFFAF8F8FFF9F8F8FFF9F8F8FFF9F8F8FFF9F8
+        F8FFFDFAFBFFFFFFFFFF007F37FF72E5CBFFFFFFFFFFFFFFFFFFFFFFFFFF77E7
+        CEFF008B49FFADADABFFFFFFFFFFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6
+        F6FFF9F7F8FFFFFFFFFF007E36FF00CA94FF00C88FFFFFFFFFFF00C990FF00CD
+        99FF008C4BFFADADABFFFFFFFFFFF4F4F3FFF4F4F3FFF4F4F3FFF4F4F3FFF4F4
+        F3FFF6F5F5FFFFFAFCFF63B68FFF009B59FF00D19AFF74EED4FF00D49FFF00A3
+        67FF008E4E97ADADABFFFFFFFFFFF2F1F0FFF2F1F0FFF2F1F0FFF2F1F0FFF2F1
+        F0FFF3F1F0FFF8F3F4FFFFF9FDFF62B58EFF008037FF00843EFF008947FF008E
+        4D9600905100ADADABFFFFFFFFFFEFEFEEFFEFEFEEFFEFEFEEFFEFEFEEFFEFEF
+        EEFFEFEFEEFFF0EFEFFFF4F1F1FFFDF4F6FFFFFFFFFFCBB4BBFF008B4400008F
+        4D0000905000ADADABFFFFFFFFFFECEBEAFFEDECEBFFEDECEBFFEDECEBFFEDEC
+        EBFFECEBEAFFECEBE9FFECEBEAFFEEEBEBFFFFFFFFFFB7AFB0FFCBB8BE00008B
+        4300008D4700ADADABFFFFFFFFFFE9E9E8FFEAEAE9FFEAEAE9FFEAEAE9FFE9E9
+        E8FFF3F4F2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFAEACFFBAB5B500C3B8
+        BB00C7B9BD00ADAEABFFFFFFFFFFE7E5E4FFE8E7E6FFE8E7E6FFE8E7E6FFE7E5
+        E4FFFFFFFFFFCBCBCAFFA7A7A4FFA5A5A3FFFFFFFFFFAFAFADFFB5B4B300B7B5
+        B400B8B5B500AEAEABFFFFFFFFFFE3E3E2FFE4E4E3FFE4E5E4FFE4E4E3FFE3E3
+        E2FFFFFFFFFFA7A7A4FFEBEBEAFFFFFFFFFFE9E9E9FFB0B0AEACB4B4B200B5B5
+        B300B5B5B300AEAEACFFFFFFFFFFE0DFDEFFE1DFDEFFE1E0DFFFE1DFDEFFE0DF
+        DEFFFFFFFFFFA5A5A3FFFFFFFFFFE8E8E8FFAFAFACA7B3B3B100B5B5B300B5B5
+        B300B5B5B300AFAFADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFE9E9E9FFAEAEACA6B3B3B100B5B5B300B5B5B300B5B5
+        B300B5B5B300B3B3B1EFB0B0ADFFAEAEACFFAEAEABFFAEAEABFFAEAEABFFADAE
+        ABFFAEAEABFFAFAFADFFB0B0AEEAB3B3B100B5B5B300B5B5B300B5B5B300B5B5
+        B300B5B5B300}
+      TabOrder = 1
+      OnClick = BtnNovoClick
     end
   end
 end

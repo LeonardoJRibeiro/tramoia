@@ -122,6 +122,16 @@ begin
       begin
         Result := 'Não foi possivel realizar o cadastro do usuário. Motivo: Usuário já cadastrado no sistema.';
       end;
+
+    21:
+      begin
+        Result := 'Não é possível alterar a entrada. Motivo: A bolsa da entrada já não está mais no estoque.';
+      end;
+
+    22:
+      begin
+        Result := 'Não é possível excluir a entrada. Motivo: A bolsa da entrada já não está mais no estoque.';
+      end;
   end;
 
 end;

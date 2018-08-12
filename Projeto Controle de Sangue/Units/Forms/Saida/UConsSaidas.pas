@@ -14,6 +14,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
+    procedure BtnAlterarClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -32,6 +33,15 @@ implementation
 
 uses UClassMensagem, UClassUsuarioDao, UDMConexao, UClassSaidaDao, UBiblioteca, USaida, UClassForeignKeyForms;
 { TFrmConsSaidas }
+
+procedure TFrmConsSaidas.BtnAlterarClick(Sender: TObject);
+begin
+  inherited;
+
+  TFrmSaida.getSaida(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario, Self.FPersistencia.Query.FieldByName('id')
+    .AsInteger);
+  EdtConsInvokeSearch(Self);
+end;
 
 procedure TFrmConsSaidas.BtnExcluirClick(Sender: TObject);
 var

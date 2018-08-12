@@ -85,6 +85,9 @@ inherited FrmConsSaidas: TFrmConsSaidas
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick
     end
+    inherited BtnAlterar: TSpeedButton
+      OnClick = BtnAlterarClick
+    end
     inherited BtnExcluir: TSpeedButton
       OnClick = BtnExcluirClick
     end
@@ -94,6 +97,8 @@ inherited FrmConsSaidas: TFrmConsSaidas
     ExplicitWidth = 742
     inherited GroupBoxConsulta: TGroupBox
       Width = 740
+      ExplicitLeft = 1
+      ExplicitTop = 7
       ExplicitWidth = 740
       inherited EdtCons: TSearchBox
         Width = 592

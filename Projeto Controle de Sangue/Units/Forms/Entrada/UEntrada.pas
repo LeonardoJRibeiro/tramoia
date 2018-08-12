@@ -75,8 +75,6 @@ procedure TFrmEntrada.BtnGravarClick(Sender: TObject);
 var
   lBolsa: TBolsa;
 
-  lIdBolsa: Integer;
-
   lEntrada: TEntrada;
   lEntradaDAO: TEntradaDAO;
 begin
@@ -139,7 +137,7 @@ begin
   lBolsa := TBolsa.Create;
   try
 
-    lBolsa.Id := -1;
+    lBolsa.Id := Self.FIdBolsa;
     lBolsa.NumeroBolsa := EdtNumeroBolsa.Text;
     lBolsa.Tipo := EdtTipo.Text;
     lBolsa.Abo := Copy(ComboBoxAboBolsa.Text, 0, string(ComboBoxAboBolsa.Text).Length - 1);
@@ -155,7 +153,7 @@ begin
       if (Self.FBolsaDAO.Salvar(lBolsa)) then
       begin
 
-        lIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_da_bolsa', lBolsa.NumeroBolsa,
+        Self.FIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_da_bolsa', lBolsa.NumeroBolsa,
           DataModuleConexao.Conexao);
 
         lEntrada := TEntrada.Create;
@@ -163,7 +161,7 @@ begin
 
           lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
           lEntrada.IdUsuario := Self.FCodUsu;
-          lEntrada.IdBolsa := lIdBolsa;
+          lEntrada.IdBolsa := Self.FIdBolsa;
           lEntrada.DataEntrada := Now;
           lEntrada.Observacao := EdtObservacao.Text;
 
@@ -220,6 +218,9 @@ begin
 
   EdtNumeroBolsa.SetFocus;
 
+  Self.FId := -1;
+  Self.FIdBolsa := -1;
+
 end;
 
 procedure TFrmEntrada.BtnSairClick(Sender: TObject);
@@ -250,7 +251,7 @@ begin
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.Volume.ToString;
           EdtOrigem.Text := lBolsa.Origem;
-          ComboBoxAboBolsa.ItemIndex := (ComboBoxAboBolsa.Items.IndexOf(Trim(lBolsa.Tipo)));
+          ComboBoxAboBolsa.ItemIndex := (ComboBoxAboBolsa.Items.IndexOf(Trim(lBolsa.Abo + lBolsa.Rh)));
         end;
 
       except
@@ -417,6 +418,8 @@ begin
   end
   else
   begin
+
+    Self.FIdBolsa := -1;
 
     DateTimePickerData.DateTime := Now;
 

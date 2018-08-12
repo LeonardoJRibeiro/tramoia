@@ -29,8 +29,6 @@ object FrmSaida: TFrmSaida
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitTop = 3
-    ExplicitWidth = 365
     object LabelId: TLabel
       Left = 19
       Top = 8
@@ -310,7 +308,6 @@ object FrmSaida: TFrmSaida
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitWidth = 330
     object BtnGravar: TBitBtn
       Left = 9
       Top = 9

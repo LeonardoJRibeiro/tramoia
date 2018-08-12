@@ -161,6 +161,9 @@ begin
   RadioGroup37.ItemIndex := 1;
   EdtRegistroPaciente.SetFocus;
 
+  Self.FId := -1;
+  Self.FIdBolsa := -1;
+
 end;
 
 procedure TFrmSaida.BtnSairClick(Sender: TObject);
@@ -227,7 +230,9 @@ begin
         begin
 
           EdtId.Text := lSaida.Id.ToString;
-          EdtRegistroPaciente.Text := lSaida.Id_Paciente.ToString;
+          EdtRegistroPaciente.Text := TClassBibliotecaDao.getValorAtributo('paciente', 'num_prontuario', 'id',
+            lSaida.Id_Paciente, DataModuleConexao.Conexao);
+          EdtRegistroPacienteExit(Self);
           Self.CarregaDadosBolsa(lSaida.Id_Bolsa);
           DateTimePickerData.Date := lSaida.Data_Saida;
           EdtHospital.Text := lSaida.Hospital;
@@ -235,6 +240,7 @@ begin
           RadioGroupTA.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Ta = 'P', 0, 1);
           RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'P', 0, 1);
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
+          Self.FIdBolsa:= lSaida.Id_Bolsa;
 
           EdtRegistroPaciente.SetFocus;
 
@@ -394,6 +400,8 @@ begin
   begin
     DateTimePickerData.Date := now;
     EdtRegistroPaciente.SetFocus;
+
+    Self.FIdBolsa := -1;
   end;
 
 end;

@@ -81,6 +81,7 @@ begin
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue,');
+    pPersistencia.Query.SQL.Add('  b.id id_bolsa,');
     pPersistencia.Query.SQL.Add('  b.origem,');
     pPersistencia.Query.SQL.Add('  b.volume,');
     pPersistencia.Query.SQL.Add('  b.sorologia,');

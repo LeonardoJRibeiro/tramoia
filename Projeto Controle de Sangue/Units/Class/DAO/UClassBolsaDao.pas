@@ -18,6 +18,7 @@ type
     function getObjeto(const pID: Integer; var pObjeto: TBolsa): Boolean;
 
     function getIdBolsa(const pNUMERO_DA_BOLSA: string): Integer;
+    function getPossuiEmEstoque(const pID: Integer): Boolean;
 
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
@@ -310,6 +311,42 @@ begin
 
       Result := True;
 
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
+function TBolsaDAO.getPossuiEmEstoque(const pID: Integer): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  possui_estoque');
+      lPersistencia.Query.SQL.Add('FROM bolsa');
+      lPersistencia.Query.SQL.Add('WHERE id = :pId');
+
+      lPersistencia.setParametro('pId', pID);
+
+      lPersistencia.Query.Open;
+
+      Result := UpperCase(Trim(lPersistencia.Query.FieldByName('possui_estoque').Asstring)) = 'S';
     except
       on E: Exception do
       begin

@@ -16,11 +16,15 @@ type
     procedure BtnExcluirClick(Sender: TObject);
     procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnAlterarClick(Sender: TObject);
+    procedure DBGridDblClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
 
+    function getBolsaPossuiEstoque: Boolean;
+
     function getAdmin: Boolean;
+    function BolsaPossuiEstoque: Boolean;
   public
     class function getConsEntrada(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer): Boolean;
   end;
@@ -32,13 +36,40 @@ implementation
 
 {$R *.dfm}
 
-uses UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UBiblioteca, UClassForeignKeyForms, UClassUsuarioDao;
+uses UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UBiblioteca, UClassForeignKeyForms, UClassUsuarioDao,
+  UClassBolsaDao;
+
+function TFrmConsEntrada.BolsaPossuiEstoque: Boolean;
+var
+  lBolsaDao: TBolsaDAO;
+begin
+
+  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    Result := lBolsaDao.getPossuiEmEstoque(Self.FPersistencia.Query.FieldByName('id_bolsa').AsInteger);
+
+  finally
+    lBolsaDao.Destroy;
+  end;
+
+end;
 
 procedure TFrmConsEntrada.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
-  TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario);
-  EdtConsInvokeSearch(Self);
+
+  if (Self.getBolsaPossuiEstoque) then
+  begin
+    TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario, Self.FPersistencia.Query.FieldByName('id')
+      .AsInteger);
+    EdtConsInvokeSearch(Self);
+  end
+  else
+  begin
+    Application.MessageBox(PChar(TMensagem.getMensagem(21)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+  end;
+
 end;
 
 procedure TFrmConsEntrada.BtnExcluirClick(Sender: TObject);
@@ -50,32 +81,41 @@ begin
   if (Self.getAdmin) then
   begin
 
-    if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['entrada'])), PChar('Cuidado'),
-      MB_YESNO + MB_ICONQUESTION) = IDYES) then
+    if (Self.getBolsaPossuiEstoque) then
     begin
 
-      lEntradaDao := TEntradaDAO.Create(DataModuleConexao.Conexao);
-      try
+      if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['entrada'])), PChar('Cuidado'),
+        MB_YESNO + MB_ICONQUESTION) = IDYES) then
+      begin
 
+        lEntradaDao := TEntradaDAO.Create(DataModuleConexao.Conexao);
         try
 
-          if (lEntradaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-          begin
-            EdtConsInvokeSearch(Self);
+          try
+
+            if (lEntradaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+            begin
+              EdtConsInvokeSearch(Self);
+            end;
+
+          except
+            on E: Exception do
+            begin
+              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+                MB_OK + MB_ICONSTOP);
+            end;
           end;
 
-        except
-          on E: Exception do
-          begin
-            Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
-              MB_OK + MB_ICONSTOP);
-          end;
+        finally
+          lEntradaDao.Destroy;
         end;
 
-      finally
-        lEntradaDao.Destroy;
       end;
 
+    end
+    else
+    begin
+      Application.MessageBox(PChar(TMensagem.getMensagem(22)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
     end;
 
   end
@@ -93,6 +133,12 @@ begin
   TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario);
   EdtConsInvokeSearch(Self);
 
+end;
+
+procedure TFrmConsEntrada.DBGridDblClick(Sender: TObject);
+begin
+  inherited;
+  BtnAlterarClick(Self);
 end;
 
 procedure TFrmConsEntrada.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -187,6 +233,31 @@ begin
 
   finally
     lUsuaioDao.Destroy;
+  end;
+
+end;
+
+function TFrmConsEntrada.getBolsaPossuiEstoque: Boolean;
+var
+  lBolsaDao: TBolsaDAO;
+begin
+
+  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+
+      Result := lBolsaDao.getPossuiEmEstoque(Self.FPersistencia.Query.FieldByName('id_bolsa').AsInteger);
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+      end;
+    end;
+
+  finally
+    lBolsaDao.Destroy
   end;
 
 end;

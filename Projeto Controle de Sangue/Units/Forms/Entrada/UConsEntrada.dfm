@@ -2,6 +2,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
   Caption = 'Consulta de Entradas'
   ClientHeight = 370
   ClientWidth = 745
+  OnClose = FormClose
   OnShow = FormShow
   ExplicitWidth = 751
   ExplicitHeight = 399
@@ -40,6 +41,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
           Alignment = taRightJustify
           Expanded = False
           FieldName = 'numero_da_bolsa'
+          Title.Alignment = taCenter
           Title.Caption = 'N'#250'mero da bolsa'
           Width = 109
           Visible = True
@@ -60,8 +62,10 @@ inherited FrmConsEntrada: TFrmConsEntrada
           Visible = True
         end
         item
+          Alignment = taRightJustify
           Expanded = False
           FieldName = 'volume'
+          Title.Alignment = taCenter
           Title.Caption = 'Volume'
           Width = 58
           Visible = True
@@ -103,6 +107,8 @@ inherited FrmConsEntrada: TFrmConsEntrada
     ExplicitWidth = 745
     inherited GroupBoxConsulta: TGroupBox
       Width = 743
+      ExplicitLeft = 1
+      ExplicitTop = 7
       ExplicitWidth = 743
       inherited EdtCons: TSearchBox
         Width = 592

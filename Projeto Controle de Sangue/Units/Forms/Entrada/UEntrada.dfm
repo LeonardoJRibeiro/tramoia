@@ -185,7 +185,7 @@ object FrmEntrada: TFrmEntrada
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9
-      Width = 81
+      Width = 87
       Height = 25
       Caption = 'Gravar'
       Glyph.Data = {
@@ -228,9 +228,9 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 184
+      Left = 193
       Top = 9
-      Width = 81
+      Width = 87
       Height = 25
       Caption = 'Sair'
       Glyph.Data = {
@@ -274,9 +274,9 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnSairClick
     end
     object BtnNovo: TBitBtn
-      Left = 97
+      Left = 102
       Top = 9
-      Width = 81
+      Width = 87
       Height = 25
       Caption = 'Novo'
       Glyph.Data = {

@@ -161,6 +161,8 @@ begin
   RadioGroup37.ItemIndex := 1;
   EdtRegistroPaciente.SetFocus;
 
+  BtnGravar.Enabled := True;
+
   Self.FId := -1;
   Self.FIdBolsa := -1;
 
@@ -240,7 +242,7 @@ begin
           RadioGroupTA.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Ta = 'P', 0, 1);
           RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'P', 0, 1);
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
-          Self.FIdBolsa:= lSaida.Id_Bolsa;
+          Self.FIdBolsa := lSaida.Id_Bolsa;
 
           EdtRegistroPaciente.SetFocus;
 

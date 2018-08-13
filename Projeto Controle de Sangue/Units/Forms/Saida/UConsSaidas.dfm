@@ -2,6 +2,7 @@ inherited FrmConsSaidas: TFrmConsSaidas
   Caption = 'Consulta de sa'#237'das'
   ClientHeight = 323
   ClientWidth = 742
+  OnClose = FormClose
   OnShow = FormShow
   ExplicitWidth = 748
   ExplicitHeight = 352
@@ -16,6 +17,7 @@ inherited FrmConsSaidas: TFrmConsSaidas
       Width = 740
       Height = 207
       DataSource = DataSource
+      OnDblClick = DBGridDblClick
       Columns = <
         item
           Alignment = taCenter
@@ -27,15 +29,19 @@ inherited FrmConsSaidas: TFrmConsSaidas
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 'data_saida'
+          Title.Alignment = taCenter
           Title.Caption = 'Data sa'#237'da'
           Width = 63
           Visible = True
         end
         item
+          Alignment = taRightJustify
           Expanded = False
           FieldName = 'num_prontuario'
+          Title.Alignment = taCenter
           Title.Caption = 'N'#250'mero prontu'#225'rio'
           Width = 108
           Visible = True
@@ -48,10 +54,11 @@ inherited FrmConsSaidas: TFrmConsSaidas
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 'tipo_sangue'
           Title.Caption = 'Abo/Rh'#13#10' paciente'
-          Width = 84
+          Width = 82
           Visible = True
         end
         item
@@ -69,8 +76,10 @@ inherited FrmConsSaidas: TFrmConsSaidas
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 'tipo_sangue_bolsa'
+          Title.Alignment = taCenter
           Title.Caption = 'Abo/Rh bolsa'
           Width = 68
           Visible = True
@@ -100,6 +109,16 @@ inherited FrmConsSaidas: TFrmConsSaidas
       ExplicitLeft = 1
       ExplicitTop = 7
       ExplicitWidth = 740
+      inherited GroupBoxTipoCons: TGroupBox
+        inherited ComboBoxTipoCons: TComboBox
+          ItemIndex = -1
+          Text = ''
+          Items.Strings = (
+            'Palavra chave'
+            'Nome'
+            'Ordem')
+        end
+      end
       inherited EdtCons: TSearchBox
         Width = 592
         OnInvokeSearch = EdtConsInvokeSearch

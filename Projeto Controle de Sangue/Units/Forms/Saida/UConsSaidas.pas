@@ -15,6 +15,9 @@ type
     procedure BtnExcluirClick(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
     procedure BtnAlterarClick(Sender: TObject);
+    procedure DBGridDblClick(Sender: TObject);
+    procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -38,9 +41,13 @@ procedure TFrmConsSaidas.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
 
-  TFrmSaida.getSaida(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario, Self.FPersistencia.Query.FieldByName('id')
-    .AsInteger);
-  EdtConsInvokeSearch(Self);
+  if (not Self.FPersistencia.Query.IsEmpty) then
+  begin
+    TFrmSaida.getSaida(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario, Self.FPersistencia.Query.FieldByName('id')
+      .AsInteger);
+    EdtConsInvokeSearch(Self);
+  end;
+
 end;
 
 procedure TFrmConsSaidas.BtnExcluirClick(Sender: TObject);
@@ -49,41 +56,46 @@ var
 begin
   inherited;
 
-  if (Self.getAdmin) then
+  if (not Self.FPersistencia.Query.IsEmpty) then
   begin
 
-    if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['saída'])), PChar('Cuidado'),
-      MB_YESNO + MB_ICONQUESTION) = IDYES) then
+    if (Self.getAdmin) then
     begin
 
-      lSaidaDao := TSaidaDAO.Create(DataModuleConexao.Conexao);
-      try
+      if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['saída'])), PChar('Cuidado'),
+        MB_YESNO + MB_ICONQUESTION) = IDYES) then
+      begin
 
+        lSaidaDao := TSaidaDAO.Create(DataModuleConexao.Conexao);
         try
 
-          if (lSaidaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-          begin
-            EdtConsInvokeSearch(Self);
+          try
+
+            if (lSaidaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+            begin
+              EdtConsInvokeSearch(Self);
+            end;
+
+          except
+            on E: Exception do
+            begin
+              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['saída', E.Message])), '1',
+                MB_OK + MB_ICONSTOP);
+            end;
           end;
 
-        except
-          on E: Exception do
-          begin
-            Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['saída', E.Message])), '1',
-              MB_OK + MB_ICONSTOP);
-          end;
+        finally
+          lSaidaDao.Destroy;
         end;
 
-      finally
-        lSaidaDao.Destroy;
       end;
 
+    end
+    else
+    begin
+      Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
     end;
 
-  end
-  else
-  begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
 
 end;
@@ -93,6 +105,21 @@ begin
   inherited;
   TFrmSaida.getSaida(TForeignKeyForms.FIdUConsSaida, Self.FIdUsuario);
   EdtConsInvokeSearch(Self);
+end;
+
+procedure TFrmConsSaidas.DBGridDblClick(Sender: TObject);
+begin
+  inherited;
+  BtnAlterarClick(Self);
+end;
+
+procedure TFrmConsSaidas.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_RETURN) then
+  begin
+    DBGridDblClick(Self);
+  end;
 end;
 
 procedure TFrmConsSaidas.EdtConsInvokeSearch(Sender: TObject);
@@ -133,6 +160,13 @@ begin
     lSaidaDao.Destroy;
   end;
 
+end;
+
+procedure TFrmConsSaidas.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox', 'FrmConsSaidas.ComboBoxTipoCons',
+    ComboBoxTipoCons.ItemIndex.ToString);
 end;
 
 procedure TFrmConsSaidas.FormShow(Sender: TObject);

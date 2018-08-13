@@ -48,6 +48,7 @@ type
     FCodUsu: Integer;
     FId: Integer;
     FIdBolsa: Integer;
+    FNumBolsa: string;
 
     FBolsaDAO: TBolsaDAO;
 
@@ -220,6 +221,7 @@ begin
 
   Self.FId := -1;
   Self.FIdBolsa := -1;
+  Self.FNumBolsa := '-1';
 
 end;
 
@@ -248,6 +250,7 @@ begin
         if (Result) then
         begin
           EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          Self.FNumBolsa := lBolsa.NumeroBolsa;
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.Volume.ToString;
           EdtOrigem.Text := lBolsa.Origem;
@@ -341,17 +344,33 @@ begin
 end;
 
 procedure TFrmEntrada.EdtNumeroBolsaExit(Sender: TObject);
+var
+  lVerificaNumBolsa: Boolean;
 begin
 
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
-    if (Self.FBolsaDAO.getExiste(EdtNumeroBolsa.Text)) then
+    if (Self.FId > 0) then
+    begin
+      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> (EdtNumeroBolsa.Text)))
+    end
+    else
+    begin
+      lVerificaNumBolsa := True;
+    end;
+
+    if (lVerificaNumBolsa) then
     begin
 
-      Application.MessageBox('Número da bolsa já cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
+      if (Self.FBolsaDAO.getExiste(EdtNumeroBolsa.Text)) then
+      begin
 
-      EdtNumeroBolsa.SetFocus;
+        Application.MessageBox('Número da bolsa já cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
+
+        EdtNumeroBolsa.SetFocus;
+
+      end;
 
     end;
 
@@ -420,6 +439,7 @@ begin
   begin
 
     Self.FIdBolsa := -1;
+    Self.FNumBolsa := '1';
 
     DateTimePickerData.DateTime := Now;
 

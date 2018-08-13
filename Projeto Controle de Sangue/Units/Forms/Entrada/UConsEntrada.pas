@@ -17,6 +17,7 @@ type
     procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnAlterarClick(Sender: TObject);
     procedure DBGridDblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -59,15 +60,20 @@ procedure TFrmConsEntrada.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
 
-  if (Self.getBolsaPossuiEstoque) then
+  if (not Self.FPersistencia.Query.IsEmpty) then
   begin
-    TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario, Self.FPersistencia.Query.FieldByName('id')
-      .AsInteger);
-    EdtConsInvokeSearch(Self);
-  end
-  else
-  begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(21)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+
+    if (Self.getBolsaPossuiEstoque) then
+    begin
+      TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario,
+        Self.FPersistencia.Query.FieldByName('id').AsInteger);
+      EdtConsInvokeSearch(Self);
+    end
+    else
+    begin
+      Application.MessageBox(PChar(TMensagem.getMensagem(21)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+    end;
+
   end;
 
 end;
@@ -78,50 +84,55 @@ var
 begin
   inherited;
 
-  if (Self.getAdmin) then
+  if (not Self.FPersistencia.Query.IsEmpty) then
   begin
 
-    if (Self.getBolsaPossuiEstoque) then
+    if (Self.getAdmin) then
     begin
 
-      if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['entrada'])), PChar('Cuidado'),
-        MB_YESNO + MB_ICONQUESTION) = IDYES) then
+      if (Self.getBolsaPossuiEstoque) then
       begin
 
-        lEntradaDao := TEntradaDAO.Create(DataModuleConexao.Conexao);
-        try
+        if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['entrada'])), PChar('Cuidado'),
+          MB_YESNO + MB_ICONQUESTION) = IDYES) then
+        begin
 
+          lEntradaDao := TEntradaDAO.Create(DataModuleConexao.Conexao);
           try
 
-            if (lEntradaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-            begin
-              EdtConsInvokeSearch(Self);
+            try
+
+              if (lEntradaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+              begin
+                EdtConsInvokeSearch(Self);
+              end;
+
+            except
+              on E: Exception do
+              begin
+                Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+                  MB_OK + MB_ICONSTOP);
+              end;
             end;
 
-          except
-            on E: Exception do
-            begin
-              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
-                MB_OK + MB_ICONSTOP);
-            end;
+          finally
+            lEntradaDao.Destroy;
           end;
 
-        finally
-          lEntradaDao.Destroy;
         end;
 
+      end
+      else
+      begin
+        Application.MessageBox(PChar(TMensagem.getMensagem(22)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
       end;
 
     end
     else
     begin
-      Application.MessageBox(PChar(TMensagem.getMensagem(22)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
+      Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
     end;
 
-  end
-  else
-  begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
 
 end;
@@ -198,6 +209,14 @@ begin
     lEntradaDao.Destroy;
   end;
 
+end;
+
+procedure TFrmConsEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  inherited;
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox', 'FrmConsEntrada.ComboBoxTipoCons',
+    ComboBoxTipoCons.ItemIndex.ToString);
 end;
 
 procedure TFrmConsEntrada.FormShow(Sender: TObject);

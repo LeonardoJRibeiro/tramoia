@@ -93,37 +93,37 @@ begin
 
     pPersistencia.Query.SQL.Add('WHERE 0=0');
 
-    { case (pTIPOCONS) of
-      0, 1: // Palavra chave e Nome
-      begin
+    case (pTIPOCONS) of
+      { 0, 1: // Palavra chave e Nome
+        begin
 
-      if (not pCHAVE.Trim.IsEmpty) then
-      begin
+        if (not pCHAVE.Trim.IsEmpty) then
+        begin
 
-      pPersistencia.Query.SQL.Add('AND nome LIKE :pChave');
-      pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
+        pPersistencia.Query.SQL.Add('AND nome LIKE :pChave');
+        pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
 
-      end;
+        end;
 
-      pPersistencia.Query.SQL.Add('ORDER BY nome');
+        pPersistencia.Query.SQL.Add('ORDER BY nome');
 
-      end;
+        end; }
 
-      2: // Id
-      begin
+      2: // Código(Id)
+        begin
 
-      if (not pCHAVE.Trim.IsEmpty) then
-      begin
+          if (not pCHAVE.Trim.IsEmpty) then
+          begin
 
-      pPersistencia.Query.SQL.Add('AND id = :pChave');
-      pPersistencia.setParametro('pChave', pCHAVE);
+            pPersistencia.Query.SQL.Add('AND e.id = :pChave');
+            pPersistencia.setParametro('pChave', pCHAVE);
 
-      end;
+          end;
 
-      pPersistencia.Query.SQL.Add('ORDER BY id');
+          pPersistencia.Query.SQL.Add('ORDER BY id');
 
-      end;
-      end; }
+        end;
+    end;
 
     pPersistencia.Query.Open;
 

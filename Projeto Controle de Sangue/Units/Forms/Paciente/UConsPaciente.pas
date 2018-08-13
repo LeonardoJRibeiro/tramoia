@@ -51,21 +51,26 @@ procedure TFrmConsPaciente.BtnAlterarClick(Sender: TObject);
 begin
   inherited;
 
-  if (Self.getAdmin) then
+  if (not Self.FPersistencia.Query.IsEmpty) then
   begin
 
-    if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario,
-      Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+    if (Self.getAdmin) then
     begin
 
-      EdtConsInvokeSearch(Self);
+      if (TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario,
+        Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+      begin
 
+        EdtConsInvokeSearch(Self);
+
+      end;
+
+    end
+    else
+    begin
+      Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
     end;
 
-  end
-  else
-  begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
 
 end;
@@ -75,51 +80,54 @@ var
   lPacienteDao: TPacienteDAO;
 begin
   inherited;
-
-  if (Self.getAdmin) then
+  if (not Self.FPersistencia.Query.IsEmpty) then
   begin
-
-    if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['paciente'])), PChar('Cuidado'),
-      MB_YESNO + MB_ICONQUESTION) = IDYES) then
+    if (Self.getAdmin) then
     begin
 
-      lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
-      try
+      if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['paciente'])), PChar('Cuidado'),
+        MB_YESNO + MB_ICONQUESTION) = IDYES) then
+      begin
 
+        lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
         try
 
-          if (not Self.getExisteRelacionamento) then
-          begin
+          try
 
-            if (lPacienteDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+            if (not Self.getExisteRelacionamento) then
             begin
-              EdtConsInvokeSearch(Self);
+
+              if (lPacienteDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+              begin
+                EdtConsInvokeSearch(Self);
+              end;
+
+            end
+            else
+            begin
+              Application.MessageBox(PChar(TMensagem.getMensagem(19)), 'Aviso', MB_OK + MB_ICONWARNING);
             end;
 
-          end
-          else
-          begin
-            Application.MessageBox(PChar(TMensagem.getMensagem(19)), 'Aviso', MB_OK + MB_ICONWARNING);
+          except
+            on E: Exception do
+            begin
+              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+                MB_OK + MB_ICONSTOP);
+            end;
           end;
 
-        except
-          on E: Exception do
-          begin
-            Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
-              MB_OK + MB_ICONSTOP);
-          end;
+        finally
+          lPacienteDao.Destroy;
         end;
 
-      finally
-        lPacienteDao.Destroy;
       end;
 
+    end
+    else
+    begin
+      Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
     end;
 
-  end
-  else
-  begin
-    Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
 
 end;

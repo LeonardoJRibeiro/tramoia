@@ -86,7 +86,8 @@ inherited FrmConsPaciente: TFrmConsPaciente
     Top = 345
     Width = 802
     Height = 41
-    ExplicitTop = 345
+    ExplicitLeft = -1
+    ExplicitTop = 350
     ExplicitWidth = 802
     ExplicitHeight = 41
     inherited BtnNovo: TSpeedButton

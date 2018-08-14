@@ -37,7 +37,6 @@ type
     MenuItemConsultarSaida: TMenuItem;
     StatusBar: TStatusBar;
     ImageUEG: TImage;
-    MenuItemRelEstoque: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -59,7 +58,6 @@ type
     procedure MenuItemConsultarSaidaClick(Sender: TObject);
     procedure MenuItemCadEntradaClick(Sender: TObject);
     procedure MenuItemCadastrarSaidaClick(Sender: TObject);
-    procedure MenuItemRelEstoqueClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -79,7 +77,7 @@ implementation
 
 uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
   URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
-  UClassBibliotecaDao, URelEstoque;
+  UClassBibliotecaDao;
 
 procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
 begin
@@ -170,12 +168,9 @@ end;
 
 procedure TFrmPrincipal.MenuItemRelEntradasClick(Sender: TObject);
 begin
-  TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
-end;
 
-procedure TFrmPrincipal.MenuItemRelEstoqueClick(Sender: TObject);
-begin
-  TFrmRelEstoque.getRelEstoque(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+  TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
 end;
 
 procedure TFrmPrincipal.FormCreate(Sender: TObject);

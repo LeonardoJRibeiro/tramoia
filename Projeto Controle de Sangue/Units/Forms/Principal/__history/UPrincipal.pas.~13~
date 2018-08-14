@@ -170,12 +170,14 @@ end;
 
 procedure TFrmPrincipal.MenuItemRelEntradasClick(Sender: TObject);
 begin
+
   TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
 end;
 
 procedure TFrmPrincipal.MenuItemRelEstoqueClick(Sender: TObject);
 begin
-  TFrmRelEstoque.getRelEstoque(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+  TFrmRelEstoque.getRelEstoque(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario)
 end;
 
 procedure TFrmPrincipal.FormCreate(Sender: TObject);

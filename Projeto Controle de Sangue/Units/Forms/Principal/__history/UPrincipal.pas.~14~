@@ -170,7 +170,9 @@ end;
 
 procedure TFrmPrincipal.MenuItemRelEntradasClick(Sender: TObject);
 begin
+
   TFrmRelEntrada.getRelEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
 end;
 
 procedure TFrmPrincipal.MenuItemRelEstoqueClick(Sender: TObject);

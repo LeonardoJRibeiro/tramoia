@@ -249,9 +249,6 @@ object FrmCons: TFrmCons
       Height = 64
       Align = alBottom
       TabOrder = 0
-      ExplicitLeft = 7
-      ExplicitTop = 6
-      ExplicitWidth = 482
       object GroupBoxTipoCons: TGroupBox
         Left = 9
         Top = 7

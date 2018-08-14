@@ -5,11 +5,13 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UConsGenerico, Data.DB, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.Buttons, Vcl.Grids,
-  Vcl.DBGrids, Vcl.ExtCtrls;
+  Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
   TFrmConsEntrada = class(TFrmCons)
     DataSource: TDataSource;
+    EdtDataFinal: TDateTimePicker;
+    EdtDataIni: TDateTimePicker;
     procedure FormShow(Sender: TObject);
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
@@ -18,6 +20,7 @@ type
     procedure BtnAlterarClick(Sender: TObject);
     procedure DBGridDblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ComboBoxTipoConsChange(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -146,6 +149,41 @@ begin
 
 end;
 
+procedure TFrmConsEntrada.ComboBoxTipoConsChange(Sender: TObject);
+begin
+  EdtCons.Clear;
+
+  case (ComboBoxTipoCons.ItemIndex) of
+    0: // Período
+      begin
+        EdtCons.Visible := False;
+        EdtDataIni.Visible := true;
+        EdtDataFinal.Visible := true;
+        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
+        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
+      end;
+
+    1: // Número da bolsa
+      begin
+        EdtCons.NumbersOnly := true;
+        EdtCons.MaxLength := 20;
+        EdtCons.Visible := true;
+        EdtDataIni.Visible := False;
+        EdtDataFinal.Visible := False;
+      end;
+
+    2: // Código
+      begin
+        EdtCons.NumbersOnly := true;
+        EdtCons.MaxLength := 11;
+        EdtCons.Visible := true;
+        EdtDataIni.Visible := False;
+        EdtDataFinal.Visible := False;
+      end;
+  end;
+
+end;
+
 procedure TFrmConsEntrada.DBGridDblClick(Sender: TObject);
 begin
   inherited;
@@ -181,7 +219,8 @@ begin
 
     try
 
-      if (lEntradaDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
+      if (lEntradaDao.getConsulta(EdtCons.Text, EdtDataIni.Date, EdtDataFinal.Date, ComboBoxTipoCons.ItemIndex,
+        Self.FPersistencia)) then
       begin
 
         Self.FPersistencia.Query.Last;
@@ -228,7 +267,15 @@ begin
 
   EdtConsInvokeSearch(Self);
 
-  EdtCons.SetFocus;
+  if (ComboBoxTipoCons.ItemIndex <> 0) then
+  begin
+    EdtCons.SetFocus;
+  end
+  else
+  begin
+    EdtDataIni.SetFocus;
+  end;
+
 end;
 
 function TFrmConsEntrada.getAdmin: Boolean;
@@ -244,7 +291,7 @@ begin
     except
       on E: Exception do
       begin
-        Result := True;
+        Result := true;
         Application.MessageBox(PChar(Format(TMensagem.getMensagem(12), ['inforção do usuário', E.Message])),
           PChar('Erro'), MB_OK + MB_ICONERROR);
       end;

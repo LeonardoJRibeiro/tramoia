@@ -12,6 +12,7 @@ type
     DataSource: TDataSource;
     EdtDataFinal: TDateTimePicker;
     EdtDataIni: TDateTimePicker;
+    BtnLocalizar: TBitBtn;
     procedure FormShow(Sender: TObject);
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
@@ -21,6 +22,7 @@ type
     procedure DBGridDblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ComboBoxTipoConsChange(Sender: TObject);
+    procedure BtnLocalizarClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -140,6 +142,12 @@ begin
 
 end;
 
+procedure TFrmConsEntrada.BtnLocalizarClick(Sender: TObject);
+begin
+  inherited;
+  EdtConsInvokeSearch(Self);
+end;
+
 procedure TFrmConsEntrada.BtnNovoClick(Sender: TObject);
 begin
   inherited;
@@ -156,6 +164,7 @@ begin
   case (ComboBoxTipoCons.ItemIndex) of
     0: // Período
       begin
+        BtnLocalizar.Visible := True;
         EdtCons.Visible := False;
         EdtDataIni.Visible := true;
         EdtDataFinal.Visible := true;
@@ -165,6 +174,7 @@ begin
 
     1: // Número da bolsa
       begin
+        BtnLocalizar.Visible := False;
         EdtCons.NumbersOnly := true;
         EdtCons.MaxLength := 20;
         EdtCons.Visible := true;
@@ -174,6 +184,7 @@ begin
 
     2: // Código
       begin
+        BtnLocalizar.Visible := False;
         EdtCons.NumbersOnly := true;
         EdtCons.MaxLength := 11;
         EdtCons.Visible := true;
@@ -231,7 +242,17 @@ begin
         end
         else
         begin
-          EdtCons.SetFocus;
+          if EdtCons.CanFocus then
+          begin
+            EdtCons.SetFocus;
+            BtnLocalizar.Visible := False;
+          end
+          else
+          begin
+            EdtDataIni.SetFocus;
+            BtnLocalizar.Visible := True;
+          end;
+
         end
 
       end;

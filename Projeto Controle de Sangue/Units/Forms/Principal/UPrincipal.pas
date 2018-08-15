@@ -38,6 +38,7 @@ type
     StatusBar: TStatusBar;
     ImageUEG: TImage;
     MenuItemRelEstoque: TMenuItem;
+    BtnConsultas: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);

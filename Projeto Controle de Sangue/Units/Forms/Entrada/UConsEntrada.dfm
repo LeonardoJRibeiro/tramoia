@@ -141,6 +141,15 @@ inherited FrmConsEntrada: TFrmConsEntrada
         Time = 43326.760915949080000000
         TabOrder = 3
       end
+      object BtnLocalizar: TBitBtn
+        Left = 662
+        Top = 22
+        Width = 59
+        Height = 25
+        Caption = 'Localizar'
+        TabOrder = 4
+        OnClick = BtnLocalizarClick
+      end
     end
   end
   object DataSource: TDataSource

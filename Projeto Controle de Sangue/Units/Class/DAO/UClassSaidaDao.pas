@@ -22,7 +22,8 @@ type
 
     function getExisteSaidaPaciente(const pID_PACIENTE: Integer): Boolean;
 
-    function getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt; var pPersistencia: TPersistencia): Boolean;
+    function getConsulta(const pCHAVE: string; const pDATAINI, pDATAFIM: TDate; const pTIPOCONS: SmallInt;
+      var pPersistencia: TPersistencia): Boolean;
 
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
@@ -74,7 +75,7 @@ begin
 
 end;
 
-function TSaidaDAO.getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt;
+function TSaidaDAO.getConsulta(const pCHAVE: string; const pDATAINI, pDATAFIM: TDate; const pTIPOCONS: SmallInt;
   var pPersistencia: TPersistencia): Boolean;
 begin
 
@@ -102,22 +103,20 @@ begin
     pPersistencia.Query.SQL.Add('WHERE 0=0');
 
     case (pTIPOCONS) of
-      {0, 1: // Palavra chave e Nome
+      0: // Número da bolsa
         begin
 
           if (not pCHAVE.Trim.IsEmpty) then
           begin
 
-            pPersistencia.Query.SQL.Add('AND nome LIKE :pChave');
-            pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
+            pPersistencia.Query.SQL.Add('AND b.numero_da_bolsa = :pNumero_Da_Bolsa');
+            pPersistencia.setParametro('pNumero_Da_Bolsa', pCHAVE);
 
           end;
 
-          pPersistencia.Query.SQL.Add('ORDER BY nome');
+        end;
 
-        end; }
-
-      2: // Ordem(id)
+      1: // Ordem
         begin
 
           if (not pCHAVE.Trim.IsEmpty) then
@@ -129,7 +128,26 @@ begin
           end;
 
           pPersistencia.Query.SQL.Add('ORDER BY id');
+        end;
 
+      2: // Paciente
+        begin
+
+          if (not pCHAVE.Trim.IsEmpty) then
+          begin
+
+            pPersistencia.Query.SQL.Add('AND p.num_prontuario = :pNum_Prontuario');
+            pPersistencia.setParametro('pNum_Prontuario', pCHAVE);
+
+          end;
+
+        end;
+
+      3: // Período
+        begin
+          pPersistencia.Query.SQL.Add('AND s.data_saida BETWEEN :pDataIni AND :pDataFim');
+          pPersistencia.setParametro('pDataIni', pDATAINI);
+          pPersistencia.setParametro('pDataFIm', pDATAFIM);
         end;
     end;
 

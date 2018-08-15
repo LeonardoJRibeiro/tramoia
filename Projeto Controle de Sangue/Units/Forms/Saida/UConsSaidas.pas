@@ -5,11 +5,14 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UConsGenerico, Data.DB, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.Buttons, Vcl.Grids,
-  Vcl.DBGrids, Vcl.ExtCtrls;
+  Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
   TFrmConsSaidas = class(TFrmCons)
     DataSource: TDataSource;
+    EdtDataInicial: TDateTimePicker;
+    EdtDataFinal: TDateTimePicker;
+    LabelA: TLabel;
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
@@ -18,6 +21,7 @@ type
     procedure DBGridDblClick(Sender: TObject);
     procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ComboBoxTipoConsChange(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -107,6 +111,18 @@ begin
   EdtConsInvokeSearch(Self);
 end;
 
+procedure TFrmConsSaidas.ComboBoxTipoConsChange(Sender: TObject);
+begin
+  inherited;
+
+  EdtDataInicial.Visible := ComboBoxTipoCons.ItemIndex = 3;
+  EdtDataFinal.Visible := ComboBoxTipoCons.ItemIndex = 3;
+  LabelA.Visible := ComboBoxTipoCons.ItemIndex = 3;
+
+  EdtCons.Visible := ComboBoxTipoCons.ItemIndex <> 3;
+
+end;
+
 procedure TFrmConsSaidas.DBGridDblClick(Sender: TObject);
 begin
   inherited;
@@ -133,17 +149,44 @@ begin
 
     try
 
-      if (lSaidaDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
+      if (lSaidaDao.getConsulta(EdtCons.Text, EdtDataInicial.Date, EdtDataFinal.Date, ComboBoxTipoCons.ItemIndex,
+        Self.FPersistencia)) then
       begin
 
         DataSource.DataSet := Self.FPersistencia.Query;
+
         if (not Self.FPersistencia.Query.IsEmpty) then
         begin
+
           DBGrid.SetFocus;
+
         end
         else
         begin
-          EdtCons.SetFocus;
+
+          if (ComboBoxTipoCons.ItemIndex = 3) then
+          begin
+
+            if (EdtDataInicial.CanFocus) then
+            begin
+
+              EdtDataInicial.SetFocus;
+
+            end;
+
+          end
+          else
+          begin
+
+            if (EdtCons.CanFocus) then
+            begin
+
+              EdtCons.SetFocus;
+
+            end;
+
+          end;
+
         end
 
       end;
@@ -172,13 +215,17 @@ end;
 procedure TFrmConsSaidas.FormShow(Sender: TObject);
 begin
   inherited;
+
   ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
     'FrmConsSaidas.ComboBoxTipoCons', '0').ToInteger;
-  ComboBoxTipoConsChange(Self);
+  ComboBoxTipoConsChange(Sender);
 
-  EdtConsInvokeSearch(Self);
+  EdtDataInicial.DateTime := TBiblioteca.getPrimeiroDiaMes(Now);
 
-  EdtCons.SetFocus;
+  EdtDataFinal.DateTime := TBiblioteca.getUltimoDiaMes(Now);
+
+  EdtConsInvokeSearch(Sender);
+
 end;
 
 function TFrmConsSaidas.getAdmin: Boolean;

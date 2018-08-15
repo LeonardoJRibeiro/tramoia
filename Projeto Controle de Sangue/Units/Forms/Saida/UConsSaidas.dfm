@@ -106,23 +106,48 @@ inherited FrmConsSaidas: TFrmConsSaidas
     ExplicitWidth = 742
     inherited GroupBoxConsulta: TGroupBox
       Width = 740
-      ExplicitLeft = 1
-      ExplicitTop = 7
+      ExplicitTop = 3
       ExplicitWidth = 740
-      inherited GroupBoxTipoCons: TGroupBox
+      object LabelA: TLabel [0]
+        Left = 382
+        Top = 28
+        Width = 7
+        Height = 13
+        Caption = 'A'
+      end
+      inherited EdtCons: TSearchBox [1]
+        Width = 592
+        OnInvokeSearch = EdtConsInvokeSearch
+        ExplicitWidth = 592
+      end
+      inherited GroupBoxTipoCons: TGroupBox [2]
         inherited ComboBoxTipoCons: TComboBox
           ItemIndex = -1
           Text = ''
           Items.Strings = (
             'Palavra chave'
             'Nome'
-            'Ordem')
+            'Ordem'
+            'Data')
         end
       end
-      inherited EdtCons: TSearchBox
-        Width = 592
-        OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitWidth = 592
+      object EdtDataInicial: TDateTimePicker
+        Left = 246
+        Top = 24
+        Width = 97
+        Height = 21
+        Date = 43326.903167233800000000
+        Time = 43326.903167233800000000
+        TabOrder = 2
+      end
+      object EdtDataFinal: TDateTimePicker
+        Left = 428
+        Top = 24
+        Width = 97
+        Height = 21
+        Date = 43326.903167233800000000
+        Time = 43326.903167233800000000
+        TabOrder = 3
       end
     end
   end

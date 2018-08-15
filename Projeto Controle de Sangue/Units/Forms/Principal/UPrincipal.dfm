@@ -49648,10 +49648,6 @@ object FrmPrincipal: TFrmPrincipal
         Caption = 'Sa'#237'das'
         OnClick = MenuItemRelSaidaClick
       end
-      object MenuItemRelEstoque: TMenuItem
-        Caption = 'Estoque'
-        OnClick = MenuItemRelEstoqueClick
-      end
     end
     object MenuItemUsuarios: TMenuItem
       Caption = 'Usu'#225'rios'

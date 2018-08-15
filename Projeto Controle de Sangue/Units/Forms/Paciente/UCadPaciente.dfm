@@ -39,7 +39,7 @@ object FrmCadPaciente: TFrmCadPaciente
     Top = 0
     Width = 566
     Height = 440
-    ActivePage = TabSheetDadosGerais
+    ActivePage = TabSheetObservacoes
     Align = alClient
     TabOrder = 0
     object TabSheetDadosGerais: TTabSheet
@@ -497,7 +497,7 @@ object FrmCadPaciente: TFrmCadPaciente
     TabOrder = 1
     object BtnSalvar: TSpeedButton
       Left = 169
-      Top = 2
+      Top = 0
       Width = 106
       Height = 31
       HelpType = htKeyword
@@ -548,7 +548,7 @@ object FrmCadPaciente: TFrmCadPaciente
     end
     object BtnSair: TSpeedButton
       Left = 297
-      Top = 1
+      Top = 0
       Width = 106
       Height = 31
       Caption = 'Sair - Esc'

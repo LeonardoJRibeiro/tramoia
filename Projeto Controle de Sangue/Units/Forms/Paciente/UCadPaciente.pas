@@ -266,6 +266,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [EdtNome.EditLabel.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtNome.SetFocus;
     Exit;
 
@@ -276,6 +277,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelSexo.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     ComboboxSexo.SetFocus;
     ComboboxSexo.DroppedDown := True;
     Exit;
@@ -287,6 +289,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelDtNascimento.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtDataNascimento.SetFocus;
     Exit;
 
@@ -297,6 +300,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelCpf.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtCpf.SetFocus;
     Exit;
 
@@ -307,6 +311,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label5.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtNumProntuario.SetFocus;
     Exit;
 
@@ -317,6 +322,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label11.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     ComboBoxABO.SetFocus;
     ComboBoxABO.DroppedDown := True;
     Exit;
@@ -328,6 +334,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label6.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtSus.SetFocus;
     Exit;
 
@@ -338,6 +345,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelMunicipio.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtCodMunicipio.SetFocus;
     Exit;
 
@@ -616,6 +624,7 @@ end;
 
 procedure TFrmCadPaciente.FormShow(Sender: TObject);
 begin
+  PageControl.TabIndex := 0;
   EdtNumProntuario.SetFocus;
 end;
 

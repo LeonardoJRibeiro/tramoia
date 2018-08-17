@@ -41467,7 +41467,6 @@ object FrmPrincipal: TFrmPrincipal
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
-    ExplicitTop = -6
     object BtnEntrada: TSpeedButton
       Left = 2
       Top = 14
@@ -51193,6 +51192,7 @@ object FrmPrincipal: TFrmPrincipal
         FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
       Layout = blGlyphTop
       ParentFont = False
+      OnClick = BtnConsultasClick
     end
   end
   object StatusBar: TStatusBar
@@ -51220,10 +51220,8 @@ object FrmPrincipal: TFrmPrincipal
         Width = 50
       end
       item
-        Text = '1.0.0.0'
         Width = 50
       end>
-    ExplicitWidth = 1008
   end
   object MainMenu: TMainMenu
     Left = 40
@@ -51269,6 +51267,10 @@ object FrmPrincipal: TFrmPrincipal
       object MenuItemRelSaida: TMenuItem
         Caption = 'Sa'#237'das'
         OnClick = MenuItemRelSaidaClick
+      end
+      object MenuItemRelEstoque: TMenuItem
+        Caption = 'Estoque'
+        OnClick = MenuItemRelEstoqueClick
       end
     end
     object MenuItemUsuarios: TMenuItem

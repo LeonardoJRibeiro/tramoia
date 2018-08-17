@@ -30,8 +30,6 @@ type
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
 
-    function getVersaoExe: string;
-
   public
     class function getSobre(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer): Boolean;
   end;
@@ -41,7 +39,7 @@ var
 
 implementation
 
-uses ShellAPI, UClassMensagem;
+uses Winapi.ShellAPI, UBiblioteca, UClassMensagem;
 
 {$R *.dfm}
 
@@ -60,7 +58,7 @@ end;
 procedure TFrmSobre.FormShow(Sender: TObject);
 begin
 
-  LabelVersao.Caption := 'Versão: ' + Self.getVersaoExe;
+  LabelVersao.Caption := 'Versão: ' + TBiblioteca.getVersaoExe;
 
 end;
 
@@ -93,49 +91,6 @@ begin
     FreeAndNil(FrmSobre);
   end;
 
-end;
-
-function TFrmSobre.getVersaoExe: string;
-type
-  PFFI = ^vs_FixedFileInfo;
-var
-  lPffi: PFFI;
-  lHandle: Dword;
-  lLen: Longint;
-  lData: PChar;
-  lBuffer: Pointer;
-  lTamanho: Dword;
-  lPArquivo: PChar;
-  lArquivo: String;
-begin
-
-  lArquivo := Application.ExeName;
-
-  lPArquivo := StrAlloc(Length(lArquivo) + 1);
-
-  StrPcopy(lPArquivo, lArquivo);
-
-  lLen := GetFileVersionInfoSize(lPArquivo, lHandle);
-
-  Result := '';
-
-  if lLen > 0 then
-  begin
-
-    lData := StrAlloc(lLen + 1);
-
-    if GetFileVersionInfo(lPArquivo, lHandle, lLen, lData) then
-    begin
-      VerQueryValue(lData, '', lBuffer, lTamanho);
-      lPffi := PFFI(lBuffer);
-      Result := Format('%d.%d.%d.%d', [HiWord(lPffi^.dwFileVersionMs), LoWord(lPffi^.dwFileVersionMs),
-        HiWord(lPffi^.dwFileVersionLs), LoWord(lPffi^.dwFileVersionLs)]);
-    end;
-
-    StrDispose(lData);
-  end;
-
-  StrDispose(lPArquivo);
 end;
 
 procedure TFrmSobre.ImageUEGClick(Sender: TObject);

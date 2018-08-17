@@ -15,8 +15,6 @@ object FrmSelRelatorio: TFrmSelRelatorio
   KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
-  OnClose = FormClose
-  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96

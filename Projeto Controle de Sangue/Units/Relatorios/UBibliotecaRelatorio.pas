@@ -225,7 +225,7 @@ begin
     tfSomente, tfOmitir:
       begin
 
-        Result := pLISTBOX.Count > 1;
+        Result := pLISTBOX.Count >= 1;
 
       end;
 

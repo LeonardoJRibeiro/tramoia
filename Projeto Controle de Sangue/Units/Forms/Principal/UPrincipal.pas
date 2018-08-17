@@ -37,11 +37,8 @@ type
     MenuItemConsultarSaida: TMenuItem;
     StatusBar: TStatusBar;
     ImageUEG: TImage;
-<<<<<<< HEAD
-    MenuItemRelEstoque: TMenuItem;
     BtnConsultas: TSpeedButton;
-=======
->>>>>>> e726dec546ed2d6273c63cb244bcefe933fdd8c6
+    MenuItemRelEstoque: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -63,6 +60,8 @@ type
     procedure MenuItemConsultarSaidaClick(Sender: TObject);
     procedure MenuItemCadEntradaClick(Sender: TObject);
     procedure MenuItemCadastrarSaidaClick(Sender: TObject);
+    procedure BtnConsultasClick(Sender: TObject);
+    procedure MenuItemRelEstoqueClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -82,7 +81,14 @@ implementation
 
 uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
   URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
-  UClassBibliotecaDao;
+  USelCons, URelEstoque, UBiblioteca, UClassBibliotecaDao;
+
+procedure TFrmPrincipal.BtnConsultasClick(Sender: TObject);
+begin
+
+  TFrmSelCons.getSelCons(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
+end;
 
 procedure TFrmPrincipal.BtnEntradaClick(Sender: TObject);
 begin
@@ -178,6 +184,13 @@ begin
 
 end;
 
+procedure TFrmPrincipal.MenuItemRelEstoqueClick(Sender: TObject);
+begin
+
+  TFrmRelEstoque.getRelEstoque(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
+end;
+
 procedure TFrmPrincipal.FormCreate(Sender: TObject);
 begin
 
@@ -256,6 +269,7 @@ begin
   begin
     StatusBar.Panels.Items[1].Text := TClassBibliotecaDao.getNomeUsuario(Self.FIdUsuario, DataModuleConexao.Conexao);
     StatusBar.Panels.Items[3].Text := DateToStr(now);
+    StatusBar.Panels.Items[5].Text := TBiblioteca.getVersaoExe;
   end
   else
   begin

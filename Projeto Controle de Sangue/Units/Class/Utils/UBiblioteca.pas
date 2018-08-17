@@ -13,12 +13,13 @@ type
     class function getPrimeiroDiaMes(const pDATA: TDate): TDate;
     class function getUltimoDiaMes(const pDATA: TDate): TDate;
     class function IsCpfValido(const pCPF: string): Boolean;
+    class function getVersaoExe: string;
     class procedure LimparCampos;
   end;
 
 implementation
 
-uses System.DateUtils;
+uses ShellAPI, System.DateUtils, Winapi.Windows;
 
 { TClassBiblioteca }
 
@@ -103,6 +104,48 @@ begin
 
 end;
 
+class function TBiblioteca.getVersaoExe: string;
+type
+  PFFI = ^vs_FixedFileInfo;
+var
+  lPffi: PFFI;
+  lHandle: Dword;
+  lLen: Longint;
+  lData: PChar;
+  lBuffer: Pointer;
+  lTamanho: Dword;
+  lPArquivo: PChar;
+  lArquivo: String;
+begin
+
+  lArquivo := Application.ExeName;
+
+  lPArquivo := StrAlloc(Length(lArquivo) + 1);
+
+  StrPcopy(lPArquivo, lArquivo);
+
+  lLen := GetFileVersionInfoSize(lPArquivo, lHandle);
+
+  Result := '';
+
+  if lLen > 0 then
+  begin
+
+    lData := StrAlloc(lLen + 1);
+
+    if GetFileVersionInfo(lPArquivo, lHandle, lLen, lData) then
+    begin
+      VerQueryValue(lData, '', lBuffer, lTamanho);
+      lPffi := PFFI(lBuffer);
+      Result := Format('%d.%d.%d.%d', [HiWord(lPffi^.dwFileVersionMs), LoWord(lPffi^.dwFileVersionMs),
+        HiWord(lPffi^.dwFileVersionLs), LoWord(lPffi^.dwFileVersionLs)]);
+    end;
+
+    StrDispose(lData);
+  end;
+
+  StrDispose(lPArquivo);
+end;
 class function TBiblioteca.GravaArquivoIni(const pNOMEARQUIVO, pNOMECHAVE, pNOMESUBSHCAVE, pVALOR: string): Boolean;
 var
   lArquivoINI: TIniFile;

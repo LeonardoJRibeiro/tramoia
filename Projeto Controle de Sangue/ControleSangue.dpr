@@ -2,13 +2,13 @@ program ControleSangue;
 
 uses
   Vcl.Forms,
+  Vcl.Themes,
+  Vcl.Styles,
   UClassMensagem in 'Units\Class\Utils\UClassMensagem.pas',
   UClassConexao in 'Units\Class\Conexao\UClassConexao.pas',
   UClassPersistencia in 'Units\Class\Conexao\UClassPersistencia.pas',
   UDMConexao in 'Units\Class\Conexao\UDMConexao.pas' {DataModuleConexao: TDataModule},
   UInterfaceDAO in 'Units\Class\DAO\InterfaceDAO\UInterfaceDAO.pas',
-  Vcl.Themes,
-  Vcl.Styles,
   UClassEndereco in 'Units\Class\Controll\UClassEndereco.pas',
   UClassEntrada in 'Units\Class\Controll\UClassEntrada.pas',
   UClassEstado in 'Units\Class\Controll\UClassEstado.pas',
@@ -56,7 +56,10 @@ uses
   UClassRelEstoqueDAO in 'Units\Relatorios\Estoque\Class\UClassRelEstoqueDAO.pas',
   USobre in 'Units\Forms\Sobre\USobre.pas' {FrmSobre},
   UConsEntrada in 'Units\Forms\Entrada\UConsEntrada.pas' {FrmConsEntrada},
-  UConsSaidas in 'Units\Forms\Saida\UConsSaidas.pas' {FrmConsSaidas};
+  UConsSaidas in 'Units\Forms\Saida\UConsSaidas.pas' {FrmConsSaidas},
+  UConsEstoque in 'Units\Forms\Estoque\UConsEstoque.pas' {FrmConsEstoque},
+  UClassConsEstoqueDAO in 'Units\Class\DAO\UClassConsEstoqueDAO.pas',
+  USelCons in 'Units\Forms\Selecionar consulta\USelCons.pas' {FrmSelCons};
 
 {$R *.res}
 

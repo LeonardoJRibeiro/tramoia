@@ -14,8 +14,6 @@ type
     BtnRelEntradaSangue: TBitBtn;
     BtnRelSaidaSangue: TBitBtn;
     BtnRelEstoque: TBitBtn;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure BtnRelSaidaSangueClick(Sender: TObject);
@@ -66,20 +64,6 @@ begin
 
 end;
 
-procedure TFrmSelRelatorio.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-
-  Action := caFree;
-
-end;
-
-procedure TFrmSelRelatorio.FormDestroy(Sender: TObject);
-begin
-
-  FrmSelRelatorio := nil;
-
-end;
-
 procedure TFrmSelRelatorio.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
@@ -104,27 +88,33 @@ begin
 
   try
 
-    if (FrmSelRelatorio = nil) then
-    begin
+    try
 
-      Application.CreateForm(TFrmSelRelatorio, FrmSelRelatorio);
+      if (FrmSelRelatorio = nil) then
+      begin
 
+        Application.CreateForm(TFrmSelRelatorio, FrmSelRelatorio);
+
+      end;
+
+      FrmSelRelatorio.FForeignFormKey := pFOREIGNFORMKEY;
+      FrmSelRelatorio.FCodUsu := pCOD_USU;
+
+      FrmSelRelatorio.ShowModal;
+
+      Result := True;
+
+    except
+      on E: Exception do
+      begin
+
+        Result := False;
+        raise Exception.Create(Format(TMensagem.getMensagem(0), ['de selecionar o relatório', E.Message]));
+      end;
     end;
 
-    FrmSelRelatorio.FForeignFormKey := pFOREIGNFORMKEY;
-    FrmSelRelatorio.FCodUsu := pCOD_USU;
-
-    FrmSelRelatorio.ShowModal;
-
-    Result := True;
-
-  except
-    on E: Exception do
-    begin
-
-      Result := False;
-      raise Exception.Create(Format(TMensagem.getMensagem(0), ['de selecionar o relatório', E.Message]));
-    end;
+  finally
+    FrmSelRelatorio.Destroy;
   end;
 
 end;

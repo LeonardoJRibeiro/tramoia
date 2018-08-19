@@ -12,7 +12,9 @@ type
     DataSource: TDataSource;
     EdtDataFinal: TDateTimePicker;
     EdtDataIni: TDateTimePicker;
-    BtnLocalizar: TBitBtn;
+    LabelAte: TLabel;
+    LabelDe: TLabel;
+    BtnLocalizar: TSpeedButton;
     procedure FormShow(Sender: TObject);
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
@@ -23,6 +25,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ComboBoxTipoConsChange(Sender: TObject);
     procedure BtnLocalizarClick(Sender: TObject);
+    procedure EdtDataFinalExit(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -166,8 +169,8 @@ begin
       begin
         BtnLocalizar.Visible := True;
         EdtCons.Visible := False;
-        EdtDataIni.Visible := true;
-        EdtDataFinal.Visible := true;
+        EdtDataIni.Visible := True;
+        EdtDataFinal.Visible := True;
         EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
         EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
       end;
@@ -175,9 +178,9 @@ begin
     1: // Número da bolsa
       begin
         BtnLocalizar.Visible := False;
-        EdtCons.NumbersOnly := true;
+        EdtCons.NumbersOnly := True;
         EdtCons.MaxLength := 20;
-        EdtCons.Visible := true;
+        EdtCons.Visible := True;
         EdtDataIni.Visible := False;
         EdtDataFinal.Visible := False;
       end;
@@ -185,9 +188,9 @@ begin
     2: // Código
       begin
         BtnLocalizar.Visible := False;
-        EdtCons.NumbersOnly := true;
+        EdtCons.NumbersOnly := True;
         EdtCons.MaxLength := 11;
-        EdtCons.Visible := true;
+        EdtCons.Visible := True;
         EdtDataIni.Visible := False;
         EdtDataFinal.Visible := False;
       end;
@@ -242,6 +245,7 @@ begin
         end
         else
         begin
+
           if EdtCons.CanFocus then
           begin
             EdtCons.SetFocus;
@@ -269,6 +273,12 @@ begin
     lEntradaDao.Destroy;
   end;
 
+end;
+
+procedure TFrmConsEntrada.EdtDataFinalExit(Sender: TObject);
+begin
+  inherited;
+  BtnLocalizarClick(Self);
 end;
 
 procedure TFrmConsEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -312,7 +322,7 @@ begin
     except
       on E: Exception do
       begin
-        Result := true;
+        Result := True;
         Application.MessageBox(PChar(Format(TMensagem.getMensagem(12), ['inforção do usuário', E.Message])),
           PChar('Erro'), MB_OK + MB_ICONERROR);
       end;

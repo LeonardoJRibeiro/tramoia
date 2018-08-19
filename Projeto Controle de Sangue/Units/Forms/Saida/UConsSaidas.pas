@@ -5,11 +5,16 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UConsGenerico, Data.DB, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.Buttons, Vcl.Grids,
-  Vcl.DBGrids, Vcl.ExtCtrls;
+  Vcl.DBGrids, Vcl.ExtCtrls, UClassPersistencia, Vcl.ComCtrls;
 
 type
   TFrmConsSaidas = class(TFrmCons)
     DataSource: TDataSource;
+    BtnLocalizar: TSpeedButton;
+    EdtDataFinal: TDateTimePicker;
+    EdtDataIni: TDateTimePicker;
+    LabelAte: TLabel;
+    LabelDe: TLabel;
     procedure EdtConsInvokeSearch(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
@@ -18,6 +23,9 @@ type
     procedure DBGridDblClick(Sender: TObject);
     procedure DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ComboBoxTipoConsChange(Sender: TObject);
+    procedure BtnLocalizarClick(Sender: TObject);
+    procedure EdtDataFinalDropDown(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -100,11 +108,65 @@ begin
 
 end;
 
+procedure TFrmConsSaidas.BtnLocalizarClick(Sender: TObject);
+begin
+  inherited;
+  EdtConsInvokeSearch(Self);
+end;
+
 procedure TFrmConsSaidas.BtnNovoClick(Sender: TObject);
 begin
   inherited;
   TFrmSaida.getSaida(TForeignKeyForms.FIdUConsSaida, Self.FIdUsuario);
   EdtConsInvokeSearch(Self);
+end;
+
+procedure TFrmConsSaidas.ComboBoxTipoConsChange(Sender: TObject);
+begin
+  inherited;
+
+  case (ComboBoxTipoCons.ItemIndex) of
+    0: // Número da bolsa
+      begin
+        BtnLocalizar.Visible := False;
+        EdtCons.NumbersOnly := True;
+        EdtCons.MaxLength := 20;
+        EdtCons.Visible := True;
+        EdtDataIni.Visible := False;
+        EdtDataFinal.Visible := False;
+      end;
+
+    1: // Ordem
+      begin
+        BtnLocalizar.Visible := False;
+        EdtCons.NumbersOnly := True;
+        EdtCons.MaxLength := 11;
+        EdtCons.Visible := True;
+        EdtDataIni.Visible := False;
+        EdtDataFinal.Visible := False;
+      end;
+
+    2: // Paciente
+      begin
+        BtnLocalizar.Visible := False;
+        EdtCons.NumbersOnly := True;
+        EdtCons.MaxLength := 11;
+        EdtCons.Visible := True;
+        EdtDataIni.Visible := False;
+        EdtDataFinal.Visible := False;
+      end;
+
+    3: // Período
+      begin
+        BtnLocalizar.Visible := True;
+        EdtCons.Visible := False;
+        EdtDataIni.Visible := True;
+        EdtDataFinal.Visible := True;
+        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
+        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
+      end;
+  end;
+
 end;
 
 procedure TFrmConsSaidas.DBGridDblClick(Sender: TObject);
@@ -133,7 +195,8 @@ begin
 
     try
 
-      if (lSaidaDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
+      if (lSaidaDao.getConsulta(EdtCons.Text, EdtDataIni.Date, EdtDataFinal.Date, ComboBoxTipoCons.ItemIndex,
+        Self.FPersistencia)) then
       begin
 
         DataSource.DataSet := Self.FPersistencia.Query;
@@ -160,6 +223,12 @@ begin
     lSaidaDao.Destroy;
   end;
 
+end;
+
+procedure TFrmConsSaidas.EdtDataFinalDropDown(Sender: TObject);
+begin
+  inherited;
+  BtnLocalizarClick(Self);
 end;
 
 procedure TFrmConsSaidas.FormClose(Sender: TObject; var Action: TCloseAction);

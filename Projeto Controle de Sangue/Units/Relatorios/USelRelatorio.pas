@@ -86,16 +86,10 @@ end;
 class function TFrmSelRelatorio.getSelRelatorio(const pFOREIGNFORMKEY: SmallInt; const pCOD_USU: Integer): Boolean;
 begin
 
+  Application.CreateForm(TFrmSelRelatorio, FrmSelRelatorio);
   try
 
     try
-
-      if (FrmSelRelatorio = nil) then
-      begin
-
-        Application.CreateForm(TFrmSelRelatorio, FrmSelRelatorio);
-
-      end;
 
       FrmSelRelatorio.FForeignFormKey := pFOREIGNFORMKEY;
       FrmSelRelatorio.FCodUsu := pCOD_USU;

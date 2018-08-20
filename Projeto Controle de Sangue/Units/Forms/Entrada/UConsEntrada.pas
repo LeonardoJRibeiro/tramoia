@@ -165,14 +165,15 @@ begin
   EdtCons.Clear;
 
   case (ComboBoxTipoCons.ItemIndex) of
-    0: // Período
+
+    0: // Código
       begin
-        BtnLocalizar.Visible := True;
-        EdtCons.Visible := False;
-        EdtDataIni.Visible := True;
-        EdtDataFinal.Visible := True;
-        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
-        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
+        BtnLocalizar.Visible := False;
+        EdtCons.NumbersOnly := True;
+        EdtCons.MaxLength := 11;
+        EdtCons.Visible := True;
+        EdtDataIni.Visible := False;
+        EdtDataFinal.Visible := False;
       end;
 
     1: // Número da bolsa
@@ -185,15 +186,16 @@ begin
         EdtDataFinal.Visible := False;
       end;
 
-    2: // Código
+    2: // Período
       begin
-        BtnLocalizar.Visible := False;
-        EdtCons.NumbersOnly := True;
-        EdtCons.MaxLength := 11;
-        EdtCons.Visible := True;
-        EdtDataIni.Visible := False;
-        EdtDataFinal.Visible := False;
+        BtnLocalizar.Visible := True;
+        EdtCons.Visible := False;
+        EdtDataIni.Visible := True;
+        EdtDataFinal.Visible := True;
+        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
+        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
       end;
+
   end;
 
 end;
@@ -218,6 +220,17 @@ begin
       begin
         BtnExcluirClick(Self);
       end;
+
+    VK_F2:
+      begin
+
+        if (EdtDataIni.CanFocus) then
+        begin
+          EdtDataIni.SetFocus;
+        end;
+
+      end;
+
   end;
 
 end;
@@ -298,7 +311,7 @@ begin
 
   EdtConsInvokeSearch(Self);
 
-  if (ComboBoxTipoCons.ItemIndex <> 0) then
+  if (ComboBoxTipoCons.ItemIndex <> 2) then
   begin
     EdtCons.SetFocus;
   end

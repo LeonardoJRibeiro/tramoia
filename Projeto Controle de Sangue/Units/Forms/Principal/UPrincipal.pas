@@ -141,7 +141,7 @@ procedure TFrmPrincipal.MenuItemCadastrarUsuarioClick(Sender: TObject);
 begin
   if (Self.getAdmin) then
   begin
-    TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+    TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal);
   end
   else
   begin

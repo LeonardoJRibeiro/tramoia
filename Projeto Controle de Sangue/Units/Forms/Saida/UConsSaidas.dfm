@@ -166,7 +166,11 @@ inherited FrmConsSaidas: TFrmConsSaidas
         Caption = 'De:'
       end
       inherited GroupBoxTipoCons: TGroupBox
+        Width = 149
+        ExplicitWidth = 149
         inherited ComboBoxTipoCons: TComboBox
+          Left = 9
+          Width = 129
           ItemIndex = -1
           Text = ''
           Items.Strings = (
@@ -174,12 +178,16 @@ inherited FrmConsSaidas: TFrmConsSaidas
             'Ordem'
             'Paciente'
             'Per'#237'odo')
+          ExplicitLeft = 9
+          ExplicitWidth = 129
         end
       end
       inherited EdtCons: TSearchBox
-        Width = 592
+        Left = 164
+        Width = 557
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitWidth = 592
+        ExplicitLeft = 164
+        ExplicitWidth = 557
       end
       object EdtDataFinal: TDateTimePicker
         Left = 444

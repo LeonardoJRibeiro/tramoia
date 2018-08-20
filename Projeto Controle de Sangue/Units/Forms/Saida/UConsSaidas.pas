@@ -247,7 +247,15 @@ begin
 
   EdtConsInvokeSearch(Self);
 
-  EdtCons.SetFocus;
+  if (EdtCons.CanFocus) then
+  begin
+    EdtCons.SetFocus
+  end
+  else
+  begin
+    EdtDataIni.SetFocus;
+  end;
+
 end;
 
 function TFrmConsSaidas.getAdmin: Boolean;
@@ -264,7 +272,7 @@ begin
       on E: Exception do
       begin
         Result := True;
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(12), ['inforção do usuário', E.Message])),
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(12), ['informação do usuário', E.Message])),
           PChar('Erro'), MB_OK + MB_ICONERROR);
       end;
     end;

@@ -18,7 +18,6 @@ type
     procedure BtnSairClick(Sender: TObject);
     procedure BtnRelSaidaSangueClick(Sender: TObject);
     procedure BtnRelEntradaSangueClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure BtnRelEstoqueClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
@@ -32,8 +31,7 @@ var
 
 implementation
 
-uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida,
-  URelEstoque;
+uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida, URelEstoque;
 
 {$R *.dfm}
 { TFrmSelRelatorio }
@@ -73,13 +71,6 @@ begin
     BtnSairClick(Sender);
 
   end;
-
-end;
-
-procedure TFrmSelRelatorio.FormShow(Sender: TObject);
-begin
-
-  BtnRelEntradaSangue.SetFocus;
 
 end;
 

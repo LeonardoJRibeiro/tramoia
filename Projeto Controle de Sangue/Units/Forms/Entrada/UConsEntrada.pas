@@ -259,7 +259,7 @@ begin
         else
         begin
 
-          if EdtCons.CanFocus then
+          if (EdtCons.CanFocus) then
           begin
             EdtCons.SetFocus;
             BtnLocalizar.Visible := False;

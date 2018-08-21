@@ -199,6 +199,7 @@ begin
         Self.FPersistencia)) then
       begin
 
+        Self.FPersistencia.Query.Last;
         DataSource.DataSet := Self.FPersistencia.Query;
         if (not Self.FPersistencia.Query.IsEmpty) then
         begin
@@ -206,7 +207,18 @@ begin
         end
         else
         begin
-          EdtCons.SetFocus;
+
+          if (EdtCons.CanFocus) then
+          begin
+            EdtCons.SetFocus;
+            BtnLocalizar.Visible := False;
+          end
+          else
+          begin
+            EdtDataIni.SetFocus;
+            BtnLocalizar.Visible := True;
+          end;
+
         end
 
       end;

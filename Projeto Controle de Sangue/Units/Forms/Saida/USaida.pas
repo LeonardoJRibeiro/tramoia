@@ -343,7 +343,6 @@ begin
 
     lNomePaciente := TClassBibliotecaDao.getValorAtributo('paciente', 'nome', 'num_prontuario',
       EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
-
     if (lNomePaciente <> '-1') then
     begin
 

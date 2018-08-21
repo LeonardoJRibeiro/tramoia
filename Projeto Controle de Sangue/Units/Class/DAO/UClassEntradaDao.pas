@@ -130,6 +130,8 @@ begin
 
     end;
 
+    pPersistencia.Query.SQL.Add('LIMIT 500;');
+
     pPersistencia.Query.Open;
 
     Result := True;

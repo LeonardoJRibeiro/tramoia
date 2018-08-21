@@ -109,9 +109,9 @@ inherited FrmConsSaidas: TFrmConsSaidas
       ExplicitWidth = 740
       object BtnLocalizar: TSpeedButton [0]
         Left = 640
-        Top = 23
+        Top = 21
         Width = 78
-        Height = 23
+        Height = 27
         Caption = 'Localizar'
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
@@ -148,18 +148,17 @@ inherited FrmConsSaidas: TFrmConsSaidas
           018D000000720000002300000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
-        Layout = blGlyphRight
         OnClick = BtnLocalizarClick
       end
       object LabelAte: TLabel [1]
-        Left = 419
+        Left = 410
         Top = 28
         Width = 17
         Height = 13
         Caption = 'At'#233
       end
       object LabelDe: TLabel [2]
-        Left = 200
+        Left = 180
         Top = 28
         Width = 17
         Height = 13
@@ -200,7 +199,7 @@ inherited FrmConsSaidas: TFrmConsSaidas
         OnDropDown = EdtDataFinalDropDown
       end
       object EdtDataIni: TDateTimePicker
-        Left = 217
+        Left = 200
         Top = 24
         Width = 190
         Height = 21

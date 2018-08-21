@@ -8,7 +8,6 @@ type
   TSaidaDAO = class(TInterfacedPersistent, IInterfaceDao<TSaida>)
   private
     FConexao: TConexao;
-
   public
 
     function getExiste(const pID: Integer): Boolean;
@@ -88,7 +87,7 @@ begin
     pPersistencia.Query.SQL.Add('  s.data_saida,');
     pPersistencia.Query.SQL.Add('  p.num_prontuario,');
     pPersistencia.Query.SQL.Add('  p.nome,');
-    pPersistencia.Query.SQL.Add('  concat(p.abo, p.rh) tipo_sangue,');
+    pPersistencia.Query.SQL.Add('  CONCAT(p.abo, p.rh) tipo_sangue,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue_bolsa');
@@ -153,6 +152,8 @@ begin
         end;
 
     end;
+
+    pPersistencia.Query.SQL.Add('LIMIT 500;');
 
     pPersistencia.Query.Open;
 

@@ -46,6 +46,8 @@ uses UClassMensagem, UClassUsuarioDao, UDMConexao, UClassSaidaDao, UBiblioteca, 
 { TFrmConsSaidas }
 
 procedure TFrmConsSaidas.BtnAlterarClick(Sender: TObject);
+var
+  lPosicaoQuery: Integer;
 begin
   inherited;
 
@@ -53,7 +55,12 @@ begin
   begin
     TFrmSaida.getSaida(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario, Self.FPersistencia.Query.FieldByName('id')
       .AsInteger);
+
+    lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+
     EdtConsInvokeSearch(Self);
+
+    Self.FPersistencia.Query.RecNo:= lPosicaoQuery;
   end;
 
 end;
@@ -178,10 +185,29 @@ end;
 procedure TFrmConsSaidas.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   inherited;
-  if (Key = VK_RETURN) then
-  begin
-    DBGridDblClick(Self);
+
+  case (Key) of
+    VK_RETURN:
+      begin
+        BtnAlterarClick(Self);
+      end;
+
+    VK_DELETE:
+      begin
+        BtnExcluirClick(Self);
+      end;
+
+    VK_F2:
+      begin
+
+        if (EdtDataIni.CanFocus) then
+        begin
+          EdtDataIni.SetFocus;
+        end;
+
+      end;
   end;
+
 end;
 
 procedure TFrmConsSaidas.EdtConsInvokeSearch(Sender: TObject);
@@ -253,8 +279,10 @@ end;
 procedure TFrmConsSaidas.FormShow(Sender: TObject);
 begin
   inherited;
+
   ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
     'FrmConsSaidas.ComboBoxTipoCons', '0').ToInteger;
+
   ComboBoxTipoConsChange(Self);
 
   EdtConsInvokeSearch(Self);

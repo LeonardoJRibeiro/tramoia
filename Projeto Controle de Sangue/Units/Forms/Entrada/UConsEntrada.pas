@@ -33,7 +33,9 @@ type
     function getBolsaPossuiEstoque: Boolean;
 
     function getAdmin: Boolean;
+
     function BolsaPossuiEstoque: Boolean;
+
   public
     class function getConsEntrada(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer): Boolean;
   end;
@@ -297,7 +299,6 @@ end;
 procedure TFrmConsEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
-  inherited;
   TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox', 'FrmConsEntrada.ComboBoxTipoCons',
     ComboBoxTipoCons.ItemIndex.ToString);
 end;
@@ -305,13 +306,15 @@ end;
 procedure TFrmConsEntrada.FormShow(Sender: TObject);
 begin
   inherited;
+
   ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
     'FrmConsEntrada.ComboBoxTipoCons', '0').ToInteger;
+
   ComboBoxTipoConsChange(Self);
 
   EdtConsInvokeSearch(Self);
 
-  if (ComboBoxTipoCons.ItemIndex <> 2) then
+  if (EdtCons.CanFocus) then
   begin
     EdtCons.SetFocus;
   end
@@ -331,7 +334,9 @@ begin
   try
 
     try
+
       Result := lUsuaioDao.getAdmin(Self.FIdUsuario);
+
     except
       on E: Exception do
       begin

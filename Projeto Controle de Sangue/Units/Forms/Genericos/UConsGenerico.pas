@@ -81,12 +81,7 @@ begin
 
   if (Key = VK_F2) then
   begin
-
-    if (EdtCons.CanFocus) then
-    begin
-      EdtCons.SetFocus;
-    end;
-
+    EdtCons.SetFocus;
   end;
 
 end;
@@ -95,6 +90,7 @@ procedure TFrmCons.FormCreate(Sender: TObject);
 begin
 
   Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+
 
 end;
 

@@ -397,7 +397,6 @@ begin
   begin
 
     EdtTipo.Text := 'CH';
-    EdtTipo.SelectAll;
 
   end;
 

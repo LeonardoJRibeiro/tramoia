@@ -109,14 +109,14 @@ inherited FrmConsEntrada: TFrmConsEntrada
       Width = 743
       ExplicitWidth = 743
       object LabelAte: TLabel [0]
-        Left = 410
+        Left = 419
         Top = 28
         Width = 17
         Height = 13
         Caption = 'At'#233
       end
       object LabelDe: TLabel [1]
-        Left = 180
+        Left = 200
         Top = 28
         Width = 17
         Height = 13
@@ -124,9 +124,9 @@ inherited FrmConsEntrada: TFrmConsEntrada
       end
       object BtnLocalizar: TSpeedButton [2]
         Left = 640
-        Top = 21
+        Top = 23
         Width = 78
-        Height = 27
+        Height = 23
         Caption = 'Localizar'
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
@@ -163,6 +163,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
           018D000000720000002300000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
+        Layout = blGlyphRight
       end
       inherited EdtCons: TSearchBox [3]
         Left = 152
@@ -179,9 +180,9 @@ inherited FrmConsEntrada: TFrmConsEntrada
           ItemIndex = -1
           Text = ''
           Items.Strings = (
-            'C'#243'digo'
-            'N'#250'mero da bolsa'
-            'Per'#237'odo')
+            'Per'#237'odo'
+            'Bolsa'
+            'C'#243'digo')
           ExplicitWidth = 122
         end
       end
@@ -196,7 +197,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
         OnExit = EdtDataFinalExit
       end
       object EdtDataIni: TDateTimePicker
-        Left = 200
+        Left = 217
         Top = 24
         Width = 190
         Height = 21

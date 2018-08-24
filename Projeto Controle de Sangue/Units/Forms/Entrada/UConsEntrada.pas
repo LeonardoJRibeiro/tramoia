@@ -33,7 +33,9 @@ type
     function getBolsaPossuiEstoque: Boolean;
 
     function getAdmin: Boolean;
+
     function BolsaPossuiEstoque: Boolean;
+
   public
     class function getConsEntrada(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer): Boolean;
   end;
@@ -165,14 +167,15 @@ begin
   EdtCons.Clear;
 
   case (ComboBoxTipoCons.ItemIndex) of
-    0: // Período
+
+    0: // Código
       begin
-        BtnLocalizar.Visible := True;
-        EdtCons.Visible := False;
-        EdtDataIni.Visible := True;
-        EdtDataFinal.Visible := True;
-        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
-        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
+        BtnLocalizar.Visible := False;
+        EdtCons.NumbersOnly := True;
+        EdtCons.MaxLength := 11;
+        EdtCons.Visible := True;
+        EdtDataIni.Visible := False;
+        EdtDataFinal.Visible := False;
       end;
 
     1: // Número da bolsa
@@ -185,15 +188,16 @@ begin
         EdtDataFinal.Visible := False;
       end;
 
-    2: // Código
+    2: // Período
       begin
-        BtnLocalizar.Visible := False;
-        EdtCons.NumbersOnly := True;
-        EdtCons.MaxLength := 11;
-        EdtCons.Visible := True;
-        EdtDataIni.Visible := False;
-        EdtDataFinal.Visible := False;
+        BtnLocalizar.Visible := True;
+        EdtCons.Visible := False;
+        EdtDataIni.Visible := True;
+        EdtDataFinal.Visible := True;
+        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
+        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
       end;
+
   end;
 
 end;
@@ -218,6 +222,17 @@ begin
       begin
         BtnExcluirClick(Self);
       end;
+
+    VK_F2:
+      begin
+
+        if (EdtDataIni.CanFocus) then
+        begin
+          EdtDataIni.SetFocus;
+        end;
+
+      end;
+
   end;
 
 end;
@@ -246,7 +261,7 @@ begin
         else
         begin
 
-          if EdtCons.CanFocus then
+          if (EdtCons.CanFocus) then
           begin
             EdtCons.SetFocus;
             BtnLocalizar.Visible := False;
@@ -284,7 +299,6 @@ end;
 procedure TFrmConsEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
-  inherited;
   TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox', 'FrmConsEntrada.ComboBoxTipoCons',
     ComboBoxTipoCons.ItemIndex.ToString);
 end;
@@ -292,13 +306,15 @@ end;
 procedure TFrmConsEntrada.FormShow(Sender: TObject);
 begin
   inherited;
+
   ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
     'FrmConsEntrada.ComboBoxTipoCons', '0').ToInteger;
+
   ComboBoxTipoConsChange(Self);
 
   EdtConsInvokeSearch(Self);
 
-  if (ComboBoxTipoCons.ItemIndex <> 0) then
+  if (EdtCons.CanFocus) then
   begin
     EdtCons.SetFocus;
   end
@@ -318,7 +334,9 @@ begin
   try
 
     try
+
       Result := lUsuaioDao.getAdmin(Self.FIdUsuario);
+
     except
       on E: Exception do
       begin

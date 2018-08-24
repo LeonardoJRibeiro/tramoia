@@ -10,6 +10,9 @@ uses
 type
   TFrmConsPaciente = class(TFrmCons)
     DataSource: TDataSource;
+    Panel: TPanel;
+    btnOk: TSpeedButton;
+    SpeedButton4: TSpeedButton;
     procedure ComboBoxTipoConsChange(Sender: TObject);
     procedure ComboBoxTipoConsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ComboBoxTipoConsCloseUp(Sender: TObject);
@@ -22,6 +25,7 @@ type
     procedure BtnExcluirClick(Sender: TObject);
     procedure EdtConsExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnOkClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -176,17 +180,16 @@ procedure TFrmConsPaciente.DBGridDblClick(Sender: TObject);
 begin
   inherited;
 
-  if (Self.FForeignFormKey = TForeignKeyForms.FIdUPrincipal) then
+  if (Self.FForeignFormKey = TForeignKeyForms.FIdUSaida) then
   begin
 
-    BtnAlterarClick(Self);
+    btnOkClick(Self);
 
   end
   else
   begin
 
-    Self.FNumProntuario := Self.FPersistencia.Query.FieldByName('num_prontuario').AsString;
-    ModalResult := mrOk;
+    BtnAlterarClick(Self);
 
   end;
 
@@ -198,7 +201,16 @@ begin
   case (Key) of
     VK_RETURN:
       begin
-        BtnAlterarClick(Self);
+
+        if (Self.FForeignFormKey = TForeignKeyForms.FIdUSaida) then
+        begin
+          btnOkClick(Self);
+        end
+        else
+        begin
+          BtnAlterarClick(Self);
+        end;
+
       end;
 
     VK_DELETE:
@@ -230,6 +242,7 @@ begin
 
       if (lPacienteDao.getConsulta(EdtCons.Text, ComboBoxTipoCons.ItemIndex, Self.FPersistencia)) then
       begin
+
         DataSource.DataSet := Self.FPersistencia.Query;
         if (not Self.FPersistencia.Query.IsEmpty) then
         begin
@@ -266,6 +279,18 @@ end;
 procedure TFrmConsPaciente.FormShow(Sender: TObject);
 begin
   inherited;
+
+  if (Self.FForeignFormKey = TForeignKeyForms.FIdUSaida) then
+  begin
+    PanelBotoes.Visible := False;
+    Panel.Visible := True;
+  end
+  else
+  begin
+    PanelBotoes.Visible := True;
+    Panel.Visible := False;
+  end;
+
   ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
     'FrmConsPaciente.ComboBoxTipoCons', '0').ToInteger;
   ComboBoxTipoConsChange(Self);
@@ -358,6 +383,13 @@ begin
     lSaidaDao.Destroy
   end;
 
+end;
+
+procedure TFrmConsPaciente.btnOkClick(Sender: TObject);
+begin
+  inherited;
+  Self.FNumProntuario := Self.FPersistencia.Query.FieldByName('num_prontuario').AsString;
+  ModalResult := mrOk;
 end;
 
 end.

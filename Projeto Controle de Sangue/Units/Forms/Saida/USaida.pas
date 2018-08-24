@@ -54,6 +54,7 @@ type
 
     FId: Integer;
     FIdBolsa: Integer;
+    FNumBolsa: string;
 
     procedure CarregaSaida;
 
@@ -190,6 +191,7 @@ begin
         if (lBolsaDao.getObjeto(pID_BOLSA, lBolsa)) then
         begin
 
+          Self.FNumBolsa := lBolsa.NumeroBolsa;
           EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.Volume.ToString;
@@ -232,8 +234,8 @@ begin
         begin
 
           EdtId.Text := lSaida.Id.ToString;
-          EdtRegistroPaciente.Text := TClassBibliotecaDao.getValorAtributo('paciente', 'num_prontuario', 'id',
-            lSaida.Id_Paciente, DataModuleConexao.Conexao);
+          EdtRegistroPaciente.Text := TClassBibliotecaDao.getValorAtributo('paciente',
+            'num_prontuario', 'id', lSaida.Id_Paciente, DataModuleConexao.Conexao);
           EdtRegistroPacienteExit(Self);
           Self.CarregaDadosBolsa(lSaida.Id_Bolsa);
           DateTimePickerData.Date := lSaida.Data_Saida;
@@ -291,18 +293,23 @@ begin
 
         try
 
-          if (not lSaidaDAO.getExisteBolsaVinculada(Self.FIdBolsa)) then
+          if (Trim(Self.FNumBolsa) <> Trim(EdtNumeroBolsa.Text)) then
           begin
 
-            Self.CarregaDadosBolsa(Self.FIdBolsa);
+            if (not lSaidaDAO.getExisteBolsaVinculada(Self.FIdBolsa)) then
+            begin
 
-          end
-          else
-          begin
+              Self.CarregaDadosBolsa(Self.FIdBolsa);
 
-            Self.FIdBolsa := -1;
-            Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
-            EdtNumeroBolsa.SetFocus;
+            end
+            else
+            begin
+
+              Self.FIdBolsa := -1;
+              Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
+              EdtNumeroBolsa.SetFocus;
+
+            end;
 
           end;
 
@@ -343,7 +350,6 @@ begin
 
     lNomePaciente := TClassBibliotecaDao.getValorAtributo('paciente', 'nome', 'num_prontuario',
       EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
-
     if (lNomePaciente <> '-1') then
     begin
 
@@ -404,6 +410,7 @@ begin
     EdtRegistroPaciente.SetFocus;
 
     Self.FIdBolsa := -1;
+    Self.FNumBolsa := '';
   end;
 
 end;

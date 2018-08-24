@@ -156,7 +156,9 @@ object FrmEntrada: TFrmEntrada
       Left = 216
       Top = 72
       Width = 64
-      Height = 21
+      Height = 22
+      AutoCompleteDelay = 1000
+      Style = csOwnerDrawFixed
       CharCase = ecUpperCase
       TabOrder = 5
       OnEnter = ComboBoxAboBolsaEnter

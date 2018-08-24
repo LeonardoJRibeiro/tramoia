@@ -39,6 +39,8 @@ type
     ImageUEG: TImage;
     BtnConsultas: TSpeedButton;
     MenuItemRelEstoque: TMenuItem;
+    MenuItemBackup: TMenuItem;
+    MenuItemGerarBackup: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -62,6 +64,8 @@ type
     procedure MenuItemCadastrarSaidaClick(Sender: TObject);
     procedure BtnConsultasClick(Sender: TObject);
     procedure MenuItemRelEstoqueClick(Sender: TObject);
+    procedure MenuItemGerarBackupClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -79,9 +83,9 @@ implementation
 
 {$R *.dfm}
 
-uses UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
+uses ShellAPI, UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
   URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
-  USelCons, URelEstoque, UBiblioteca, UClassBibliotecaDao;
+  USelCons, URelEstoque, UBiblioteca, UClassBibliotecaDao, UClassGeraBackup;
 
 procedure TFrmPrincipal.BtnConsultasClick(Sender: TObject);
 begin
@@ -177,6 +181,37 @@ begin
 
 end;
 
+procedure TFrmPrincipal.MenuItemGerarBackupClick(Sender: TObject);
+var
+  lGeraBackup: TGeraBackup;
+begin
+
+  lGeraBackup := TGeraBackup.Create;
+  try
+
+    try
+
+      if (lGeraBackup.CriaBackup) then
+      begin
+
+        Application.MessageBox(PChar('Backup criado em ' + ExtractFilePath(Application.ExeName) + 'backup.sql' +
+          ' com sucesso'), 'Sucesso', MB_OK + MB_ICONINFORMATION)
+
+      end;
+
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lGeraBackup.Destroy;
+  end;
+
+end;
+
 procedure TFrmPrincipal.MenuItemRelEntradasClick(Sender: TObject);
 begin
 
@@ -188,6 +223,19 @@ procedure TFrmPrincipal.MenuItemRelEstoqueClick(Sender: TObject);
 begin
 
   TFrmRelEstoque.getRelEstoque(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
+end;
+
+procedure TFrmPrincipal.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+
+  if (Application.MessageBox(PChar('Deseja realizar o backup do banco?'), 'Saindo do sistema',
+    MB_YESNO + MB_ICONQUESTION) = 6) then
+  begin
+
+    MenuItemGerarBackupClick(Sender);
+
+  end;
 
 end;
 

@@ -2,17 +2,19 @@ unit UClassConexao;
 
 interface
 
-uses System.SysUtils, System.Classes, FireDAC.Comp.Client;
+uses System.SysUtils, System.Classes, FireDAC.Phys.MySQLDef, FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Comp.Client;
 
 type
   TConexao = class(TPersistent)
   private
-    FDConnection: TFDConnection;
+    FFDConnection: TFDConnection;
+    FFDPhysMySQLDriverLink: TFDPhysMySQLDriverLink;
   public
 
     function PreparaConexao(): Boolean;
 
-    property Connection: TFDConnection read FDConnection write FDConnection;
+    property Connection: TFDConnection read FFDConnection write FFDConnection;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -20,22 +22,22 @@ type
 
 implementation
 
-uses UBiblioteca;
+uses Vcl.Forms, UBiblioteca;
 { TConexao }
 
 constructor TConexao.Create;
 begin
   inherited;
 
-  Self.FDConnection := TFDConnection.Create(nil);
+  Self.FFDConnection := TFDConnection.Create(nil);
 
-  Self.PreparaConexao;
+  Self.FFDPhysMySQLDriverLink := TFDPhysMySQLDriverLink.Create(nil);
 
 end;
 
 destructor TConexao.Destroy;
 begin
-  FreeAndNil(Self.FDConnection);
+  FreeAndNil(Self.FFDConnection);
   inherited;
 end;
 
@@ -44,28 +46,30 @@ begin
 
   try
 
-    Self.FDConnection.Connected := False;
+    Self.FFDConnection.Connected := False;
 
-    Self.FDConnection.LoginPrompt := False;
+    Self.FFDConnection.LoginPrompt := False;
 
-    Self.FDConnection.Params.Clear;
+    Self.FFDConnection.Params.Clear;
 
-    Self.FDConnection.Params.Add('DriverID=MySQL');
+    Self.FFDConnection.Params.Add('DriverID=MySQL');
 
-    Self.FDConnection.Params.Add('hostname=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
+    Self.FFDConnection.Params.Add('hostname=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
       'hostname', ''));
 
-    Self.FDConnection.Params.Add('user_name=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
+    Self.FFDConnection.Params.Add('user_name=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
       'user_name', ''));
 
-    Self.FDConnection.Params.Add('password=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
+    Self.FFDConnection.Params.Add('password=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao',
       'password', ''));
 
-    Self.FDConnection.Params.Add('port=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'port', ''));
+    Self.FFDConnection.Params.Add('port=' + TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'port', ''));
 
-    Self.FDConnection.Params.Add('Database=banco');
+    Self.FFDConnection.Params.Add('Database=banco');
 
-    Self.FDConnection.Connected := True;
+    Self.FFDConnection.Connected := True;
+
+    Self.FFDPhysMySQLDriverLink.VendorLib := ExtractFilePath(Application.ExeName) + 'libmysql.dll';
 
     Result := True;
 

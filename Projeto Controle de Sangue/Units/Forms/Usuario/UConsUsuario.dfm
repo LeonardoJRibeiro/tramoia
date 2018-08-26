@@ -56,12 +56,14 @@ inherited FrmConsUsuario: TFrmConsUsuario
       ExplicitLeft = 5
     end
     inherited BtnAlterar: TSpeedButton
+      Left = 85
       OnClick = BtnAlterarClick
+      ExplicitLeft = 85
     end
     inherited BtnExcluir: TSpeedButton
-      Left = 163
+      Left = 164
       OnClick = BtnExcluirClick
-      ExplicitLeft = 163
+      ExplicitLeft = 164
     end
   end
   inherited PanelConsulta: TPanel
@@ -69,8 +71,6 @@ inherited FrmConsUsuario: TFrmConsUsuario
     ExplicitWidth = 472
     inherited GroupBoxConsulta: TGroupBox
       Width = 470
-      ExplicitLeft = 1
-      ExplicitTop = 7
       ExplicitWidth = 470
       inherited EdtCons: TSearchBox
         Width = 324

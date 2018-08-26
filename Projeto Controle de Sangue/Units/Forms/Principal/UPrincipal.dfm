@@ -17,6 +17,7 @@ object FrmPrincipal: TFrmPrincipal
   OldCreateOrder = False
   Position = poMainFormCenter
   WindowState = wsMaximized
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -51282,6 +51283,13 @@ object FrmPrincipal: TFrmPrincipal
       object MenuItemConsultarUsuario: TMenuItem
         Caption = 'Consultar'
         OnClick = MenuItemConsultarUsuarioClick
+      end
+    end
+    object MenuItemBackup: TMenuItem
+      Caption = 'Backup'
+      object MenuItemGerarBackup: TMenuItem
+        Caption = 'Gerar backup'
+        OnClick = MenuItemGerarBackupClick
       end
     end
     object MenuItemSobre: TMenuItem

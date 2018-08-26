@@ -131,7 +131,7 @@ begin
         end;
     end;
 
-    pPersistencia.Query.SQL.Add('LIMIT 500');
+    pPersistencia.Query.SQL.Add('LIMIT 1000');
 
     pPersistencia.Query.Open;
 

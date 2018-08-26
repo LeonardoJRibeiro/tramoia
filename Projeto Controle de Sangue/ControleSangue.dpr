@@ -59,7 +59,8 @@ uses
   UConsSaidas in 'Units\Forms\Saida\UConsSaidas.pas' {FrmConsSaidas},
   UConsEstoque in 'Units\Forms\Estoque\UConsEstoque.pas' {FrmConsEstoque},
   UClassConsEstoqueDAO in 'Units\Class\DAO\UClassConsEstoqueDAO.pas',
-  USelCons in 'Units\Forms\Selecionar consulta\USelCons.pas' {FrmSelCons};
+  USelCons in 'Units\Forms\Selecionar consulta\USelCons.pas' {FrmSelCons},
+  UClassGeraBackup in 'Units\Class\UClassGeraBackup.pas';
 
 {$R *.res}
 

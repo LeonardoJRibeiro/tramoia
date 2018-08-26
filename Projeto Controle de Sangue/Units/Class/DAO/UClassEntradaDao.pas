@@ -95,7 +95,25 @@ begin
     pPersistencia.Query.SQL.Add('WHERE 0=0');
 
     case (pTIPOCONS) of
-      0: // Código(Id)
+      0: // Período
+        begin
+          pPersistencia.Query.SQL.Add('AND e.data_entrada BETWEEN :pDataIni AND :pDataFim');
+          pPersistencia.setParametro('pDataIni', pDATAINI);
+          pPersistencia.setParametro('pDataFim', pDATAFIM);
+        end;
+
+      1: // Bolsa
+        begin
+
+          if (not pCHAVE.Trim.IsEmpty) then
+          begin
+            pPersistencia.Query.SQL.Add('AND b.numero_da_bolsa = :pNumero_Da_Bolsa');
+            pPersistencia.setParametro('pNumero_Da_Bolsa', pCHAVE);
+          end;
+
+        end;
+
+      2: // Código(Id)
         begin
 
           if (not pCHAVE.Trim.IsEmpty) then
@@ -110,27 +128,7 @@ begin
 
         end;
 
-      1: // Número da Bolsa
-        begin
-
-          if (not pCHAVE.Trim.IsEmpty) then
-          begin
-            pPersistencia.Query.SQL.Add('AND b.numero_da_bolsa = :pNumero_Da_Bolsa');
-            pPersistencia.setParametro('pNumero_Da_Bolsa', pCHAVE);
-          end;
-
-        end;
-
-      2: // Período
-        begin
-          pPersistencia.Query.SQL.Add('AND e.data_entrada BETWEEN :pDataIni AND :pDataFim');
-          pPersistencia.setParametro('pDataIni', pDATAINI);
-          pPersistencia.setParametro('pDataFim', pDATAFIM);
-        end;
-
     end;
-
-    pPersistencia.Query.SQL.Add('LIMIT 500;');
 
     pPersistencia.Query.Open;
 

@@ -114,7 +114,7 @@ begin
       lPersistencia.Query.SQL.Add('SELECT');
       lPersistencia.Query.SQL.Add(pATRIBUTO_RETORNO);
       lPersistencia.Query.SQL.Add('FROM ' + pENTIDADE);
-      lPersistencia.Query.SQL.Add('WHERE ' + pIDENTIFICADOR + '=' + IntToStr(pCHAVE));
+      lPersistencia.Query.SQL.Add('WHERE ' + pIDENTIFICADOR + '=' + pCHAVE);
 
       lPersistencia.Query.Open;
 

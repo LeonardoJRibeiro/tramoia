@@ -2,7 +2,7 @@ unit UBiblioteca;
 
 interface
 
-uses System.Classes, System.SysUtils, IniFiles, Vcl.Forms, Vcl.stdctrls;
+uses System.Classes, System.SysUtils, IniFiles, Vcl.Forms, Vcl.stdctrls, UClassUsuarioDao;
 
 type
   TBiblioteca = class(TPersistent)
@@ -146,6 +146,7 @@ begin
 
   StrDispose(lPArquivo);
 end;
+
 class function TBiblioteca.GravaArquivoIni(const pNOMEARQUIVO, pNOMECHAVE, pNOMESUBSHCAVE, pVALOR: string): Boolean;
 var
   lArquivoINI: TIniFile;
@@ -240,7 +241,6 @@ begin
   end;
 
 end;
-
 
 class function TBiblioteca.LeArquivoIni(const pNOMEARQUIVO, pNOMECHAVE, pNOMESUBSHCAVE, pDEFAULT: string): string;
 var

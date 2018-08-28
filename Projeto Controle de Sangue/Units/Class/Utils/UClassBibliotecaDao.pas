@@ -10,13 +10,16 @@ type
     FConexao: TConexao;
 
   public
-    class function getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: Variant;
+    class function getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: integer;
+      const pCONEXAO: TConexao): Variant; overload;
+
+    class function getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string; const pCHAVE: string;
       const pCONEXAO: TConexao): Variant; overload;
 
     class function setValorAtributo(const pEntidade, pCAMPO_A_SER_ALTERADO, pIDENTIFICADOR: string;
       const pCHAVE: Variant; const pALTERACAO: Variant; const pCONEXAO: TConexao): Boolean;
 
-    class function getNomeUsuario(const pID_USUARIO: Integer; const pCONEXAO: TConexao): string;
+    class function getNomeUsuario(const pID_USUARIO: integer; const pCONEXAO: TConexao): string;
 
   published
     { published declarations }
@@ -28,7 +31,7 @@ implementation
 
 uses UClassUsuarioDao;
 
-class function TClassBibliotecaDao.getNomeUsuario(const pID_USUARIO: Integer; const pCONEXAO: TConexao): string;
+class function TClassBibliotecaDao.getNomeUsuario(const pID_USUARIO: integer; const pCONEXAO: TConexao): string;
 var
   lUsuarioDao: TUSUARIODAO;
 begin
@@ -51,7 +54,33 @@ begin
 end;
 
 class function TClassBibliotecaDao.getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR: string;
-  const pCHAVE: Variant; const pCONEXAO: TConexao): Variant;
+  const pCHAVE: integer; const pCONEXAO: TConexao): Variant;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(pCONEXAO);
+  try
+
+    try
+
+      Result := lPersistencia.getValorAtributo(pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR, pCHAVE, pCONEXAO);
+
+    except
+      on E: Exception do
+      begin
+        Result := -1;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+end;
+
+class function TClassBibliotecaDao.getValorAtributo(const pEntidade, pCAMPO_RETORNO, pIDENTIFICADOR, pCHAVE: string;
+  const pCONEXAO: TConexao): Variant;
 var
   lPersistencia: TPersistencia;
 begin

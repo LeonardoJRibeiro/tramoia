@@ -35456,7 +35456,7 @@ object FrmLogin: TFrmLogin
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
-    MaxLength = 50
+    MaxLength = 20
     ParentFont = False
     TabOrder = 0
   end
@@ -35471,7 +35471,7 @@ object FrmLogin: TFrmLogin
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
-    MaxLength = 30
+    MaxLength = 20
     ParentFont = False
     PasswordChar = '*'
     TabOrder = 1

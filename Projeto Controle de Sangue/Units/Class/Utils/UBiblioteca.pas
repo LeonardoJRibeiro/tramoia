@@ -15,6 +15,7 @@ type
     class function IsCpfValido(const pCPF: string): Boolean;
     class function getVersaoExe: string;
     class procedure LimparCampos;
+    class procedure AtivaDesativaCompontes(const pFORM: TForm; const pATIVO: Boolean);
   end;
 
 implementation
@@ -22,6 +23,36 @@ implementation
 uses ShellAPI, System.DateUtils, Winapi.Windows;
 
 { TClassBiblioteca }
+
+class procedure TBiblioteca.AtivaDesativaCompontes(const pFORM: TForm; const pATIVO: Boolean);
+var
+  lCount: SmallInt;
+begin
+
+  for lCount := 0 to pFORM.ComponentCount - 1 do
+  begin
+
+    if (TComponent(pFORM.Components[lCount]) is TEdit) then
+    begin
+      TEdit(TComponent(pFORM.Components[lCount])).Enabled := pATIVO;
+      Break;
+    end;
+
+    if (TComponent(pFORM.Components[lCount]) is TComboBox) then
+    begin
+      TComboBox(TComponent(pFORM.Components[lCount])).Enabled := pATIVO;
+      Break;
+    end;
+
+    if (TComponent(pFORM.Components[lCount]) is TCheckBox) then
+    begin
+      TCheckBox(TComponent(pFORM.Components[lCount])).Checked := pATIVO;
+      Break;
+    end;
+
+  end;
+
+end;
 
 class function TBiblioteca.Crypt(Action, Src: string): string;
 Label Fim;
@@ -155,7 +186,7 @@ begin
     lArquivoINI := TIniFile.Create(ExtractFilePath(ParamStr(0)) + pNOMEARQUIVO);
     try
       lArquivoINI.WriteString(pNOMECHAVE, pNOMESUBSHCAVE, pVALOR);
-      Result := True;
+      Result := true;
     finally
       lArquivoINI.Free;
     end;
@@ -163,7 +194,7 @@ begin
   except
     on E: Exception do
     begin
-      Result := false;
+      Result := False;
       raise Exception.Create(E.Message);
     end;
 
@@ -182,7 +213,7 @@ begin
     (pCPF = '44444444444') or (pCPF = '55555555555') or (pCPF = '66666666666') or (pCPF = '77777777777') or
     (pCPF = '88888888888') or (pCPF = '99999999999') or (Length(pCPF) <> 11)) then
   begin
-    Result := false;
+    Result := False;
     exit;
   end;
 
@@ -229,15 +260,15 @@ begin
     // Verifica se os digitos calculados conferem com os digitos informados. }
     if ((lDig10 = pCPF[10]) and (lDig11 = pCPF[11])) then
     begin
-      Result := True
+      Result := true
     end
     else
     begin
-      Result := false;
+      Result := False;
     end;
 
   except
-    Result := false
+    Result := False
   end;
 
 end;
@@ -289,7 +320,7 @@ begin
 
     if (TComponent(Screen.ActiveControl.Components[lCount]) is TCheckBox) then
     begin
-      TCheckBox(TComponent(Screen.ActiveControl.Components[lCount])).Checked := false;
+      TCheckBox(TComponent(Screen.ActiveControl.Components[lCount])).Checked := False;
       Break;
     end;
 

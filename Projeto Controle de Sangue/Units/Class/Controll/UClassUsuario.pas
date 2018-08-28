@@ -8,8 +8,8 @@ type
   TUsuario = class(TPersistent)
   private
     FId: Integer;
-    FNome: string[16];
-    FSenha: string[8];
+    FNome: string[20];
+    FSenha: string[50];
     FAdmin: string[1];
 
     function getId: Integer;

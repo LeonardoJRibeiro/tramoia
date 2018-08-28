@@ -141,6 +141,8 @@ begin
 
   Self.SalvaSaida;
 
+  TBiblioteca.AtivaDesativaCompontes(Self, False);
+
 end;
 
 procedure TFrmSaida.BtnNovoClick(Sender: TObject);
@@ -165,6 +167,8 @@ begin
 
   Self.FId := -1;
   Self.FIdBolsa := -1;
+
+  TBiblioteca.AtivaDesativaCompontes(Self, True);
 
 end;
 

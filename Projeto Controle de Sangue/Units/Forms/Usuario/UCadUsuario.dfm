@@ -192,7 +192,7 @@ object FrmCadUsuario: TFrmCadUsuario
       Top = 81
       Width = 193
       Height = 21
-      MaxLength = 15
+      MaxLength = 20
       PasswordChar = '*'
       TabOrder = 1
       Text = ''

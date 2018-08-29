@@ -385,6 +385,7 @@ begin
   begin
 
     EdtOrigem.Text := 'HEMOGO';
+    EdtOrigem.SelectAll;
 
   end;
 
@@ -397,6 +398,7 @@ begin
   begin
 
     EdtTipo.Text := 'CH';
+    EdtTipo.SelectAll;
 
   end;
 

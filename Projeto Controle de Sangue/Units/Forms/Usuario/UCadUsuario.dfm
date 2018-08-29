@@ -169,7 +169,7 @@ object FrmCadUsuario: TFrmCadUsuario
     Height = 138
     Align = alClient
     TabOrder = 1
-    object Label1: TLabel
+    object LabelSenha: TLabel
       Left = 24
       Top = 65
       Width = 30

@@ -90,6 +90,7 @@ object FrmSaida: TFrmSaida
         Top = 33
         Width = 64
         Height = 21
+        TabStop = False
         Enabled = False
         TabOrder = 3
       end
@@ -118,6 +119,7 @@ object FrmSaida: TFrmSaida
         Top = 33
         Width = 35
         Height = 21
+        TabStop = False
         Enabled = False
         TabOrder = 1
       end

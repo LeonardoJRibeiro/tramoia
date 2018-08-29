@@ -178,10 +178,19 @@ end;
 procedure TFrmConsSaidas.DBGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   inherited;
-  if (Key = VK_RETURN) then
-  begin
-    DBGridDblClick(Self);
+  case (Key) of
+    VK_RETURN:
+      begin
+        DBGridDblClick(Self);
+      end;
+
+    VK_DELETE:
+      begin
+        BtnExcluirClick(Self);
+      end;
+
   end;
+
 end;
 
 procedure TFrmConsSaidas.EdtConsInvokeSearch(Sender: TObject);
@@ -206,7 +215,16 @@ begin
         end
         else
         begin
-          EdtCons.SetFocus;
+          if (EdtCons.CanFocus) then
+          begin
+            EdtCons.SetFocus;
+            BtnLocalizar.Visible := False;
+          end
+          else
+          begin
+            EdtDataIni.SetFocus;
+            BtnLocalizar.Visible := True;
+          end;
         end
 
       end;

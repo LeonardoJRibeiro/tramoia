@@ -54,6 +54,7 @@ type
 
     FId: Integer;
     FIdBolsa: Integer;
+    FNumBolsa: string;
 
     procedure CarregaSaida;
 
@@ -141,8 +142,6 @@ begin
 
   Self.SalvaSaida;
 
-  TBiblioteca.AtivaDesativaCompontes(Self, False);
-
 end;
 
 procedure TFrmSaida.BtnNovoClick(Sender: TObject);
@@ -167,8 +166,7 @@ begin
 
   Self.FId := -1;
   Self.FIdBolsa := -1;
-
-  TBiblioteca.AtivaDesativaCompontes(Self, True);
+  Self.FNumBolsa := '-1';
 
 end;
 
@@ -195,6 +193,7 @@ begin
         begin
 
           EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          Self.FNumBolsa := lBolsa.NumeroBolsa;
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.Volume.ToString;
           EdtAboBolsa.Text := lBolsa.Abo + lBolsa.Rh;
@@ -273,63 +272,78 @@ procedure TFrmSaida.EdtNumeroBolsaExit(Sender: TObject);
 var
   lSaidaDAO: TSaidaDAO;
   lBolsaDao: TBolsaDAO;
+  lVerificaNumBolsa: Boolean;
 begin
 
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
-    lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
-    try
-
-      Self.FIdBolsa := lBolsaDao.getIdBolsa(EdtNumeroBolsa.Text);
-
-    finally
-      lBolsaDao.Destroy;
-    end;
-
-    if (Self.FIdBolsa > 0) then
+    if (Self.FId > 0) then
     begin
-
-      lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
-      try
-
-        try
-
-          if (not lSaidaDAO.getExisteBolsaVinculada(Self.FIdBolsa)) then
-          begin
-
-            Self.CarregaDadosBolsa(Self.FIdBolsa);
-
-          end
-          else
-          begin
-
-            Self.FIdBolsa := -1;
-            Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
-            EdtNumeroBolsa.SetFocus;
-
-          end;
-
-        except
-          on E: Exception do
-          begin
-            raise Exception.Create('Erro ao verificar se o número da bolsa já esta vinculado a uma saída. Motivo ' +
-              E.Message);
-            Self.FIdBolsa := -1;
-            EdtNumeroBolsa.SetFocus;
-          end;
-        end;
-
-      finally
-        lSaidaDAO.Destroy;
-      end;
-
+      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> (EdtNumeroBolsa.Text)))
     end
     else
     begin
+      lVerificaNumBolsa := True;
+    end;
 
-      Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
-      EdtNumeroBolsa.SetFocus;
+    if (lVerificaNumBolsa) then
+    begin
+
+      lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+      try
+
+        Self.FIdBolsa := lBolsaDao.getIdBolsa(EdtNumeroBolsa.Text);
+
+      finally
+        lBolsaDao.Destroy;
+      end;
+
+      if (Self.FIdBolsa > 0) then
+      begin
+
+        lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
+        try
+
+          try
+
+            if (not lSaidaDAO.getExisteBolsaVinculada(Self.FIdBolsa)) then
+            begin
+
+              Self.CarregaDadosBolsa(Self.FIdBolsa);
+
+            end
+            else
+            begin
+
+              Self.FIdBolsa := -1;
+              Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
+              EdtNumeroBolsa.SetFocus;
+
+            end;
+
+          except
+            on E: Exception do
+            begin
+              raise Exception.Create('Erro ao verificar se o número da bolsa já esta vinculado a uma saída. Motivo ' +
+                E.Message);
+              Self.FIdBolsa := -1;
+              EdtNumeroBolsa.SetFocus;
+            end;
+          end;
+
+        finally
+          lSaidaDAO.Destroy;
+        end;
+
+      end
+      else
+      begin
+
+        Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
+        EdtNumeroBolsa.SetFocus;
+
+      end;
 
     end;
 
@@ -408,6 +422,7 @@ begin
     EdtRegistroPaciente.SetFocus;
 
     Self.FIdBolsa := -1;
+    Self.FNumBolsa := '1';
   end;
 
 end;

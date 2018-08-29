@@ -109,9 +109,9 @@ inherited FrmConsSaidas: TFrmConsSaidas
       ExplicitWidth = 740
       object BtnLocalizar: TSpeedButton [0]
         Left = 640
-        Top = 23
+        Top = 21
         Width = 78
-        Height = 23
+        Height = 27
         Caption = 'Localizar'
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100

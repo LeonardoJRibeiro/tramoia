@@ -12,7 +12,7 @@ type
     Panel1: TPanel;
     EdtNome: TLabeledEdit;
     EdtSenha: TMaskEdit;
-    Label1: TLabel;
+    LabelSenha: TLabel;
     CheckBoxAdministrador: TCheckBox;
     BtnGravar: TBitBtn;
     BtnNovo: TBitBtn;
@@ -68,6 +68,26 @@ var
 
   lUsuarioCadastrado: Boolean;
 begin
+
+  if (Trim(EdtNome.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [EdtNome.EditLabel.Caption])), PChar('Informação'),
+      MB_OK + MB_ICONINFORMATION);
+    EdtNome.SetFocus;
+    Exit;
+
+  end;
+
+  if (Trim(EdtSenha.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelSenha.Caption])), PChar('Informação'),
+      MB_OK + MB_ICONINFORMATION);
+    EdtSenha.SetFocus;
+    Exit;
+
+  end;
 
   lUsuarioCadastrado := False;
 

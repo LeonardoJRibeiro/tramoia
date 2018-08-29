@@ -1,20 +1,20 @@
 inherited FrmConsEntrada: TFrmConsEntrada
   Caption = 'Consulta de Entradas'
   ClientHeight = 370
-  ClientWidth = 745
+  ClientWidth = 782
   OnClose = FormClose
   OnShow = FormShow
-  ExplicitWidth = 751
+  ExplicitWidth = 788
   ExplicitHeight = 399
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanelGrid: TPanel
-    Width = 745
+    Width = 782
     Height = 256
     ExplicitWidth = 745
     ExplicitHeight = 256
     inherited DBGrid: TDBGrid
-      Width = 743
+      Width = 780
       Height = 254
       DataSource = DataSource
       OnDblClick = DBGridDblClick
@@ -43,7 +43,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
           FieldName = 'numero_da_bolsa'
           Title.Alignment = taCenter
           Title.Caption = 'N'#250'mero da bolsa'
-          Width = 109
+          Width = 117
           Visible = True
         end
         item
@@ -89,7 +89,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
   end
   inherited PanelBotoes: TPanel
     Top = 328
-    Width = 745
+    Width = 782
     ExplicitTop = 328
     ExplicitWidth = 745
     inherited BtnNovo: TSpeedButton
@@ -103,10 +103,10 @@ inherited FrmConsEntrada: TFrmConsEntrada
     end
   end
   inherited PanelConsulta: TPanel
-    Width = 745
+    Width = 782
     ExplicitWidth = 745
     inherited GroupBoxConsulta: TGroupBox
-      Width = 743
+      Width = 780
       ExplicitWidth = 743
       object LabelAte: TLabel [0]
         Left = 410
@@ -123,7 +123,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
         Caption = 'De:'
       end
       object BtnLocalizar: TSpeedButton [2]
-        Left = 640
+        Left = 679
         Top = 21
         Width = 78
         Height = 27
@@ -166,10 +166,10 @@ inherited FrmConsEntrada: TFrmConsEntrada
       end
       inherited EdtCons: TSearchBox [3]
         Left = 152
-        Width = 569
+        Width = 604
         OnInvokeSearch = EdtConsInvokeSearch
         ExplicitLeft = 152
-        ExplicitWidth = 569
+        ExplicitWidth = 604
       end
       inherited GroupBoxTipoCons: TGroupBox [4]
         Width = 137

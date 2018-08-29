@@ -496,9 +496,9 @@ object FrmCadPaciente: TFrmCadPaciente
     Align = alBottom
     TabOrder = 1
     object BtnSalvar: TSpeedButton
-      Left = 169
-      Top = 2
-      Width = 106
+      Left = 140
+      Top = 1
+      Width = 140
       Height = 31
       HelpType = htKeyword
       Caption = 'Gravar - F6'
@@ -547,9 +547,9 @@ object FrmCadPaciente: TFrmCadPaciente
       OnClick = BtnSalvarClick
     end
     object BtnSair: TSpeedButton
-      Left = 297
+      Left = 292
       Top = 1
-      Width = 106
+      Width = 140
       Height = 31
       Caption = 'Sair - Esc'
       Font.Charset = DEFAULT_CHARSET

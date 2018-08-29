@@ -17,7 +17,6 @@ type
     EdtNumeroBolsa: TEdit;
     EdtOrigem: TEdit;
     LabelOrigem: TLabel;
-    EdtTipo: TEdit;
     LabelTipo: TLabel;
     LabelAboSangue: TLabel;
     LabelObservacao: TLabel;
@@ -30,6 +29,7 @@ type
     LabelOrdemSaida: TLabel;
     BtnNovo: TBitBtn;
     ComboBoxAboBolsa: TComboBox;
+    ComboBoxTipo: TComboBox;
     procedure FormShow(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -37,11 +37,11 @@ type
     procedure BtnGravarClick(Sender: TObject);
     procedure EdtNumeroBolsaExit(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
-    procedure EdtTipoEnter(Sender: TObject);
     procedure ComboBoxAboBolsaKeyPress(Sender: TObject; var Key: Char);
     procedure ComboBoxAboBolsaEnter(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ComboBoxTipoEnter(Sender: TObject);
   private
 
     FForeignFormKey: SmallInt;
@@ -91,12 +91,12 @@ begin
 
   end;
 
-  if (Trim(EdtTipo.Text).IsEmpty) then
+  if (ComboBoxAboBolsa.ItemIndex = -1) then
   begin
 
     MessageDlg(Format(TMensagem.getMensagem(3), [LabelTipo.Caption]), mtWarning, [mbOK], -1);
 
-    EdtTipo.SetFocus;
+    ComboBoxTipo.SetFocus;
 
     Exit;
 
@@ -140,7 +140,7 @@ begin
 
     lBolsa.Id := Self.FIdBolsa;
     lBolsa.NumeroBolsa := EdtNumeroBolsa.Text;
-    lBolsa.Tipo := EdtTipo.Text;
+    lBolsa.Tipo := ComboBoxTipo.Text;
     lBolsa.Abo := Copy(ComboBoxAboBolsa.Text, 0, string(ComboBoxAboBolsa.Text).Length - 1);
     lBolsa.Rh := Copy(ComboBoxAboBolsa.Text, string(ComboBoxAboBolsa.Text).Length,
       string(ComboBoxAboBolsa.Text).Length);
@@ -211,7 +211,7 @@ begin
   BtnGravar.Enabled := True;
   EdtOrdemSaida.Clear;
   EdtNumeroBolsa.Clear;
-  EdtTipo.Clear;
+  ComboBoxTipo.ItemIndex := 0;
   EdtVolume.Clear;
   ComboBoxAboBolsa.ItemIndex := -1;
   EdtOrigem.Clear;
@@ -251,7 +251,7 @@ begin
         begin
           EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
           Self.FNumBolsa := lBolsa.NumeroBolsa;
-          EdtTipo.Text := lBolsa.Tipo;
+          ComboBoxTipo.ItemIndex := (ComboBoxTipo.Items.IndexOf(Trim(lBolsa.Tipo)));
           EdtVolume.Text := lBolsa.Volume.ToString;
           EdtOrigem.Text := lBolsa.Origem;
           ComboBoxAboBolsa.ItemIndex := (ComboBoxAboBolsa.Items.IndexOf(Trim(lBolsa.Abo + lBolsa.Rh)));
@@ -343,6 +343,11 @@ begin
 
 end;
 
+procedure TFrmEntrada.ComboBoxTipoEnter(Sender: TObject);
+begin
+  ComboBoxTipo.DroppedDown := True;
+end;
+
 procedure TFrmEntrada.EdtNumeroBolsaExit(Sender: TObject);
 var
   lVerificaNumBolsa: Boolean;
@@ -386,19 +391,6 @@ begin
 
     EdtOrigem.Text := 'HEMOGO';
     EdtOrigem.SelectAll;
-
-  end;
-
-end;
-
-procedure TFrmEntrada.EdtTipoEnter(Sender: TObject);
-begin
-
-  if (Trim(EdtTipo.Text).IsEmpty) then
-  begin
-
-    EdtTipo.Text := 'CH';
-    EdtTipo.SelectAll;
 
   end;
 

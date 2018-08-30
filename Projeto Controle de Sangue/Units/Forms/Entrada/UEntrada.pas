@@ -91,7 +91,7 @@ begin
 
   end;
 
-  if (ComboBoxAboBolsa.ItemIndex = -1) then
+  if (ComboBoxTipo.ItemIndex = -1) then
   begin
 
     MessageDlg(Format(TMensagem.getMensagem(3), [LabelTipo.Caption]), mtWarning, [mbOK], -1);

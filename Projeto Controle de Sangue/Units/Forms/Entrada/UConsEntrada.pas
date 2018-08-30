@@ -67,6 +67,8 @@ begin
 end;
 
 procedure TFrmConsEntrada.BtnAlterarClick(Sender: TObject);
+var
+  lPosicaoQuery: Integer;
 begin
   inherited;
 
@@ -77,7 +79,12 @@ begin
     begin
       TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario,
         Self.FPersistencia.Query.FieldByName('id').AsInteger);
+
+      lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+
       EdtConsInvokeSearch(Self);
+
+      Self.FPersistencia.Query.RecNo := lPosicaoQuery;
     end
     else
     begin
@@ -91,6 +98,7 @@ end;
 procedure TFrmConsEntrada.BtnExcluirClick(Sender: TObject);
 var
   lEntradaDao: TEntradaDAO;
+  lPosicaoQuery: Integer;
 begin
   inherited;
 
@@ -112,9 +120,13 @@ begin
 
             try
 
-              if (lEntradaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+              if (lEntradaDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
               begin
+                lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+
                 EdtConsInvokeSearch(Self);
+
+                Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
               end;
 
             except

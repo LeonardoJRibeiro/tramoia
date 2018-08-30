@@ -5,7 +5,7 @@ object FrmCadUsuario: TFrmCadUsuario
   BorderStyle = bsSingle
   Caption = 'Cadastro de Usu'#225'rio'
   ClientHeight = 173
-  ClientWidth = 258
+  ClientWidth = 256
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,10 +22,11 @@ object FrmCadUsuario: TFrmCadUsuario
   object PanelBotoes: TPanel
     Left = 0
     Top = 138
-    Width = 258
+    Width = 256
     Height = 35
     Align = alBottom
     TabOrder = 0
+    ExplicitWidth = 258
     object BtnGravar: TBitBtn
       Left = 1
       Top = 5
@@ -165,10 +166,11 @@ object FrmCadUsuario: TFrmCadUsuario
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 258
+    Width = 256
     Height = 138
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 258
     object LabelSenha: TLabel
       Left = 24
       Top = 65
@@ -179,7 +181,7 @@ object FrmCadUsuario: TFrmCadUsuario
     object EdtNome: TLabeledEdit
       Left = 24
       Top = 32
-      Width = 193
+      Width = 205
       Height = 21
       EditLabel.Width = 27
       EditLabel.Height = 13
@@ -190,7 +192,7 @@ object FrmCadUsuario: TFrmCadUsuario
     object EdtSenha: TMaskEdit
       Left = 24
       Top = 81
-      Width = 193
+      Width = 205
       Height = 21
       MaxLength = 20
       PasswordChar = '*'

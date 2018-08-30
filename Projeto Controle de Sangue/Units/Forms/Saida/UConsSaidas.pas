@@ -46,6 +46,8 @@ uses UClassMensagem, UClassUsuarioDao, UDMConexao, UClassSaidaDao, UBiblioteca, 
 { TFrmConsSaidas }
 
 procedure TFrmConsSaidas.BtnAlterarClick(Sender: TObject);
+var
+  lPosicaoQuery: Integer;
 begin
   inherited;
 
@@ -53,7 +55,12 @@ begin
   begin
     TFrmSaida.getSaida(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario, Self.FPersistencia.Query.FieldByName('id')
       .AsInteger);
+
+    lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+
     EdtConsInvokeSearch(Self);
+
+    Self.FPersistencia.Query.RecNo := lPosicaoQuery;
   end;
 
 end;
@@ -61,6 +68,7 @@ end;
 procedure TFrmConsSaidas.BtnExcluirClick(Sender: TObject);
 var
   lSaidaDao: TSaidaDAO;
+  lPosicaoQuery: Integer;
 begin
   inherited;
 
@@ -81,7 +89,11 @@ begin
 
             if (lSaidaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
             begin
+              lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+
               EdtConsInvokeSearch(Self);
+
+              Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
             end;
 
           except
@@ -208,6 +220,7 @@ begin
         Self.FPersistencia)) then
       begin
 
+        Self.FPersistencia.Query.First;
         DataSource.DataSet := Self.FPersistencia.Query;
         if (not Self.FPersistencia.Query.IsEmpty) then
         begin

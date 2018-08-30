@@ -314,7 +314,7 @@ object FrmSaida: TFrmSaida
       Left = 9
       Top = 9
       Width = 109
-      Height = 25
+      Height = 27
       Caption = 'Gravar'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -359,7 +359,7 @@ object FrmSaida: TFrmSaida
       Left = 243
       Top = 9
       Width = 109
-      Height = 25
+      Height = 27
       Caption = 'Sair'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -404,7 +404,7 @@ object FrmSaida: TFrmSaida
       Left = 126
       Top = 9
       Width = 109
-      Height = 25
+      Height = 27
       Caption = 'Novo'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100

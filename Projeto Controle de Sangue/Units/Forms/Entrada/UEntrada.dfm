@@ -5,7 +5,7 @@ object FrmEntrada: TFrmEntrada
   BorderStyle = bsSingle
   Caption = 'Entrada de sangue'
   ClientHeight = 235
-  ClientWidth = 339
+  ClientWidth = 350
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,14 +24,14 @@ object FrmEntrada: TFrmEntrada
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 339
+    Width = 350
     Height = 194
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitWidth = 322
+    ExplicitWidth = 344
     object LabelData: TLabel
       Left = 91
       Top = 11
@@ -54,15 +54,15 @@ object FrmEntrada: TFrmEntrada
       Caption = 'Origem'
     end
     object LabelTipo: TLabel
-      Left = 156
+      Left = 154
       Top = 57
       Width = 20
       Height = 13
       Caption = 'Tipo'
     end
     object LabelAboSangue: TLabel
-      Left = 257
-      Top = 58
+      Left = 268
+      Top = 57
       Width = 64
       Height = 13
       Caption = 'ABO da Bolsa'
@@ -75,8 +75,8 @@ object FrmEntrada: TFrmEntrada
       Caption = 'Observa'#231#227'o'
     end
     object LabelVolume: TLabel
-      Left = 207
-      Top = 58
+      Left = 210
+      Top = 57
       Width = 34
       Height = 13
       Caption = 'Volume'
@@ -110,7 +110,7 @@ object FrmEntrada: TFrmEntrada
     object EdtOrigem: TEdit
       Left = 10
       Top = 120
-      Width = 311
+      Width = 322
       Height = 21
       CharCase = ecUpperCase
       MaxLength = 15
@@ -120,17 +120,18 @@ object FrmEntrada: TFrmEntrada
     object EdtObservacao: TEdit
       Left = 10
       Top = 167
-      Width = 311
+      Width = 322
       Height = 21
       MaxLength = 100
       TabOrder = 7
     end
     object EdtVolume: TEdit
-      Left = 207
+      Left = 210
       Top = 72
-      Width = 46
+      Width = 52
       Height = 21
       Alignment = taRightJustify
+      MaxLength = 11
       NumbersOnly = True
       TabOrder = 4
     end
@@ -145,7 +146,7 @@ object FrmEntrada: TFrmEntrada
       TabOrder = 1
     end
     object ComboBoxAboBolsa: TComboBox
-      Left = 257
+      Left = 268
       Top = 72
       Width = 64
       Height = 22
@@ -166,9 +167,9 @@ object FrmEntrada: TFrmEntrada
         'O-')
     end
     object ComboBoxTipo: TComboBox
-      Left = 156
+      Left = 154
       Top = 72
-      Width = 45
+      Width = 50
       Height = 22
       AutoCompleteDelay = 1000
       Style = csOwnerDrawFixed
@@ -187,19 +188,19 @@ object FrmEntrada: TFrmEntrada
   object PanelBottom: TPanel
     Left = 0
     Top = 194
-    Width = 339
+    Width = 350
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitWidth = 322
+    ExplicitWidth = 344
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9
-      Width = 100
-      Height = 25
+      Width = 105
+      Height = 27
       Caption = 'Gravar'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -241,10 +242,10 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 221
+      Left = 227
       Top = 9
-      Width = 100
-      Height = 25
+      Width = 105
+      Height = 27
       Caption = 'Sair'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -287,10 +288,10 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnSairClick
     end
     object BtnNovo: TBitBtn
-      Left = 115
+      Left = 119
       Top = 9
-      Width = 100
-      Height = 25
+      Width = 105
+      Height = 27
       Caption = 'Novo'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100

@@ -5,7 +5,7 @@ object FrmConsEstoque: TFrmConsEstoque
   BorderStyle = bsSingle
   Caption = 'Consulta de estoque'
   ClientHeight = 211
-  ClientWidth = 351
+  ClientWidth = 438
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -25,13 +25,14 @@ object FrmConsEstoque: TFrmConsEstoque
   object PanelBotoes: TPanel
     Left = 0
     Top = 169
-    Width = 351
+    Width = 438
     Height = 42
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
-    TabOrder = 0
+    TabOrder = 2
+    ExplicitWidth = 351
     object BtnSair: TSpeedButton
       Left = 137
       Top = 6
@@ -86,17 +87,19 @@ object FrmConsEstoque: TFrmConsEstoque
   object PanelConsulta: TPanel
     Left = 0
     Top = 0
-    Width = 351
+    Width = 438
     Height = 72
     Align = alTop
-    TabOrder = 1
+    TabOrder = 0
+    ExplicitWidth = 351
     object GroupBoxConsulta: TGroupBox
       Left = 1
       Top = 7
-      Width = 349
+      Width = 436
       Height = 64
       Align = alBottom
       TabOrder = 0
+      ExplicitWidth = 349
       object GroupBoxTipoCons: TGroupBox
         Left = 9
         Top = 7
@@ -120,29 +123,53 @@ object FrmConsEstoque: TFrmConsEstoque
         end
       end
       object EdtCons: TSearchBox
-        Left = 136
+        Left = 245
         Top = 24
-        Width = 188
+        Width = 86
         Height = 21
         AutoSize = False
         CharCase = ecUpperCase
         MaxLength = 2
-        TabOrder = 1
+        TabOrder = 2
         OnInvokeSearch = EdtConsInvokeSearch
+      end
+      object GroupBoxListarEstoque: TGroupBox
+        Left = 135
+        Top = 7
+        Width = 99
+        Height = 49
+        Caption = 'Estoque'
+        TabOrder = 1
+        object ComboBoxListarEstoque: TComboBox
+          Left = 8
+          Top = 17
+          Width = 85
+          Height = 21
+          Cursor = crHandPoint
+          Style = csDropDownList
+          MaxLength = 3
+          TabOrder = 0
+          OnChange = ComboBoxTipoConsChange
+          Items.Strings = (
+            'Com estoque'
+            'Sem estoque'
+            'Ambos')
+        end
       end
     end
   end
   object PanelGrid: TPanel
     Left = 0
     Top = 72
-    Width = 351
+    Width = 438
     Height = 97
     Align = alClient
-    TabOrder = 2
+    TabOrder = 1
+    ExplicitWidth = 351
     object DBGrid: TDBGrid
       Left = 1
       Top = 1
-      Width = 349
+      Width = 436
       Height = 95
       Align = alClient
       Color = clSkyBlue
@@ -197,6 +224,15 @@ object FrmConsEstoque: TFrmConsEstoque
           FieldName = 'sorologia'
           Title.Alignment = taCenter
           Title.Caption = 'Sorologia'
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'possui_estoque'
+          Title.Alignment = taCenter
+          Title.Caption = 'Possui  estoque'
+          Width = 80
           Visible = True
         end>
     end

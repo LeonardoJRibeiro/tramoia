@@ -19,6 +19,8 @@ type
     PanelGrid: TPanel;
     DBGrid: TDBGrid;
     DataSource: TDataSource;
+    GroupBoxListarEstoque: TGroupBox;
+    ComboBoxListarEstoque: TComboBox;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure ComboBoxTipoConsChange(Sender: TObject);
@@ -76,7 +78,8 @@ begin
 
       DataSource.DataSet := nil;
 
-      if (lConsEstoqueDAO.getConsulta(ComboBoxTipoCons.ItemIndex, EdtCons.Text, Self.FPersistencia)) then
+      if (lConsEstoqueDAO.getConsulta(ComboBoxTipoCons.ItemIndex, ComboBoxListarEstoque.ItemIndex, EdtCons.Text,
+        Self.FPersistencia)) then
       begin
 
         DataSource.DataSet := Self.FPersistencia.Query;
@@ -103,6 +106,9 @@ begin
 
   TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox', 'FrmConsEstoque.ComboBoxTipoCons',
     ComboBoxTipoCons.ItemIndex.ToString);
+
+  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox', 'FrmConsEstoque.ComboBoxListarEstoque',
+    ComboBoxListarEstoque.ItemIndex.ToString);
 
   Action := caFree;
 
@@ -141,6 +147,9 @@ begin
 
   ComboBoxTipoCons.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
     'FrmConsEstoque.ComboBoxTipoCons', '0').ToInteger;
+
+  ComboBoxListarEstoque.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
+    'FrmConsEstoque.ComboBoxListarEstoque', '2').ToInteger;
 
   EdtConsInvokeSearch(Sender);
 

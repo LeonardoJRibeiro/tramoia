@@ -43,13 +43,21 @@ object FrmSaida: TFrmSaida
       Height = 13
       Caption = 'Data'
     end
+    object LabelResponsavel: TLabel
+      Left = 210
+      Top = 8
+      Width = 61
+      Height = 13
+      Caption = 'Respons'#225'vel'
+      FocusControl = EdtResponsavel
+    end
     object GroupBoxSangue: TGroupBox
       Left = 9
       Top = 123
       Width = 342
       Height = 300
       Caption = 'Bolsa de sangue'
-      TabOrder = 3
+      TabOrder = 4
       object LabelVolume: TLabel
         Left = 10
         Top = 63
@@ -199,7 +207,7 @@ object FrmSaida: TFrmSaida
       Width = 343
       Height = 65
       Caption = 'Paciente'
-      TabOrder = 2
+      TabOrder = 3
       object LabelRegistroPaciente: TLabel
         Left = 10
         Top = 18
@@ -267,7 +275,7 @@ object FrmSaida: TFrmSaida
         TabOrder = 0
       end
       object EdtRegistroPaciente: TEdit
-        Left = 10
+        Left = 6
         Top = 33
         Width = 88
         Height = 21
@@ -298,6 +306,14 @@ object FrmSaida: TFrmSaida
       Date = 43248.939316319450000000
       Time = 43248.939316319450000000
       TabOrder = 1
+    end
+    object EdtResponsavel: TEdit
+      Left = 210
+      Top = 23
+      Width = 121
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 2
     end
   end
   object PanelBottom: TPanel

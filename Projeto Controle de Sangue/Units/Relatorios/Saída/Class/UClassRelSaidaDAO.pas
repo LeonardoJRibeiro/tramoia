@@ -46,7 +46,6 @@ begin
     pPersistencia.Query.SQL.Add('  s.data_saida,');
     pPersistencia.Query.SQL.Add('  s.hospital,');
     pPersistencia.Query.SQL.Add('  p.nome,');
-    pPersistencia.Query.SQL.Add('  p.cpf,');
     pPersistencia.Query.SQL.Add('  concat(p.abo,' + QuotedStr('/') + ',p.rh) AS abo_pac,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
@@ -54,7 +53,9 @@ begin
     pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_ta,');
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_agh,');
-    pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_37');
+    pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_37,');
+    pPersistencia.Query.SQL.Add('  s.pai,');
+    pPersistencia.Query.SQL.Add('  s.responsavel');
     pPersistencia.Query.SQL.Add('FROM saida s');
 
     pPersistencia.Query.SQL.Add('LEFT JOIN paciente p');

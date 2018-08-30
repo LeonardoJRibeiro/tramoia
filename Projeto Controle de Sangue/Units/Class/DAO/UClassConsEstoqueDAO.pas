@@ -51,7 +51,7 @@ begin
       ') AS sorologia');
     pPersistencia.Query.SQL.Add('FROM bolsa b');
 
-    pPersistencia.Query.SQL.Add('WHERE  0=0');
+    pPersistencia.Query.SQL.Add('WHERE  possui_estoque='+QuotedStr('S'));
 
     if (pTIPOCONS = 0) then // Tipo.
     begin
@@ -59,7 +59,7 @@ begin
       if (not pCHAVE.Trim.IsEmpty) then
       begin
 
-        pPersistencia.Query.SQL.Add('AND b.tipo = :pTipo');
+        pPersistencia.Query.SQL.Add(' AND b.tipo = :pTipo');
         pPersistencia.setParametro('pTipo', pCHAVE);
 
       end;
@@ -73,7 +73,7 @@ begin
       if (not pCHAVE.Trim.IsEmpty) then
       begin
 
-        pPersistencia.Query.SQL.Add('AND b.abo = :pAbo');
+        pPersistencia.Query.SQL.Add(' AND b.abo = :pAbo');
         pPersistencia.setParametro('pAbo', pCHAVE);
 
       end;
@@ -82,13 +82,13 @@ begin
 
     end;
 
-    pPersistencia.Query.SQL.Add('GROUP BY');
+    pPersistencia.Query.SQL.Add(' GROUP BY');
     pPersistencia.Query.SQL.Add('  b.abo,');
     pPersistencia.Query.SQL.Add('  b.rh,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.sorologia');
 
-    pPersistencia.Query.SQL.Add('ORDER BY ' + lOrderBy);
+    pPersistencia.Query.SQL.Add(' ORDER BY ' + lOrderBy);
 
     pPersistencia.Query.Open;
 

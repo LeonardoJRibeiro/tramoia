@@ -7967,7 +7967,7 @@ object FrmPrincipal: TFrmPrincipal
       OnClick = BtnEntradaClick
     end
     object BtnPacientes: TSpeedButton
-      Left = 260
+      Left = 264
       Top = 14
       Width = 128
       Height = 128
@@ -16099,7 +16099,7 @@ object FrmPrincipal: TFrmPrincipal
       end>
   end
   object MainMenu: TMainMenu
-    Left = 40
+    Left = 64
     Top = 152
     object MenuItemPaciente: TMenuItem
       Caption = 'Pacientes'

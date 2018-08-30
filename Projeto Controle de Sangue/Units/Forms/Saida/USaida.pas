@@ -39,6 +39,8 @@ type
     DateTimePickerData: TDateTimePicker;
     LabelData: TLabel;
     BtnNovo: TBitBtn;
+    EdtResponsavel: TEdit;
+    LabelResponsavel: TLabel;
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -118,6 +120,17 @@ var
   lIdBolsa: Integer;
 begin
 
+  if (Trim(EdtResponsavel.Text).IsEmpty) then
+  begin
+
+    MessageDlg(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption]), mtWarning, [mbOK], -1);
+
+    EdtResponsavel.SetFocus;
+
+    exit;
+
+  end;
+
   if (Trim(EdtRegistroPaciente.Text).IsEmpty) then
   begin
 
@@ -149,6 +162,7 @@ begin
 
   EdtId.Clear;
   DateTimePickerData.Date := now;
+  EdtResponsavel.Text := TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
   EdtRegistroPaciente.Clear;
   EdtNomePaciente.Clear;
   EdtNumeroBolsa.Clear;
@@ -160,7 +174,7 @@ begin
   RadioGroupTA.ItemIndex := 1;
   RadioGroupAGH.ItemIndex := 1;
   RadioGroup37.ItemIndex := 1;
-  EdtRegistroPaciente.SetFocus;
+  EdtResponsavel.SetFocus;
 
   BtnGravar.Enabled := True;
 
@@ -419,7 +433,8 @@ begin
   else
   begin
     DateTimePickerData.Date := now;
-    EdtRegistroPaciente.SetFocus;
+    EdtResponsavel.Text :=  TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
+    EdtResponsavel.SetFocus;
 
     Self.FIdBolsa := -1;
     Self.FNumBolsa := '1';
@@ -477,6 +492,7 @@ begin
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_Agh := Copy(RadioGroupAGH.Items[RadioGroupAGH.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_37 := Copy(RadioGroup37.Items[RadioGroup37.ItemIndex], 1, 1);
+    lSaida.Responsavel := EdtResponsavel.Text;
 
     lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
     try

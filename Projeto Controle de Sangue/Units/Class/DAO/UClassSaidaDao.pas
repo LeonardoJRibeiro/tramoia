@@ -90,7 +90,8 @@ begin
     pPersistencia.Query.SQL.Add('  CONCAT(p.abo, p.rh) tipo_sangue,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue_bolsa');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue_bolsa,');
+    pPersistencia.Query.SQL.Add('  s.responsavel');
     pPersistencia.Query.SQL.Add('FROM saida s');
 
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
@@ -357,7 +358,8 @@ begin
         lPersistencia.Query.SQL.Add('  pai,');
         lPersistencia.Query.SQL.Add('  prova_compatibilidade_ta,');
         lPersistencia.Query.SQL.Add('  prova_compatibilidade_agh,');
-        lPersistencia.Query.SQL.Add('  prova_compatibilidade_37');
+        lPersistencia.Query.SQL.Add('  prova_compatibilidade_37,');
+        lPersistencia.Query.SQL.Add('  responsavel');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pId,');
         lPersistencia.Query.SQL.Add('  :pId_Paciente,');
@@ -368,7 +370,8 @@ begin
         lPersistencia.Query.SQL.Add('  :pPai,');
         lPersistencia.Query.SQL.Add('  :pProva_Compatibilidade_Ta,');
         lPersistencia.Query.SQL.Add('  :pProva_Compatibilidade_Agh,');
-        lPersistencia.Query.SQL.Add('  :pProva_Compatibilidade_37');
+        lPersistencia.Query.SQL.Add('  :pProva_Compatibilidade_37,');
+        lPersistencia.Query.SQL.Add('  :pResponsavel');
         lPersistencia.Query.SQL.Add(');');
 
       end
@@ -384,7 +387,8 @@ begin
         lPersistencia.Query.SQL.Add('  pai= :pPai,');
         lPersistencia.Query.SQL.Add('  prova_compatibilidade_ta= :pProva_Compatibilidade_Ta,');
         lPersistencia.Query.SQL.Add('  prova_compatibilidade_agh= :pProva_Compatibilidade_Agh,');
-        lPersistencia.Query.SQL.Add('  prova_compatibilidade_37= :pProva_Compatibilidade_37');
+        lPersistencia.Query.SQL.Add('  prova_compatibilidade_37= :pProva_Compatibilidade_37,');
+        lPersistencia.Query.SQL.Add('  responsavel= :pResponsavel');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
       end;
@@ -399,6 +403,7 @@ begin
       lPersistencia.setParametro('pProva_Compatibilidade_Ta', pObjeto.Prova_Compatibilidade_Ta);
       lPersistencia.setParametro('pProva_Compatibilidade_Agh', pObjeto.Prova_Compatibilidade_Agh);
       lPersistencia.setParametro('pProva_Compatibilidade_37', pObjeto.Prova_Compatibilidade_37);
+      lPersistencia.setParametro('pResponsavel', pObjeto.Responsavel);
 
       lPersistencia.Query.ExecSQL;
 
@@ -441,7 +446,8 @@ begin
       lPersistencia.Query.SQL.Add('  pai,');
       lPersistencia.Query.SQL.Add('  prova_compatibilidade_ta,');
       lPersistencia.Query.SQL.Add('  prova_compatibilidade_agh,');
-      lPersistencia.Query.SQL.Add('  prova_compatibilidade_37');
+      lPersistencia.Query.SQL.Add('  prova_compatibilidade_37,');
+      lPersistencia.Query.SQL.Add('  responsavel');
       lPersistencia.Query.SQL.Add('FROM saida');
 
       lPersistencia.Query.SQL.Add('WHERE id= :pId');
@@ -459,6 +465,7 @@ begin
       pObjeto.Prova_Compatibilidade_Ta := lPersistencia.Query.FieldByName('prova_compatibilidade_ta').Asstring;
       pObjeto.Prova_Compatibilidade_Agh := lPersistencia.Query.FieldByName('prova_compatibilidade_agh').Asstring;
       pObjeto.Prova_Compatibilidade_37 := lPersistencia.Query.FieldByName('prova_compatibilidade_37').Asstring;
+      pObjeto.Responsavel := lPersistencia.Query.FieldByName('responsavel').AsString;
 
       Result := True;
 

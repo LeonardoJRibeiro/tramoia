@@ -1,20 +1,20 @@
 inherited FrmConsSaidas: TFrmConsSaidas
   Caption = 'Consulta de sa'#237'das'
   ClientHeight = 323
-  ClientWidth = 742
+  ClientWidth = 864
   OnClose = FormClose
   OnShow = FormShow
-  ExplicitWidth = 748
+  ExplicitWidth = 870
   ExplicitHeight = 352
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanelGrid: TPanel
-    Width = 742
+    Width = 864
     Height = 209
-    ExplicitWidth = 742
+    ExplicitWidth = 831
     ExplicitHeight = 209
     inherited DBGrid: TDBGrid
-      Width = 740
+      Width = 862
       Height = 207
       DataSource = DataSource
       OnDblClick = DBGridDblClick
@@ -83,14 +83,20 @@ inherited FrmConsSaidas: TFrmConsSaidas
           Title.Caption = 'Abo/Rh bolsa'
           Width = 68
           Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'responsavel'
+          Title.Caption = 'Respons'#225'vel'
+          Visible = True
         end>
     end
   end
   inherited PanelBotoes: TPanel
     Top = 281
-    Width = 742
+    Width = 864
     ExplicitTop = 281
-    ExplicitWidth = 742
+    ExplicitWidth = 831
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick
     end
@@ -102,13 +108,13 @@ inherited FrmConsSaidas: TFrmConsSaidas
     end
   end
   inherited PanelConsulta: TPanel
-    Width = 742
-    ExplicitWidth = 742
+    Width = 864
+    ExplicitWidth = 831
     inherited GroupBoxConsulta: TGroupBox
-      Width = 740
-      ExplicitWidth = 740
+      Width = 862
+      ExplicitWidth = 829
       object BtnLocalizar: TSpeedButton [0]
-        Left = 640
+        Left = 712
         Top = 21
         Width = 78
         Height = 27
@@ -152,14 +158,14 @@ inherited FrmConsSaidas: TFrmConsSaidas
         OnClick = BtnLocalizarClick
       end
       object LabelAte: TLabel [1]
-        Left = 419
+        Left = 493
         Top = 28
         Width = 17
         Height = 13
         Caption = 'At'#233
       end
       object LabelDe: TLabel [2]
-        Left = 200
+        Left = 266
         Top = 28
         Width = 17
         Height = 13
@@ -183,14 +189,14 @@ inherited FrmConsSaidas: TFrmConsSaidas
         end
       end
       inherited EdtCons: TSearchBox
-        Left = 164
+        Left = 236
         Width = 557
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitLeft = 164
+        ExplicitLeft = 236
         ExplicitWidth = 557
       end
       object EdtDataFinal: TDateTimePicker
-        Left = 444
+        Left = 516
         Top = 24
         Width = 190
         Height = 21
@@ -200,7 +206,7 @@ inherited FrmConsSaidas: TFrmConsSaidas
         OnDropDown = EdtDataFinalDropDown
       end
       object EdtDataIni: TDateTimePicker
-        Left = 217
+        Left = 289
         Top = 24
         Width = 190
         Height = 21

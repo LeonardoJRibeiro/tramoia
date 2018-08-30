@@ -12,9 +12,15 @@ type
     BtnSair: TBitBtn;
     PanelRelatorios: TPanel;
     BtnConsEstoque: TBitBtn;
+    BtnConsSaidas: TBitBtn;
+    BtnConsPacientes: TBitBtn;
+    BtnConsEntradas: TBitBtn;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure BtnConsEstoqueClick(Sender: TObject);
+    procedure BtnConsEntradasClick(Sender: TObject);
+    procedure BtnConsPacientesClick(Sender: TObject);
+    procedure BtnConsSaidasClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
@@ -27,9 +33,33 @@ var
 
 implementation
 
-uses UClassMensagem, UClassForeignKeyForms, UConsEstoque;
+uses UClassMensagem, UClassForeignKeyForms, UConsEstoque, UConsEntrada,
+  UConsSaidas, UConsPaciente;
 
 {$R *.dfm}
+
+procedure TFrmSelCons.BtnConsPacientesClick(Sender: TObject);
+var
+  lRegistro: string;
+begin
+
+  TFrmConsPaciente.getConsPaciente(Self.FForeignFormKey, Self.FCodUsu, lRegistro);
+
+end;
+
+procedure TFrmSelCons.BtnConsSaidasClick(Sender: TObject);
+begin
+
+  TFrmConsSaidas.getConsSaida(Self.FForeignFormKey, Self.FCodUsu);
+
+end;
+
+procedure TFrmSelCons.BtnConsEntradasClick(Sender: TObject);
+begin
+
+  TFrmConsEntrada.getConsEntrada(Self.FForeignFormKey, Self.FCodUsu);
+
+end;
 
 procedure TFrmSelCons.BtnConsEstoqueClick(Sender: TObject);
 begin

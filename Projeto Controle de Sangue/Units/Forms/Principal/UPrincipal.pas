@@ -257,7 +257,15 @@ end;
 
 procedure TFrmPrincipal.FormShow(Sender: TObject);
 begin
+
   TimerLogin.Enabled := True;
+
+  ImageUEG.Align := alNone;
+
+  ImageUEG.Left := FrmPrincipal.Width;
+
+  ImageUEG.Top := StatusBar.Top - ImageUEG.Height - 40;
+
 end;
 
 function TFrmPrincipal.getAdmin: Boolean;

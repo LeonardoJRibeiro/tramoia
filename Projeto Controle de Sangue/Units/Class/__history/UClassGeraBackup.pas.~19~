@@ -95,7 +95,7 @@ begin
     lHostName := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'hostname', 'localhost');
 
     Writeln(lTextFile, 'mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' + lUserName +
-      ' --password="' + lPassWord + '" -h ' + lHostName + ' > %~dp0backup.sql');
+      ' --password="' + lPassWord + '" -h ' + lHostName + ' > backup.sql');
 
     CloseFile(lTextFile);
 

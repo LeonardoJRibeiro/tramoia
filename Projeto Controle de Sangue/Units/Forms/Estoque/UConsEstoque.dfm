@@ -32,9 +32,8 @@ object FrmConsEstoque: TFrmConsEstoque
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 2
-    ExplicitWidth = 351
     object BtnSair: TSpeedButton
-      Left = 137
+      Left = 183
       Top = 6
       Width = 75
       Height = 31
@@ -91,7 +90,6 @@ object FrmConsEstoque: TFrmConsEstoque
     Height = 72
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 351
     object GroupBoxConsulta: TGroupBox
       Left = 1
       Top = 7
@@ -99,7 +97,6 @@ object FrmConsEstoque: TFrmConsEstoque
       Height = 64
       Align = alBottom
       TabOrder = 0
-      ExplicitWidth = 349
       object GroupBoxTipoCons: TGroupBox
         Left = 9
         Top = 7
@@ -165,7 +162,6 @@ object FrmConsEstoque: TFrmConsEstoque
     Height = 97
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 351
     object DBGrid: TDBGrid
       Left = 1
       Top = 1

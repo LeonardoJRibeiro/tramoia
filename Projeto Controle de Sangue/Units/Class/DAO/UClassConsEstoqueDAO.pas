@@ -10,7 +10,8 @@ type
 
   public
 
-    function getConsulta(const pTIPOCONS: SmallInt; const pCHAVE: string; var pPersistencia: TPersistencia): Boolean;
+    function getConsulta(const pTIPOCONS, pLISTESTOQUE: SmallInt; const pCHAVE: string;
+      var pPersistencia: TPersistencia): Boolean;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -32,7 +33,7 @@ begin
   inherited;
 end;
 
-function TConsEstoqueDAO.getConsulta(const pTIPOCONS: SmallInt; const pCHAVE: string;
+function TConsEstoqueDAO.getConsulta(const pTIPOCONS, pLISTESTOQUE: SmallInt; const pCHAVE: string;
   var pPersistencia: TPersistencia): Boolean;
 var
   lOrderBy: string;
@@ -48,10 +49,12 @@ begin
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) AS abo,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
-      ') AS sorologia');
+      ') AS sorologia,');
+    pPersistencia.Query.SQL.Add('IF(b.possui_estoque=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
+      QuotedStr('NÃO') + ') AS possui_estoque');
     pPersistencia.Query.SQL.Add('FROM bolsa b');
 
-    pPersistencia.Query.SQL.Add('WHERE  possui_estoque='+QuotedStr('S'));
+    pPersistencia.Query.SQL.Add('WHERE  0=0');
 
     if (pTIPOCONS = 0) then // Tipo.
     begin
@@ -80,6 +83,17 @@ begin
 
       lOrderBy := 'b.abo';
 
+    end;
+
+    case (pLISTESTOQUE) of
+      0: // Com estoque.
+        begin
+          pPersistencia.Query.SQL.Add('  AND b.possui_estoque = ' + QuotedStr('S'));
+        end;
+      1: // Sem estoque.
+        begin
+          pPersistencia.Query.SQL.Add('  AND b.possui_estoque = ' + QuotedStr('N'));
+        end;
     end;
 
     pPersistencia.Query.SQL.Add(' GROUP BY');

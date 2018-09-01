@@ -153,7 +153,6 @@ begin
 
     pPersistencia.Query.SQL.Add(lGroupBy.ToString);
     pPersistencia.Query.SQL.Add(' ORDER BY ' + lOrderBy + ';');
-    pPersistencia.Query.SQL.SaveToFile('C:\Users\xande\Desktop\sql.txt');
 
     pPersistencia.Query.Open;
 

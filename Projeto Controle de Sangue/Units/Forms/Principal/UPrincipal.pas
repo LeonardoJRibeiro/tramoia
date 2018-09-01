@@ -194,7 +194,7 @@ begin
       if (lGeraBackup.CriaBackup) then
       begin
 
-        Application.MessageBox(PChar('Backup criado em ' + ExtractFilePath(Application.ExeName) + 'backup.sql' +
+        Application.MessageBox(PChar('Backup criado em \\Meus documentos\Controle de sangue\Backup' +
           ' com sucesso'), 'Sucesso', MB_OK + MB_ICONINFORMATION)
 
       end;
@@ -260,11 +260,11 @@ begin
 
   TimerLogin.Enabled := True;
 
-  ImageUEG.Align := alNone;
+{  ImageUEG.Align := alNone;
 
   ImageUEG.Left := FrmPrincipal.Width;
 
-  ImageUEG.Top := StatusBar.Top - ImageUEG.Height - 40;
+  ImageUEG.Top := StatusBar.Top - ImageUEG.Height - 40; }
 
 end;
 

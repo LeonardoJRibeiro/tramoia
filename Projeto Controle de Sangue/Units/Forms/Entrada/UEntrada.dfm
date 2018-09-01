@@ -31,6 +31,7 @@ object FrmEntrada: TFrmEntrada
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitWidth = 344
     object LabelData: TLabel
       Left = 91
       Top = 11
@@ -194,6 +195,7 @@ object FrmEntrada: TFrmEntrada
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitWidth = 344
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9

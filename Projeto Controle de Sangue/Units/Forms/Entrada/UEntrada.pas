@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.WinXCtrls,
-  UClassBolsaDAO, UBiblioteca;
+  UClassBolsaDAO;
 
 type
   TFrmEntrada = class(TForm)
@@ -176,10 +176,6 @@ begin
 
               BtnGravar.Enabled := False;
 
-              TBiblioteca.AtivaDesativaCompontes(FrmEntrada, False);
-
-              MessageDlg(Format(TMensagem.getMensagem(23), [LabelNumeroBolsa.Caption]), mtInformation, [mbOK], -1);
-
               BtnNovo.SetFocus;
 
             end;
@@ -209,10 +205,6 @@ end;
 
 procedure TFrmEntrada.BtnNovoClick(Sender: TObject);
 begin
-
-  TBiblioteca.AtivaDesativaCompontes(Self, True);
-
-  EdtOrdemSaida.Enabled := False;
 
   DateTimePickerData.DateTime := Now;
 

@@ -132,16 +132,6 @@ begin
       begin
         Result := 'Não é possível excluir a entrada. Motivo: A bolsa da entrada já não está mais no estoque.';
       end;
-
-    23:
-      begin
-        Result := 'Entrada realizada com sucesso.';
-      end;
-
-    24:
-      begin
-        Result := 'Saída realizada com sucesso.';
-      end;
   end;
 
 end;

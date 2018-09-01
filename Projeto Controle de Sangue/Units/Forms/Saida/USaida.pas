@@ -33,7 +33,7 @@ type
     BtnSair: TBitBtn;
     EdtId: TEdit;
     LabelId: TLabel;
-    EdtVolume: TEdit;
+    EdtVolume: TMaskEdit;
     BtnConsPaciente: TSpeedButton;
     EdtRegistroPaciente: TEdit;
     DateTimePickerData: TDateTimePicker;
@@ -153,42 +153,13 @@ begin
 
   end;
 
-  if (Trim(EdtVolume.Text).IsEmpty) then
-  begin
-
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelVolume.Caption]), mtWarning, [mbOK], -1);
-
-    EdtHospital.SetFocus;
-
-    exit;
-
-  end;
-
-  if (Trim(EdtHospital.Text).IsEmpty) then
-  begin
-
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelHospital.Caption]), mtWarning, [mbOK], -1);
-
-    EdtHospital.SetFocus;
-
-    exit;
-
-  end;
-
   Self.SalvaSaida;
-
-  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', Trim(EdtHospital.Text));
 
 end;
 
 procedure TFrmSaida.BtnNovoClick(Sender: TObject);
 begin
-  TBiblioteca.AtivaDesativaCompontes(Self, true);
 
-  EdtHospital.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', '');
-
-  EdtId.Enabled := False;
-  EdtNomePaciente.Enabled := False;
   EdtId.Clear;
   DateTimePickerData.Date := now;
   EdtResponsavel.Text := TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
@@ -198,13 +169,14 @@ begin
   EdtAboBolsa.Clear;
   EdtTipo.Clear;
   EdtVolume.Clear;
+  EdtHospital.Clear;
   RadioGroupPai.ItemIndex := 1;
   RadioGroupTA.ItemIndex := 1;
   RadioGroupAGH.ItemIndex := 1;
   RadioGroup37.ItemIndex := 1;
   EdtResponsavel.SetFocus;
 
-  BtnGravar.Enabled := true;
+  BtnGravar.Enabled := True;
 
   Self.FId := -1;
   Self.FIdBolsa := -1;
@@ -288,7 +260,6 @@ begin
           RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'P', 0, 1);
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
           Self.FIdBolsa := lSaida.Id_Bolsa;
-          EdtResponsavel.Text := lSaida.Responsavel;
 
           EdtRegistroPaciente.SetFocus;
 
@@ -327,7 +298,7 @@ begin
     end
     else
     begin
-      lVerificaNumBolsa := true;
+      lVerificaNumBolsa := True;
     end;
 
     if (lVerificaNumBolsa) then
@@ -461,9 +432,8 @@ begin
   end
   else
   begin
-    EdtHospital.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', '');
     DateTimePickerData.Date := now;
-    EdtResponsavel.Text := TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
+    EdtResponsavel.Text :=  TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
     EdtResponsavel.SetFocus;
 
     Self.FIdBolsa := -1;
@@ -533,10 +503,6 @@ begin
         begin
 
           EdtId.Text := lSaida.Id.ToString;
-
-          TBiblioteca.AtivaDesativaCompontes(Self, False);
-
-          MessageDlg(TMensagem.getMensagem(24), mtInformation, [mbOK], -1);
 
           BtnGravar.Enabled := False;
 

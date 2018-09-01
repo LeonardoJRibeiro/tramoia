@@ -125,8 +125,6 @@ begin
 
       if (Self.SalvaEndereco) then
       begin
-        TBiblioteca.AtivaDesativaCompontes(Self, True);
-
         Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Paciente'])), PChar('Informação'),
           MB_OK + MB_ICONINFORMATION);
         ModalResult := mrOk;

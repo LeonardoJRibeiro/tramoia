@@ -61,9 +61,9 @@ object FrmSaida: TFrmSaida
       object LabelVolume: TLabel
         Left = 10
         Top = 63
-        Width = 34
+        Width = 48
         Height = 13
-        Caption = 'Volume'
+        Caption = 'Volume(*)'
       end
       object LabelAboSangue: TLabel
         Left = 223
@@ -82,9 +82,9 @@ object FrmSaida: TFrmSaida
       object LabelHospital: TLabel
         Left = 101
         Top = 63
-        Width = 38
+        Width = 52
         Height = 13
-        Caption = 'Hospital'
+        Caption = 'Hospital(*)'
       end
       object LabelTipo: TLabel
         Left = 294
@@ -191,14 +191,13 @@ object FrmSaida: TFrmSaida
           TabOrder = 2
         end
       end
-      object EdtVolume: TMaskEdit
+      object EdtVolume: TEdit
         Left = 10
         Top = 78
         Width = 84
         Height = 21
         MaxLength = 9
         TabOrder = 2
-        Text = ''
       end
     end
     object GroupBoxPaciente: TGroupBox

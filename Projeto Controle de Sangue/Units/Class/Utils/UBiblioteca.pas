@@ -2,7 +2,7 @@ unit UBiblioteca;
 
 interface
 
-uses System.Classes, System.SysUtils, IniFiles, Vcl.Forms, Vcl.stdctrls, UClassUsuarioDao;
+uses System.Classes, System.SysUtils, IniFiles, Vcl.Forms, Vcl.stdctrls, UClassUsuarioDao, Vcl.ComCtrls, Vcl.ExtCtrls;
 
 type
   TBiblioteca = class(TPersistent)
@@ -32,22 +32,29 @@ begin
   for lCount := 0 to pFORM.ComponentCount - 1 do
   begin
 
-    if (TComponent(pFORM.Components[lCount]) is TEdit) then
+    if (pFORM.Components[lCount] is TEdit) then
     begin
-      TEdit(TComponent(pFORM.Components[lCount])).Enabled := pATIVO;
-      Break;
+      TEdit(pFORM.Components[lCount]).Enabled := pATIVO;
     end;
 
-    if (TComponent(pFORM.Components[lCount]) is TComboBox) then
+    if (pFORM.Components[lCount] is TComboBox) then
     begin
-      TComboBox(TComponent(pFORM.Components[lCount])).Enabled := pATIVO;
-      Break;
+      TComboBox(pFORM.Components[lCount]).Enabled := pATIVO;
     end;
 
-    if (TComponent(pFORM.Components[lCount]) is TCheckBox) then
+    if (pFORM.Components[lCount] is TCheckBox) then
     begin
-      TCheckBox(TComponent(pFORM.Components[lCount])).Checked := pATIVO;
-      Break;
+      TCheckBox(pFORM.Components[lCount]).Enabled := pATIVO;
+    end;
+
+    if (TComponent(pFORM.Components[lCount]) is TDateTimePicker) then
+    begin
+      TDateTimePicker(pFORM.Components[lCount]).Enabled := pATIVO;
+    end;
+
+    if (TComponent(pFORM.Components[lCount]) is TRadioGroup) then
+    begin
+      TRadioGroup(pFORM.Components[lCount]).Enabled := pATIVO;
     end;
 
   end;

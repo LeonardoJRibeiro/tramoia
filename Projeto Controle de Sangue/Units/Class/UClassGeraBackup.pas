@@ -82,24 +82,45 @@ var
   lUserName: string;
   lPassWord: string;
   lHostName: string;
+
+  lStringListScript: TStringList;
+
 begin
 
   try
 
-    AssignFile(lTextFile, Self.FCaminhoExe + 'doBackup.bat');
+    lStringListScript := TStringList.Create;
+    try
 
-    Rewrite(lTextFile);
+      lStringListScript.Add('FOR /F "tokens=1,2,3 delims=/ " %%a in ("%DATE%") do (');
+      lStringListScript.Add('set DIA=%%a');
+      lStringListScript.Add('set MES=%%b');
+      lStringListScript.Add('set ANO=%%c');
+      lStringListScript.Add(')');
 
-    lUserName := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'user_name', 'root');
-    lPassWord := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'password', '');
-    lHostName := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'hostname', 'localhost');
+      lStringListScript.Add('set data=%DIA%_%MES%_%ANO%');
 
-    Writeln(lTextFile, 'mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' + lUserName +
-      ' --password="' + lPassWord + '" -h ' + lHostName + ' > %~dp0backup.sql');
+      lUserName := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'user_name', 'root');
+      lPassWord := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'password', '');
+      lHostName := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'hostname', 'localhost');
 
-    CloseFile(lTextFile);
+      lStringListScript.Add('mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' +
+        lUserName + ' --password="' + lPassWord + '" -h ' + lHostName + ' > ' +
+        '"%userprofile%\documents\Controle de sangue\Backups\backup_%data%.sql"');
 
-    Result := True;
+      AssignFile(lTextFile, Self.FCaminhoExe + 'doBackup.bat');
+
+      Rewrite(lTextFile);
+
+      Writeln(lTextFile, lStringListScript.Text);
+
+      CloseFile(lTextFile);
+
+      Result := True;
+
+    finally
+      lStringListScript.Destroy;
+    end;
 
   except
     on E: Exception do

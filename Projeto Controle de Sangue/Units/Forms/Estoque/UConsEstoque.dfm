@@ -149,8 +149,7 @@ object FrmConsEstoque: TFrmConsEstoque
           OnChange = ComboBoxTipoConsChange
           Items.Strings = (
             'Com estoque'
-            'Sem estoque'
-            'Ambos')
+            'Sem estoque')
         end
       end
     end
@@ -162,7 +161,7 @@ object FrmConsEstoque: TFrmConsEstoque
     Height = 97
     Align = alClient
     TabOrder = 1
-    object DBGrid: TDBGrid
+    object DBGridComEstoque: TDBGrid
       Left = 1
       Top = 1
       Width = 436
@@ -203,6 +202,67 @@ object FrmConsEstoque: TFrmConsEstoque
           Title.Alignment = taCenter
           Title.Caption = 'Quantidade total'
           Width = 86
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'tipo'
+          Title.Alignment = taCenter
+          Title.Caption = 'Tipo'
+          Width = 42
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'sorologia'
+          Title.Alignment = taCenter
+          Title.Caption = 'Sorologia'
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'possui_estoque'
+          Title.Alignment = taCenter
+          Title.Caption = 'Possui  estoque'
+          Width = 80
+          Visible = True
+        end>
+    end
+    object DBGridSemEstoque: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 436
+      Height = 95
+      Align = alClient
+      Color = clSkyBlue
+      DataSource = DataSource
+      Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      Columns = <
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'ultimasaida'
+          Title.Alignment = taCenter
+          Title.Caption = #218'ltima Sa'#237'da'
+          Width = 65
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'abo'
+          Title.Alignment = taCenter
+          Title.Caption = 'Abo/Rh'
+          Width = 55
           Visible = True
         end
         item

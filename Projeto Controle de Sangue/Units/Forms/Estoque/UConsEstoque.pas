@@ -17,10 +17,11 @@ type
     ComboBoxTipoCons: TComboBox;
     EdtCons: TSearchBox;
     PanelGrid: TPanel;
-    DBGrid: TDBGrid;
+    DBGridComEstoque: TDBGrid;
     DataSource: TDataSource;
     GroupBoxListarEstoque: TGroupBox;
     ComboBoxListarEstoque: TComboBox;
+    DBGridSemEstoque: TDBGrid;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure ComboBoxTipoConsChange(Sender: TObject);
@@ -84,7 +85,16 @@ begin
 
         DataSource.DataSet := Self.FPersistencia.Query;
 
-        DBGrid.SetFocus;
+        DBGridComEstoque.Visible := ComboBoxListarEstoque.ItemIndex = 0;
+        DBGridSemEstoque.Visible := ComboBoxListarEstoque.ItemIndex = 1;
+
+        case ComboBoxListarEstoque.ItemIndex of
+
+          0: DBGridComEstoque.SetFocus;
+
+          1: DBGridSemEstoque.SetFocus;
+
+        end;
 
       end;
 

@@ -250,19 +250,10 @@ object FrmConsEstoque: TFrmConsEstoque
         item
           Alignment = taCenter
           Expanded = False
-          FieldName = 'ultimasaida'
-          Title.Alignment = taCenter
-          Title.Caption = #218'ltima Sa'#237'da'
-          Width = 65
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
           FieldName = 'abo'
           Title.Alignment = taCenter
           Title.Caption = 'Abo/Rh'
-          Width = 55
+          Width = 94
           Visible = True
         end
         item
@@ -271,7 +262,7 @@ object FrmConsEstoque: TFrmConsEstoque
           FieldName = 'tipo'
           Title.Alignment = taCenter
           Title.Caption = 'Tipo'
-          Width = 42
+          Width = 88
           Visible = True
         end
         item
@@ -280,6 +271,7 @@ object FrmConsEstoque: TFrmConsEstoque
           FieldName = 'sorologia'
           Title.Alignment = taCenter
           Title.Caption = 'Sorologia'
+          Width = 105
           Visible = True
         end
         item
@@ -288,7 +280,7 @@ object FrmConsEstoque: TFrmConsEstoque
           FieldName = 'possui_estoque'
           Title.Alignment = taCenter
           Title.Caption = 'Possui  estoque'
-          Width = 80
+          Width = 94
           Visible = True
         end>
     end

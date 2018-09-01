@@ -7,8 +7,8 @@ uses System.SysUtils, System.Classes, UClassPersistencia;
 type
   TConsEstoqueDAO = class(TPersistent)
   private
-    procedure setSqlComEstoque(var pPersistencia: TPersistencia);
-    procedure setSqlSemEstoque(var pPersistencia: TPersistencia);
+    function getSqlComEstoque: string;
+    function getSqlSemEstoque: string;
 
   public
 
@@ -35,38 +35,57 @@ begin
   inherited;
 end;
 
-procedure TConsEstoqueDAO.setSqlComEstoque(var pPersistencia: TPersistencia);
+function TConsEstoqueDAO.getSqlComEstoque: string;
+var
+  SQL: TStringBuilder;
 begin
+  SQL := TStringBuilder.Create;
 
-    pPersistencia.Query.SQL.Add('SELECT');
-    pPersistencia.Query.SQL.Add('  COUNT(b.id) AS quantidade,');
-    pPersistencia.Query.SQL.Add('  CONCAT(SUM(b.volume), ' + QuotedStr(' mL') + ') AS volume,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) AS abo,');
-    pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
+  try
+    SQL.Append('SELECT');
+    SQL.Append('  COUNT(b.id) AS quantidade,');
+    SQL.Append('  CONCAT(SUM(b.volume), ' + QuotedStr(' mL') + ') AS volume,');
+    SQL.Append('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) AS abo,');
+    SQL.Append('  b.tipo,');
+    SQL.Append('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
       ') AS sorologia,');
-    pPersistencia.Query.SQL.Add('  IF(b.possui_estoque=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
+    SQL.Append('  IF(b.possui_estoque=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
       QuotedStr('NÃO') + ') AS possui_estoque ');
-    pPersistencia.Query.SQL.Add('FROM bolsa b ');
+    SQL.Append('FROM bolsa b ');
 
-    pPersistencia.Query.SQL.Add('WHERE b.possui_estoque = ' + QuotedStr('S'));
+    SQL.Append(' WHERE b.possui_estoque = ' + QuotedStr('S'));
 
+    Result := SQL.ToString;
+  finally
+    SQL.Free;
+  end;
 end;
 
-procedure TConsEstoqueDAO.setSqlSemEstoque(var pPersistencia: TPersistencia);
+function TConsEstoqueDAO.getSqlSemEstoque: string;
+var
+  SQL: TStringBuilder;
 begin
+  SQL := TStringBuilder.Create;
 
-    pPersistencia.Query.SQL.Add('SELECT');
-    pPersistencia.Query.SQL.Add('  (SELECT MAX(s.data_saida) FROM saida s LEFT JOIN bolsa b ON s.id_bolsa = b.id WHERE s.id_bolsa = b.id) AS ultimasaida,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) AS abo,');
-    pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
-      ') AS sorologia,');
-    pPersistencia.Query.SQL.Add('  IF(b.possui_estoque=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
-      QuotedStr('NÃO') + ') AS possui_estoque ');
-    pPersistencia.Query.SQL.Add('FROM bolsa b ');
+  try
+    SQL.Append('SELECT');
+    SQL.Append('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) AS abo,');
+    SQL.Append('  b.tipo,');
+    SQL.Append('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
+    ') AS sorologia,');
+    SQL.Append('  IF(b.possui_estoque=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
+    QuotedStr('NÃO') + ') AS possui_estoque ');
+    SQL.Append('FROM bolsa b ');
+    SQL.Append(' INNER JOIN saida s ');
+    SQL.Append(' ON b.id = s.id_bolsa');
 
-    pPersistencia.Query.SQL.Add('WHERE  b.possui_estoque = '+QuotedStr('N')+' and CONCAT(b.abo, '+QuotedStr('/')+', b.rh) NOT IN (SELECT CONCAT(b.abo, '+QuotedStr('/')+', b.rh) FROM bolsa b WHERE b.possui_estoque = '+QuotedStr('S')+')');
+    SQL.Append(' WHERE  b.possui_estoque = '+QuotedStr('N')+' and CONCAT(b.abo, '+QuotedStr('/')+', b.rh)'+
+    ' NOT IN (SELECT CONCAT(b.abo, '+QuotedStr('/')+', b.rh) FROM bolsa b WHERE b.possui_estoque = '+QuotedStr('S')+')');
+
+    Result := SQL.ToString;
+  finally
+    SQL.Free;
+  end;
 
 end;
 
@@ -74,20 +93,32 @@ function TConsEstoqueDAO.getConsulta(const pTIPOCONS, pLISTESTOQUE: SmallInt; co
   var pPersistencia: TPersistencia): Boolean;
 var
   lOrderBy: string;
+  lGroupBy: TStringBuilder;
 begin
 
+  lGroupBy := TStringBuilder.Create;
+
   try
+
+    lGroupBy.Append(' GROUP BY');
+    lGroupBy.Append('  b.abo,');
+    lGroupBy.Append('  b.rh,');
+    lGroupBy.Append('  b.tipo,');
+    lGroupBy.Append('  b.sorologia,');
 
     pPersistencia.IniciaTransacao;
 
     case (pLISTESTOQUE) of
       0: // Com estoque.
         begin
-          setSqlComEstoque(pPersistencia);
+          pPersistencia.Query.SQL.Add(getSqlComEstoque);
+          lGroupBy.Append('  b.possui_estoque');
         end;
       1: // Sem estoque.
         begin
-          setSqlSemEstoque(pPersistencia);
+          pPersistencia.Query.SQL.Add(getSqlSemEstoque);
+          lGroupBy.Append('  b.possui_estoque,');
+          lGroupBy.Append('  s.data_saida ');
         end;
     end;
 
@@ -97,7 +128,7 @@ begin
       if (not pCHAVE.Trim.IsEmpty) then
       begin
 
-        pPersistencia.Query.SQL.Add(' AND b.tipo = :pTipo');
+        pPersistencia.Query.SQL.Add(' AND b.tipo = :pTipo ');
         pPersistencia.setParametro('pTipo', pCHAVE);
 
       end;
@@ -111,7 +142,7 @@ begin
       if (not pCHAVE.Trim.IsEmpty) then
       begin
 
-        pPersistencia.Query.SQL.Add(' AND b.abo = :pAbo');
+        pPersistencia.Query.SQL.Add(' AND b.abo = :pAbo ');
         pPersistencia.setParametro('pAbo', pCHAVE);
 
       end;
@@ -120,14 +151,9 @@ begin
 
     end;
 
-    pPersistencia.Query.SQL.Add(' GROUP BY');
-    pPersistencia.Query.SQL.Add('  b.abo,');
-    pPersistencia.Query.SQL.Add('  b.rh,');
-    pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  b.sorologia,');
-    pPersistencia.Query.SQL.Add('  b.possui_estoque');
-
-    pPersistencia.Query.SQL.Add(' ORDER BY ' + lOrderBy);
+    pPersistencia.Query.SQL.Add(lGroupBy.ToString);
+    pPersistencia.Query.SQL.Add(' ORDER BY ' + lOrderBy + ';');
+    pPersistencia.Query.SQL.SaveToFile('C:\Users\xande\Desktop\sql.txt');
 
     pPersistencia.Query.Open;
 

@@ -159,7 +159,7 @@ begin
     'FrmConsEstoque.ComboBoxTipoCons', '0').ToInteger;
 
   ComboBoxListarEstoque.ItemIndex := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'IndexCombobox',
-    'FrmConsEstoque.ComboBoxListarEstoque', '2').ToInteger;
+    'FrmConsEstoque.ComboBoxListarEstoque', '0').ToInteger;
 
   EdtConsInvokeSearch(Sender);
 

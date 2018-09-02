@@ -42,9 +42,9 @@ begin
     pPersistencia.IniciaTransacao;
 
     pPersistencia.Query.SQL.Add('SELECT');
-    pPersistencia.Query.SQL.Add('  COUNT(b.id) as quantidade,');
-    pPersistencia.Query.SQL.Add('  CONCAT(sum(b.volume), ' + QuotedStr(' mL') + ') as volume,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) as abo,');
+    pPersistencia.Query.SQL.Add('  COUNT(b.id) AS quantidade,');
+    pPersistencia.Query.SQL.Add('  CONCAT(SUM(b.volume), ' + QuotedStr(' mL') + ') AS volume,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS abo,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
       ') AS sorologia');
@@ -67,8 +67,8 @@ begin
     pPersistencia.Query.SQL.Add('  b.sorologia');
 
     pPersistencia.Query.SQL.Add('ORDER BY');
-    pPersistencia.Query.SQL.Add('  quantidade desc,');
-    pPersistencia.Query.SQL.Add('  volume desc');
+    pPersistencia.Query.SQL.Add('  quantidade DESC,');
+    pPersistencia.Query.SQL.Add('  volume DESC');
 
     pPersistencia.Query.Open;
 

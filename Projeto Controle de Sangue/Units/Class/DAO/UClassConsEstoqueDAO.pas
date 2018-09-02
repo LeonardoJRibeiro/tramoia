@@ -45,7 +45,7 @@ begin
     SQL.Append('SELECT');
     SQL.Append('  COUNT(b.id) AS quantidade,');
     SQL.Append('  CONCAT(SUM(b.volume), ' + QuotedStr(' mL') + ') AS volume,');
-    SQL.Append('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) AS abo,');
+    SQL.Append('  CONCAT(b.abo, b.rh) AS abo,');
     SQL.Append('  b.tipo,');
     SQL.Append('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
       ') AS sorologia,');
@@ -69,7 +69,7 @@ begin
 
   try
     SQL.Append('SELECT');
-    SQL.Append('  CONCAT(b.abo, ' + QuotedStr('/') + ', b.rh) AS abo,');
+    SQL.Append('  CONCAT(b.abo, b.rh) AS abo,');
     SQL.Append('  b.tipo,');
     SQL.Append('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
     ') AS sorologia,');
@@ -79,8 +79,8 @@ begin
     SQL.Append(' INNER JOIN saida s ');
     SQL.Append(' ON b.id = s.id_bolsa');
 
-    SQL.Append(' WHERE  b.possui_estoque = '+QuotedStr('N')+' and CONCAT(b.abo, '+QuotedStr('/')+', b.rh)'+
-    ' NOT IN (SELECT CONCAT(b.abo, '+QuotedStr('/')+', b.rh) FROM bolsa b WHERE b.possui_estoque = '+QuotedStr('S')+')');
+    SQL.Append(' WHERE  b.possui_estoque = '+QuotedStr('N')+' and CONCAT(b.abo, b.rh)'+
+    ' NOT IN (SELECT CONCAT(b.abo, b.rh) FROM bolsa b WHERE b.possui_estoque = '+QuotedStr('S')+')');
 
     Result := SQL.ToString;
   finally

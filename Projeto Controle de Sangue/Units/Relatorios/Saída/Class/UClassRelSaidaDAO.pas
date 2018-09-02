@@ -46,10 +46,10 @@ begin
     pPersistencia.Query.SQL.Add('  s.data_saida,');
     pPersistencia.Query.SQL.Add('  s.hospital,');
     pPersistencia.Query.SQL.Add('  p.nome,');
-    pPersistencia.Query.SQL.Add('  concat(p.abo,' + QuotedStr('/') + ',p.rh) AS abo_pac,');
+    pPersistencia.Query.SQL.Add('  CONCAT(p.abo, p.rh) AS abo_pac,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo,' + QuotedStr('/') + ', b.rh) AS abo_bol,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS abo_bol,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_ta,');
     pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_agh,');
@@ -64,7 +64,6 @@ begin
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
     pPersistencia.Query.SQL.Add('ON(b.id = s.id_bolsa)');
 
-    // Se parar parâmetro pro SQL da erro.
     pPersistencia.Query.SQL.Add('WHERE s.data_saida BETWEEN :pDataIni AND :pDataFim');
     pPersistencia.setParametro('pDataIni', pRELSAIDA.DataIni);
     pPersistencia.setParametro('pDataFim', pRELSAIDA.DataFim);

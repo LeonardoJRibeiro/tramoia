@@ -114,7 +114,6 @@ object FrmEntrada: TFrmEntrada
       CharCase = ecUpperCase
       MaxLength = 15
       TabOrder = 6
-      OnEnter = EdtOrigemEnter
     end
     object EdtObservacao: TEdit
       Left = 10

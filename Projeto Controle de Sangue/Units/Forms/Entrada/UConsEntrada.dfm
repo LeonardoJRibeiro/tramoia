@@ -81,7 +81,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
         item
           Expanded = False
           FieldName = 'observacao'
-          Title.Caption = 'Obseva'#231#227'o'
+          Title.Caption = 'Observa'#231#227'o'
           Width = 243
           Visible = True
         end>

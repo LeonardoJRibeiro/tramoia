@@ -129,6 +129,10 @@ begin
 
         Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Paciente'])), PChar('Informação'),
           MB_OK + MB_ICONINFORMATION);
+
+        TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'CodigoIbge', 'FrmCadPaciente.EdtCodMunicipio',
+          Trim(EdtCodMunicipio.Text));
+
         ModalResult := mrOk;
       end;
 
@@ -618,6 +622,18 @@ end;
 
 procedure TFrmCadPaciente.FormShow(Sender: TObject);
 begin
+
+  if (not (Self.FIdPaciente > 0)) then
+  begin
+    EdtCodMunicipio.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'CodigoIbge',
+      'FrmCadPaciente.EdtCodMunicipio', '');
+    if (not Trim(EdtCodMunicipio.Text).IsEmpty) then
+    begin
+      EdtCodMunicipioExit(Self);
+    end;
+
+  end;
+
   EdtNumProntuario.SetFocus;
 end;
 

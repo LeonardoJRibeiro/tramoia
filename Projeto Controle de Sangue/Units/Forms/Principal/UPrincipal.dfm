@@ -50755,6 +50755,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object MenuItemConsPaciente: TMenuItem
         Caption = 'Consultar'
+        OnClick = MenuItemConsPacienteClick
       end
     end
     object MenuItemEntradas: TMenuItem

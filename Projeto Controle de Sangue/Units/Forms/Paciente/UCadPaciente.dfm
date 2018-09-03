@@ -44,6 +44,10 @@ object FrmCadPaciente: TFrmCadPaciente
     TabOrder = 0
     object TabSheetDadosGerais: TTabSheet
       Caption = 'Dados gerais'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PanelDadosPessoais: TPanel
         Left = 0
         Top = 0
@@ -402,7 +406,6 @@ object FrmCadPaciente: TFrmCadPaciente
             EditLabel.Caption = 'Nome Munic'#237'pio'
             ReadOnly = True
             TabOrder = 4
-            Text = 'ITAPURANGA'
           end
           object EdtEstado: TLabeledEdit
             Left = 396
@@ -416,7 +419,6 @@ object FrmCadPaciente: TFrmCadPaciente
             EditLabel.Caption = 'Estado'
             ReadOnly = True
             TabOrder = 5
-            Text = 'GO'
           end
           object EdtCodMunicipio: TEdit
             Left = 10
@@ -429,7 +431,6 @@ object FrmCadPaciente: TFrmCadPaciente
             MaxLength = 7
             NumbersOnly = True
             TabOrder = 3
-            Text = '5211206'
             OnExit = EdtCodMunicipioExit
             OnKeyDown = EdtCodMunicipioKeyDown
           end
@@ -478,6 +479,10 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object MemoObservacoes: TMemo
         Left = 16
         Top = 10

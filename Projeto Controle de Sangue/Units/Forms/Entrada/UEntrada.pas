@@ -33,7 +33,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure EdtOrigemEnter(Sender: TObject);
     procedure BtnGravarClick(Sender: TObject);
     procedure EdtNumeroBolsaExit(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
@@ -182,6 +181,9 @@ begin
 
               BtnNovo.SetFocus;
 
+              TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Origem', 'FrmEntrada.EdtOrigem',
+                Trim(EdtOrigem.Text));
+
             end;
 
           finally
@@ -212,6 +214,8 @@ begin
 
   TBiblioteca.AtivaDesativaCompontes(Self, True);
 
+  EdtOrigem.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Origem', 'FrmEntrada.EdtOrigem', '');
+
   EdtOrdemSaida.Enabled := False;
 
   DateTimePickerData.DateTime := Now;
@@ -222,7 +226,6 @@ begin
   ComboBoxTipo.ItemIndex := 0;
   EdtVolume.Clear;
   ComboBoxAboBolsa.ItemIndex := -1;
-  EdtOrigem.Clear;
   EdtObservacao.Clear;
 
   EdtNumeroBolsa.SetFocus;
@@ -391,19 +394,6 @@ begin
 
 end;
 
-procedure TFrmEntrada.EdtOrigemEnter(Sender: TObject);
-begin
-
-  if (Trim(EdtOrigem.Text).IsEmpty) then
-  begin
-
-    EdtOrigem.Text := 'HEMOGO';
-    EdtOrigem.SelectAll;
-
-  end;
-
-end;
-
 procedure TFrmEntrada.FormCreate(Sender: TObject);
 begin
 
@@ -442,6 +432,8 @@ begin
 
     Self.FIdBolsa := -1;
     Self.FNumBolsa := '1';
+
+    EdtOrigem.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Origem', 'FrmEntrada.EdtOrigem', '');
 
     DateTimePickerData.DateTime := Now;
 

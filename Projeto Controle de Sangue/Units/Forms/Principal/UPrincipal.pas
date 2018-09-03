@@ -66,6 +66,7 @@ type
     procedure MenuItemRelEstoqueClick(Sender: TObject);
     procedure MenuItemGerarBackupClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure MenuItemConsPacienteClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -156,6 +157,13 @@ end;
 procedure TFrmPrincipal.MenuItemCadEntradaClick(Sender: TObject);
 begin
   TFrmEntrada.getEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
+procedure TFrmPrincipal.MenuItemConsPacienteClick(Sender: TObject);
+var
+  lNumProntuario: string;
+begin
+  TFrmConsPaciente.getConsPaciente(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario, lNumProntuario);
 end;
 
 procedure TFrmPrincipal.MenuItemConsultarEntradaClick(Sender: TObject);

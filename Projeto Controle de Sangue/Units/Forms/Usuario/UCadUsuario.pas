@@ -112,6 +112,7 @@ begin
 
             Application.MessageBox(PChar(TMensagem.getMensagem(20)), PChar('Aviso'), MB_OK + MB_ICONWARNING);
             EdtNome.SetFocus;
+            Exit;
 
           end;
 

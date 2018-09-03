@@ -11,7 +11,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
   inherited PanelGrid: TPanel
     Width = 782
     Height = 256
-    ExplicitWidth = 745
+    ExplicitWidth = 782
     ExplicitHeight = 256
     inherited DBGrid: TDBGrid
       Width = 780
@@ -91,7 +91,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
     Top = 328
     Width = 782
     ExplicitTop = 328
-    ExplicitWidth = 745
+    ExplicitWidth = 782
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick
     end
@@ -104,10 +104,10 @@ inherited FrmConsEntrada: TFrmConsEntrada
   end
   inherited PanelConsulta: TPanel
     Width = 782
-    ExplicitWidth = 745
+    ExplicitWidth = 782
     inherited GroupBoxConsulta: TGroupBox
       Width = 780
-      ExplicitWidth = 743
+      ExplicitWidth = 780
       object LabelAte: TLabel [0]
         Left = 410
         Top = 28
@@ -163,6 +163,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
           018D000000720000002300000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
+        OnClick = BtnLocalizarClick
       end
       inherited EdtCons: TSearchBox [3]
         Left = 152

@@ -110,7 +110,7 @@ begin
           begin
 
             pPersistencia.Query.SQL.Add('AND b.numero_da_bolsa = :pChave');
-            pPersistencia.setParametro('pChave', pCHAVE);
+            pPersistencia.setParametro('pChave', pCHAVE + '%');
 
           end;
 
@@ -137,8 +137,9 @@ begin
           if (not pCHAVE.Trim.IsEmpty) then
           begin
 
-            pPersistencia.Query.SQL.Add('AND p.num_prontuario = :pChave');
-            pPersistencia.setParametro('pChave', pCHAVE);
+            pPersistencia.Query.SQL.Add('AND ((p.num_prontuario = :pNum_Prontuario) OR (p.nome LIKE :pNome))');
+            pPersistencia.setParametro('pNum_Prontuario', pCHAVE);
+            pPersistencia.setParametro('pNome', pCHAVE + '%');
 
           end;
 
@@ -465,7 +466,7 @@ begin
       pObjeto.Prova_Compatibilidade_Ta := lPersistencia.Query.FieldByName('prova_compatibilidade_ta').Asstring;
       pObjeto.Prova_Compatibilidade_Agh := lPersistencia.Query.FieldByName('prova_compatibilidade_agh').Asstring;
       pObjeto.Prova_Compatibilidade_37 := lPersistencia.Query.FieldByName('prova_compatibilidade_37').Asstring;
-      pObjeto.Responsavel := lPersistencia.Query.FieldByName('responsavel').AsString;
+      pObjeto.Responsavel := lPersistencia.Query.FieldByName('responsavel').Asstring;
 
       Result := True;
 

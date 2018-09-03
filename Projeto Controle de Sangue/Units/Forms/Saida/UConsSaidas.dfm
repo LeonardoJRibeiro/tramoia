@@ -12,7 +12,7 @@ inherited FrmConsSaidas: TFrmConsSaidas
     Width = 864
     Height = 295
     ExplicitWidth = 864
-    ExplicitHeight = 209
+    ExplicitHeight = 295
     inherited DBGrid: TDBGrid
       Width = 862
       Height = 293
@@ -95,7 +95,7 @@ inherited FrmConsSaidas: TFrmConsSaidas
   inherited PanelBotoes: TPanel
     Top = 367
     Width = 864
-    ExplicitTop = 281
+    ExplicitTop = 367
     ExplicitWidth = 864
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick

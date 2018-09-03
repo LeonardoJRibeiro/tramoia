@@ -16,7 +16,6 @@ type
     MainMenu: TMainMenu;
     MenuItemPaciente: TMenuItem;
     MenuItemCadPaciente: TMenuItem;
-    MenuItemCadHistorico: TMenuItem;
     MenuItemRelatorios: TMenuItem;
     MenuItemRelEntradas: TMenuItem;
     MenuItemRelSaida: TMenuItem;
@@ -41,6 +40,7 @@ type
     MenuItemRelEstoque: TMenuItem;
     MenuItemBackup: TMenuItem;
     MenuItemGerarBackup: TMenuItem;
+    MenuItemConsPaciente: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -145,7 +145,7 @@ procedure TFrmPrincipal.MenuItemCadastrarUsuarioClick(Sender: TObject);
 begin
   if (Self.getAdmin) then
   begin
-    TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+    TFrmCadUsuario.getCadUsuario(TForeignKeyForms.FIdUPrincipal);
   end
   else
   begin
@@ -194,8 +194,8 @@ begin
       if (lGeraBackup.CriaBackup) then
       begin
 
-        Application.MessageBox(PChar('Backup criado em \\Meus documentos\Controle de sangue\Backup' +
-          ' com sucesso'), 'Sucesso', MB_OK + MB_ICONINFORMATION)
+        Application.MessageBox(PChar('Backup criado em Meus documentos\Controle de sangue\Backup' + ' com sucesso'),
+          'Sucesso', MB_OK + MB_ICONINFORMATION)
 
       end;
 
@@ -260,11 +260,11 @@ begin
 
   TimerLogin.Enabled := True;
 
-{  ImageUEG.Align := alNone;
+  { ImageUEG.Align := alNone;
 
-  ImageUEG.Left := FrmPrincipal.Width;
+    ImageUEG.Left := FrmPrincipal.Width;
 
-  ImageUEG.Top := StatusBar.Top - ImageUEG.Height - 40; }
+    ImageUEG.Top := StatusBar.Top - ImageUEG.Height - 40; }
 
 end;
 
@@ -281,7 +281,7 @@ begin
     except
       on E: Exception do
       begin
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(12), ['inforção do usuário', E.Message])),
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(1), ['informação do usuário', E.Message])),
           PChar('Erro'), MB_OK + MB_ICONERROR);
       end;
     end;

@@ -50753,8 +50753,8 @@ object FrmPrincipal: TFrmPrincipal
         Caption = 'Cadastrar'
         OnClick = MenuItemCadPacienteClick
       end
-      object MenuItemCadHistorico: TMenuItem
-        Caption = 'Hist'#243'rico'
+      object MenuItemConsPaciente: TMenuItem
+        Caption = 'Consultar'
       end
     end
     object MenuItemEntradas: TMenuItem

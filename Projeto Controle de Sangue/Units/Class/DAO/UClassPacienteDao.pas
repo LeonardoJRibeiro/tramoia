@@ -22,6 +22,8 @@ type
 
     function getExisteCpf(const pCPF: string): Boolean;
 
+    function getNomeEABO(const pNUM_PRONTUARIO: string; var pNOME, pABO: string): Boolean;
+
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
@@ -297,6 +299,46 @@ begin
 
 end;
 
+function TPacienteDAO.getNomeEABO(const pNUM_PRONTUARIO: string; var pNOME, pABO: string): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  nome,');
+      lPersistencia.Query.SQL.Add('  CONCAT(abo,rh) AS aborh');
+      lPersistencia.Query.SQL.Add('FROM paciente');
+      lPersistencia.Query.SQL.Add('WHERE num_prontuario = :pNum_Prontuario');
+
+      lPersistencia.setParametro('pNum_Prontuario', pNUM_PRONTUARIO);
+
+      lPersistencia.Query.Open;
+
+      pNOME := lPersistencia.Query.FieldByName('nome').AsString;
+      pABO := lPersistencia.Query.FieldByName('aborh').AsString;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        lPersistencia.Transacao.Rollback;
+        raise Exception.Create(E.Message);
+      end;
+
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
 function TPacienteDAO.Salvar(var pObjeto: TPaciente): Boolean;
 var
   lPersistencia: TPersistencia;
@@ -414,19 +456,19 @@ begin
       lPersistencia.Query.Open;
 
       pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').Asstring;
-      pObjeto.Nome_Pai := lPersistencia.Query.FieldByName('nome_pai').Asstring;
-      pObjeto.Nome_Mae := lPersistencia.Query.FieldByName('nome_mae').Asstring;
+      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').AsString;
+      pObjeto.Nome_Pai := lPersistencia.Query.FieldByName('nome_pai').AsString;
+      pObjeto.Nome_Mae := lPersistencia.Query.FieldByName('nome_mae').AsString;
       pObjeto.Data_Nascimento := lPersistencia.Query.FieldByName('data_nascimento').AsDateTime;
-      pObjeto.Sexo := lPersistencia.Query.FieldByName('sexo').Asstring;
-      pObjeto.Num_Prontuario := lPersistencia.Query.FieldByName('num_prontuario').Asstring;
-      pObjeto.Abo := lPersistencia.Query.FieldByName('abo').Asstring;
-      pObjeto.Rh := lPersistencia.Query.FieldByName('rh').Asstring;
-      pObjeto.Cpf := lPersistencia.Query.FieldByName('cpf').Asstring;
-      pObjeto.Rg := lPersistencia.Query.FieldByName('rg').Asstring;
-      pObjeto.Telefone := lPersistencia.Query.FieldByName('telefone').Asstring;
-      pObjeto.Sus := lPersistencia.Query.FieldByName('sus').Asstring;
-      pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').Asstring;
+      pObjeto.Sexo := lPersistencia.Query.FieldByName('sexo').AsString;
+      pObjeto.Num_Prontuario := lPersistencia.Query.FieldByName('num_prontuario').AsString;
+      pObjeto.Abo := lPersistencia.Query.FieldByName('abo').AsString;
+      pObjeto.Rh := lPersistencia.Query.FieldByName('rh').AsString;
+      pObjeto.Cpf := lPersistencia.Query.FieldByName('cpf').AsString;
+      pObjeto.Rg := lPersistencia.Query.FieldByName('rg').AsString;
+      pObjeto.Telefone := lPersistencia.Query.FieldByName('telefone').AsString;
+      pObjeto.Sus := lPersistencia.Query.FieldByName('sus').AsString;
+      pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').AsString;
 
       Result := True;
 

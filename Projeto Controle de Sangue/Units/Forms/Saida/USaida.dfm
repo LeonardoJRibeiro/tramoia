@@ -5,7 +5,7 @@ object FrmSaida: TFrmSaida
   BorderStyle = bsSingle
   Caption = 'Sa'#237'da de sangue'
   ClientHeight = 465
-  ClientWidth = 367
+  ClientWidth = 427
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object FrmSaida: TFrmSaida
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 367
+    Width = 427
     Height = 424
     Align = alClient
     BevelInner = bvLowered
@@ -54,19 +54,19 @@ object FrmSaida: TFrmSaida
     object GroupBoxSangue: TGroupBox
       Left = 9
       Top = 123
-      Width = 342
+      Width = 404
       Height = 300
       Caption = 'Bolsa de sangue'
       TabOrder = 4
       object LabelVolume: TLabel
-        Left = 10
-        Top = 63
-        Width = 48
+        Left = 312
+        Top = 18
+        Width = 34
         Height = 13
-        Caption = 'Volume(*)'
+        Caption = 'Volume'
       end
       object LabelAboSangue: TLabel
-        Left = 223
+        Left = 205
         Top = 18
         Width = 64
         Height = 13
@@ -80,21 +80,21 @@ object FrmSaida: TFrmSaida
         Caption = 'N'#250'mero da bolsa(*)'
       end
       object LabelHospital: TLabel
-        Left = 101
-        Top = 63
+        Left = 10
+        Top = 60
         Width = 52
         Height = 13
         Caption = 'Hospital(*)'
       end
       object LabelTipo: TLabel
-        Left = 294
+        Left = 273
         Top = 18
         Width = 20
         Height = 13
         Caption = 'Tipo'
       end
       object EdtAboBolsa: TEdit
-        Left = 223
+        Left = 205
         Top = 33
         Width = 64
         Height = 21
@@ -105,7 +105,7 @@ object FrmSaida: TFrmSaida
       object EdtNumeroBolsa: TEdit
         Left = 10
         Top = 33
-        Width = 206
+        Width = 191
         Height = 21
         MaxLength = 20
         NumbersOnly = True
@@ -113,9 +113,9 @@ object FrmSaida: TFrmSaida
         OnExit = EdtNumeroBolsaExit
       end
       object EdtHospital: TEdit
-        Left = 101
-        Top = 78
-        Width = 228
+        Left = 10
+        Top = 75
+        Width = 381
         Height = 21
         CharCase = ecUpperCase
         MaxLength = 100
@@ -123,7 +123,7 @@ object FrmSaida: TFrmSaida
         Text = 'HMI'
       end
       object EdtTipo: TEdit
-        Left = 294
+        Left = 273
         Top = 33
         Width = 35
         Height = 21
@@ -134,7 +134,7 @@ object FrmSaida: TFrmSaida
       object RadioGroupPai: TRadioGroup
         Left = 10
         Top = 105
-        Width = 319
+        Width = 381
         Height = 37
         Caption = 'Pai'
         Columns = 2
@@ -147,14 +147,14 @@ object FrmSaida: TFrmSaida
       object GroupBoxProvaCompatibilidade: TGroupBox
         Left = 10
         Top = 144
-        Width = 319
+        Width = 381
         Height = 149
         Caption = 'Prova de compatibilidade'
         TabOrder = 6
         object RadioGroupTA: TRadioGroup
           Left = 7
           Top = 14
-          Width = 305
+          Width = 366
           Height = 41
           Caption = 'TA'
           Columns = 2
@@ -167,7 +167,7 @@ object FrmSaida: TFrmSaida
         object RadioGroupAGH: TRadioGroup
           Left = 7
           Top = 57
-          Width = 305
+          Width = 366
           Height = 41
           Caption = 'AGH'
           Columns = 2
@@ -180,7 +180,7 @@ object FrmSaida: TFrmSaida
         object RadioGroup37: TRadioGroup
           Left = 7
           Top = 100
-          Width = 305
+          Width = 366
           Height = 41
           Caption = '37'
           Columns = 2
@@ -192,18 +192,20 @@ object FrmSaida: TFrmSaida
         end
       end
       object EdtVolume: TEdit
-        Left = 10
-        Top = 78
-        Width = 84
+        Left = 312
+        Top = 33
+        Width = 79
         Height = 21
+        Enabled = False
         MaxLength = 9
+        ReadOnly = True
         TabOrder = 2
       end
     end
     object GroupBoxPaciente: TGroupBox
       Left = 9
       Top = 50
-      Width = 343
+      Width = 404
       Height = 65
       Caption = 'Paciente'
       TabOrder = 3
@@ -215,14 +217,14 @@ object FrmSaida: TFrmSaida
         Caption = 'Prontu'#225'rio(*)'
       end
       object LabelNomePaciente: TLabel
-        Left = 123
+        Left = 142
         Top = 18
         Width = 86
         Height = 13
         Caption = 'Nome do paciente'
       end
       object BtnConsPaciente: TSpeedButton
-        Left = 99
+        Left = 94
         Top = 33
         Width = 23
         Height = 21
@@ -264,8 +266,58 @@ object FrmSaida: TFrmSaida
           0000000000000000000000000000000000000000000000000000}
         OnClick = BtnConsPacienteClick
       end
+      object btnCadPaciente: TSpeedButton
+        Left = 117
+        Top = 33
+        Width = 23
+        Height = 21
+        Flat = True
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000000000000000000000000000006E0000006E0000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          006E000000AA000000AA000000AA000000AA000000AA000000E1000000E10000
+          00AA000000AA000000AA000000AA000000AA0000006E00000000000000000000
+          006E000000AA000000AA000000AA000000AA000000AA000000E1000000E10000
+          00AA000000AA000000AA000000AA000000AA0000006E00000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000000000A5000000A50000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000000000000000000000000000006E0000006E0000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
+        OnClick = btnCadPacienteClick
+      end
+      object Label1: TLabel
+        Left = 351
+        Top = 18
+        Width = 21
+        Height = 13
+        Caption = 'ABO'
+      end
       object EdtNomePaciente: TEdit
-        Left = 123
+        Left = 141
         Top = 33
         Width = 206
         Height = 21
@@ -284,6 +336,16 @@ object FrmSaida: TFrmSaida
         TabOrder = 1
         OnExit = EdtRegistroPacienteExit
         OnKeyDown = EdtRegistroPacienteKeyDown
+      end
+      object EdtAboPaciente: TEdit
+        Left = 351
+        Top = 33
+        Width = 40
+        Height = 21
+        TabStop = False
+        Color = clInfoBk
+        Enabled = False
+        TabOrder = 2
       end
     end
     object EdtId: TEdit
@@ -318,7 +380,7 @@ object FrmSaida: TFrmSaida
   object PanelBottom: TPanel
     Left = 0
     Top = 424
-    Width = 367
+    Width = 427
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
@@ -328,7 +390,7 @@ object FrmSaida: TFrmSaida
     object BtnGravar: TBitBtn
       Left = 9
       Top = 9
-      Width = 109
+      Width = 130
       Height = 27
       Caption = 'Gravar'
       Glyph.Data = {
@@ -371,9 +433,9 @@ object FrmSaida: TFrmSaida
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 243
+      Left = 283
       Top = 9
-      Width = 109
+      Width = 130
       Height = 27
       Caption = 'Sair'
       Glyph.Data = {
@@ -416,9 +478,9 @@ object FrmSaida: TFrmSaida
       OnClick = BtnSairClick
     end
     object BtnNovo: TBitBtn
-      Left = 126
+      Left = 146
       Top = 9
-      Width = 109
+      Width = 130
       Height = 27
       Caption = 'Novo'
       Glyph.Data = {

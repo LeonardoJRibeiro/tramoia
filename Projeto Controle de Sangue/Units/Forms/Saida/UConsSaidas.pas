@@ -161,8 +161,8 @@ begin
     2: // Paciente
       begin
         BtnLocalizar.Visible := False;
-        EdtCons.NumbersOnly := True;
-        EdtCons.MaxLength := 11;
+        EdtCons.NumbersOnly := False;
+        EdtCons.MaxLength := 100;
         EdtCons.Visible := True;
         EdtDataIni.Visible := False;
         EdtDataFinal.Visible := False;
@@ -220,7 +220,7 @@ begin
         Self.FPersistencia)) then
       begin
 
-        Self.FPersistencia.Query.First;
+        Self.FPersistencia.Query.Last;
         DataSource.DataSet := Self.FPersistencia.Query;
         if (not Self.FPersistencia.Query.IsEmpty) then
         begin

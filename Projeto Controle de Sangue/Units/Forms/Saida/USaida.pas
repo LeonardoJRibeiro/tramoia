@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.Buttons, Vcl.Mask;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.Buttons, Vcl.Mask,
+  UCadPaciente, UClassPacienteDao;
 
 type
   TFrmSaida = class(TForm)
@@ -41,6 +42,9 @@ type
     BtnNovo: TBitBtn;
     EdtResponsavel: TEdit;
     LabelResponsavel: TLabel;
+    btnCadPaciente: TSpeedButton;
+    Label1: TLabel;
+    EdtAboPaciente: TEdit;
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -50,6 +54,7 @@ type
     procedure EdtRegistroPacienteExit(Sender: TObject);
     procedure EdtRegistroPacienteKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnNovoClick(Sender: TObject);
+    procedure btnCadPacienteClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -79,6 +84,11 @@ uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, U
 
 {$R *.dfm}
 { TFrmSaida }
+
+procedure TFrmSaida.btnCadPacienteClick(Sender: TObject);
+begin
+  TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUSaida, Self.FIdUsuario);
+end;
 
 procedure TFrmSaida.BtnConsPacienteClick(Sender: TObject);
 var
@@ -189,6 +199,7 @@ begin
 
   EdtId.Enabled := False;
   EdtNomePaciente.Enabled := False;
+  EdtAboPaciente.Enabled := False;
   EdtId.Clear;
   DateTimePickerData.Date := now;
   EdtResponsavel.Text := TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
@@ -397,26 +408,38 @@ end;
 procedure TFrmSaida.EdtRegistroPacienteExit(Sender: TObject);
 var
   lNomePaciente: string;
+  lAboPaciente: string;
+  lPacienteDao: TPacienteDAO;
 begin
 
   if (not Trim(EdtRegistroPaciente.Text).IsEmpty) then
   begin
 
-    lNomePaciente := TClassBibliotecaDao.getValorAtributo('paciente', 'nome', 'num_prontuario',
-      EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
+    lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+    try
 
-    if (lNomePaciente <> '-1') then
-    begin
+      if (lPacienteDao.getNomeEABO(Trim(EdtRegistroPaciente.Text), lNomePaciente, lAboPaciente)) then
+      begin
 
-      EdtNomePaciente.Text := lNomePaciente;
+        if (lNomePaciente <> '') then
+        begin
 
-    end
-    else
-    begin
+          EdtNomePaciente.Text := lNomePaciente;
+          EdtAboPaciente.Text := lAboPaciente;
 
-      MessageDlg(Format(TMensagem.getMensagem(6), ['Paciente']), mtWarning, [mbOK], -1);
-      EdtRegistroPaciente.SetFocus;
+        end
+        else
+        begin
 
+          MessageDlg(Format(TMensagem.getMensagem(6), ['Paciente']), mtWarning, [mbOK], -1);
+          EdtRegistroPaciente.SetFocus;
+
+        end;
+
+      end;
+
+    finally
+      lPacienteDao.Destroy;
     end;
 
   end
@@ -436,10 +459,19 @@ end;
 
 procedure TFrmSaida.EdtRegistroPacienteKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  if (Key = VK_F2) then
-  begin
-    BtnConsPacienteClick(Self);
+
+  case (Key) of
+    VK_F2:
+      begin
+        BtnConsPacienteClick(Self);
+      end;
+
+    VK_F3:
+      begin
+        btnCadPacienteClick(Self);
+      end;
   end;
+
 end;
 
 procedure TFrmSaida.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

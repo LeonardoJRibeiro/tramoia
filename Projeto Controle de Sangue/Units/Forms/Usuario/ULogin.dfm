@@ -35451,6 +35451,7 @@ object FrmLogin: TFrmLogin
     Width = 458
     Height = 38
     AutoSize = False
+    CharCase = ecUpperCase
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20

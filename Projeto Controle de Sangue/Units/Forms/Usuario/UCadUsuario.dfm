@@ -181,6 +181,7 @@ object FrmCadUsuario: TFrmCadUsuario
       Top = 32
       Width = 205
       Height = 21
+      CharCase = ecUpperCase
       EditLabel.Width = 27
       EditLabel.Height = 13
       EditLabel.Caption = 'Nome'

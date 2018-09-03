@@ -569,7 +569,6 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Top = 6
         Width = 315
         Height = 16
-        Alignment = taCenter
         DataField = 'nome'
         DataSource = DataSource
         Text = ''
@@ -686,7 +685,6 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Top = 6
         Width = 53
         Height = 16
-        Alignment = taCenter
         DataField = 'hospital'
         DataSource = DataSource
         Text = ''
@@ -705,7 +703,6 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Top = 6
         Width = 89
         Height = 16
-        Alignment = taCenter
         DataField = 'responsavel'
         DataSource = DataSource
         Text = ''

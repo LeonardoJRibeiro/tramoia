@@ -288,11 +288,11 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextObservacao: TRLDBText
-        Left = 795
+        Left = 609
         Top = 7
-        Width = 70
+        Width = 436
         Height = 16
-        Alignment = taCenter
+        AutoSize = False
         DataField = 'observacao'
         DataSource = DataSource
         Text = ''

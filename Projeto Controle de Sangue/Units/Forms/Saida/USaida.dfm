@@ -49,7 +49,7 @@ object FrmSaida: TFrmSaida
       Width = 61
       Height = 13
       Caption = 'Respons'#225'vel'
-      FocusControl = EdtResponsavel
+      FocusControl = ComboBoxResponsavel
     end
     object GroupBoxSangue: TGroupBox
       Left = 9
@@ -368,10 +368,10 @@ object FrmSaida: TFrmSaida
       Time = 43248.939316319450000000
       TabOrder = 1
     end
-    object EdtResponsavel: TEdit
+    object ComboBoxResponsavel: TComboBox
       Left = 210
       Top = 23
-      Width = 121
+      Width = 190
       Height = 21
       CharCase = ecUpperCase
       TabOrder = 2

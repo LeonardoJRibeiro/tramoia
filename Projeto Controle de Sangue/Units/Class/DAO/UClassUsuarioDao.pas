@@ -2,7 +2,8 @@ unit UClassUsuarioDAO;
 
 interface
 
-uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassUsuario;
+uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassUsuario,
+  System.Generics.Collections;
 
 type
   TUsuarioDAO = class(TInterfacedPersistent, IInterfaceDao<TUsuario>)
@@ -27,6 +28,8 @@ type
     function getExisteUsuariosCadastrados: Boolean;
 
     function getAdmin(const pID: Integer): Boolean;
+
+    function getListaObjeto(var pLista: TObjectList<TUsuario>): Boolean;
 
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
@@ -280,6 +283,60 @@ begin
     lPersistencia.Destroy;
   end;
 
+end;
+
+function TUsuarioDAO.getListaObjeto(var pLista: TObjectList<TUsuario>): Boolean;
+var
+  lPersistencia: TPersistencia;
+  lUsuario: TUsuario;
+  I: Integer;
+
+begin
+  Result := False;
+  pLista.Clear;
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    lPersistencia.IniciaTransacao;
+
+    lPersistencia.Query.SQL.Add('SELECT ');
+    lPersistencia.Query.SQL.Add('   u.id, ');
+    lPersistencia.Query.SQL.Add('   u.nome ');
+    lPersistencia.Query.SQL.Add('FROM usuario u ');
+    lPersistencia.Query.SQL.Add('ORDER BY u.id');
+
+    lPersistencia.Query.Open;
+
+    if (not lPersistencia.Query.IsEmpty) then
+    begin
+
+      lUsuario := TUsuario.Create;
+
+      while (not lPersistencia.Query.Eof) do
+      begin
+
+        lUsuario.Id := lPersistencia.Query.FieldByName('id').AsInteger;
+        lUsuario.Nome := lPersistencia.Query.FieldByName('nome').AsString;
+
+        pLista.Add(lUsuario);
+        lPersistencia.Query.Next;
+
+      end;
+
+      Result:= True;
+
+    end
+    else
+    begin
+
+      Result := False;
+
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
 end;
 
 function TUsuarioDAO.getLogin(const pNOME, pSENHA: string; var pID: Integer): Boolean;

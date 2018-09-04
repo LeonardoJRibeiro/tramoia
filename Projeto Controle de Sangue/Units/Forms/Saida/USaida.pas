@@ -40,11 +40,11 @@ type
     DateTimePickerData: TDateTimePicker;
     LabelData: TLabel;
     BtnNovo: TBitBtn;
-    EdtResponsavel: TEdit;
     LabelResponsavel: TLabel;
     btnCadPaciente: TSpeedButton;
     Label1: TLabel;
     EdtAboPaciente: TEdit;
+    ComboBoxResponsavel: TComboBox;
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -67,6 +67,8 @@ type
 
     procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
 
+    procedure CarregaUsuarios;
+
     function SalvaSaida: Boolean;
 
   public
@@ -80,7 +82,8 @@ var
 implementation
 
 uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO, UBiblioteca,
-  UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao;
+  UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao,
+  System.Generics.Collections, UClassUsuario, UClassUsuarioDAO;
 
 {$R *.dfm}
 { TFrmSaida }
@@ -130,12 +133,12 @@ var
   lIdBolsa: Integer;
 begin
 
-  if (Trim(EdtResponsavel.Text).IsEmpty) then
+  if (ComboBoxResponsavel.ItemIndex = -1) then
   begin
 
     MessageDlg(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption]), mtWarning, [mbOK], -1);
 
-    EdtResponsavel.SetFocus;
+    ComboBoxResponsavel.SetFocus;
 
     exit;
 
@@ -202,7 +205,7 @@ begin
   EdtAboPaciente.Enabled := False;
   EdtId.Clear;
   DateTimePickerData.Date := now;
-  EdtResponsavel.Text := TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
+  CarregaUsuarios;
   EdtRegistroPaciente.Clear;
   EdtNomePaciente.Clear;
   EdtNumeroBolsa.Clear;
@@ -213,7 +216,7 @@ begin
   RadioGroupTA.ItemIndex := 1;
   RadioGroupAGH.ItemIndex := 1;
   RadioGroup37.ItemIndex := 1;
-  EdtResponsavel.SetFocus;
+  ComboBoxResponsavel.SetFocus;
 
   BtnGravar.Enabled := true;
 
@@ -299,7 +302,8 @@ begin
           RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'P', 0, 1);
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
           Self.FIdBolsa := lSaida.Id_Bolsa;
-          EdtResponsavel.Text := lSaida.Responsavel;
+          CarregaUsuarios;
+          ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString);
 
           EdtRegistroPaciente.SetFocus;
 
@@ -495,13 +499,51 @@ begin
   begin
     EdtHospital.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', '');
     DateTimePickerData.Date := now;
-    EdtResponsavel.Text := TClassBibliotecaDao.getNomeUsuario(FIdUsuario, DataModuleConexao.Conexao);
-    EdtResponsavel.SetFocus;
+
+    CarregaUsuarios;
+    ComboBoxResponsavel.SetFocus;
 
     Self.FIdBolsa := -1;
     Self.FNumBolsa := '1';
   end;
 
+end;
+
+procedure TFrmSaida.CarregaUsuarios;
+var
+  lListaUsuario: TObjectList<TUsuario>;
+  lUsuarioDAO: TUsuarioDAO;
+  I: Integer;
+begin
+  ComboBoxResponsavel.Clear;
+
+  lListaUsuario := TObjectList<TUsuario>.Create();
+  try
+
+    lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+    try
+
+      if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
+      begin
+        for I := 0 to lListaUsuario.Count-1 do
+        begin
+          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[i].Id.ToString + ' - ' + 
+                                        lListaUsuario.Items[i].Nome);
+        end;
+      end
+      else
+      begin                                                           
+        Application.MessageBox('Não há usuários cadastrados. Cadastre antes de efetuar uma saída.', 
+                               'Aviso', MB_ICONWARNING + MB_OK);
+      end;
+
+    finally
+      lUsuarioDAO.Destroy;
+    end;
+
+  finally
+    lListaUsuario.Free;
+  end;
 end;
 
 class function TFrmSaida.getSaida(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
@@ -554,7 +596,7 @@ begin
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_Agh := Copy(RadioGroupAGH.Items[RadioGroupAGH.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_37 := Copy(RadioGroup37.Items[RadioGroup37.ItemIndex], 1, 1);
-    lSaida.Responsavel := EdtResponsavel.Text;
+//    lSaida.Responsavel := EdtResponsavel.Text;
 
     lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
     try

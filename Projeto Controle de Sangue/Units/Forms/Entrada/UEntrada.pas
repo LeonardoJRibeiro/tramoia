@@ -402,16 +402,12 @@ end;
 
 procedure TFrmEntrada.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  case (Key) of
-    VK_ESCAPE:
-      begin
-        BtnSairClick(Sender);
-      end;
 
-    VK_F6:
-      begin
-        BtnGravarClick(Self);
-      end;
+  if (Key = VK_ESCAPE) then
+  begin
+
+    BtnSairClick(Sender);
+
   end;
 
 end;

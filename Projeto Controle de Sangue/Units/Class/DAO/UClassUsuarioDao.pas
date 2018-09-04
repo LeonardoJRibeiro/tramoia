@@ -311,10 +311,10 @@ begin
     if (not lPersistencia.Query.IsEmpty) then
     begin
 
-      lUsuario := TUsuario.Create;
-
+      lPersistencia.Query.First;
       while (not lPersistencia.Query.Eof) do
       begin
+        lUsuario := TUsuario.Create;
 
         lUsuario.Id := lPersistencia.Query.FieldByName('id').AsInteger;
         lUsuario.Nome := lPersistencia.Query.FieldByName('nome').AsString;

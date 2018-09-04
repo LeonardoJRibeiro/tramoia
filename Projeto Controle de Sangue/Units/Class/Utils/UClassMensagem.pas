@@ -142,6 +142,17 @@ begin
       begin
         Result := 'Saída realizada com sucesso.';
       end;
+
+    25:
+      begin
+        Result := 'Erro ao carregar informações da entrada. Motivo %s';
+      end;
+
+    26:
+      begin
+        Result := 'Erro ao carregar informações da bolsa. Motivo %s';
+      end;
+
   end;
 
 end;

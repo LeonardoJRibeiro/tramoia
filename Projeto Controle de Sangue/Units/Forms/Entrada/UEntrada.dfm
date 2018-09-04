@@ -153,7 +153,6 @@ object FrmEntrada: TFrmEntrada
       CharCase = ecUpperCase
       TabOrder = 5
       OnEnter = ComboBoxAboBolsaEnter
-      OnKeyPress = ComboBoxAboBolsaKeyPress
       Items.Strings = (
         'A+'
         'A-'

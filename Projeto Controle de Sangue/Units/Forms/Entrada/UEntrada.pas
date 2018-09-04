@@ -36,7 +36,6 @@ type
     procedure BtnGravarClick(Sender: TObject);
     procedure EdtNumeroBolsaExit(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
-    procedure ComboBoxAboBolsaKeyPress(Sender: TObject; var Key: Char);
     procedure ComboBoxAboBolsaEnter(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -82,7 +81,8 @@ begin
   if (Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelNumeroBolsa.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelNumeroBolsa.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     EdtNumeroBolsa.SetFocus;
 
@@ -93,7 +93,8 @@ begin
   if (ComboBoxTipo.ItemIndex = -1) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelTipo.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelTipo.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     ComboBoxTipo.SetFocus;
 
@@ -104,7 +105,8 @@ begin
   if (Trim(EdtVolume.Text).IsEmpty) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelVolume.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelVolume.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     EdtVolume.SetFocus;
 
@@ -115,7 +117,8 @@ begin
   if (ComboBoxAboBolsa.ItemIndex = -1) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelAboSangue.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelAboSangue.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     ComboBoxAboBolsa.SetFocus;
 
@@ -126,7 +129,8 @@ begin
   if (Trim(EdtOrigem.Text).IsEmpty) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelOrigem.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelOrigem.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     EdtOrigem.SetFocus;
 
@@ -177,7 +181,7 @@ begin
 
               TBiblioteca.AtivaDesativaCompontes(FrmEntrada, False);
 
-              MessageDlg(Format(TMensagem.getMensagem(23), [LabelNumeroBolsa.Caption]), mtInformation, [mbOK], -1);
+              Application.MessageBox(PChar(TMensagem.getMensagem(23)), 'Aviso', MB_OK + MB_ICONINFORMATION);
 
               BtnNovo.SetFocus;
 
@@ -199,7 +203,8 @@ begin
     except
       on E: Exception do
       begin
-        raise Exception.Create(Format(TMensagem.getMensagem(4), ['Entrada', E.Message]));
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['Entrada', E.Message])), 'Erro',
+          MB_OK + MB_ICONERROR);
       end;
     end;
 
@@ -211,16 +216,13 @@ end;
 
 procedure TFrmEntrada.BtnNovoClick(Sender: TObject);
 begin
+  EdtOrigem.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Origem', 'FrmEntrada.EdtOrigem', '');
+  DateTimePickerData.DateTime := Now;
 
   TBiblioteca.AtivaDesativaCompontes(Self, True);
 
-  EdtOrigem.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Origem', 'FrmEntrada.EdtOrigem', '');
-
-  EdtOrdemSaida.Enabled := False;
-
-  DateTimePickerData.DateTime := Now;
-
   BtnGravar.Enabled := True;
+  EdtOrdemSaida.Enabled := False;
   EdtOrdemSaida.Clear;
   EdtNumeroBolsa.Clear;
   ComboBoxTipo.ItemIndex := 0;
@@ -228,12 +230,11 @@ begin
   ComboBoxAboBolsa.ItemIndex := -1;
   EdtObservacao.Clear;
 
-  EdtNumeroBolsa.SetFocus;
-
   Self.FId := -1;
   Self.FIdBolsa := -1;
   Self.FNumBolsa := '-1';
 
+  EdtNumeroBolsa.SetFocus;
 end;
 
 procedure TFrmEntrada.BtnSairClick(Sender: TObject);
@@ -269,7 +270,11 @@ begin
         end;
 
       except
-
+        on E: Exception do
+        begin
+          Result := False;
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(26), [E.Message])), 'Erro', MB_OK + MB_ICONERROR);
+        end;
       end;
 
     finally
@@ -306,6 +311,11 @@ begin
         end;
 
       except
+        on E: Exception do
+        begin
+          Result := False;
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(25), [E.Message])), 'Erro', MB_OK + MB_ICONERROR);
+        end;
 
       end;
 
@@ -333,24 +343,6 @@ procedure TFrmEntrada.ComboBoxAboBolsaEnter(Sender: TObject);
 begin
 
   ComboBoxAboBolsa.DroppedDown := ComboBoxAboBolsa.ItemIndex = -1;
-
-end;
-
-procedure TFrmEntrada.ComboBoxAboBolsaKeyPress(Sender: TObject; var Key: Char);
-begin
-
-  // Se for diferente da tecla da barra de espaço.
-  if (Key <> #08) then
-  begin
-
-    Key := UpCase(Key);
-
-    if not(Key in ['A', 'B', 'O', '+', '-']) then
-    begin
-      Key := #0;
-    end;
-
-  end;
 
 end;
 
@@ -462,7 +454,8 @@ begin
       on E: Exception do
       begin
         Result := False;
-        raise Exception.Create(Format(TMensagem.getMensagem(0), ['de Entrada de sangue', E.Message]));
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(0), ['de Entrada de sangue', E.Message])), 'Erro',
+          MB_OK + MB_ICONERROR);
       end;
     end;
 

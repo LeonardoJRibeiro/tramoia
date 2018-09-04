@@ -168,6 +168,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
       inherited EdtCons: TSearchBox [3]
         Left = 152
         Width = 604
+        NumbersOnly = True
         OnInvokeSearch = EdtConsInvokeSearch
         ExplicitLeft = 152
         ExplicitWidth = 604

@@ -370,7 +370,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel20: TRLPanel
-        Left = 975
+        Left = 977
         Top = 28
         Width = 1
         Height = 27
@@ -433,7 +433,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
       object RLLabelPai: TRLLabel
         Left = 919
         Top = 20
-        Width = 30
+        Width = 27
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -451,7 +451,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLPanel2: TRLPanel
-        Left = 949
+        Left = 947
         Top = -1
         Width = 1
         Height = 57
@@ -501,7 +501,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel8: TRLPanel
-        Left = 975
+        Left = 977
         Top = 0
         Width = 1
         Height = 30
@@ -537,7 +537,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel12: TRLPanel
-        Left = 949
+        Left = 947
         Top = 0
         Width = 1
         Height = 30
@@ -652,9 +652,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextCompatibilidadeAGH: TRLDBText
-        Left = 975
+        Left = 977
         Top = 6
-        Width = 34
+        Width = 31
         Height = 16
         Alignment = taCenter
         DataField = 'prova_compatibilidade_agh'
@@ -728,7 +728,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
       object RLDBText1: TRLDBText
         Left = 919
         Top = 6
-        Width = 30
+        Width = 27
         Height = 16
         Alignment = taCenter
         DataField = 'prova_compatibilidade_37'

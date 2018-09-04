@@ -51,10 +51,16 @@ begin
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS abo_bol,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
-    pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_ta,');
-    pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_agh,');
-    pPersistencia.Query.SQL.Add('  s.prova_compatibilidade_37,');
-    pPersistencia.Query.SQL.Add('  s.pai,');
+
+    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_ta = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
+      QuotedStr('NÃO') + ') AS prova_compatibilidade_ta,');
+    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_agh = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
+      QuotedStr('NÃO') + ') AS prova_compatibilidade_agh,');
+    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_37 = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
+      QuotedStr('NÃO') + ') AS prova_compatibilidade_37,');
+    pPersistencia.Query.SQL.Add('  if(s.pai = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
+      ') AS pai,');
+
     pPersistencia.Query.SQL.Add('  s.responsavel');
     pPersistencia.Query.SQL.Add('FROM saida s');
 

@@ -248,11 +248,12 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextOrigem: TRLDBText
-        Left = 324
+        Left = 309
         Top = 7
-        Width = 44
+        Width = 74
         Height = 16
         Alignment = taCenter
+        AutoSize = False
         DataField = 'origem'
         DataSource = DataSource
         Text = ''

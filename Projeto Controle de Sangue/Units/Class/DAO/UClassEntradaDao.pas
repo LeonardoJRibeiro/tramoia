@@ -85,7 +85,10 @@ begin
     pPersistencia.Query.SQL.Add('  b.id id_bolsa,');
     pPersistencia.Query.SQL.Add('  b.origem,');
     pPersistencia.Query.SQL.Add('  b.volume,');
-    pPersistencia.Query.SQL.Add('  b.sorologia,');
+
+    pPersistencia.Query.SQL.Add('  if(b.sorologia = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
+      QuotedStr('NÃO') + ') AS sorologia,');
+
     pPersistencia.Query.SQL.Add('  e.observacao');
     pPersistencia.Query.SQL.Add('FROM entrada e');
 

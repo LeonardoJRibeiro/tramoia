@@ -47,8 +47,8 @@ implementation
 
 {$R *.dfm}
 
-uses UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UBiblioteca, UClassForeignKeyForms, UClassUsuarioDao,
-  UClassBolsaDao;
+uses System.Math, UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UBiblioteca, UClassForeignKeyForms,
+  UClassUsuarioDao, UClassBolsaDao;
 
 function TFrmConsEntrada.BolsaPossuiEstoque: Boolean;
 var
@@ -176,38 +176,35 @@ end;
 
 procedure TFrmConsEntrada.ComboBoxTipoConsChange(Sender: TObject);
 begin
+
   EdtCons.Clear;
+
+  BtnLocalizar.Visible := ComboBoxTipoCons.ItemIndex = 2;
+
+  EdtCons.Visible := ComboBoxTipoCons.ItemIndex <> 2;
+
+  EdtDataIni.Visible := ComboBoxTipoCons.ItemIndex = 2;
+  EdtDataFinal.Visible := ComboBoxTipoCons.ItemIndex = 2;
 
   case (ComboBoxTipoCons.ItemIndex) of
 
-    0: // Código
+    0, 1: // 0 = Código e 1 = Número da bolsa.
       begin
-        BtnLocalizar.Visible := False;
-        EdtCons.NumbersOnly := True;
-        EdtCons.MaxLength := 11;
-        EdtCons.Visible := True;
-        EdtDataIni.Visible := False;
-        EdtDataFinal.Visible := False;
-      end;
 
-    1: // Número da bolsa
-      begin
-        BtnLocalizar.Visible := False;
-        EdtCons.NumbersOnly := True;
-        EdtCons.MaxLength := 20;
-        EdtCons.Visible := True;
-        EdtDataIni.Visible := False;
-        EdtDataFinal.Visible := False;
+        EdtCons.MaxLength := IfThen(ComboBoxTipoCons.ItemIndex = 0, 11, 20);
+
+        EdtCons.SetFocus;
+
       end;
 
     2: // Período
       begin
-        BtnLocalizar.Visible := True;
-        EdtCons.Visible := False;
-        EdtDataIni.Visible := True;
-        EdtDataFinal.Visible := True;
-        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(now);
-        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(now);
+
+        EdtDataIni.Date := TBiblioteca.getPrimeiroDiaMes(Now);
+        EdtDataFinal.Date := TBiblioteca.getUltimoDiaMes(Now);
+
+        EdtDataIni.SetFocus;
+
       end;
 
   end;
@@ -264,24 +261,32 @@ begin
         Self.FPersistencia)) then
       begin
 
-        Self.FPersistencia.Query.Last;
         DataSource.DataSet := Self.FPersistencia.Query;
+
         if (not Self.FPersistencia.Query.IsEmpty) then
         begin
+
           DBGrid.SetFocus;
+
+          Self.FPersistencia.Query.Last;
+
         end
         else
         begin
 
           if (EdtCons.CanFocus) then
           begin
+
             EdtCons.SetFocus;
             BtnLocalizar.Visible := False;
+
           end
           else
           begin
+
             EdtDataIni.SetFocus;
             BtnLocalizar.Visible := True;
+
           end;
 
         end

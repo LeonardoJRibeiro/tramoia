@@ -373,6 +373,7 @@ object FrmSaida: TFrmSaida
       Top = 23
       Width = 190
       Height = 21
+      AutoDropDown = True
       CharCase = ecUpperCase
       TabOrder = 2
     end

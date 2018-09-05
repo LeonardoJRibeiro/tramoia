@@ -48,13 +48,13 @@ type
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormShow(Sender: TObject);
     procedure EdtNumeroBolsaExit(Sender: TObject);
     procedure BtnConsPacienteClick(Sender: TObject);
     procedure EdtRegistroPacienteExit(Sender: TObject);
     procedure EdtRegistroPacienteKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnNovoClick(Sender: TObject);
     procedure btnCadPacienteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -303,9 +303,10 @@ begin
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
           Self.FIdBolsa := lSaida.Id_Bolsa;
           CarregaUsuarios;
-          ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString);
+          ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString+ ' - ' +
+                                      TClassBibliotecaDao.getNomeUsuario(lSaida.Id_Usuario, DataModuleConexao.Conexao));
 
-          EdtRegistroPaciente.SetFocus;
+          ComboBoxResponsavel.SetFocus;
 
         end;
 
@@ -580,6 +581,7 @@ function TFrmSaida.SalvaSaida: Boolean;
 var
   lSaida: TSaida;
   lSaidaDAO: TSaidaDAO;
+  lFimCopy: Integer;
 begin
 
   lSaida := TSaida.Create;
@@ -588,7 +590,11 @@ begin
     lSaida.Id := StrToIntDef(EdtId.Text, -1);
     lSaida.Id_Paciente := TClassBibliotecaDao.getValorAtributo('paciente', 'id', 'num_prontuario',
       EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
-    lSaida.Id_Usuario := Self.FIdUsuario;
+
+    // Retira apenas o ID do usuário da string
+    lFimCopy := AnsiPos('-', ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]) - 1;
+    lSaida.Id_Usuario := Trim(Copy(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex],1,lFimCopy)).ToInteger;
+
     lSaida.Id_Bolsa := Self.FIdBolsa;
     lSaida.Data_Saida := now;
     lSaida.Hospital := EdtHospital.Text;
@@ -596,7 +602,6 @@ begin
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_Agh := Copy(RadioGroupAGH.Items[RadioGroupAGH.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_37 := Copy(RadioGroup37.Items[RadioGroup37.ItemIndex], 1, 1);
-//    lSaida.Responsavel := EdtResponsavel.Text;
 
     lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
     try

@@ -128,7 +128,7 @@ begin
 
       if (not lPersistencia.Query.IsEmpty) then
       begin
-        Result := lPersistencia.Query.Fields[0].Value;
+        Result := lPersistencia.Query.FieldByName(pATRIBUTO_RETORNO).Value;
       end
       else
       begin

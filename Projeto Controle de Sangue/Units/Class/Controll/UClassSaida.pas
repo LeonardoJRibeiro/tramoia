@@ -29,7 +29,6 @@ type
     function getProva_Compatibilidade_Ta: string;
     function getProva_Compatibilidade_Agh: string;
     function getProva_Compatibilidade_37: string;
-    function getResponsavel: string;
 
     procedure setId(const pID: Integer);
     procedure setId_Paciente(const pID_PACIENTE: Integer);
@@ -41,7 +40,6 @@ type
     procedure setProva_Compatibilidade_Ta(const pPROVA_COMPATIBILIDADE_TA: string);
     procedure setProva_Compatibilidade_Agh(const pPROVA_COMPATIBILIDADE_AGH: string);
     procedure setProva_Compatibilidade_37(const pPROVA_COMPATIBILIDADE_37: string);
-    procedure setResponsavel(const pResponsavel: string);
 
   public
     property Id: Integer read getId write setId;
@@ -54,7 +52,6 @@ type
     property Prova_Compatibilidade_Ta: string read getProva_Compatibilidade_Ta write setProva_Compatibilidade_Ta;
     property Prova_Compatibilidade_Agh: string read getProva_Compatibilidade_Agh write setProva_Compatibilidade_Agh;
     property Prova_Compatibilidade_37: string read getProva_Compatibilidade_37 write setProva_Compatibilidade_37;
-    property Responsavel: string read getResponsavel write setResponsavel;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -114,11 +111,6 @@ begin
   Result := Self.FProva_Compatibilidade_Ta;
 end;
 
-function TSaida.getResponsavel: string;
-begin
-  Result := Self.FResponsavel;
-end;
-
 function TSaida.getProva_Compatibilidade_Agh: string;
 begin
   Result := Self.FProva_Compatibilidade_Agh;
@@ -167,11 +159,6 @@ end;
 procedure TSaida.setProva_Compatibilidade_Ta(const pPROVA_COMPATIBILIDADE_TA: string);
 begin
   Self.FProva_Compatibilidade_Ta:= pProva_Compatibilidade_Ta;
-end;
-
-procedure TSaida.setResponsavel(const pResponsavel: string);
-begin
-  Self.FResponsavel := pResponsavel;
 end;
 
 procedure TSaida.setProva_Compatibilidade_Agh(const pPROVA_COMPATIBILIDADE_AGH: string);

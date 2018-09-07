@@ -46,6 +46,7 @@ begin
 
   inherited;
 end;
+
 function TUsuario.getId: Integer;
 begin
   Result := Self.FId;

@@ -5,7 +5,7 @@ object FrmEntrada: TFrmEntrada
   BorderStyle = bsSingle
   Caption = 'Entrada de sangue'
   ClientHeight = 235
-  ClientWidth = 350
+  ClientWidth = 365
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,7 +24,7 @@ object FrmEntrada: TFrmEntrada
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 350
+    Width = 365
     Height = 194
     Align = alClient
     BevelInner = bvLowered
@@ -32,7 +32,7 @@ object FrmEntrada: TFrmEntrada
     BevelWidth = 2
     TabOrder = 0
     object LabelData: TLabel
-      Left = 91
+      Left = 83
       Top = 11
       Width = 23
       Height = 13
@@ -53,14 +53,14 @@ object FrmEntrada: TFrmEntrada
       Caption = 'Origem'
     end
     object LabelTipo: TLabel
-      Left = 154
+      Left = 159
       Top = 57
       Width = 20
       Height = 13
       Caption = 'Tipo'
     end
     object LabelAboSangue: TLabel
-      Left = 268
+      Left = 287
       Top = 57
       Width = 64
       Height = 13
@@ -74,7 +74,7 @@ object FrmEntrada: TFrmEntrada
       Caption = 'Observa'#231#227'o'
     end
     object LabelVolume: TLabel
-      Left = 210
+      Left = 217
       Top = 57
       Width = 34
       Height = 13
@@ -87,71 +87,85 @@ object FrmEntrada: TFrmEntrada
       Height = 13
       Caption = 'Ordem'
     end
+    object LabelResponsavel: TLabel
+      Left = 206
+      Top = 11
+      Width = 61
+      Height = 13
+      Caption = 'Respons'#225'vel'
+    end
+    object Label1: TLabel
+      Left = 267
+      Top = 75
+      Width = 13
+      Height = 13
+      Caption = 'mL'
+    end
     object DateTimePickerData: TDateTimePicker
-      Left = 91
+      Left = 83
       Top = 27
-      Width = 120
+      Width = 113
       Height = 21
       Date = 43248.939316319450000000
       Time = 43248.939316319450000000
-      TabOrder = 0
+      TabOrder = 1
     end
     object EdtNumeroBolsa: TEdit
       Left = 10
       Top = 72
-      Width = 140
+      Width = 143
       Height = 21
       MaxLength = 20
       NumbersOnly = True
-      TabOrder = 2
+      TabOrder = 3
       OnExit = EdtNumeroBolsaExit
     end
     object EdtOrigem: TEdit
       Left = 10
       Top = 120
-      Width = 322
+      Width = 341
       Height = 21
       CharCase = ecUpperCase
       MaxLength = 15
-      TabOrder = 6
+      TabOrder = 7
     end
     object EdtObservacao: TEdit
       Left = 10
       Top = 167
-      Width = 322
+      Width = 341
       Height = 21
       MaxLength = 100
-      TabOrder = 7
+      TabOrder = 8
     end
     object EdtVolume: TEdit
-      Left = 210
+      Left = 217
       Top = 72
-      Width = 52
+      Width = 48
       Height = 21
       Alignment = taRightJustify
       MaxLength = 11
       NumbersOnly = True
-      TabOrder = 4
+      TabOrder = 5
     end
     object EdtOrdemSaida: TEdit
       Left = 10
       Top = 27
-      Width = 71
+      Width = 67
       Height = 21
       Color = clInfoBk
       Enabled = False
       NumbersOnly = True
-      TabOrder = 1
+      TabOrder = 0
     end
     object ComboBoxAboBolsa: TComboBox
-      Left = 268
+      Left = 287
       Top = 72
       Width = 64
       Height = 22
       AutoCompleteDelay = 1000
       Style = csOwnerDrawFixed
       CharCase = ecUpperCase
-      TabOrder = 5
+      TabOrder = 6
       OnEnter = ComboBoxAboBolsaEnter
       Items.Strings = (
         'A+'
@@ -164,15 +178,15 @@ object FrmEntrada: TFrmEntrada
         'O-')
     end
     object ComboBoxTipo: TComboBox
-      Left = 154
+      Left = 159
       Top = 72
-      Width = 50
+      Width = 52
       Height = 22
       AutoCompleteDelay = 1000
       Style = csOwnerDrawFixed
       CharCase = ecUpperCase
       ItemIndex = 0
-      TabOrder = 3
+      TabOrder = 4
       Text = 'CH'
       OnEnter = ComboBoxTipoEnter
       Items.Strings = (
@@ -181,11 +195,22 @@ object FrmEntrada: TFrmEntrada
         'CRIO'
         'PLQ')
     end
+    object ComboBoxResponsavel: TComboBox
+      Left = 206
+      Top = 27
+      Width = 145
+      Height = 22
+      AutoCompleteDelay = 1000
+      Style = csOwnerDrawFixed
+      CharCase = ecUpperCase
+      TabOrder = 2
+      OnEnter = ComboBoxResponsavelEnter
+    end
   end
   object PanelBottom: TPanel
     Left = 0
     Top = 194
-    Width = 350
+    Width = 365
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
@@ -193,7 +218,7 @@ object FrmEntrada: TFrmEntrada
     BevelWidth = 2
     TabOrder = 1
     object BtnGravar: TBitBtn
-      Left = 10
+      Left = 21
       Top = 9
       Width = 105
       Height = 27
@@ -238,7 +263,7 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 227
+      Left = 238
       Top = 9
       Width = 105
       Height = 27
@@ -283,7 +308,7 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnSairClick
     end
     object BtnNovo: TBitBtn
-      Left = 119
+      Left = 130
       Top = 9
       Width = 105
       Height = 27

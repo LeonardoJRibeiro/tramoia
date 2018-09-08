@@ -117,7 +117,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLPanel6: TRLPanel
-        Left = 917
+        Left = 1016
         Top = -1
         Width = 1
         Height = 57
@@ -300,7 +300,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelCompatibilidade: TRLLabel
-        Left = 953
+        Left = 923
         Top = 6
         Width = 86
         Height = 16
@@ -319,7 +319,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelCompatibilidadeTA: TRLLabel
-        Left = 949
+        Left = 919
         Top = 34
         Width = 26
         Height = 16
@@ -333,7 +333,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Caption = 'TA'
       end
       object RLLabelCompatibilidadeAGH: TRLLabel
-        Left = 975
+        Left = 945
         Top = 34
         Width = 36
         Height = 16
@@ -347,9 +347,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Caption = 'AGH'
       end
       object RLLabelCompatibilidade37: TRLLabel
-        Left = 1012
+        Left = 986
         Top = 34
-        Width = 35
+        Width = 29
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -361,8 +361,8 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Caption = '37'
       end
       object RLPanel19: TRLPanel
-        Left = 1010
-        Top = 28
+        Left = 946
+        Top = 27
         Width = 1
         Height = 27
         Color = clBlack
@@ -370,7 +370,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel20: TRLPanel
-        Left = 977
+        Left = 982
         Top = 28
         Width = 1
         Height = 27
@@ -431,7 +431,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelPai: TRLLabel
-        Left = 919
+        Left = 1019
         Top = 20
         Width = 27
         Height = 16
@@ -451,7 +451,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLPanel2: TRLPanel
-        Left = 947
+        Left = 917
         Top = -1
         Width = 1
         Height = 57
@@ -460,9 +460,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel28: TRLPanel
-        Left = 949
-        Top = 28
-        Width = 98
+        Left = 917
+        Top = 27
+        Width = 99
         Height = 1
         Color = clBlack
         ParentColor = False
@@ -501,7 +501,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel8: TRLPanel
-        Left = 977
+        Left = 978
         Top = 0
         Width = 1
         Height = 30
@@ -528,7 +528,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel11: TRLPanel
-        Left = 1010
+        Left = 1016
         Top = 0
         Width = 1
         Height = 30
@@ -537,7 +537,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel12: TRLPanel
-        Left = 947
+        Left = 946
         Top = 0
         Width = 1
         Height = 30
@@ -622,7 +622,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaABO: TRLDBText
-        Left = 818
+        Left = 817
         Top = 6
         Width = 51
         Height = 16
@@ -642,9 +642,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextCompatibilidadeTA: TRLDBText
-        Left = 949
+        Left = 919
         Top = 6
-        Width = 25
+        Width = 26
         Height = 16
         Alignment = taCenter
         DataField = 'prova_compatibilidade_ta'
@@ -652,9 +652,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextCompatibilidadeAGH: TRLDBText
-        Left = 977
+        Left = 946
         Top = 6
-        Width = 31
+        Width = 33
         Height = 16
         Alignment = taCenter
         DataField = 'prova_compatibilidade_agh'
@@ -662,7 +662,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextCompatibilidade37: TRLDBText
-        Left = 1012
+        Left = 981
         Top = 6
         Width = 35
         Height = 16
@@ -725,10 +725,10 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentColor = False
         Transparent = False
       end
-      object RLDBText1: TRLDBText
-        Left = 919
+      object RLDBTextPai: TRLDBText
+        Left = 1019
         Top = 6
-        Width = 27
+        Width = 28
         Height = 16
         Alignment = taCenter
         DataField = 'prova_compatibilidade_37'

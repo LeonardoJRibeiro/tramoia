@@ -45,6 +45,7 @@ begin
     pPersistencia.Query.SQL.Add('  s.id,');
     pPersistencia.Query.SQL.Add('  s.data_saida,');
     pPersistencia.Query.SQL.Add('  s.hospital,');
+    pPersistencia.Query.SQL.Add('  u.nome AS responsavel,');
     pPersistencia.Query.SQL.Add('  p.nome,');
     pPersistencia.Query.SQL.Add('  CONCAT(p.abo, p.rh) AS abo_pac,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
@@ -59,9 +60,8 @@ begin
     pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_37 = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
       QuotedStr('NÃO') + ') AS prova_compatibilidade_37,');
     pPersistencia.Query.SQL.Add('  if(s.pai = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
-      ') AS pai,');
+      ') AS pai');
 
-    pPersistencia.Query.SQL.Add('  s.responsavel');
     pPersistencia.Query.SQL.Add('FROM saida s');
 
     pPersistencia.Query.SQL.Add('LEFT JOIN paciente p');
@@ -69,6 +69,9 @@ begin
 
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
     pPersistencia.Query.SQL.Add('ON(b.id = s.id_bolsa)');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN usuario u');
+    pPersistencia.Query.SQL.Add('ON(s.id_usuario = u.id)');
 
     pPersistencia.Query.SQL.Add('WHERE s.data_saida BETWEEN :pDataIni AND :pDataFim');
     pPersistencia.setParametro('pDataIni', pRELSAIDA.DataIni);

@@ -30,6 +30,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure EdtConsInvokeSearch(Sender: TObject);
+    procedure ComboBoxListarEstoqueChange(Sender: TObject);
   private
     FForeignFormKey: Smallint;
     FCodUsu: Integer;
@@ -54,6 +55,17 @@ begin
 
   Close;
 
+end;
+
+procedure TFrmConsEstoque.ComboBoxListarEstoqueChange(Sender: TObject);
+begin
+  EdtCons.Clear;
+
+  EdtCons.MaxLength := IfThen(ComboBoxTipoCons.ItemIndex = 0, 3, 2);
+
+  EdtConsInvokeSearch(Sender);
+
+  EdtCons.SetFocus;
 end;
 
 procedure TFrmConsEstoque.ComboBoxTipoConsChange(Sender: TObject);

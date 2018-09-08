@@ -14,6 +14,7 @@ type
     class function getUltimoDiaMes(const pDATA: TDate): TDate;
     class function IsCpfValido(const pCPF: string): Boolean;
     class function getVersaoExe: string;
+    class function getIdUsuarioOnString(pString: String): SmallInt;
     class procedure LimparCampos;
     class procedure AtivaDesativaCompontes(const pFORM: TForm; const pATIVO: Boolean);
   end;
@@ -126,6 +127,17 @@ begin
   end;
   Result := Dest;
 Fim:
+end;
+
+class function TBiblioteca.getIdUsuarioOnString(pString: String): SmallInt;
+var
+  lFimCopy: SmallInt;
+begin
+
+  Result := -1;
+  lFimCopy := AnsiPos('-', pString) - 1;
+  Result := Trim(Copy(pString,1,lFimCopy)).ToInteger;
+
 end;
 
 class function TBiblioteca.getPrimeiroDiaMes(const pDATA: TDate): TDate;

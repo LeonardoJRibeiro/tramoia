@@ -4,7 +4,7 @@ object FrmConsEstoque: TFrmConsEstoque
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Consulta de estoque'
-  ClientHeight = 211
+  ClientHeight = 302
   ClientWidth = 438
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object FrmConsEstoque: TFrmConsEstoque
   TextHeight = 13
   object PanelBotoes: TPanel
     Left = 0
-    Top = 169
+    Top = 260
     Width = 438
     Height = 42
     Align = alBottom
@@ -32,6 +32,7 @@ object FrmConsEstoque: TFrmConsEstoque
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 2
+    ExplicitTop = 169
     object BtnSair: TSpeedButton
       Left = 183
       Top = 6
@@ -146,7 +147,7 @@ object FrmConsEstoque: TFrmConsEstoque
           Style = csDropDownList
           MaxLength = 3
           TabOrder = 0
-          OnChange = ComboBoxTipoConsChange
+          OnChange = ComboBoxListarEstoqueChange
           Items.Strings = (
             'Com estoque'
             'Sem estoque')
@@ -158,14 +159,15 @@ object FrmConsEstoque: TFrmConsEstoque
     Left = 0
     Top = 72
     Width = 438
-    Height = 97
+    Height = 188
     Align = alClient
     TabOrder = 1
+    ExplicitHeight = 97
     object DBGridComEstoque: TDBGrid
       Left = 1
       Top = 1
       Width = 436
-      Height = 95
+      Height = 186
       Align = alClient
       Color = clSkyBlue
       DataSource = DataSource
@@ -235,7 +237,7 @@ object FrmConsEstoque: TFrmConsEstoque
       Left = 1
       Top = 1
       Width = 436
-      Height = 95
+      Height = 186
       Align = alClient
       Color = clSkyBlue
       DataSource = DataSource

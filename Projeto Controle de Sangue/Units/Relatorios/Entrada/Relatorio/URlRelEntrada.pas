@@ -45,6 +45,10 @@ type
     RLLabelTotalEntradas: TRLLabel;
     RLDBResultTotalEntradas: TRLDBResult;
     RLPDFFilter: TRLPDFFilter;
+    RLLabelResponsavel: TRLLabel;
+    RLPanel7: TRLPanel;
+    RLPanel8: TRLPanel;
+    RLDBText1: TRLDBText;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

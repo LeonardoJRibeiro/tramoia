@@ -153,6 +153,11 @@ begin
         Result := 'Erro ao carregar informações da bolsa. Motivo %s';
       end;
 
+    27:
+      begin
+        Result := 'Erro ao realizar a autenticação do usuário. Motivo: %s';
+      end;
+
   end;
 
 end;

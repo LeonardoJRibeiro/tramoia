@@ -65,9 +65,9 @@ type
 
     procedure CarregaSaida;
 
-    procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
-
     procedure CarregaUsuarios;
+
+    procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
 
     function SalvaSaida: Boolean;
 
@@ -83,7 +83,7 @@ implementation
 
 uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO, UBiblioteca,
   UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao,
-  System.Generics.Collections, UClassUsuario, UClassUsuarioDAO;
+  System.Generics.Collections, UClassUsuario, UClassUsuarioDAO, UAutenticacao;
 
 {$R *.dfm}
 { TFrmSaida }
@@ -188,9 +188,18 @@ begin
 
   end;
 
-  Self.SalvaSaida;
+  if TFrmAutenticacao.getAutenticacao(TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex])) then
+  begin
 
-  TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', Trim(EdtHospital.Text));
+    Self.SalvaSaida;
+
+    TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', Trim(EdtHospital.Text));
+
+  end
+  else
+  begin
+    //Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['Saída de Sangue','Não foi possível realizar a autenticação do usuário informado. Tente novamente.'])), PChar('Erro'));
+  end;
 
 end;
 
@@ -277,6 +286,7 @@ procedure TFrmSaida.CarregaSaida;
 var
   lSaida: TSaida;
   lSaidaDAO: TSaidaDAO;
+  I: SmallInt;
 begin
 
   lSaida := TSaida.Create;
@@ -303,8 +313,21 @@ begin
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
           Self.FIdBolsa := lSaida.Id_Bolsa;
           CarregaUsuarios;
-          ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString+ ' - ' +
-                                      TClassBibliotecaDao.getNomeUsuario(lSaida.Id_Usuario, DataModuleConexao.Conexao));
+
+            // Maneira com mais acessos ao banco
+//          ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString+ ' - ' +
+//                                      TClassBibliotecaDao.getNomeUsuario(lSaida.Id_Usuario, DataModuleConexao.Conexao));
+
+          ComboBoxResponsavel.ItemIndex := -1;
+          for I := 0 to ComboBoxResponsavel.Items.Count-1 do
+          begin
+
+            if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = lSaida.Id_Usuario) then
+            begin
+              ComboBoxResponsavel.ItemIndex := I;
+            end;
+
+          end;
 
           ComboBoxResponsavel.SetFocus;
 
@@ -581,7 +604,6 @@ function TFrmSaida.SalvaSaida: Boolean;
 var
   lSaida: TSaida;
   lSaidaDAO: TSaidaDAO;
-  lFimCopy: Integer;
 begin
 
   lSaida := TSaida.Create;
@@ -592,8 +614,9 @@ begin
       EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
 
     // Retira apenas o ID do usuário da string
-    lFimCopy := AnsiPos('-', ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]) - 1;
-    lSaida.Id_Usuario := Trim(Copy(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex],1,lFimCopy)).ToInteger;
+//    lFimCopy := AnsiPos('-', ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]) - 1;
+//    lSaida.Id_Usuario := Trim(Copy(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex],1,lFimCopy)).ToInteger;
+    lSaida.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
 
     lSaida.Id_Bolsa := Self.FIdBolsa;
     lSaida.Data_Saida := now;

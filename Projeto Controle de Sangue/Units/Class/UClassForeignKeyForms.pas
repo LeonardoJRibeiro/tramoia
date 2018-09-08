@@ -25,6 +25,7 @@ type
     FIdUSobre: Byte = 12;
     FIdUConsEntrada: Byte = 13;
     FIdUConsSaida: Byte = 14;
+    FIdUAutenticacao: Byte = 15;
 
   end;
 

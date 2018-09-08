@@ -79,6 +79,7 @@ begin
 
     pPersistencia.Query.SQL.Add('SELECT');
     pPersistencia.Query.SQL.Add('  e.id,');
+    pPersistencia.Query.SQL.Add('  u.nome AS responsavel,');
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue,');
@@ -94,6 +95,9 @@ begin
 
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
     pPersistencia.Query.SQL.Add('ON (e.id_bolsa = b.id)');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN usuario u');
+    pPersistencia.Query.SQL.Add('ON (e.id_usuario = u.id)');
 
     pPersistencia.Query.SQL.Add('WHERE 0=0');
 

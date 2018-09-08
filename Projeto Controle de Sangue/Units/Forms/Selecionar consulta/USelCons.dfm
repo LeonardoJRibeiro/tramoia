@@ -72,7 +72,6 @@ object FrmSelCons: TFrmSelCons
         F5FB3F75A1FF}
       TabOrder = 0
       OnClick = BtnSairClick
-      ExplicitTop = 6
     end
   end
   object PanelRelatorios: TPanel
@@ -92,9 +91,8 @@ object FrmSelCons: TFrmSelCons
       Height = 39
       Align = alTop
       Caption = '&Estoque de bolsas'
-      TabOrder = 0
+      TabOrder = 3
       OnClick = BtnConsEstoqueClick
-      ExplicitTop = 115
     end
     object BtnConsSaidas: TBitBtn
       Left = 2
@@ -103,10 +101,8 @@ object FrmSelCons: TFrmSelCons
       Height = 39
       Align = alTop
       Caption = '&Saidas'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = BtnConsSaidasClick
-      ExplicitLeft = 4
-      ExplicitTop = 74
     end
     object BtnConsPacientes: TBitBtn
       Left = 2
@@ -115,9 +111,8 @@ object FrmSelCons: TFrmSelCons
       Height = 39
       Align = alTop
       Caption = '&Pacientes'
-      TabOrder = 2
+      TabOrder = 0
       OnClick = BtnConsPacientesClick
-      ExplicitTop = -4
     end
     object BtnConsEntradas: TBitBtn
       Left = 2
@@ -126,9 +121,8 @@ object FrmSelCons: TFrmSelCons
       Height = 39
       Align = alTop
       Caption = '&Entradas'
-      TabOrder = 3
+      TabOrder = 1
       OnClick = BtnConsEntradasClick
-      ExplicitTop = 35
     end
   end
 end

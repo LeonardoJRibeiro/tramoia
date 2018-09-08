@@ -30,6 +30,9 @@ type
     BtnNovo: TBitBtn;
     ComboBoxAboBolsa: TComboBox;
     ComboBoxTipo: TComboBox;
+    ComboBoxResponsavel: TComboBox;
+    LabelResponsavel: TLabel;
+    Label1: TLabel;
     procedure FormShow(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -40,6 +43,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure ComboBoxTipoEnter(Sender: TObject);
+    procedure ComboBoxResponsavelEnter(Sender: TObject);
   private
 
     FForeignFormKey: SmallInt;
@@ -49,6 +53,8 @@ type
     FNumBolsa: string;
 
     FBolsaDAO: TBolsaDAO;
+
+    procedure CarregaUsuarios;
 
     function CarregaObjetos: Boolean;
     function CarregaEntrada: Boolean;
@@ -68,7 +74,8 @@ implementation
 
 { TFrmEntradaSaida }
 uses System.StrUtils, UClassForeignKeyForms, UClassMensagem, UClassEntrada, UClassEntradaDao, UDMConexao,
-  UClassSaidaDao, UClassBolsa, UClassBibliotecaDao;
+  UClassSaidaDao, UClassBolsa, UClassBibliotecaDao,
+  System.Generics.Collections, UClassUsuario, UClassUsuarioDao, UAutenticacao;
 
 procedure TFrmEntrada.BtnGravarClick(Sender: TObject);
 var
@@ -77,6 +84,17 @@ var
   lEntrada: TEntrada;
   lEntradaDAO: TEntradaDAO;
 begin
+
+  if (ComboBoxResponsavel.ItemIndex = -1) then
+  begin
+
+    MessageDlg(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption]), mtWarning, [mbOK], -1);
+
+    ComboBoxResponsavel.SetFocus;
+
+    exit;
+
+  end;
 
   if (Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
@@ -138,78 +156,83 @@ begin
 
   end;
 
-  lBolsa := TBolsa.Create;
-  try
+  if TFrmAutenticacao.getAutenticacao(TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex])) then
+  begin
 
-    lBolsa.Id := Self.FIdBolsa;
-    lBolsa.NumeroBolsa := EdtNumeroBolsa.Text;
-    lBolsa.Tipo := ComboBoxTipo.Text;
-    lBolsa.Abo := Copy(ComboBoxAboBolsa.Text, 0, string(ComboBoxAboBolsa.Text).Length - 1);
-    lBolsa.Rh := Copy(ComboBoxAboBolsa.Text, string(ComboBoxAboBolsa.Text).Length,
-      string(ComboBoxAboBolsa.Text).Length);
-    lBolsa.Origem := EdtOrigem.Text;
-    lBolsa.Volume := StrToInt(EdtVolume.Text);
-    lBolsa.Sorologia := 'N';
-    lBolsa.PossuiEstoque := 'S';
-
+    lBolsa := TBolsa.Create;
     try
 
-      if (Self.FBolsaDAO.Salvar(lBolsa)) then
-      begin
+      lBolsa.Id := Self.FIdBolsa;
+      lBolsa.NumeroBolsa := EdtNumeroBolsa.Text;
+      lBolsa.Tipo := ComboBoxTipo.Text;
+      lBolsa.Abo := Copy(ComboBoxAboBolsa.Text, 0, string(ComboBoxAboBolsa.Text).Length - 1);
+      lBolsa.Rh := Copy(ComboBoxAboBolsa.Text, string(ComboBoxAboBolsa.Text).Length,
+        string(ComboBoxAboBolsa.Text).Length);
+      lBolsa.Origem := EdtOrigem.Text;
+      lBolsa.Volume := StrToInt(EdtVolume.Text);
+      lBolsa.Sorologia := 'N';
+      lBolsa.PossuiEstoque := 'S';
 
-        Self.FIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_da_bolsa', lBolsa.NumeroBolsa,
-          DataModuleConexao.Conexao);
+      try
 
-        lEntrada := TEntrada.Create;
-        try
+        if (Self.FBolsaDAO.Salvar(lBolsa)) then
+        begin
 
-          lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
-          lEntrada.IdUsuario := Self.FCodUsu;
-          lEntrada.IdBolsa := Self.FIdBolsa;
-          lEntrada.DataEntrada := Now;
-          lEntrada.Observacao := EdtObservacao.Text;
+          Self.FIdBolsa := TClassBibliotecaDao.getValorAtributo('bolsa', 'id', 'numero_da_bolsa', lBolsa.NumeroBolsa,
+            DataModuleConexao.Conexao);
 
-          lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
+          lEntrada := TEntrada.Create;
           try
 
-            if (lEntradaDAO.Salvar(lEntrada)) then
-            begin
+            lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
+            lEntrada.IdUsuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
+            lEntrada.IdBolsa := Self.FIdBolsa;
+            lEntrada.DataEntrada := Now;
+            lEntrada.Observacao := EdtObservacao.Text;
 
-              EdtOrdemSaida.Text := lEntrada.Id.ToString;
+            lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
+            try
 
-              BtnGravar.Enabled := False;
+              if (lEntradaDAO.Salvar(lEntrada)) then
+              begin
 
-              TBiblioteca.AtivaDesativaCompontes(FrmEntrada, False);
+                EdtOrdemSaida.Text := lEntrada.Id.ToString;
 
-              Application.MessageBox(PChar(TMensagem.getMensagem(23)), 'Aviso', MB_OK + MB_ICONINFORMATION);
+                BtnGravar.Enabled := False;
 
-              BtnNovo.SetFocus;
+                TBiblioteca.AtivaDesativaCompontes(FrmEntrada, False);
 
-              TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Origem', 'FrmEntrada.EdtOrigem',
-                Trim(EdtOrigem.Text));
+                Application.MessageBox(PChar(TMensagem.getMensagem(23)), 'Aviso', MB_OK + MB_ICONINFORMATION);
 
+                BtnNovo.SetFocus;
+
+                TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Origem', 'FrmEntrada.EdtOrigem',
+                  Trim(EdtOrigem.Text));
+
+              end;
+
+            finally
+              lEntradaDAO.Destroy;
             end;
 
           finally
-            lEntradaDAO.Destroy;
+            lEntrada.Destroy;
           end;
 
-        finally
-          lEntrada.Destroy;
         end;
 
+      except
+        on E: Exception do
+        begin
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['Entrada', E.Message])), 'Erro',
+            MB_OK + MB_ICONERROR);
+        end;
       end;
 
-    except
-      on E: Exception do
-      begin
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['Entrada', E.Message])), 'Erro',
-          MB_OK + MB_ICONERROR);
-      end;
+    finally
+      lBolsa.Destroy;
     end;
 
-  finally
-    lBolsa.Destroy;
   end;
 
 end;
@@ -234,7 +257,7 @@ begin
   Self.FIdBolsa := -1;
   Self.FNumBolsa := '-1';
 
-  EdtNumeroBolsa.SetFocus;
+  ComboBoxResponsavel.SetFocus;
 end;
 
 procedure TFrmEntrada.BtnSairClick(Sender: TObject);
@@ -291,6 +314,7 @@ function TFrmEntrada.CarregaEntrada: Boolean;
 var
   lEntradaDAO: TEntradaDAO;
   lEntrada: TEntrada;
+  I: SmallInt;
 begin
 
   lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
@@ -306,6 +330,20 @@ begin
         begin
           EdtOrdemSaida.Text := lEntrada.Id.ToString;
           DateTimePickerData.DateTime := lEntrada.DataEntrada;
+
+          CarregaUsuarios;
+
+          ComboBoxResponsavel.ItemIndex := -1;
+          for I := 0 to ComboBoxResponsavel.Items.Count-1 do
+          begin
+
+            if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = lEntrada.IdUsuario) then
+            begin
+              ComboBoxResponsavel.ItemIndex := I;
+            end;
+
+          end;
+
           EdtObservacao.Text := lEntrada.Observacao;
           Self.FIdBolsa := lEntrada.IdBolsa;
         end;
@@ -336,7 +374,45 @@ begin
   begin
     Self.CarregaBolsa(Self.FIdBolsa);
   end;
+  ComboBoxResponsavel.SetFocus;
 
+end;
+
+procedure TFrmEntrada.CarregaUsuarios;
+var
+  lListaUsuario: TObjectList<TUsuario>;
+  lUsuarioDAO: TUsuarioDAO;
+  I: Integer;
+begin
+  ComboBoxResponsavel.Clear;
+
+  lListaUsuario := TObjectList<TUsuario>.Create();
+  try
+
+    lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+    try
+
+      if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
+      begin
+        for I := 0 to lListaUsuario.Count-1 do
+        begin
+          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[i].Id.ToString + ' - ' +
+                                        lListaUsuario.Items[i].Nome);
+        end;
+      end
+      else
+      begin
+        Application.MessageBox('Não há usuários cadastrados. Cadastre antes de efetuar uma saída.',
+                               'Aviso', MB_ICONWARNING + MB_OK);
+      end;
+
+    finally
+      lUsuarioDAO.Destroy;
+    end;
+
+  finally
+    lListaUsuario.Free;
+  end;
 end;
 
 procedure TFrmEntrada.ComboBoxAboBolsaEnter(Sender: TObject);
@@ -344,6 +420,11 @@ begin
 
   ComboBoxAboBolsa.DroppedDown := ComboBoxAboBolsa.ItemIndex = -1;
 
+end;
+
+procedure TFrmEntrada.ComboBoxResponsavelEnter(Sender: TObject);
+begin
+  ComboBoxResponsavel.DroppedDown := True;
 end;
 
 procedure TFrmEntrada.ComboBoxTipoEnter(Sender: TObject);
@@ -429,7 +510,8 @@ begin
 
     DateTimePickerData.DateTime := Now;
 
-    EdtNumeroBolsa.SetFocus;
+    CarregaUsuarios;
+    ComboBoxResponsavel.SetFocus;
 
   end;
 

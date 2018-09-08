@@ -77,7 +77,7 @@ type
     RLPanel2: TRLPanel;
     RLPanel28: TRLPanel;
     RLPanel27: TRLPanel;
-    RLDBText1: TRLDBText;
+    RLDBTextPai: TRLDBText;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

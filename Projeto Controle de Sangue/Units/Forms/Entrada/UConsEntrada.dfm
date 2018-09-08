@@ -1,20 +1,20 @@
 inherited FrmConsEntrada: TFrmConsEntrada
   Caption = 'Consulta de Entradas'
   ClientHeight = 370
-  ClientWidth = 782
+  ClientWidth = 849
   OnClose = FormClose
   OnShow = FormShow
-  ExplicitWidth = 788
+  ExplicitWidth = 855
   ExplicitHeight = 399
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanelGrid: TPanel
-    Width = 782
+    Width = 849
     Height = 256
     ExplicitWidth = 782
     ExplicitHeight = 256
     inherited DBGrid: TDBGrid
-      Width = 780
+      Width = 847
       Height = 254
       DataSource = DataSource
       OnDblClick = DBGridDblClick
@@ -26,6 +26,13 @@ inherited FrmConsEntrada: TFrmConsEntrada
           Title.Alignment = taRightJustify
           Title.Caption = 'C'#243'digo'
           Width = 40
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'responsavel'
+          Title.Caption = 'Respons'#225'vel'
+          Width = 80
           Visible = True
         end
         item
@@ -89,7 +96,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
   end
   inherited PanelBotoes: TPanel
     Top = 328
-    Width = 782
+    Width = 849
     ExplicitTop = 328
     ExplicitWidth = 782
     inherited BtnNovo: TSpeedButton
@@ -103,27 +110,27 @@ inherited FrmConsEntrada: TFrmConsEntrada
     end
   end
   inherited PanelConsulta: TPanel
-    Width = 782
+    Width = 849
     ExplicitWidth = 782
     inherited GroupBoxConsulta: TGroupBox
-      Width = 780
+      Width = 847
       ExplicitWidth = 780
       object LabelAte: TLabel [0]
-        Left = 410
+        Left = 464
         Top = 28
         Width = 17
         Height = 13
         Caption = 'At'#233
       end
       object LabelDe: TLabel [1]
-        Left = 180
+        Left = 220
         Top = 28
         Width = 17
         Height = 13
         Caption = 'De:'
       end
       object BtnLocalizar: TSpeedButton [2]
-        Left = 679
+        Left = 722
         Top = 21
         Width = 78
         Height = 27
@@ -166,11 +173,11 @@ inherited FrmConsEntrada: TFrmConsEntrada
         OnClick = BtnLocalizarClick
       end
       inherited EdtCons: TSearchBox [3]
-        Left = 152
+        Left = 195
         Width = 604
         NumbersOnly = True
         OnInvokeSearch = EdtConsInvokeSearch
-        ExplicitLeft = 152
+        ExplicitLeft = 195
         ExplicitWidth = 604
       end
       inherited GroupBoxTipoCons: TGroupBox [4]
@@ -188,7 +195,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
         end
       end
       object EdtDataFinal: TDateTimePicker
-        Left = 444
+        Left = 487
         Top = 24
         Width = 190
         Height = 21
@@ -198,7 +205,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
         OnExit = EdtDataFinalExit
       end
       object EdtDataIni: TDateTimePicker
-        Left = 200
+        Left = 243
         Top = 24
         Width = 190
         Height = 21

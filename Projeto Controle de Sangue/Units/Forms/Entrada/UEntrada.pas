@@ -88,7 +88,8 @@ begin
   if (ComboBoxResponsavel.ItemIndex = -1) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     ComboBoxResponsavel.SetFocus;
 
@@ -104,7 +105,7 @@ begin
 
     EdtNumeroBolsa.SetFocus;
 
-    Exit;
+    exit;
 
   end;
 
@@ -116,7 +117,7 @@ begin
 
     ComboBoxTipo.SetFocus;
 
-    Exit;
+    exit;
 
   end;
 
@@ -128,7 +129,7 @@ begin
 
     EdtVolume.SetFocus;
 
-    Exit;
+    exit;
 
   end;
 
@@ -140,7 +141,7 @@ begin
 
     ComboBoxAboBolsa.SetFocus;
 
-    Exit;
+    exit;
 
   end;
 
@@ -152,11 +153,12 @@ begin
 
     EdtOrigem.SetFocus;
 
-    Exit;
+    exit;
 
   end;
 
-  if TFrmAutenticacao.getAutenticacao(TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex])) then
+  if TFrmAutenticacao.getAutenticacao(TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items
+    [ComboBoxResponsavel.ItemIndex])) then
   begin
 
     lBolsa := TBolsa.Create;
@@ -185,7 +187,8 @@ begin
           try
 
             lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
-            lEntrada.IdUsuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
+            lEntrada.IdUsuario := TBiblioteca.getIdUsuarioOnString
+              (ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
             lEntrada.IdBolsa := Self.FIdBolsa;
             lEntrada.DataEntrada := Now;
             lEntrada.Observacao := EdtObservacao.Text;
@@ -334,10 +337,10 @@ begin
           CarregaUsuarios;
 
           ComboBoxResponsavel.ItemIndex := -1;
-          for I := 0 to ComboBoxResponsavel.Items.Count-1 do
+          for I := 0 to ComboBoxResponsavel.Items.Count - 1 do
           begin
 
-            if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = lEntrada.IdUsuario) then
+            if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[I]) = lEntrada.IdUsuario) then
             begin
               ComboBoxResponsavel.ItemIndex := I;
             end;
@@ -394,16 +397,15 @@ begin
 
       if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
       begin
-        for I := 0 to lListaUsuario.Count-1 do
+        for I := 0 to lListaUsuario.Count - 1 do
         begin
-          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[i].Id.ToString + ' - ' +
-                                        lListaUsuario.Items[i].Nome);
+          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[I].Id.ToString + ' - ' + lListaUsuario.Items[I].Nome);
         end;
       end
       else
       begin
-        Application.MessageBox('Não há usuários cadastrados. Cadastre antes de efetuar uma saída.',
-                               'Aviso', MB_ICONWARNING + MB_OK);
+        Application.MessageBox('Não há usuários cadastrados. Cadastre antes de efetuar uma saída.', 'Aviso',
+          MB_ICONWARNING + MB_OK);
       end;
 
     finally
@@ -483,12 +485,21 @@ end;
 
 procedure TFrmEntrada.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
+  case (Key) of
+    VK_F6:
+      begin
+        BtnGravarClick(Self);
+      end;
 
-  if (Key = VK_ESCAPE) then
-  begin
+    VK_F7:
+      begin
+        BtnNovoClick(Self);
+      end;
 
-    BtnSairClick(Sender);
-
+    VK_ESCAPE:
+      begin
+        BtnSairClick(Self);
+      end;
   end;
 
 end;

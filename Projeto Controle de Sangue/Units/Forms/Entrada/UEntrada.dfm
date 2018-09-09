@@ -222,7 +222,7 @@ object FrmEntrada: TFrmEntrada
       Top = 9
       Width = 105
       Height = 27
-      Caption = 'Gravar'
+      Caption = '&Gravar - F6'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF
@@ -267,7 +267,7 @@ object FrmEntrada: TFrmEntrada
       Top = 9
       Width = 105
       Height = 27
-      Caption = 'Sair'
+      Caption = '&Sair - Esc'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF
@@ -312,7 +312,7 @@ object FrmEntrada: TFrmEntrada
       Top = 9
       Width = 105
       Height = 27
-      Caption = 'Novo'
+      Caption = '&Novo - F7'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF

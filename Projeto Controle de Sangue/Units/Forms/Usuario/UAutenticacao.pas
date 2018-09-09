@@ -84,16 +84,17 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, acPNG, Vcl.ExtCtrls, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, acPNG, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask;
 
 type
   TFrmAutenticacao = class(TForm)
     Image1: TImage;
     Label1: TLabel;
     EdtUsuario: TLabeledEdit;
-    EdtSenha: TLabeledEdit;
     BtnAutenticar: TButton;
     BtnCancelar: TButton;
+    EdtSenha: TMaskEdit;
+    Label2: TLabel;
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnAutenticarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

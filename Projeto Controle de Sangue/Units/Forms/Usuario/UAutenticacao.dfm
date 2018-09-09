@@ -1836,6 +1836,13 @@ object FrmAutenticacao: TFrmAutenticacao
     Alignment = taCenter
     Caption = 'Realize a autentica'#231#227'o do usu'#225'rio'#13#10'para continuar:'
   end
+  object Label2: TLabel
+    Left = 136
+    Top = 85
+    Width = 30
+    Height = 13
+    Caption = 'Senha'
+  end
   object EdtUsuario: TLabeledEdit
     Left = 136
     Top = 60
@@ -1847,17 +1854,6 @@ object FrmAutenticacao: TFrmAutenticacao
     EditLabel.Caption = 'Usu'#225'rio'
     Enabled = False
     TabOrder = 0
-  end
-  object EdtSenha: TLabeledEdit
-    Left = 136
-    Top = 99
-    Width = 180
-    Height = 21
-    EditLabel.Width = 34
-    EditLabel.Height = 13
-    EditLabel.Caption = 'Senha:'
-    TabOrder = 1
-    OnKeyDown = EdtSenhaKeyDown
   end
   object BtnAutenticar: TButton
     Left = 69
@@ -1876,5 +1872,15 @@ object FrmAutenticacao: TFrmAutenticacao
     Caption = 'Cancelar'
     ModalResult = 8
     TabOrder = 3
+  end
+  object EdtSenha: TMaskEdit
+    Left = 136
+    Top = 99
+    Width = 180
+    Height = 21
+    PasswordChar = '*'
+    TabOrder = 1
+    Text = ''
+    OnKeyDown = EdtSenhaKeyDown
   end
 end

@@ -43,7 +43,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure ComboBoxTipoEnter(Sender: TObject);
-    procedure ComboBoxResponsavelEnter(Sender: TObject);
   private
 
     FForeignFormKey: SmallInt;
@@ -55,6 +54,7 @@ type
     FBolsaDAO: TBolsaDAO;
 
     procedure CarregaUsuarios;
+    procedure setIndexByIdUsuario(pIdUsuario: Integer);
 
     function CarregaObjetos: Boolean;
     function CarregaEntrada: Boolean;
@@ -335,17 +335,7 @@ begin
           DateTimePickerData.DateTime := lEntrada.DataEntrada;
 
           CarregaUsuarios;
-
-          ComboBoxResponsavel.ItemIndex := -1;
-          for I := 0 to ComboBoxResponsavel.Items.Count - 1 do
-          begin
-
-            if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[I]) = lEntrada.IdUsuario) then
-            begin
-              ComboBoxResponsavel.ItemIndex := I;
-            end;
-
-          end;
+          setIndexByIdUsuario(lEntrada.IdUsuario);
 
           EdtObservacao.Text := lEntrada.Observacao;
           Self.FIdBolsa := lEntrada.IdBolsa;
@@ -417,16 +407,29 @@ begin
   end;
 end;
 
+procedure TFrmEntrada.setIndexByIdUsuario(pIdUsuario: Integer);
+var
+  I: SmallInt;
+begin
+
+  ComboBoxResponsavel.ItemIndex := -1;
+  for I := 0 to ComboBoxResponsavel.Items.Count-1 do
+  begin
+
+    if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = pIdUsuario) then
+    begin
+      ComboBoxResponsavel.ItemIndex := I;
+    end;
+
+  end;
+
+end;
+
 procedure TFrmEntrada.ComboBoxAboBolsaEnter(Sender: TObject);
 begin
 
   ComboBoxAboBolsa.DroppedDown := ComboBoxAboBolsa.ItemIndex = -1;
 
-end;
-
-procedure TFrmEntrada.ComboBoxResponsavelEnter(Sender: TObject);
-begin
-  ComboBoxResponsavel.DroppedDown := True;
 end;
 
 procedure TFrmEntrada.ComboBoxTipoEnter(Sender: TObject);
@@ -522,6 +525,7 @@ begin
     DateTimePickerData.DateTime := Now;
 
     CarregaUsuarios;
+    setIndexByIdUsuario(Self.FCodUsu);
     ComboBoxResponsavel.SetFocus;
 
   end;

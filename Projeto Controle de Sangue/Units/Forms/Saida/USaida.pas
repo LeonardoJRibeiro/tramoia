@@ -67,6 +67,8 @@ type
 
     procedure CarregaUsuarios;
 
+    procedure setIndexByIdUsuario(pIdUsuario: Integer);
+
     procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
 
     function SalvaSaida: Boolean;
@@ -286,7 +288,6 @@ procedure TFrmSaida.CarregaSaida;
 var
   lSaida: TSaida;
   lSaidaDAO: TSaidaDAO;
-  I: SmallInt;
 begin
 
   lSaida := TSaida.Create;
@@ -318,16 +319,7 @@ begin
 //          ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString+ ' - ' +
 //                                      TClassBibliotecaDao.getNomeUsuario(lSaida.Id_Usuario, DataModuleConexao.Conexao));
 
-          ComboBoxResponsavel.ItemIndex := -1;
-          for I := 0 to ComboBoxResponsavel.Items.Count-1 do
-          begin
-
-            if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = lSaida.Id_Usuario) then
-            begin
-              ComboBoxResponsavel.ItemIndex := I;
-            end;
-
-          end;
+          setIndexByIdUsuario(lSaida.Id_Usuario);
 
           ComboBoxResponsavel.SetFocus;
 
@@ -525,6 +517,7 @@ begin
     DateTimePickerData.Date := now;
 
     CarregaUsuarios;
+    setIndexByIdUsuario(Self.FIdUsuario);
     ComboBoxResponsavel.SetFocus;
 
     Self.FIdBolsa := -1;
@@ -568,6 +561,24 @@ begin
   finally
     lListaUsuario.Free;
   end;
+end;
+
+procedure TFrmSaida.setIndexByIdUsuario(pIdUsuario: Integer);
+var
+  I: SmallInt;
+begin
+
+  ComboBoxResponsavel.ItemIndex := -1;
+  for I := 0 to ComboBoxResponsavel.Items.Count-1 do
+  begin
+
+    if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = pIdUsuario) then
+    begin
+      ComboBoxResponsavel.ItemIndex := I;
+    end;
+
+  end;
+
 end;
 
 class function TFrmSaida.getSaida(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;

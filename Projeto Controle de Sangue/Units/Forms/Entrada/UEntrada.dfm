@@ -204,7 +204,6 @@ object FrmEntrada: TFrmEntrada
       Style = csOwnerDrawFixed
       CharCase = ecUpperCase
       TabOrder = 2
-      OnEnter = ComboBoxResponsavelEnter
     end
   end
   object PanelBottom: TPanel

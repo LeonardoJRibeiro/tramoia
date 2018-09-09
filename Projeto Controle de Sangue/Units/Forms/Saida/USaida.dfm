@@ -372,8 +372,9 @@ object FrmSaida: TFrmSaida
       Left = 210
       Top = 23
       Width = 190
-      Height = 21
-      AutoDropDown = True
+      Height = 22
+      AutoCompleteDelay = 1000
+      Style = csOwnerDrawFixed
       CharCase = ecUpperCase
       TabOrder = 2
     end

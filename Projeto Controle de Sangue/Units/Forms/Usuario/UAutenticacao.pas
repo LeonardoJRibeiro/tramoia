@@ -97,6 +97,7 @@ type
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnAutenticarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FIdUsuario: Integer;
     FNumTentativas: Byte;
@@ -164,11 +165,25 @@ end;
 procedure TFrmAutenticacao.EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
-  if (Key = VK_RETURN) then
-  begin
-    BtnAutenticarClick(Sender);
+  case (Key) of
+
+    VK_RETURN:
+      begin
+        BtnAutenticarClick(Sender);
+      end;
+
   end;
 
+end;
+
+procedure TFrmAutenticacao.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  case (Key) of
+    VK_ESCAPE:
+      begin
+        BtnCancelar.Click;
+      end;
+  end;
 end;
 
 procedure TFrmAutenticacao.FormShow(Sender: TObject);

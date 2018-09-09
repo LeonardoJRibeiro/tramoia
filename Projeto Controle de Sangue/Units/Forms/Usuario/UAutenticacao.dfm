@@ -11,8 +11,10 @@ object FrmAutenticacao: TFrmAutenticacao
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -1829,7 +1831,7 @@ object FrmAutenticacao: TFrmAutenticacao
   object Label1: TLabel
     Left = 134
     Top = 8
-    Width = 182
+    Width = 161
     Height = 26
     Alignment = taCenter
     Caption = 'Realize a autentica'#231#227'o do usu'#225'rio'#13#10'para continuar:'

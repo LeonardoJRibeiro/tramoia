@@ -14,7 +14,7 @@ object FrmConsEstoque: TFrmConsEstoque
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -32,7 +32,6 @@ object FrmConsEstoque: TFrmConsEstoque
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 2
-    ExplicitTop = 169
     object BtnSair: TSpeedButton
       Left = 183
       Top = 6
@@ -162,7 +161,6 @@ object FrmConsEstoque: TFrmConsEstoque
     Height = 188
     Align = alClient
     TabOrder = 1
-    ExplicitHeight = 97
     object DBGridComEstoque: TDBGrid
       Left = 1
       Top = 1

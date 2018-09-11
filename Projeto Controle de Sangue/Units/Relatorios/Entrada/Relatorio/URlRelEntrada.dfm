@@ -250,8 +250,8 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       Borders.FixedTop = True
       Borders.FixedBottom = True
       object RLDBTextDataEntrada: TRLDBText
-        Left = 12
-        Top = 7
+        Left = 11
+        Top = 8
         Width = 80
         Height = 16
         Alignment = taCenter
@@ -281,7 +281,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextTipo: TRLDBText
-        Left = 447
+        Left = 448
         Top = 7
         Width = 27
         Height = 16
@@ -321,8 +321,8 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLPanel13: TRLPanel
-        Left = 102
-        Top = -2
+        Left = 99
+        Top = 0
         Width = 1
         Height = 30
         Color = clBlack
@@ -331,7 +331,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLPanel14: TRLPanel
         Left = 365
-        Top = -1
+        Top = 0
         Width = 1
         Height = 30
         Color = clBlack
@@ -349,7 +349,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLPanel16: TRLPanel
         Left = 480
-        Top = -1
+        Top = 0
         Width = 1
         Height = 30
         Color = clBlack
@@ -358,7 +358,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLPanel17: TRLPanel
         Left = 541
-        Top = -1
+        Top = 0
         Width = 1
         Height = 30
         Color = clBlack
@@ -367,7 +367,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       end
       object RLPanel18: TRLPanel
         Left = 606
-        Top = -1
+        Top = 0
         Width = 1
         Height = 30
         Color = clBlack

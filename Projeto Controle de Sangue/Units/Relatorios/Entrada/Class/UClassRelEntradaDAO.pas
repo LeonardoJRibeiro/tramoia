@@ -42,12 +42,8 @@ begin
     pPersistencia.IniciaTransacao;
 
     pPersistencia.Query.SQL.Add('SELECT');
-    pPersistencia.Query.SQL.Add('  e.id,');
-    pPersistencia.Query.SQL.Add('  e.id_usuario,');
-    pPersistencia.Query.SQL.Add('  e.id_bolsa,');
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
     pPersistencia.Query.SQL.Add('  e.observacao,');
-    pPersistencia.Query.SQL.Add('  b.id,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');
@@ -55,11 +51,14 @@ begin
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS aborh,');
     pPersistencia.Query.SQL.Add('  b.origem,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
-    pPersistencia.Query.SQL.Add('  b.sorologia');
+    pPersistencia.Query.SQL.Add('  u.nome AS responsavel');
     pPersistencia.Query.SQL.Add('FROM entrada e');
 
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
     pPersistencia.Query.SQL.Add('ON(b.id = e.id_bolsa)');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN usuario u');
+    pPersistencia.Query.SQL.Add('ON(e.id_usuario = u.id)');
 
     pPersistencia.Query.SQL.Add('WHERE e.data_entrada BETWEEN :pDataIni AND :pDataFim');
     pPersistencia.setParametro('pDataIni', pRELENTRADA.DataIni);

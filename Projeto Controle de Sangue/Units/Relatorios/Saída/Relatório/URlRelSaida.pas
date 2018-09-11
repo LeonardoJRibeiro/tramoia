@@ -195,6 +195,12 @@ begin
 
           DataSource.DataSet := Self.FPersistencia.Query;
 
+        end
+        else
+        begin
+
+          MessageBox(Self.Handle, 'Não há registros na sua busca', 'Aviso', mb_Ok);
+
         end;
 
       end;

@@ -46,9 +46,9 @@ object FrmSaida: TFrmSaida
     object LabelResponsavel: TLabel
       Left = 210
       Top = 8
-      Width = 61
+      Width = 75
       Height = 13
-      Caption = 'Respons'#225'vel'
+      Caption = 'Respons'#225'vel(*)'
       FocusControl = ComboBoxResponsavel
     end
     object GroupBoxSangue: TGroupBox
@@ -93,12 +93,20 @@ object FrmSaida: TFrmSaida
         Height = 13
         Caption = 'Tipo'
       end
+      object Label2: TLabel
+        Left = 378
+        Top = 36
+        Width = 13
+        Height = 13
+        Caption = 'mL'
+      end
       object EdtAboBolsa: TEdit
         Left = 205
         Top = 33
         Width = 64
         Height = 21
         TabStop = False
+        Alignment = taCenter
         Enabled = False
         TabOrder = 3
       end
@@ -128,6 +136,7 @@ object FrmSaida: TFrmSaida
         Width = 35
         Height = 21
         TabStop = False
+        Alignment = taCenter
         Enabled = False
         TabOrder = 1
       end
@@ -194,10 +203,12 @@ object FrmSaida: TFrmSaida
       object EdtVolume: TEdit
         Left = 312
         Top = 33
-        Width = 79
+        Width = 61
         Height = 21
+        Alignment = taRightJustify
         Enabled = False
         MaxLength = 9
+        NumbersOnly = True
         ReadOnly = True
         TabOrder = 2
       end
@@ -394,7 +405,7 @@ object FrmSaida: TFrmSaida
       Top = 9
       Width = 130
       Height = 27
-      Caption = 'Gravar'
+      Caption = '&Gravar - F6'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF
@@ -439,7 +450,7 @@ object FrmSaida: TFrmSaida
       Top = 9
       Width = 130
       Height = 27
-      Caption = 'Sair'
+      Caption = '&Sair - Esc'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF
@@ -484,7 +495,7 @@ object FrmSaida: TFrmSaida
       Top = 9
       Width = 130
       Height = 27
-      Caption = 'Novo'
+      Caption = '&Novo - F7'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF

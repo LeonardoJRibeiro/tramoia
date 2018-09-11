@@ -5,7 +5,7 @@ object FrmCadUsuario: TFrmCadUsuario
   BorderStyle = bsSingle
   Caption = 'Cadastro de Usu'#225'rio'
   ClientHeight = 173
-  ClientWidth = 256
+  ClientWidth = 294
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,16 +22,17 @@ object FrmCadUsuario: TFrmCadUsuario
   object PanelBotoes: TPanel
     Left = 0
     Top = 138
-    Width = 256
+    Width = 294
     Height = 35
     Align = alBottom
     TabOrder = 0
+    ExplicitWidth = 256
     object BtnGravar: TBitBtn
       Left = 1
       Top = 5
-      Width = 81
+      Width = 92
       Height = 25
-      Caption = 'Gravar'
+      Caption = '&Gravar - F6'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF
@@ -72,11 +73,11 @@ object FrmCadUsuario: TFrmCadUsuario
       OnClick = BtnGravarClick
     end
     object BtnNovo: TBitBtn
-      Left = 87
+      Left = 97
       Top = 5
-      Width = 75
+      Width = 92
       Height = 25
-      Caption = 'Novo'
+      Caption = '&Novo - F7'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF
@@ -117,11 +118,11 @@ object FrmCadUsuario: TFrmCadUsuario
       OnClick = BtnNovoClick
     end
     object BtnSair: TBitBtn
-      Left = 166
+      Left = 193
       Top = 5
-      Width = 81
+      Width = 92
       Height = 25
-      Caption = 'Sair'
+      Caption = '&Sair - Esc'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000120B0000120B000000000000000000000000FF0000FF
@@ -165,33 +166,34 @@ object FrmCadUsuario: TFrmCadUsuario
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 256
+    Width = 294
     Height = 138
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 256
     object LabelSenha: TLabel
       Left = 24
       Top = 65
-      Width = 30
+      Width = 44
       Height = 13
-      Caption = 'Senha'
+      Caption = 'Senha(*)'
     end
     object EdtNome: TLabeledEdit
       Left = 24
       Top = 32
-      Width = 205
+      Width = 241
       Height = 21
       CharCase = ecUpperCase
-      EditLabel.Width = 27
+      EditLabel.Width = 41
       EditLabel.Height = 13
-      EditLabel.Caption = 'Nome'
+      EditLabel.Caption = 'Nome(*)'
       MaxLength = 20
       TabOrder = 0
     end
     object EdtSenha: TMaskEdit
       Left = 24
       Top = 81
-      Width = 205
+      Width = 241
       Height = 21
       MaxLength = 20
       PasswordChar = '*'

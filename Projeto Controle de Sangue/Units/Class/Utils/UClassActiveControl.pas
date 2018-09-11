@@ -61,11 +61,7 @@ begin
 
           if (Msg.wParam = VK_SPACE) then
           begin
-
-            // Método não fecha ainda, pq a aplicação ta chamando aqui várias vezes, assim liga e desliga
-            // o droppeddown se deixar -> TComboBox(Screen.ActiveControl).DroppedDown := not TComboBox(Screen.ActiveControl).DroppedDown;
             TComboBox(Screen.ActiveControl).DroppedDown := True;
-
           end;
 
         end;

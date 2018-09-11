@@ -60,7 +60,7 @@ begin
 
     8:
       begin
-        Result := '%s salvo com sucesso!'
+        Result := '%s salvo com sucesso.'
       end;
 
     9:
@@ -135,12 +135,12 @@ begin
 
     23:
       begin
-        Result := 'Entrada realizada com sucesso.';
+        Result := 'Entrada gravada com sucesso.';
       end;
 
     24:
       begin
-        Result := 'Saída realizada com sucesso.';
+        Result := 'Saída gravada com sucesso.';
       end;
 
     25:

@@ -5,7 +5,7 @@ object FrmEntrada: TFrmEntrada
   BorderStyle = bsSingle
   Caption = 'Entrada de sangue'
   ClientHeight = 235
-  ClientWidth = 365
+  ClientWidth = 383
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,47 +24,48 @@ object FrmEntrada: TFrmEntrada
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 365
+    Width = 383
     Height = 194
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitWidth = 365
     object LabelData: TLabel
       Left = 83
-      Top = 11
-      Width = 23
+      Top = 12
+      Width = 37
       Height = 13
-      Caption = 'Data'
+      Caption = 'Data(*)'
     end
     object LabelNumeroBolsa: TLabel
       Left = 10
       Top = 57
-      Width = 80
+      Width = 94
       Height = 13
-      Caption = 'N'#250'mero da bolsa'
+      Caption = 'N'#250'mero da bolsa(*)'
     end
     object LabelOrigem: TLabel
       Left = 10
-      Top = 105
-      Width = 34
+      Top = 104
+      Width = 48
       Height = 13
-      Caption = 'Origem'
+      Caption = 'Origem(*)'
     end
     object LabelTipo: TLabel
       Left = 159
       Top = 57
-      Width = 20
+      Width = 34
       Height = 13
-      Caption = 'Tipo'
+      Caption = 'Tipo(*)'
     end
     object LabelAboSangue: TLabel
       Left = 287
       Top = 57
-      Width = 64
+      Width = 78
       Height = 13
-      Caption = 'ABO da Bolsa'
+      Caption = 'ABO da Bolsa(*)'
     end
     object LabelObservacao: TLabel
       Left = 10
@@ -76,23 +77,23 @@ object FrmEntrada: TFrmEntrada
     object LabelVolume: TLabel
       Left = 217
       Top = 57
-      Width = 34
+      Width = 48
       Height = 13
-      Caption = 'Volume'
+      Caption = 'Volume(*)'
     end
     object LabelOrdemSaida: TLabel
       Left = 10
-      Top = 11
+      Top = 12
       Width = 32
       Height = 13
       Caption = 'Ordem'
     end
     object LabelResponsavel: TLabel
       Left = 206
-      Top = 11
-      Width = 61
+      Top = 12
+      Width = 75
       Height = 13
-      Caption = 'Respons'#225'vel'
+      Caption = 'Respons'#225'vel(*)'
     end
     object Label1: TLabel
       Left = 267
@@ -123,7 +124,7 @@ object FrmEntrada: TFrmEntrada
     object EdtOrigem: TEdit
       Left = 10
       Top = 120
-      Width = 341
+      Width = 355
       Height = 21
       CharCase = ecUpperCase
       MaxLength = 15
@@ -132,7 +133,7 @@ object FrmEntrada: TFrmEntrada
     object EdtObservacao: TEdit
       Left = 10
       Top = 167
-      Width = 341
+      Width = 355
       Height = 21
       MaxLength = 100
       TabOrder = 8
@@ -160,7 +161,7 @@ object FrmEntrada: TFrmEntrada
     object ComboBoxAboBolsa: TComboBox
       Left = 287
       Top = 72
-      Width = 64
+      Width = 78
       Height = 22
       AutoCompleteDelay = 1000
       Style = csOwnerDrawFixed
@@ -198,7 +199,7 @@ object FrmEntrada: TFrmEntrada
     object ComboBoxResponsavel: TComboBox
       Left = 206
       Top = 27
-      Width = 145
+      Width = 159
       Height = 22
       AutoCompleteDelay = 1000
       Style = csOwnerDrawFixed
@@ -209,17 +210,18 @@ object FrmEntrada: TFrmEntrada
   object PanelBottom: TPanel
     Left = 0
     Top = 194
-    Width = 365
+    Width = 383
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitWidth = 365
     object BtnGravar: TBitBtn
-      Left = 21
+      Left = 10
       Top = 9
-      Width = 105
+      Width = 115
       Height = 27
       Caption = '&Gravar - F6'
       Glyph.Data = {
@@ -262,9 +264,9 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 238
+      Left = 250
       Top = 9
-      Width = 105
+      Width = 115
       Height = 27
       Caption = '&Sair - Esc'
       Glyph.Data = {
@@ -309,7 +311,7 @@ object FrmEntrada: TFrmEntrada
     object BtnNovo: TBitBtn
       Left = 130
       Top = 9
-      Width = 105
+      Width = 115
       Height = 27
       Caption = '&Novo - F7'
       Glyph.Data = {

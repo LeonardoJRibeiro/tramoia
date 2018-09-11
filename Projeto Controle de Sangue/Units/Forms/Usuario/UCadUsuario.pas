@@ -190,11 +190,21 @@ end;
 procedure TFrmCadUsuario.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
-  if (Key = VK_ESCAPE) then
-  begin
+  case (Key) of
+    VK_F6:
+      begin
+        BtnGravarClick(Self);
+      end;
 
-    BtnSairClick(Sender);
+    VK_F7:
+      begin
+        BtnNovoClick(Self);
+      end;
 
+    VK_ESCAPE:
+      begin
+        BtnSairClick(Self);
+      end;
   end;
 
 end;

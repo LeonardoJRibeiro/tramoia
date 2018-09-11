@@ -45,6 +45,7 @@ type
     Label1: TLabel;
     EdtAboPaciente: TEdit;
     ComboBoxResponsavel: TComboBox;
+    Label2: TLabel;
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -138,7 +139,8 @@ begin
   if (ComboBoxResponsavel.ItemIndex = -1) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     ComboBoxResponsavel.SetFocus;
 
@@ -149,7 +151,8 @@ begin
   if (Trim(EdtRegistroPaciente.Text).IsEmpty) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelRegistroPaciente.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelRegistroPaciente.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     EdtRegistroPaciente.SetFocus;
 
@@ -160,7 +163,8 @@ begin
   if (Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelNumeroBolsa.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelNumeroBolsa.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     EdtNumeroBolsa.SetFocus;
 
@@ -171,9 +175,10 @@ begin
   if (Trim(EdtVolume.Text).IsEmpty) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelVolume.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelVolume.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
-    EdtHospital.SetFocus;
+    EdtVolume.SetFocus;
 
     exit;
 
@@ -182,7 +187,8 @@ begin
   if (Trim(EdtHospital.Text).IsEmpty) then
   begin
 
-    MessageDlg(Format(TMensagem.getMensagem(3), [LabelHospital.Caption]), mtWarning, [mbOK], -1);
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelHospital.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
     EdtHospital.SetFocus;
 
@@ -190,22 +196,25 @@ begin
 
   end;
 
-  if TFrmAutenticacao.getAutenticacao(TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex])) then
+  if (TFrmAutenticacao.getAutenticacao(TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items
+    [ComboBoxResponsavel.ItemIndex]))) then
   begin
 
-    Self.SalvaSaida;
+    if (Self.SalvaSaida) then
+    begin
 
-    TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', Trim(EdtHospital.Text));
+      TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital',
+        Trim(EdtHospital.Text));
 
-  end
-  else
-  begin
-    //Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['Saída de Sangue','Não foi possível realizar a autenticação do usuário informado. Tente novamente.'])), PChar('Erro'));
+    end;
+
   end;
 
 end;
 
 procedure TFrmSaida.BtnNovoClick(Sender: TObject);
+var
+  lUltimoUsu: Integer;
 begin
   TBiblioteca.AtivaDesativaCompontes(Self, true);
 
@@ -214,9 +223,11 @@ begin
   EdtId.Enabled := False;
   EdtNomePaciente.Enabled := False;
   EdtAboPaciente.Enabled := False;
+  EdtAboBolsa.Enabled := False;
+  EdtTipo.Enabled := False;
+  EdtVolume.Enabled := False;
   EdtId.Clear;
   DateTimePickerData.Date := now;
-  CarregaUsuarios;
   EdtRegistroPaciente.Clear;
   EdtNomePaciente.Clear;
   EdtNumeroBolsa.Clear;
@@ -315,9 +326,9 @@ begin
           Self.FIdBolsa := lSaida.Id_Bolsa;
           CarregaUsuarios;
 
-            // Maneira com mais acessos ao banco
-//          ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString+ ' - ' +
-//                                      TClassBibliotecaDao.getNomeUsuario(lSaida.Id_Usuario, DataModuleConexao.Conexao));
+          // Maneira com mais acessos ao banco
+          // ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString+ ' - ' +
+          // TClassBibliotecaDao.getNomeUsuario(lSaida.Id_Usuario, DataModuleConexao.Conexao));
 
           setIndexByIdUsuario(lSaida.Id_Usuario);
 
@@ -497,9 +508,21 @@ end;
 procedure TFrmSaida.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
-  if (Key = VK_ESCAPE) then
-  begin
-    BtnSairClick(Sender);
+  case (Key) of
+    VK_F6:
+      begin
+        BtnGravarClick(Self);
+      end;
+
+    VK_F7:
+      begin
+        BtnNovoClick(Self);
+      end;
+
+    VK_ESCAPE:
+      begin
+        BtnSairClick(Self);
+      end;
   end;
 
 end;
@@ -542,16 +565,17 @@ begin
 
       if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
       begin
-        for I := 0 to lListaUsuario.Count-1 do
+
+        for I := 0 to lListaUsuario.Count - 1 do
         begin
-          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[i].Id.ToString + ' - ' + 
-                                        lListaUsuario.Items[i].Nome);
+          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[I].Id.ToString + ' - ' + lListaUsuario.Items[I].Nome);
         end;
+
       end
       else
-      begin                                                           
-        Application.MessageBox('Não há usuários cadastrados. Cadastre antes de efetuar uma saída.', 
-                               'Aviso', MB_ICONWARNING + MB_OK);
+      begin
+        Application.MessageBox('Não há usuários cadastrados. Cadastre antes de efetuar uma saída.', 'Aviso',
+          MB_ICONWARNING + MB_OK);
       end;
 
     finally
@@ -565,16 +589,16 @@ end;
 
 procedure TFrmSaida.setIndexByIdUsuario(pIdUsuario: Integer);
 var
-  I: SmallInt;
+  lCount: SmallInt;
 begin
 
   ComboBoxResponsavel.ItemIndex := -1;
-  for I := 0 to ComboBoxResponsavel.Items.Count-1 do
+  for lCount := 0 to ComboBoxResponsavel.Items.Count - 1 do
   begin
 
-    if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = pIdUsuario) then
+    if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[lCount]) = pIdUsuario) then
     begin
-      ComboBoxResponsavel.ItemIndex := I;
+      ComboBoxResponsavel.ItemIndex := lCount;
     end;
 
   end;
@@ -625,8 +649,8 @@ begin
       EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
 
     // Retira apenas o ID do usuário da string
-//    lFimCopy := AnsiPos('-', ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]) - 1;
-//    lSaida.Id_Usuario := Trim(Copy(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex],1,lFimCopy)).ToInteger;
+    // lFimCopy := AnsiPos('-', ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]) - 1;
+    // lSaida.Id_Usuario := Trim(Copy(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex],1,lFimCopy)).ToInteger;
     lSaida.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
 
     lSaida.Id_Bolsa := Self.FIdBolsa;
@@ -649,7 +673,7 @@ begin
 
           TBiblioteca.AtivaDesativaCompontes(Self, False);
 
-          MessageDlg(TMensagem.getMensagem(24), mtInformation, [mbOK], -1);
+          Application.MessageBox(PChar(TMensagem.getMensagem(24)), 'Informação', MB_ICONINFORMATION + MB_OK);
 
           BtnGravar.Enabled := False;
 
@@ -660,6 +684,7 @@ begin
       except
         on E: Exception do
         begin
+          Result := False;
           raise Exception.Create(Format(TMensagem.getMensagem(4), ['Saída de sangue', E.Message]));
         end;
       end;

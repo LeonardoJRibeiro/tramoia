@@ -46,7 +46,7 @@ type
   private
 
     FForeignFormKey: SmallInt;
-    FCodUsu: Integer;
+    FIdUsuario: Integer;
     FId: Integer;
     FIdBolsa: Integer;
     FNumBolsa: string;
@@ -74,8 +74,8 @@ implementation
 
 { TFrmEntradaSaida }
 uses System.StrUtils, UClassForeignKeyForms, UClassMensagem, UClassEntrada, UClassEntradaDao, UDMConexao,
-  UClassSaidaDao, UClassBolsa, UClassBibliotecaDao,
-  System.Generics.Collections, UClassUsuario, UClassUsuarioDao, UAutenticacao;
+  UClassSaidaDao, UClassBolsa, UClassBibliotecaDao, System.Generics.Collections, UClassUsuario, UClassUsuarioDao,
+  UAutenticacao;
 
 procedure TFrmEntrada.BtnGravarClick(Sender: TObject);
 var
@@ -317,7 +317,6 @@ function TFrmEntrada.CarregaEntrada: Boolean;
 var
   lEntradaDAO: TEntradaDAO;
   lEntrada: TEntrada;
-  I: SmallInt;
 begin
 
   lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
@@ -387,10 +386,12 @@ begin
 
       if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
       begin
+
         for I := 0 to lListaUsuario.Count - 1 do
         begin
           ComboBoxResponsavel.Items.Add(lListaUsuario.Items[I].Id.ToString + ' - ' + lListaUsuario.Items[I].Nome);
         end;
+
       end
       else
       begin
@@ -409,16 +410,16 @@ end;
 
 procedure TFrmEntrada.setIndexByIdUsuario(pIdUsuario: Integer);
 var
-  I: SmallInt;
+  lCount: SmallInt;
 begin
 
   ComboBoxResponsavel.ItemIndex := -1;
-  for I := 0 to ComboBoxResponsavel.Items.Count-1 do
+  for lCount := 0 to ComboBoxResponsavel.Items.Count - 1 do
   begin
 
-    if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[i]) = pIdUsuario) then
+    if (TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[lCount]) = pIdUsuario) then
     begin
-      ComboBoxResponsavel.ItemIndex := I;
+      ComboBoxResponsavel.ItemIndex := lCount;
     end;
 
   end;
@@ -525,7 +526,7 @@ begin
     DateTimePickerData.DateTime := Now;
 
     CarregaUsuarios;
-    setIndexByIdUsuario(Self.FCodUsu);
+    setIndexByIdUsuario(Self.FIdUsuario);
     ComboBoxResponsavel.SetFocus;
 
   end;
@@ -542,7 +543,7 @@ begin
     try
 
       FrmEntrada.FForeignFormKey := pFOREIGNFORMKEY;
-      FrmEntrada.FCodUsu := pCOD_USU;
+      FrmEntrada.FIdUsuario := pCOD_USU;
       FrmEntrada.FId := pID;
 
       Result := FrmEntrada.ShowModal = mrOk;

@@ -113,7 +113,7 @@ begin
           begin
 
             pPersistencia.Query.SQL.Add('AND b.numero_da_bolsa = :pChave');
-            pPersistencia.setParametro('pChave', pCHAVE + '%');
+            pPersistencia.setParametro('pChave', pCHAVE);
 
           end;
 

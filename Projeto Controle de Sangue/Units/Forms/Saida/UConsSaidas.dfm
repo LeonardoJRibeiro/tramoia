@@ -38,6 +38,12 @@ inherited FrmConsSaidas: TFrmConsSaidas
           Visible = True
         end
         item
+          Expanded = False
+          FieldName = 'responsavel'
+          Title.Caption = 'Respons'#225'vel'
+          Visible = True
+        end
+        item
           Alignment = taRightJustify
           Expanded = False
           FieldName = 'num_prontuario'
@@ -82,12 +88,6 @@ inherited FrmConsSaidas: TFrmConsSaidas
           Title.Alignment = taCenter
           Title.Caption = 'Abo/Rh bolsa'
           Width = 68
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'responsavel'
-          Title.Caption = 'Respons'#225'vel'
           Visible = True
         end>
     end

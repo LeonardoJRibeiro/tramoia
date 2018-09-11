@@ -11,7 +11,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
   inherited PanelGrid: TPanel
     Width = 849
     Height = 256
-    ExplicitWidth = 782
+    ExplicitWidth = 849
     ExplicitHeight = 256
     inherited DBGrid: TDBGrid
       Width = 847
@@ -29,19 +29,19 @@ inherited FrmConsEntrada: TFrmConsEntrada
           Visible = True
         end
         item
-          Expanded = False
-          FieldName = 'responsavel'
-          Title.Caption = 'Respons'#225'vel'
-          Width = 80
-          Visible = True
-        end
-        item
           Alignment = taCenter
           Expanded = False
           FieldName = 'data_entrada'
           Title.Alignment = taCenter
           Title.Caption = 'Data'
           Width = 74
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'responsavel'
+          Title.Caption = 'Respons'#225'vel'
+          Width = 80
           Visible = True
         end
         item
@@ -98,7 +98,7 @@ inherited FrmConsEntrada: TFrmConsEntrada
     Top = 328
     Width = 849
     ExplicitTop = 328
-    ExplicitWidth = 782
+    ExplicitWidth = 849
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick
     end
@@ -111,10 +111,10 @@ inherited FrmConsEntrada: TFrmConsEntrada
   end
   inherited PanelConsulta: TPanel
     Width = 849
-    ExplicitWidth = 782
+    ExplicitWidth = 849
     inherited GroupBoxConsulta: TGroupBox
       Width = 847
-      ExplicitWidth = 780
+      ExplicitWidth = 847
       object LabelAte: TLabel [0]
         Left = 464
         Top = 28

@@ -65,7 +65,6 @@ type
     procedure BtnConsultasClick(Sender: TObject);
     procedure MenuItemRelEstoqueClick(Sender: TObject);
     procedure MenuItemGerarBackupClick(Sender: TObject);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure MenuItemConsPacienteClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
@@ -127,7 +126,17 @@ end;
 
 procedure TFrmPrincipal.BtnSairClick(Sender: TObject);
 begin
+
+  if (Application.MessageBox(PChar('Deseja realizar o backup do banco?'), 'Saindo do sistema',
+    MB_YESNO + MB_ICONQUESTION) = 6) then
+  begin
+
+    MenuItemGerarBackupClick(Sender);
+
+  end;
+
   Close;
+
 end;
 
 procedure TFrmPrincipal.MenuItemCadPacienteClick(Sender: TObject);
@@ -199,11 +208,12 @@ begin
 
     try
 
-      if (lGeraBackup.CriaBackup) then
+      if (lGeraBackup.CriaBackup(Application.MessageBox(PChar('Deseja subir o backup para o Google Drive?(Recomendado)'), 'Saindo do sistema',
+        MB_YESNO + MB_ICONQUESTION) = 6)) then
       begin
 
-        Application.MessageBox(PChar('Backup criado em Meus documentos\Controle de sangue\Backup' + ' com sucesso'),
-          'Sucesso', MB_OK + MB_ICONINFORMATION)
+        Application.MessageBox(PChar('Backup criado em ' + ExtractFilePath(Application.ExeName) + '\Backup\' +
+          ' com sucesso'), 'Sucesso', MB_OK + MB_ICONINFORMATION)
 
       end;
 
@@ -234,18 +244,6 @@ begin
 
 end;
 
-procedure TFrmPrincipal.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-begin
-
-  if (Application.MessageBox(PChar('Deseja realizar o backup do banco?'), 'Saindo do sistema',
-    MB_YESNO + MB_ICONQUESTION) = 6) then
-  begin
-
-    MenuItemGerarBackupClick(Sender);
-
-  end;
-
-end;
 
 procedure TFrmPrincipal.FormCreate(Sender: TObject);
 begin
@@ -321,7 +319,9 @@ end;
 
 procedure TFrmPrincipal.MenuItemSairClick(Sender: TObject);
 begin
-  Close;
+
+  BtnSairClick(Sender);
+
 end;
 
 procedure TFrmPrincipal.TimerLoginTimer(Sender: TObject);

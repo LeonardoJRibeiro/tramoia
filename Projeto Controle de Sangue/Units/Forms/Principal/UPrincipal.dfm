@@ -17,7 +17,6 @@ object FrmPrincipal: TFrmPrincipal
   OldCreateOrder = False
   Position = poMainFormCenter
   WindowState = wsMaximized
-  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

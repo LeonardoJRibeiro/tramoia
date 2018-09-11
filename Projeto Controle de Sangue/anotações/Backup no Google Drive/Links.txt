@@ -1,0 +1,5 @@
+https://www.example-code.com/delphiDll/google_drive_upload_file_from_string.asp
+
+https://www.sync-components.com/google-delphi-components/google-drive
+
+https://lmd.de/downloads/tutorials/connectionpack/your_first_application_google_.htm

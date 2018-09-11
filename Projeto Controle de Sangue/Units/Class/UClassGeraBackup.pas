@@ -10,11 +10,11 @@ type
 
     FCaminhoExe: string;
 
-    function PreparaScript: Boolean;
+    function PreparaScript(const pUPLOADDRIVE: Boolean): Boolean;
 
   public
 
-    function CriaBackup: Boolean;
+    function CriaBackup(const pUPLOADDRIVE: Boolean): Boolean;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -39,7 +39,7 @@ begin
   inherited;
 end;
 
-function TGeraBackup.CriaBackup: Boolean;
+function TGeraBackup.CriaBackup(const pUPLOADDRIVE: Boolean): Boolean;
 begin
 
   try
@@ -47,7 +47,7 @@ begin
     if (FileExists(Self.FCaminhoExe + 'mysqldump.exe')) then
     begin
 
-      if (Self.PreparaScript) then
+      if (Self.PreparaScript(pUPLOADDRIVE)) then
       begin
 
         ShellExecute(0, 'open', pchar(Self.FCaminhoExe + 'doBackup.bat'), '', nil, SW_NORMAL);
@@ -76,7 +76,7 @@ begin
 
 end;
 
-function TGeraBackup.PreparaScript: Boolean;
+function TGeraBackup.PreparaScript(const pUPLOADDRIVE: Boolean): Boolean;
 var
   lTextFile: TextFile;
   lUserName: string;
@@ -89,8 +89,17 @@ begin
 
   try
 
+    if (not DirectoryExists(Self.FCaminhoExe + '\Backup')) then
+    begin
+
+      CreateDir(Self.FCaminhoExe + '\Backup');
+
+    end;
+
     lStringListScript := TStringList.Create;
     try
+
+      lStringListScript.Add('@ECHO OFF');
 
       lStringListScript.Add('FOR /F "tokens=1,2,3 delims=/ " %%a in ("%DATE%") do (');
       lStringListScript.Add('set DIA=%%a');
@@ -104,9 +113,22 @@ begin
       lPassWord := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'password', '');
       lHostName := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'hostname', 'localhost');
 
-      lStringListScript.Add('mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' +
+      // Meus documentos.
+      { lStringListScript.Add('mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' +
         lUserName + ' --password="' + lPassWord + '" -h ' + lHostName + ' > ' +
-        '"%userprofile%\documents\Controle de sangue\Backups\backup_%data%.sql"');
+        '"%userprofile%\documents\Controle de sangue\Backups\backup_%data%.sql"'); }
+
+      lStringListScript.Add('mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' +
+        lUserName + ' --password="' + lPassWord + '" -h ' + lHostName + ' > ' + '"%~dp0Backup\backup_%data%.sql"');
+
+      lStringListScript.Add('forfiles.exe -p"%~dp0Backup" -m*.sql -c"cmd /c del /f /q @FILE" -d-180');
+
+      if (pUPLOADDRIVE) then
+      begin
+
+        lStringListScript.Add('gdrive-windows-386.exe upload "%~dp0Backup\backup_%data%.sql"');
+
+      end;
 
       AssignFile(lTextFile, Self.FCaminhoExe + 'doBackup.bat');
 

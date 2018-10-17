@@ -9,20 +9,9 @@ uses
 
 type
   TFrmCadPaciente = class(TForm)
-    PageControl: TPageControl;
-    PanelDadosPessoais: TPanel;
-    PanelEndereco: TPanel;
-    LabelMunicipio: TLabel;
-    Label8: TLabel;
-    GroupBoxEndereco: TGroupBox;
-    EdtLogradouro: TLabeledEdit;
-    EdtComplemento: TLabeledEdit;
-    EdtBairro: TLabeledEdit;
-    EdtNumero: TLabeledEdit;
-    EdtCep: TMaskEdit;
-    PanelInformacoesComplementares: TPanel;
-    GroupBoxInfoComplementares: TGroupBox;
-    TabSheetDadosGerais: TTabSheet;
+    PanelBotoes: TPanel;
+    BtnSalvar: TSpeedButton;
+    BtnSair: TSpeedButton;
     GroupBoxDadosPessoais: TGroupBox;
     LabelSexo: TLabel;
     LabelCpf: TLabel;
@@ -30,30 +19,32 @@ type
     LabelDtNascimento: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    Label11: TLabel;
     EdtNome: TLabeledEdit;
     EdtCpf: TMaskEdit;
     ComboboxSexo: TComboBox;
     EdtRg: TEdit;
     EdtDataNascimento: TMaskEdit;
     EdtNumProntuario: TEdit;
-    TabSheetObservacoes: TTabSheet;
-    PanelBotoes: TPanel;
-    Label9: TLabel;
-    Label10: TLabel;
-    MemoObservacoes: TMemo;
-    EdtNomeMunicipio: TLabeledEdit;
-    EdtEstado: TLabeledEdit;
     ComboBoxABO: TComboBox;
-    Label11: TLabel;
-    EdtTelefone: TMaskEdit;
-    Label12: TLabel;
     EdtNomePai: TLabeledEdit;
     EdtNomeMae: TLabeledEdit;
     EdtSus: TMaskEdit;
-    EdtCodMunicipio: TEdit;
-    BtnSalvar: TSpeedButton;
-    BtnSair: TSpeedButton;
+    GroupBoxEndereco: TGroupBox;
+    LabelMunicipio: TLabel;
+    Label8: TLabel;
     BtnConsMunicipio: TSpeedButton;
+    EdtLogradouro: TLabeledEdit;
+    EdtComplemento: TLabeledEdit;
+    EdtBairro: TLabeledEdit;
+    EdtNumero: TLabeledEdit;
+    EdtCep: TMaskEdit;
+    EdtNomeMunicipio: TLabeledEdit;
+    EdtEstado: TLabeledEdit;
+    EdtCodMunicipio: TEdit;
+    GroupBoxInfoComplementares: TGroupBox;
+    Label12: TLabel;
+    EdtTelefone: TMaskEdit;
     procedure BtnSalvarClick(Sender: TObject);
     procedure EdtCodMunicipioExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -209,7 +200,6 @@ begin
       lPaciente.Rg := EdtRg.Text;
       lPaciente.Telefone := EdtTelefone.Text;
       lPaciente.Sus := EdtSus.Text;
-      lPaciente.Observacao := MemoObservacoes.Text;
 
       lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
       try
@@ -228,7 +218,7 @@ begin
       on E: Exception do
       begin
         Result := False;
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['paciente', E.Message])), PChar('Erro'),
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['paciente', E.Message])), PChar('Erro'),
           MB_OK + MB_ICONERROR);
       end;
     end;
@@ -267,6 +257,16 @@ function TFrmCadPaciente.ValidaCampos: Boolean;
 begin
   Result := False;
 
+  if (Trim(EdtNumProntuario.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label5.Caption])), PChar('Informação'),
+      MB_OK + MB_ICONINFORMATION);
+    EdtNumProntuario.SetFocus;
+    Exit;
+
+  end;
+
   if (Trim(EdtNome.Text).IsEmpty) then
   begin
 
@@ -298,26 +298,6 @@ begin
 
   end;
 
-  if (Trim(EdtCpf.Text).IsEmpty) then
-  begin
-
-    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelCpf.Caption])), PChar('Informação'),
-      MB_OK + MB_ICONINFORMATION);
-    EdtCpf.SetFocus;
-    Exit;
-
-  end;
-
-  if (Trim(EdtNumProntuario.Text).IsEmpty) then
-  begin
-
-    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label5.Caption])), PChar('Informação'),
-      MB_OK + MB_ICONINFORMATION);
-    EdtNumProntuario.SetFocus;
-    Exit;
-
-  end;
-
   if (ComboBoxABO.ItemIndex = -1) then
   begin
 
@@ -325,16 +305,6 @@ begin
       MB_OK + MB_ICONINFORMATION);
     ComboBoxABO.SetFocus;
     ComboBoxABO.DroppedDown := True;
-    Exit;
-
-  end;
-
-  if (Trim(EdtSus.Text).IsEmpty) then
-  begin
-
-    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label6.Caption])), PChar('Informação'),
-      MB_OK + MB_ICONINFORMATION);
-    EdtSus.SetFocus;
     Exit;
 
   end;
@@ -359,6 +329,7 @@ var
   lNome: string;
   lUf: string;
 begin
+
   if (Trim(EdtCodMunicipio.Text) <> '') then
   begin
 
@@ -406,6 +377,7 @@ begin
     end;
 
   end;
+
 end;
 
 procedure TFrmCadPaciente.EdtCodMunicipioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -581,12 +553,6 @@ begin
 
   end;
 
-  if (GetKeyState(VK_RETURN) < 0) then
-  begin
-    PageControl.TabIndex := 1;
-    MemoObservacoes.SetFocus;
-  end;
-
 end;
 
 procedure TFrmCadPaciente.FormCreate(Sender: TObject);
@@ -599,13 +565,6 @@ end;
 
 procedure TFrmCadPaciente.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-
-  if (Shift = [ssCtrl]) and (Key = Ord('A')) then
-  begin
-
-    PageControl.SelectNextPage(True);
-
-  end;
 
   case (Key) of
     VK_ESCAPE:
@@ -623,7 +582,7 @@ end;
 procedure TFrmCadPaciente.FormShow(Sender: TObject);
 begin
 
-  if (not (Self.FIdPaciente > 0)) then
+  if (not(Self.FIdPaciente > 0)) then
   begin
     EdtCodMunicipio.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'CodigoIbge',
       'FrmCadPaciente.EdtCodMunicipio', '');
@@ -748,7 +707,6 @@ begin
         EdtNomePai.Text := lPaciente.Nome_Pai;
         EdtNomeMae.Text := lPaciente.Nome_Mae;
         EdtTelefone.Text := lPaciente.Telefone;
-        MemoObservacoes.Text := lPaciente.Observacao;
 
         lEndereco := TEndereco.Create;
         try

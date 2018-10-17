@@ -4,8 +4,8 @@ object FrmCadPaciente: TFrmCadPaciente
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Cadastro de paciente'
-  ClientHeight = 474
-  ClientWidth = 566
+  ClientHeight = 446
+  ClientWidth = 560
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,489 +20,18 @@ object FrmCadPaciente: TFrmCadPaciente
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label9: TLabel
-    Left = 416
-    Top = 88
-    Width = 24
-    Height = 13
-    Caption = 'Sexo'
-  end
-  object Label10: TLabel
-    Left = 416
-    Top = 96
-    Width = 37
-    Height = 13
-    Caption = 'Label10'
-  end
-  object PageControl: TPageControl
-    Left = 0
-    Top = 0
-    Width = 566
-    Height = 440
-    ActivePage = TabSheetDadosGerais
-    Align = alClient
-    TabOrder = 0
-    object TabSheetDadosGerais: TTabSheet
-      Caption = 'Dados gerais'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
-      object PanelDadosPessoais: TPanel
-        Left = 0
-        Top = 0
-        Width = 558
-        Height = 161
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        object GroupBoxDadosPessoais: TGroupBox
-          AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 552
-          Height = 153
-          Align = alTop
-          Caption = 'Dados Pessoais'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          object LabelSexo: TLabel
-            Left = 10
-            Top = 62
-            Width = 38
-            Height = 13
-            Caption = 'Sexo(*)'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-          end
-          object LabelCpf: TLabel
-            Left = 175
-            Top = 62
-            Width = 33
-            Height = 13
-            Caption = 'CPF(*)'
-          end
-          object Label3: TLabel
-            Left = 271
-            Top = 62
-            Width = 32
-            Height = 13
-            Caption = 'R.G(*)'
-          end
-          object LabelDtNascimento: TLabel
-            Left = 83
-            Top = 62
-            Width = 87
-            Height = 13
-            Caption = 'Dt. Nascimento(*)'
-          end
-          object Label5: TLabel
-            Left = 10
-            Top = 16
-            Width = 64
-            Height = 13
-            Caption = 'Prontu'#225'rio(*)'
-          end
-          object Label6: TLabel
-            Left = 365
-            Top = 62
-            Width = 41
-            Height = 13
-            Caption = 'S.U.S(*)'
-          end
-          object Label11: TLabel
-            Left = 484
-            Top = 61
-            Width = 43
-            Height = 13
-            Caption = 'A.B.O(*)'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-          end
-          object EdtNome: TLabeledEdit
-            Left = 163
-            Top = 32
-            Width = 370
-            Height = 21
-            AutoSize = False
-            CharCase = ecUpperCase
-            EditLabel.Width = 89
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Nome Completo(*)'
-            EditLabel.Font.Charset = DEFAULT_CHARSET
-            EditLabel.Font.Color = clWindowText
-            EditLabel.Font.Height = -11
-            EditLabel.Font.Name = 'Tahoma'
-            EditLabel.Font.Style = []
-            EditLabel.ParentFont = False
-            MaxLength = 100
-            TabOrder = 1
-          end
-          object EdtCpf: TMaskEdit
-            Left = 175
-            Top = 77
-            Width = 91
-            Height = 21
-            AutoSize = False
-            EditMask = '999\.999\.999\-99;0;'
-            MaxLength = 14
-            TabOrder = 4
-            Text = ''
-            OnExit = EdtCpfExit
-          end
-          object ComboboxSexo: TComboBox
-            Left = 10
-            Top = 77
-            Width = 70
-            Height = 22
-            Style = csOwnerDrawFixed
-            TabOrder = 2
-            OnEnter = ComboboxSexoEnter
-            Items.Strings = (
-              'Masculino'
-              'Feminino')
-          end
-          object EdtRg: TEdit
-            Left = 271
-            Top = 77
-            Width = 87
-            Height = 21
-            MaxLength = 7
-            NumbersOnly = True
-            TabOrder = 5
-            OnExit = EdtRgExit
-          end
-          object EdtDataNascimento: TMaskEdit
-            Left = 83
-            Top = 77
-            Width = 86
-            Height = 21
-            EditMask = '!99/99/9999;1;_'
-            MaxLength = 10
-            TabOrder = 3
-            Text = '  /  /    '
-            OnExit = EdtDataNascimentoExit
-          end
-          object EdtNumProntuario: TEdit
-            Left = 10
-            Top = 32
-            Width = 146
-            Height = 21
-            MaxLength = 20
-            NumbersOnly = True
-            TabOrder = 0
-            OnExit = EdtNumProntuarioExit
-          end
-          object ComboBoxABO: TComboBox
-            Left = 484
-            Top = 77
-            Width = 49
-            Height = 22
-            Style = csOwnerDrawFixed
-            TabOrder = 7
-            OnEnter = ComboBoxABOEnter
-            Items.Strings = (
-              'A+'
-              'A-'
-              'B+'
-              'B-'
-              'AB+'
-              'AB-'
-              'O+'
-              'O-')
-          end
-          object EdtNomePai: TLabeledEdit
-            Left = 10
-            Top = 121
-            Width = 258
-            Height = 21
-            CharCase = ecUpperCase
-            EditLabel.Width = 59
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Nome do Pai'
-            MaxLength = 100
-            TabOrder = 8
-          end
-          object EdtNomeMae: TLabeledEdit
-            Left = 275
-            Top = 121
-            Width = 258
-            Height = 21
-            CharCase = ecUpperCase
-            EditLabel.Width = 65
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Nome da M'#227'e'
-            MaxLength = 100
-            TabOrder = 9
-          end
-          object EdtSus: TMaskEdit
-            Left = 365
-            Top = 77
-            Width = 113
-            Height = 21
-            EditMask = '!99999999999 9999 9;0;_'
-            MaxLength = 18
-            TabOrder = 6
-            Text = ''
-            OnExit = EdtSusExit
-          end
-        end
-      end
-      object PanelEndereco: TPanel
-        Left = 0
-        Top = 161
-        Width = 558
-        Height = 168
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-        object GroupBoxEndereco: TGroupBox
-          AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 552
-          Height = 158
-          Align = alTop
-          Caption = 'Endere'#231'o'
-          TabOrder = 0
-          object LabelMunicipio: TLabel
-            Left = 10
-            Top = 61
-            Width = 59
-            Height = 13
-            Caption = 'C'#243'digo IBGE'
-          end
-          object Label8: TLabel
-            Left = 460
-            Top = 61
-            Width = 33
-            Height = 13
-            Caption = 'CEP(*)'
-          end
-          object BtnConsMunicipio: TSpeedButton
-            Left = 80
-            Top = 76
-            Width = 23
-            Height = 21
-            Flat = True
-            Glyph.Data = {
-              36040000424D3604000000000000360000002800000010000000100000000100
-              2000000000000004000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0011000000780000002A00000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              007D010101FF010101EE00000032000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              002F010101F0010101FF010101EE000000320000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              000000000037010101F0010101FF010101EE0000003200000033010101810101
-              01980000007C0000002B00000000000000000000000000000000000000000000
-              00000000000000000037010101F0010101FF010101F7010101FF010101F60101
-              01DC010101F8010101FE01010193000000030000000000000000000000000000
-              0000000000000000000000000037010101F9010101FB00000071000000070000
-              00000000000B0000007F010101FE0101018F0000000000000000000000000000
-              0000000000000000000000000037010101FF0000006F00000000000000000000
-              0000000000000000000001010185010101FD0000002300000000000000000000
-              0000000000000000000001010186010101F30000000600000000000000000000
-              0000000000000000000000000011010101FD0000006E00000000000000000000
-              000000000000000000000101019D010101D80000000000000000000000000000
-              0000000000000101018C00000016010101EC0101018800000000000000000000
-              0000000000000000000001010183010101F50000000800000000000000000000
-              000000000058010101F500000027010101FE0000006D00000000000000000000
-              0000000000000000000000000033010101FF0000007900000000000000000101
-              018F010101F7000000550101018B010101FC0000002100000000000000000000
-              00000000000000000000000000000101019E010101FD0000007E0000000E0000
-              001A0000002901010189010101FF010101890000000000000000000000000000
-              00000000000000000000000000000000000501010199010101FE010101FB0101
-              01E8010101FC010101FD0101018B000000020000000000000000000000000000
-              000000000000000000000000000000000000000000000000002A000000760101
-              018D000000720000002300000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000}
-            OnClick = BtnConsMunicipioClick
-          end
-          object EdtLogradouro: TLabeledEdit
-            Left = 10
-            Top = 32
-            Width = 256
-            Height = 21
-            CharCase = ecUpperCase
-            EditLabel.Width = 69
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Logradouro(*)'
-            MaxLength = 100
-            TabOrder = 0
-          end
-          object EdtComplemento: TLabeledEdit
-            Left = 10
-            Top = 120
-            Width = 523
-            Height = 21
-            CharCase = ecUpperCase
-            EditLabel.Width = 65
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Complemento'
-            MaxLength = 100
-            TabOrder = 7
-          end
-          object EdtBairro: TLabeledEdit
-            Left = 272
-            Top = 32
-            Width = 204
-            Height = 21
-            CharCase = ecUpperCase
-            EditLabel.Width = 42
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Bairro(*)'
-            TabOrder = 1
-          end
-          object EdtNumero: TLabeledEdit
-            Left = 484
-            Top = 32
-            Width = 49
-            Height = 21
-            EditLabel.Width = 51
-            EditLabel.Height = 13
-            EditLabel.Caption = 'N'#250'mero(*)'
-            MaxLength = 8
-            TabOrder = 2
-            OnExit = EdtNumeroExit
-          end
-          object EdtCep: TMaskEdit
-            Left = 460
-            Top = 76
-            Width = 70
-            Height = 21
-            Alignment = taCenter
-            AutoSize = False
-            EditMask = '99999-999;0;_'
-            MaxLength = 9
-            TabOrder = 6
-            Text = ''
-          end
-          object EdtNomeMunicipio: TLabeledEdit
-            Left = 104
-            Top = 76
-            Width = 286
-            Height = 21
-            TabStop = False
-            Color = clInfoBk
-            EditLabel.Width = 73
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Nome Munic'#237'pio'
-            ReadOnly = True
-            TabOrder = 4
-          end
-          object EdtEstado: TLabeledEdit
-            Left = 396
-            Top = 76
-            Width = 57
-            Height = 21
-            TabStop = False
-            Color = clInfoBk
-            EditLabel.Width = 33
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Estado'
-            ReadOnly = True
-            TabOrder = 5
-          end
-          object EdtCodMunicipio: TEdit
-            Left = 10
-            Top = 76
-            Width = 71
-            Height = 21
-            HelpType = htKeyword
-            Alignment = taRightJustify
-            AutoSize = False
-            MaxLength = 7
-            NumbersOnly = True
-            TabOrder = 3
-            OnExit = EdtCodMunicipioExit
-            OnKeyDown = EdtCodMunicipioKeyDown
-          end
-        end
-      end
-      object PanelInformacoesComplementares: TPanel
-        Left = 0
-        Top = 329
-        Width = 558
-        Height = 83
-        Align = alClient
-        BevelOuter = bvNone
-        TabOrder = 2
-        object GroupBoxInfoComplementares: TGroupBox
-          AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 552
-          Height = 69
-          Align = alTop
-          Caption = 'Informa'#231#245'es Complementares'
-          TabOrder = 0
-          object Label12: TLabel
-            Left = 10
-            Top = 20
-            Width = 39
-            Height = 13
-            Caption = 'Contato'
-          end
-          object EdtTelefone: TMaskEdit
-            Left = 10
-            Top = 37
-            Width = 87
-            Height = 21
-            Alignment = taCenter
-            EditMask = '!\(99\)00000-0000;0;_'
-            MaxLength = 14
-            TabOrder = 0
-            Text = ''
-            OnEnter = EdtTelefoneEnter
-            OnExit = EdtTelefoneExit
-          end
-        end
-      end
-    end
-    object TabSheetObservacoes: TTabSheet
-      Caption = 'Observa'#231#245'es'
-      ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
-      object MemoObservacoes: TMemo
-        Left = 16
-        Top = 10
-        Width = 537
-        Height = 391
-        MaxLength = 1000
-        TabOrder = 0
-      end
-    end
-  end
   object PanelBotoes: TPanel
     Left = 0
-    Top = 440
-    Width = 566
-    Height = 34
+    Top = 402
+    Width = 560
+    Height = 44
     Align = alBottom
-    TabOrder = 1
+    BorderStyle = bsSingle
+    TabOrder = 0
+    ExplicitTop = 403
     object BtnSalvar: TSpeedButton
       Left = 140
-      Top = 1
+      Top = 4
       Width = 140
       Height = 31
       HelpType = htKeyword
@@ -553,7 +82,7 @@ object FrmCadPaciente: TFrmCadPaciente
     end
     object BtnSair: TSpeedButton
       Left = 292
-      Top = 1
+      Top = 4
       Width = 140
       Height = 31
       Caption = 'Sair - Esc'
@@ -600,6 +129,412 @@ object FrmCadPaciente: TFrmCadPaciente
         F5FB3F75A1FF}
       ParentFont = False
       OnClick = BtnSairClick
+    end
+  end
+  object GroupBoxDadosPessoais: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 554
+    Height = 153
+    Align = alTop
+    Caption = 'Dados Pessoais'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    ExplicitLeft = 6
+    ExplicitTop = 11
+    object LabelSexo: TLabel
+      Left = 10
+      Top = 62
+      Width = 38
+      Height = 13
+      Caption = 'Sexo(*)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object LabelCpf: TLabel
+      Left = 175
+      Top = 62
+      Width = 19
+      Height = 13
+      Caption = 'CPF'
+    end
+    object Label3: TLabel
+      Left = 271
+      Top = 62
+      Width = 18
+      Height = 13
+      Caption = 'R.G'
+    end
+    object LabelDtNascimento: TLabel
+      Left = 83
+      Top = 62
+      Width = 87
+      Height = 13
+      Caption = 'Dt. Nascimento(*)'
+    end
+    object Label5: TLabel
+      Left = 10
+      Top = 16
+      Width = 64
+      Height = 13
+      Caption = 'Prontu'#225'rio(*)'
+    end
+    object Label6: TLabel
+      Left = 365
+      Top = 62
+      Width = 27
+      Height = 13
+      Caption = 'S.U.S'
+    end
+    object Label11: TLabel
+      Left = 484
+      Top = 61
+      Width = 43
+      Height = 13
+      Caption = 'A.B.O(*)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object EdtNome: TLabeledEdit
+      Left = 163
+      Top = 32
+      Width = 370
+      Height = 21
+      AutoSize = False
+      CharCase = ecUpperCase
+      EditLabel.Width = 89
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Nome Completo(*)'
+      EditLabel.Font.Charset = DEFAULT_CHARSET
+      EditLabel.Font.Color = clWindowText
+      EditLabel.Font.Height = -11
+      EditLabel.Font.Name = 'Tahoma'
+      EditLabel.Font.Style = []
+      EditLabel.ParentFont = False
+      MaxLength = 100
+      TabOrder = 1
+    end
+    object EdtCpf: TMaskEdit
+      Left = 175
+      Top = 77
+      Width = 91
+      Height = 21
+      AutoSize = False
+      EditMask = '999\.999\.999\-99;0;'
+      MaxLength = 14
+      TabOrder = 4
+      Text = ''
+      OnExit = EdtCpfExit
+    end
+    object ComboboxSexo: TComboBox
+      Left = 10
+      Top = 77
+      Width = 70
+      Height = 22
+      Style = csOwnerDrawFixed
+      TabOrder = 2
+      OnEnter = ComboboxSexoEnter
+      Items.Strings = (
+        'Masculino'
+        'Feminino')
+    end
+    object EdtRg: TEdit
+      Left = 271
+      Top = 77
+      Width = 87
+      Height = 21
+      MaxLength = 7
+      NumbersOnly = True
+      TabOrder = 5
+      OnExit = EdtRgExit
+    end
+    object EdtDataNascimento: TMaskEdit
+      Left = 83
+      Top = 77
+      Width = 86
+      Height = 21
+      EditMask = '!99/99/9999;1;_'
+      MaxLength = 10
+      TabOrder = 3
+      Text = '  /  /    '
+      OnExit = EdtDataNascimentoExit
+    end
+    object EdtNumProntuario: TEdit
+      Left = 10
+      Top = 32
+      Width = 146
+      Height = 21
+      MaxLength = 20
+      NumbersOnly = True
+      TabOrder = 0
+      OnExit = EdtNumProntuarioExit
+    end
+    object ComboBoxABO: TComboBox
+      Left = 484
+      Top = 77
+      Width = 49
+      Height = 22
+      Style = csOwnerDrawFixed
+      TabOrder = 7
+      OnEnter = ComboBoxABOEnter
+      Items.Strings = (
+        'A+'
+        'A-'
+        'B+'
+        'B-'
+        'AB+'
+        'AB-'
+        'O+'
+        'O-')
+    end
+    object EdtNomePai: TLabeledEdit
+      Left = 10
+      Top = 121
+      Width = 258
+      Height = 21
+      CharCase = ecUpperCase
+      EditLabel.Width = 59
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Nome do Pai'
+      MaxLength = 100
+      TabOrder = 8
+    end
+    object EdtNomeMae: TLabeledEdit
+      Left = 275
+      Top = 121
+      Width = 258
+      Height = 21
+      CharCase = ecUpperCase
+      EditLabel.Width = 65
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Nome da M'#227'e'
+      MaxLength = 100
+      TabOrder = 9
+    end
+    object EdtSus: TMaskEdit
+      Left = 365
+      Top = 77
+      Width = 113
+      Height = 21
+      EditMask = '!99999999999 9999 9;0;_'
+      MaxLength = 18
+      TabOrder = 6
+      Text = ''
+      OnExit = EdtSusExit
+    end
+  end
+  object GroupBoxEndereco: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 162
+    Width = 554
+    Height = 158
+    Align = alTop
+    Caption = 'Endere'#231'o'
+    TabOrder = 2
+    ExplicitLeft = -2
+    ExplicitTop = 237
+    object LabelMunicipio: TLabel
+      Left = 10
+      Top = 61
+      Width = 59
+      Height = 13
+      Caption = 'C'#243'digo IBGE'
+    end
+    object Label8: TLabel
+      Left = 460
+      Top = 61
+      Width = 33
+      Height = 13
+      Caption = 'CEP(*)'
+    end
+    object BtnConsMunicipio: TSpeedButton
+      Left = 80
+      Top = 76
+      Width = 23
+      Height = 21
+      Flat = True
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0011000000780000002A00000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        007D010101FF010101EE00000032000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        002F010101F0010101FF010101EE000000320000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        000000000037010101F0010101FF010101EE0000003200000033010101810101
+        01980000007C0000002B00000000000000000000000000000000000000000000
+        00000000000000000037010101F0010101FF010101F7010101FF010101F60101
+        01DC010101F8010101FE01010193000000030000000000000000000000000000
+        0000000000000000000000000037010101F9010101FB00000071000000070000
+        00000000000B0000007F010101FE0101018F0000000000000000000000000000
+        0000000000000000000000000037010101FF0000006F00000000000000000000
+        0000000000000000000001010185010101FD0000002300000000000000000000
+        0000000000000000000001010186010101F30000000600000000000000000000
+        0000000000000000000000000011010101FD0000006E00000000000000000000
+        000000000000000000000101019D010101D80000000000000000000000000000
+        0000000000000101018C00000016010101EC0101018800000000000000000000
+        0000000000000000000001010183010101F50000000800000000000000000000
+        000000000058010101F500000027010101FE0000006D00000000000000000000
+        0000000000000000000000000033010101FF0000007900000000000000000101
+        018F010101F7000000550101018B010101FC0000002100000000000000000000
+        00000000000000000000000000000101019E010101FD0000007E0000000E0000
+        001A0000002901010189010101FF010101890000000000000000000000000000
+        00000000000000000000000000000000000501010199010101FE010101FB0101
+        01E8010101FC010101FD0101018B000000020000000000000000000000000000
+        000000000000000000000000000000000000000000000000002A000000760101
+        018D000000720000002300000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000}
+      OnClick = BtnConsMunicipioClick
+    end
+    object EdtLogradouro: TLabeledEdit
+      Left = 10
+      Top = 32
+      Width = 256
+      Height = 21
+      CharCase = ecUpperCase
+      EditLabel.Width = 69
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Logradouro(*)'
+      MaxLength = 100
+      TabOrder = 0
+    end
+    object EdtComplemento: TLabeledEdit
+      Left = 10
+      Top = 120
+      Width = 523
+      Height = 21
+      CharCase = ecUpperCase
+      EditLabel.Width = 65
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Complemento'
+      MaxLength = 100
+      TabOrder = 7
+    end
+    object EdtBairro: TLabeledEdit
+      Left = 272
+      Top = 32
+      Width = 204
+      Height = 21
+      CharCase = ecUpperCase
+      EditLabel.Width = 42
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Bairro(*)'
+      TabOrder = 1
+    end
+    object EdtNumero: TLabeledEdit
+      Left = 484
+      Top = 32
+      Width = 49
+      Height = 21
+      EditLabel.Width = 51
+      EditLabel.Height = 13
+      EditLabel.Caption = 'N'#250'mero(*)'
+      MaxLength = 8
+      TabOrder = 2
+      OnExit = EdtNumeroExit
+    end
+    object EdtCep: TMaskEdit
+      Left = 460
+      Top = 76
+      Width = 70
+      Height = 21
+      Alignment = taCenter
+      AutoSize = False
+      EditMask = '99999-999;0;_'
+      MaxLength = 9
+      TabOrder = 6
+      Text = ''
+    end
+    object EdtNomeMunicipio: TLabeledEdit
+      Left = 104
+      Top = 76
+      Width = 286
+      Height = 21
+      TabStop = False
+      Color = clInfoBk
+      EditLabel.Width = 73
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Nome Munic'#237'pio'
+      ReadOnly = True
+      TabOrder = 4
+    end
+    object EdtEstado: TLabeledEdit
+      Left = 396
+      Top = 76
+      Width = 57
+      Height = 21
+      TabStop = False
+      Color = clInfoBk
+      EditLabel.Width = 33
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Estado'
+      ReadOnly = True
+      TabOrder = 5
+    end
+    object EdtCodMunicipio: TEdit
+      Left = 10
+      Top = 76
+      Width = 71
+      Height = 21
+      HelpType = htKeyword
+      Alignment = taRightJustify
+      AutoSize = False
+      MaxLength = 7
+      NumbersOnly = True
+      TabOrder = 3
+      OnExit = EdtCodMunicipioExit
+      OnKeyDown = EdtCodMunicipioKeyDown
+    end
+  end
+  object GroupBoxInfoComplementares: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 326
+    Width = 554
+    Height = 69
+    Align = alTop
+    Caption = 'Informa'#231#245'es Complementares'
+    TabOrder = 3
+    ExplicitLeft = -2
+    ExplicitTop = 357
+    object Label12: TLabel
+      Left = 10
+      Top = 20
+      Width = 39
+      Height = 13
+      Caption = 'Contato'
+    end
+    object EdtTelefone: TMaskEdit
+      Left = 10
+      Top = 37
+      Width = 87
+      Height = 21
+      Alignment = taCenter
+      EditMask = '!\(99\)00000-0000;0;_'
+      MaxLength = 14
+      TabOrder = 0
+      Text = ''
+      OnEnter = EdtTelefoneEnter
+      OnExit = EdtTelefoneExit
     end
   end
 end

@@ -19,8 +19,6 @@ type
     LabelOrigem: TLabel;
     LabelTipo: TLabel;
     LabelAboSangue: TLabel;
-    LabelObservacao: TLabel;
-    EdtObservacao: TEdit;
     BtnGravar: TBitBtn;
     BtnSair: TBitBtn;
     EdtVolume: TEdit;
@@ -191,7 +189,6 @@ begin
               (ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
             lEntrada.IdBolsa := Self.FIdBolsa;
             lEntrada.DataEntrada := Now;
-            lEntrada.Observacao := EdtObservacao.Text;
 
             lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
             try
@@ -254,7 +251,6 @@ begin
   ComboBoxTipo.ItemIndex := 0;
   EdtVolume.Clear;
   ComboBoxAboBolsa.ItemIndex := -1;
-  EdtObservacao.Clear;
 
   Self.FId := -1;
   Self.FIdBolsa := -1;
@@ -336,7 +332,6 @@ begin
           CarregaUsuarios;
           setIndexByIdUsuario(lEntrada.IdUsuario);
 
-          EdtObservacao.Text := lEntrada.Observacao;
           Self.FIdBolsa := lEntrada.IdBolsa;
         end;
 

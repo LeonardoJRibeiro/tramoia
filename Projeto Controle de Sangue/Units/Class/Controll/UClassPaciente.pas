@@ -20,7 +20,6 @@ type
     FRg: string[10];
     FTelefone: string[12];
     FSus: string[16];
-    FObservacao: string;
 
     function getId: Integer;
     function getNome: string;
@@ -35,7 +34,6 @@ type
     function getRg: string;
     function getTelefone: string;
     function getSus: string;
-    function getObservacao: string;
 
     procedure setId(const pID: Integer);
     procedure setNome(const pNOME: string);
@@ -50,7 +48,6 @@ type
     procedure setRg(const pRG: string);
     procedure setTelefone(const pTELEFONE: string);
     procedure setSus(const pSUS: string);
-    procedure setObservacao(const pOBSERVACAO: string);
 
   public
     property Id: Integer read getId write setId;
@@ -66,15 +63,15 @@ type
     property Rg: string read getRg write setRg;
     property Telefone: string read getTelefone write setTelefone;
     property Sus: string read getSus write setSus;
-    property Observacao: string read getObservacao write setObservacao;
 
     constructor Create; overload;
     destructor Destroy; override;
+
   end;
 
 implementation
 
-{ TPaciente}
+{ TPaciente }
 
 constructor TPaciente.Create;
 begin
@@ -86,6 +83,7 @@ begin
 
   inherited;
 end;
+
 function TPaciente.getId: Integer;
 begin
   Result := Self.FId;
@@ -151,79 +149,69 @@ begin
   Result := Self.FSus;
 end;
 
-function TPaciente.getObservacao: string;
-begin
-  Result := Self.FObservacao;
-end;
-
 procedure TPaciente.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TPaciente.setNome(const pNOME: string);
 begin
-  Self.FNome:= pNome;
+  Self.FNome := pNOME;
 end;
 
 procedure TPaciente.setNome_Pai(const pNOME_PAI: string);
 begin
-  Self.FNome_Pai:= pNome_Pai;
+  Self.FNome_Pai := pNOME_PAI;
 end;
 
 procedure TPaciente.setNome_Mae(const pNOME_MAE: string);
 begin
-  Self.FNome_Mae:= pNome_Mae;
+  Self.FNome_Mae := pNOME_MAE;
 end;
 
 procedure TPaciente.setData_Nascimento(const pDATA_NASCIMENTO: TDate);
 begin
-  Self.FData_Nascimento:= pData_Nascimento;
+  Self.FData_Nascimento := pDATA_NASCIMENTO;
 end;
 
 procedure TPaciente.setSexo(const pSEXO: string);
 begin
-  Self.FSexo:= pSexo;
+  Self.FSexo := pSEXO;
 end;
 
 procedure TPaciente.setNum_Prontuario(const pNUM_PRONTUARIO: string);
 begin
-  Self.FNum_Prontuario:= pNum_Prontuario;
+  Self.FNum_Prontuario := pNUM_PRONTUARIO;
 end;
 
 procedure TPaciente.setAbo(const pABO: string);
 begin
-  Self.FAbo:= pAbo;
+  Self.FAbo := pABO;
 end;
 
 procedure TPaciente.setRh(const pRH: string);
 begin
-  Self.FRh:= pRh;
+  Self.FRh := pRH;
 end;
 
 procedure TPaciente.setCpf(const pCPF: string);
 begin
-  Self.FCpf:= pCpf;
+  Self.FCpf := pCPF;
 end;
 
 procedure TPaciente.setRg(const pRG: string);
 begin
-  Self.FRg:= pRg;
+  Self.FRg := pRG;
 end;
 
 procedure TPaciente.setTelefone(const pTELEFONE: string);
 begin
-  Self.FTelefone:= pTelefone;
+  Self.FTelefone := pTELEFONE;
 end;
 
 procedure TPaciente.setSus(const pSUS: string);
 begin
-  Self.FSus:= pSus;
-end;
-
-procedure TPaciente.setObservacao(const pOBSERVACAO: string);
-begin
-  Self.FObservacao:= pObservacao;
+  Self.FSus := pSUS;
 end;
 
 end.

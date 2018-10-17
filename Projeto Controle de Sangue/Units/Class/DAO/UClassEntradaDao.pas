@@ -88,9 +88,8 @@ begin
     pPersistencia.Query.SQL.Add('  b.volume,');
 
     pPersistencia.Query.SQL.Add('  if(b.sorologia = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
-      QuotedStr('NÃO') + ') AS sorologia,');
+      QuotedStr('NÃO') + ') AS sorologia');
 
-    pPersistencia.Query.SQL.Add('  e.observacao');
     pPersistencia.Query.SQL.Add('FROM entrada e');
 
     pPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
@@ -207,14 +206,12 @@ begin
         lPersistencia.Query.SQL.Add('  id,');
         lPersistencia.Query.SQL.Add('  id_usuario,');
         lPersistencia.Query.SQL.Add('  id_bolsa,');
-        lPersistencia.Query.SQL.Add('  data_entrada,');
-        lPersistencia.Query.SQL.Add('  observacao');
+        lPersistencia.Query.SQL.Add('  data_entrada');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pId,');
         lPersistencia.Query.SQL.Add('  :pId_Usuario,');
         lPersistencia.Query.SQL.Add('  :pId_Bolsa,');
-        lPersistencia.Query.SQL.Add('  :pData_Entrada,');
-        lPersistencia.Query.SQL.Add('  :pObservacao');
+        lPersistencia.Query.SQL.Add('  :pData_Entrada');
         lPersistencia.Query.SQL.Add(');');
       end
       else
@@ -222,8 +219,7 @@ begin
         lPersistencia.Query.SQL.Add('UPDATE entrada SET');
         lPersistencia.Query.SQL.Add('  id_usuario= :pId_Usuario,');
         lPersistencia.Query.SQL.Add('  id_bolsa= :pId_Bolsa,');
-        lPersistencia.Query.SQL.Add('  data_entrada= :pData_Entrada,');
-        lPersistencia.Query.SQL.Add('  observacao= :pObservacao');
+        lPersistencia.Query.SQL.Add('  data_entrada= :pData_Entrada');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
       end;
@@ -232,7 +228,6 @@ begin
       lPersistencia.setParametro('pId_Usuario', pObjeto.IdUsuario);
       lPersistencia.setParametro('pId_Bolsa', pObjeto.IdBolsa);
       lPersistencia.setParametro('pData_Entrada', pObjeto.DataEntrada);
-      lPersistencia.setParametro('pObservacao', pObjeto.Observacao);
 
       lPersistencia.Query.ExecSQL;
 
@@ -275,7 +270,6 @@ begin
       pObjeto.IdUsuario := lPersistencia.Query.FieldByName('id_usuario').AsInteger;
       pObjeto.IdBolsa := lPersistencia.Query.FieldByName('id_bolsa').AsInteger;
       pObjeto.DataEntrada := lPersistencia.Query.FieldByName('data_entrada').AsDateTime;
-      pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').Asstring;
 
       Result := True;
 

@@ -60,7 +60,8 @@ uses
   UConsEstoque in 'Units\Forms\Estoque\UConsEstoque.pas' {FrmConsEstoque},
   UClassConsEstoqueDAO in 'Units\Class\DAO\UClassConsEstoqueDAO.pas',
   USelCons in 'Units\Forms\Selecionar consulta\USelCons.pas' {FrmSelCons},
-  UClassGeraBackup in 'Units\Class\UClassGeraBackup.pas';
+  UClassGeraBackup in 'Units\Class\UClassGeraBackup.pas',
+  UAutenticacao in 'Units\Forms\Usuario\UAutenticacao.pas' {FrmAutenticacao};
 
 {$R *.res}
 

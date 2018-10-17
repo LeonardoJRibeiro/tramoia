@@ -12,19 +12,16 @@ type
     FIdUsuario: Integer;
     FDataEntrada: TDate;
     FIdBolsa: Integer;
-    FObservacao: string[100];
 
     function getId: Integer;
     function getId_Usuario: Integer;
     function getIdBolsa: Integer;
     function getData_Entrada: TDate;
-    function getObservacao: string;
 
     procedure setId(const pID: Integer);
     procedure setIdUsuario(const pID_USUARIO: Integer);
     procedure setDataEntrada(const pDATA_ENTRADA: TDate);
     procedure setIdBolsa(const pID_BOLSA: Integer);
-    procedure setObservacao(const pOBSERVACAO: string);
 
   public
 
@@ -32,7 +29,6 @@ type
     property IdUsuario: Integer read getId_Usuario write setIdUsuario;
     property DataEntrada: TDate read getData_Entrada write setDataEntrada;
     property IdBolsa: Integer read getIdBolsa write setIdBolsa;
-    property Observacao: string read getObservacao write setObservacao;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -73,11 +69,6 @@ begin
   Result := Self.FDataEntrada;
 end;
 
-function TEntrada.getObservacao: string;
-begin
-  Result := Self.FObservacao;
-end;
-
 procedure TEntrada.setId(const pID: Integer);
 begin
   Self.FId := pID;
@@ -96,11 +87,6 @@ end;
 procedure TEntrada.setDataEntrada(const pDATA_ENTRADA: TDate);
 begin
   Self.FDataEntrada := pDATA_ENTRADA;
-end;
-
-procedure TEntrada.setObservacao(const pOBSERVACAO: string);
-begin
-  Self.FObservacao := pOBSERVACAO;
 end;
 
 end.

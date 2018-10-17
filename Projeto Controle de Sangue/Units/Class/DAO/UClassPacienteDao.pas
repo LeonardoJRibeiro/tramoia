@@ -365,8 +365,7 @@ begin
         lPersistencia.Query.SQL.Add('  cpf,');
         lPersistencia.Query.SQL.Add('  rg,');
         lPersistencia.Query.SQL.Add('  telefone,');
-        lPersistencia.Query.SQL.Add('  sus,');
-        lPersistencia.Query.SQL.Add('  observacao');
+        lPersistencia.Query.SQL.Add('  sus');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pNome,');
         lPersistencia.Query.SQL.Add('  :pNome_Pai,');
@@ -379,8 +378,7 @@ begin
         lPersistencia.Query.SQL.Add('  :pCpf,');
         lPersistencia.Query.SQL.Add('  :pRg,');
         lPersistencia.Query.SQL.Add('  :pTelefone,');
-        lPersistencia.Query.SQL.Add('  :pSus,');
-        lPersistencia.Query.SQL.Add('  :pObservacao');
+        lPersistencia.Query.SQL.Add('  :pSus');
         lPersistencia.Query.SQL.Add(');');
       end
       else
@@ -397,8 +395,7 @@ begin
         lPersistencia.Query.SQL.Add('  cpf = :pCpf,');
         lPersistencia.Query.SQL.Add('  rg = :pRg,');
         lPersistencia.Query.SQL.Add('  telefone = :pTelefone,');
-        lPersistencia.Query.SQL.Add('  sus = :pSus,');
-        lPersistencia.Query.SQL.Add('  observacao = :pObservacao');
+        lPersistencia.Query.SQL.Add('  sus = :pSus');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
         lPersistencia.setParametro('pId', pObjeto.Id);
@@ -416,7 +413,6 @@ begin
       lPersistencia.setParametro('pRg', pObjeto.Rg);
       lPersistencia.setParametro('pTelefone', pObjeto.Telefone);
       lPersistencia.setParametro('pSus', pObjeto.Sus);
-      lPersistencia.setParametro('pObservacao', pObjeto.Observacao);
 
       lPersistencia.Query.ExecSQL;
 
@@ -468,7 +464,6 @@ begin
       pObjeto.Rg := lPersistencia.Query.FieldByName('rg').AsString;
       pObjeto.Telefone := lPersistencia.Query.FieldByName('telefone').AsString;
       pObjeto.Sus := lPersistencia.Query.FieldByName('sus').AsString;
-      pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').AsString;
 
       Result := True;
 

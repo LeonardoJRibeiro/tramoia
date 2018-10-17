@@ -4,7 +4,7 @@ object FrmEntrada: TFrmEntrada
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Entrada de sangue'
-  ClientHeight = 235
+  ClientHeight = 192
   ClientWidth = 383
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -25,13 +25,13 @@ object FrmEntrada: TFrmEntrada
     Left = 0
     Top = 0
     Width = 383
-    Height = 194
+    Height = 151
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitWidth = 365
+    ExplicitHeight = 194
     object LabelData: TLabel
       Left = 83
       Top = 12
@@ -66,13 +66,6 @@ object FrmEntrada: TFrmEntrada
       Width = 78
       Height = 13
       Caption = 'ABO da Bolsa(*)'
-    end
-    object LabelObservacao: TLabel
-      Left = 10
-      Top = 152
-      Width = 58
-      Height = 13
-      Caption = 'Observa'#231#227'o'
     end
     object LabelVolume: TLabel
       Left = 217
@@ -129,14 +122,6 @@ object FrmEntrada: TFrmEntrada
       CharCase = ecUpperCase
       MaxLength = 15
       TabOrder = 7
-    end
-    object EdtObservacao: TEdit
-      Left = 10
-      Top = 167
-      Width = 355
-      Height = 21
-      MaxLength = 100
-      TabOrder = 8
     end
     object EdtVolume: TEdit
       Left = 217
@@ -209,7 +194,7 @@ object FrmEntrada: TFrmEntrada
   end
   object PanelBottom: TPanel
     Left = 0
-    Top = 194
+    Top = 151
     Width = 383
     Height = 41
     Align = alBottom
@@ -217,7 +202,7 @@ object FrmEntrada: TFrmEntrada
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitWidth = 365
+    ExplicitTop = 194
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9

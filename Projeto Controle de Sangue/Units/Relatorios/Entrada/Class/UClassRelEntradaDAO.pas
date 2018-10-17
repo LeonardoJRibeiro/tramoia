@@ -43,7 +43,6 @@ begin
 
     pPersistencia.Query.SQL.Add('SELECT');
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
-    pPersistencia.Query.SQL.Add('  e.observacao,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');

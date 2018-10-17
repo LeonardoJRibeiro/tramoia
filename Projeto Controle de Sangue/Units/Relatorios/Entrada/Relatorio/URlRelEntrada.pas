@@ -25,7 +25,6 @@ type
     RLPanel5: TRLPanel;
     RLLabelAboRh: TRLLabel;
     RLPanel6: TRLPanel;
-    RLLabel1: TRLLabel;
     DataSource: TDataSource;
     RLBand1: TRLBand;
     RLDBTextDataEntrada: TRLDBText;
@@ -34,7 +33,6 @@ type
     RLDBTextTipo: TRLDBText;
     RLDBTextVolume: TRLDBText;
     RLDBTextAboRh: TRLDBText;
-    RLDBTextObservacao: TRLDBText;
     RLPanel13: TRLPanel;
     RLPanel14: TRLPanel;
     RLPanel15: TRLPanel;

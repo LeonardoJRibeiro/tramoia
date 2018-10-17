@@ -92,7 +92,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLLabelNumeroBolsa: TRLLabel
-        Left = 238
+        Left = 358
         Top = 20
         Width = 103
         Height = 16
@@ -105,7 +105,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'N'#250'mero da bolsa'
       end
       object RLPanel2: TRLPanel
-        Left = 365
+        Left = 485
         Top = -1
         Width = 1
         Height = 57
@@ -114,9 +114,9 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLLabelOrigem: TRLLabel
-        Left = 380
+        Left = 491
         Top = 20
-        Width = 46
+        Width = 68
         Height = 16
         AutoSize = False
         Borders.Sides = sdCustom
@@ -127,7 +127,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'Origem'
       end
       object RLPanel3: TRLPanel
-        Left = 440
+        Left = 575
         Top = -3
         Width = 1
         Height = 57
@@ -136,7 +136,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLLabelTipo: TRLLabel
-        Left = 447
+        Left = 581
         Top = 20
         Width = 27
         Height = 16
@@ -149,7 +149,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'Tipo'
       end
       object RLPanel4: TRLPanel
-        Left = 480
+        Left = 614
         Top = -1
         Width = 1
         Height = 57
@@ -158,7 +158,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLLabelVolume: TRLLabel
-        Left = 488
+        Left = 622
         Top = 20
         Width = 48
         Height = 16
@@ -171,7 +171,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'Volume'
       end
       object RLPanel5: TRLPanel
-        Left = 541
+        Left = 675
         Top = -3
         Width = 1
         Height = 57
@@ -180,7 +180,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLLabelAboRh: TRLLabel
-        Left = 547
+        Left = 678
         Top = 20
         Width = 52
         Height = 16
@@ -193,26 +193,13 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'ABO/Rh'
       end
       object RLPanel6: TRLPanel
-        Left = 606
+        Left = 733
         Top = -1
         Width = 1
         Height = 57
         Color = clBlack
         ParentColor = False
         Transparent = False
-      end
-      object RLLabel1: TRLLabel
-        Left = 795
-        Top = 20
-        Width = 72
-        Height = 16
-        AutoSize = False
-        Borders.Sides = sdCustom
-        Borders.DrawLeft = False
-        Borders.DrawTop = False
-        Borders.DrawRight = False
-        Borders.DrawBottom = False
-        Caption = 'Observa'#231#227'o'
       end
       object RLLabelResponsavel: TRLLabel
         Left = 106
@@ -228,7 +215,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Caption = 'Respons'#225'vel'
       end
       object RLPanel7: TRLPanel
-        Left = 207
+        Left = 327
         Top = 0
         Width = 1
         Height = 56
@@ -260,7 +247,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextNumeroBolsa: TRLDBText
-        Left = 212
+        Left = 332
         Top = 7
         Width = 149
         Height = 16
@@ -270,7 +257,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextOrigem: TRLDBText
-        Left = 369
+        Left = 491
         Top = 7
         Width = 68
         Height = 16
@@ -281,7 +268,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextTipo: TRLDBText
-        Left = 448
+        Left = 582
         Top = 7
         Width = 27
         Height = 16
@@ -291,7 +278,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextVolume: TRLDBText
-        Left = 488
+        Left = 622
         Top = 7
         Width = 48
         Height = 16
@@ -301,22 +288,12 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Text = ''
       end
       object RLDBTextAboRh: TRLDBText
-        Left = 547
+        Left = 678
         Top = 7
         Width = 52
         Height = 16
         Alignment = taCenter
         DataField = 'aborh'
-        DataSource = DataSource
-        Text = ''
-      end
-      object RLDBTextObservacao: TRLDBText
-        Left = 609
-        Top = 7
-        Width = 436
-        Height = 16
-        AutoSize = False
-        DataField = 'observacao'
         DataSource = DataSource
         Text = ''
       end
@@ -330,7 +307,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLPanel14: TRLPanel
-        Left = 365
+        Left = 485
         Top = 0
         Width = 1
         Height = 30
@@ -339,7 +316,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLPanel15: TRLPanel
-        Left = 440
+        Left = 575
         Top = 0
         Width = 1
         Height = 30
@@ -348,7 +325,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLPanel16: TRLPanel
-        Left = 480
+        Left = 614
         Top = 0
         Width = 1
         Height = 30
@@ -357,7 +334,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLPanel17: TRLPanel
-        Left = 541
+        Left = 675
         Top = 0
         Width = 1
         Height = 30
@@ -366,7 +343,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLPanel18: TRLPanel
-        Left = 606
+        Left = 733
         Top = 0
         Width = 1
         Height = 30
@@ -375,7 +352,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLPanel8: TRLPanel
-        Left = 207
+        Left = 327
         Top = 0
         Width = 1
         Height = 30
@@ -388,7 +365,6 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Top = 7
         Width = 96
         Height = 16
-        Alignment = taCenter
         DataField = 'responsavel'
         DataSource = DataSource
         Text = ''

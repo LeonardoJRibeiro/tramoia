@@ -223,6 +223,29 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         ParentColor = False
         Transparent = False
       end
+      object RLPanel9: TRLPanel
+        Left = 766
+        Top = 0
+        Width = 1
+        Height = 57
+        Color = clBlack
+        ParentColor = False
+        Transparent = False
+      end
+      object RLLabel1: TRLLabel
+        Left = 736
+        Top = 20
+        Width = 28
+        Height = 16
+        Alignment = taCenter
+        AutoSize = False
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        Caption = 'PAI'
+      end
     end
     object RLBand1: TRLBand
       Left = 38
@@ -366,6 +389,25 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Width = 96
         Height = 16
         DataField = 'responsavel'
+        DataSource = DataSource
+        Text = ''
+      end
+      object RLPanel10: TRLPanel
+        Left = 766
+        Top = -3
+        Width = 1
+        Height = 30
+        Color = clBlack
+        ParentColor = False
+        Transparent = False
+      end
+      object RLDBTextPai: TRLDBText
+        Left = 739
+        Top = 7
+        Width = 22
+        Height = 16
+        Alignment = taCenter
+        DataField = 'pai'
         DataSource = DataSource
         Text = ''
       end

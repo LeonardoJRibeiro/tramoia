@@ -17,6 +17,7 @@ type
     FVolume: Integer;
     FSorologia: string[1];
     FPossuiEstoque: string[1];
+    FPai: string[1];
 
     function getAbo: string;
     function getId: Integer;
@@ -27,6 +28,7 @@ type
     function getSorologia: string;
     function getTipo: string;
     function getVolume: Integer;
+    function getPai: string;
 
     procedure setAbo(const pABO: string);
     procedure setId(const pID: Integer);
@@ -37,6 +39,7 @@ type
     procedure setSorologia(const pSOROLOGIA: string);
     procedure setTipo(const pTIPO: string);
     procedure setVolume(const pVOLUME: Integer);
+    procedure setPai(const pPAI: string);
 
   public
 
@@ -49,6 +52,7 @@ type
     property Volume: Integer read getVolume write setVolume;
     property Sorologia: string read getSorologia write setSorologia;
     property PossuiEstoque: string read getPossuiEstoque write setPossuiEstoque;
+    property Pai: string read getPai write setPai;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -89,6 +93,11 @@ end;
 function TBolsa.getOrigem: string;
 begin
   Result := Self.FOrigem;
+end;
+
+function TBolsa.getPai: string;
+begin
+  Result := Self.FPai;
 end;
 
 function TBolsa.getPossuiEstoque: string;
@@ -134,6 +143,11 @@ end;
 procedure TBolsa.setOrigem(const pORIGEM: string);
 begin
   Self.FOrigem := pORIGEM;
+end;
+
+procedure TBolsa.setPai(const pPAI: string);
+begin
+  Self.FPai := pPAI;
 end;
 
 procedure TBolsa.setPossuiEstoque(const pPOSSUI_ESTOQUE: string);

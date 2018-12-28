@@ -84,7 +84,7 @@ var
 
 implementation
 
-uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO, UBiblioteca,
+uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO, UClassBiblioteca,
   UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao,
   System.Generics.Collections, UClassUsuario, UClassUsuarioDAO, UAutenticacao;
 

@@ -33,7 +33,7 @@ implementation
 
 {$R *.dfm}
 
-uses UClassMunicipioDao, UDMConexao, UClassMensagem, UBiblioteca;
+uses UClassMunicipioDao, UDMConexao, UClassMensagem, UClassBiblioteca;
 { TFrmConsMunicpio }
 
 procedure TFrmConsMunicipio.DBGridDblClick(Sender: TObject);

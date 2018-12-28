@@ -87,17 +87,20 @@ begin
     pPersistencia.IniciaTransacao;
 
     pPersistencia.Query.SQL.Add('SELECT');
-    pPersistencia.Query.SQL.Add('  id,');
-    pPersistencia.Query.SQL.Add('  nome,');
-    pPersistencia.Query.SQL.Add('  num_prontuario,');
-    pPersistencia.Query.SQL.Add('  CONCAT(abo, rh) grupo_sanguineo,');
-    pPersistencia.Query.SQL.Add('  CONCAT(SUBSTRING(CPF,1,3), ' + QuotedStr('.') + ', SUBSTRING(CPF,4,3), ' +
-      QuotedStr('.') + ',SUBSTRING(CPF,7,3), ' + QuotedStr('-') + ', SUBSTRING(CPF,10,2)) AS cpf,');
-    pPersistencia.Query.SQL.Add('CONCAT(SUBSTRING(sus,1,11), ' + QuotedStr(' ') + ', SUBSTRING(sus,12,4), ' +
-      QuotedStr(' ') + ', SUBSTRING(sus,16,1)) AS sus,');
-    pPersistencia.Query.SQL.Add('  rg,');
-    pPersistencia.Query.SQL.Add('  telefone');
-    pPersistencia.Query.SQL.Add('FROM paciente');
+    pPersistencia.Query.SQL.Add('  p.id,');
+    pPersistencia.Query.SQL.Add('  p.nome,');
+    pPersistencia.Query.SQL.Add('  p.num_prontuario,');
+    pPersistencia.Query.SQL.Add('  CONCAT(p.abo, p.rh) grupo_sanguineo,');
+    pPersistencia.Query.SQL.Add('  CONCAT(SUBSTRING(p.cpf,1,3), ' + QuotedStr('.') + ', SUBSTRING(p.cpf,4,3), ' +
+      QuotedStr('.') + ',SUBSTRING(p.cpf,7,3), ' + QuotedStr('-') + ', SUBSTRING(p.cpf,10,2)) AS cpf,');
+    pPersistencia.Query.SQL.Add('CONCAT(SUBSTRING(p.sus,1,11), ' + QuotedStr(' ') + ', SUBSTRING(p.sus,12,4), ' +
+      QuotedStr(' ') + ', SUBSTRING(p.sus,16,1)) AS sus,');
+    pPersistencia.Query.SQL.Add('  p.rg,');
+    pPersistencia.Query.SQL.Add('  CONCAT(t.ddd, t.numero) telefone');
+    pPersistencia.Query.SQL.Add('FROM paciente p');
+
+    pPersistencia.Query.SQL.Add('LEFT JOIN telefone t');
+    pPersistencia.Query.SQL.Add('ON (p.id = t.id_paciente)');
 
     pPersistencia.Query.SQL.Add('WHERE 0=0');
 
@@ -108,12 +111,12 @@ begin
           if (not pCHAVE.Trim.IsEmpty) then
           begin
 
-            pPersistencia.Query.SQL.Add('AND nome LIKE :pChave');
+            pPersistencia.Query.SQL.Add('AND p.nome LIKE :pChave');
             pPersistencia.setParametro('pChave', IfThen(pTIPOCONS = 0, '%', '') + pCHAVE + '%');
 
           end;
 
-          pPersistencia.Query.SQL.Add('ORDER BY nome');
+          pPersistencia.Query.SQL.Add('ORDER BY p.nome');
 
         end;
 
@@ -123,12 +126,12 @@ begin
           if (not pCHAVE.Trim.IsEmpty) then
           begin
 
-            pPersistencia.Query.SQL.Add('AND num_prontuario = :pChave');
+            pPersistencia.Query.SQL.Add('AND p.num_prontuario = :pChave');
             pPersistencia.setParametro('pChave', pCHAVE);
 
           end;
 
-          pPersistencia.Query.SQL.Add('ORDER BY num_prontuario');
+          pPersistencia.Query.SQL.Add('ORDER BY p.num_prontuario');
 
         end;
     end;
@@ -364,8 +367,8 @@ begin
         lPersistencia.Query.SQL.Add('  rh,');
         lPersistencia.Query.SQL.Add('  cpf,');
         lPersistencia.Query.SQL.Add('  rg,');
-        lPersistencia.Query.SQL.Add('  telefone,');
-        lPersistencia.Query.SQL.Add('  sus');
+        lPersistencia.Query.SQL.Add('  sus,');
+        lPersistencia.Query.SQL.Add('  observacao');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pNome,');
         lPersistencia.Query.SQL.Add('  :pNome_Pai,');
@@ -377,8 +380,8 @@ begin
         lPersistencia.Query.SQL.Add('  :pRh,');
         lPersistencia.Query.SQL.Add('  :pCpf,');
         lPersistencia.Query.SQL.Add('  :pRg,');
-        lPersistencia.Query.SQL.Add('  :pTelefone,');
-        lPersistencia.Query.SQL.Add('  :pSus');
+        lPersistencia.Query.SQL.Add('  :pSus,');
+        lPersistencia.Query.SQL.Add('  :pObservacao');
         lPersistencia.Query.SQL.Add(');');
       end
       else
@@ -394,8 +397,8 @@ begin
         lPersistencia.Query.SQL.Add('  rh = :pRh,');
         lPersistencia.Query.SQL.Add('  cpf = :pCpf,');
         lPersistencia.Query.SQL.Add('  rg = :pRg,');
-        lPersistencia.Query.SQL.Add('  telefone = :pTelefone,');
-        lPersistencia.Query.SQL.Add('  sus = :pSus');
+        lPersistencia.Query.SQL.Add('  sus = :pSus,');
+        lPersistencia.Query.SQL.Add('  observacao = :pObservacao');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
         lPersistencia.setParametro('pId', pObjeto.Id);
@@ -411,8 +414,8 @@ begin
       lPersistencia.setParametro('pRh', pObjeto.Rh);
       lPersistencia.setParametro('pCpf', pObjeto.Cpf);
       lPersistencia.setParametro('pRg', pObjeto.Rg);
-      lPersistencia.setParametro('pTelefone', pObjeto.Telefone);
       lPersistencia.setParametro('pSus', pObjeto.Sus);
+      lPersistencia.setParametro('pObservacao', pObjeto.Observacao);
 
       lPersistencia.Query.ExecSQL;
 
@@ -462,8 +465,8 @@ begin
       pObjeto.Rh := lPersistencia.Query.FieldByName('rh').AsString;
       pObjeto.Cpf := lPersistencia.Query.FieldByName('cpf').AsString;
       pObjeto.Rg := lPersistencia.Query.FieldByName('rg').AsString;
-      pObjeto.Telefone := lPersistencia.Query.FieldByName('telefone').AsString;
       pObjeto.Sus := lPersistencia.Query.FieldByName('sus').AsString;
+      pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').AsString;
 
       Result := True;
 

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.WinXCtrls,
-  UClassBolsaDAO, UBiblioteca;
+  UClassBolsaDAO, UClassBiblioteca;
 
 type
   TFrmEntrada = class(TForm)
@@ -31,6 +31,7 @@ type
     ComboBoxResponsavel: TComboBox;
     LabelResponsavel: TLabel;
     Label1: TLabel;
+    RadioGroupPai: TRadioGroup;
     procedure FormShow(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -73,7 +74,7 @@ implementation
 { TFrmEntradaSaida }
 uses System.StrUtils, UClassForeignKeyForms, UClassMensagem, UClassEntrada, UClassEntradaDao, UDMConexao,
   UClassSaidaDao, UClassBolsa, UClassBibliotecaDao, System.Generics.Collections, UClassUsuario, UClassUsuarioDao,
-  UAutenticacao;
+  UAutenticacao, System.Math;
 
 procedure TFrmEntrada.BtnGravarClick(Sender: TObject);
 var
@@ -172,6 +173,7 @@ begin
       lBolsa.Volume := StrToInt(EdtVolume.Text);
       lBolsa.Sorologia := 'N';
       lBolsa.PossuiEstoque := 'S';
+      lBolsa.Pai := Copy(RadioGroupPai.Items[RadioGroupPai.ItemIndex], 1, 1);
 
       try
 
@@ -251,6 +253,7 @@ begin
   ComboBoxTipo.ItemIndex := 0;
   EdtVolume.Clear;
   ComboBoxAboBolsa.ItemIndex := -1;
+  RadioGroupPai.ItemIndex := 1;
 
   Self.FId := -1;
   Self.FIdBolsa := -1;
@@ -289,6 +292,7 @@ begin
           EdtVolume.Text := lBolsa.Volume.ToString;
           EdtOrigem.Text := lBolsa.Origem;
           ComboBoxAboBolsa.ItemIndex := (ComboBoxAboBolsa.Items.IndexOf(Trim(lBolsa.Abo + lBolsa.Rh)));
+          RadioGroupPai.ItemIndex := IfThen(lBolsa.Pai = 'P', 0, 1);
         end;
 
       except

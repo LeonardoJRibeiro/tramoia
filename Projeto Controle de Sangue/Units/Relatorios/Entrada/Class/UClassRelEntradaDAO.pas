@@ -47,8 +47,12 @@ begin
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');
     pPersistencia.Query.SQL.Add('  b.rh,');
+    pPersistencia.Query.SQL.Add('  b.pai,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS aborh,');
     pPersistencia.Query.SQL.Add('  b.origem,');
+    pPersistencia.Query.SQL.Add('  if(b.sorologia = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO')
+      + ') AS sorologia,');
+
     pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
     pPersistencia.Query.SQL.Add('  u.nome AS responsavel');
     pPersistencia.Query.SQL.Add('FROM entrada e');

@@ -47,7 +47,7 @@ implementation
 
 {$R *.dfm}
 
-uses System.Math, UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UBiblioteca, UClassForeignKeyForms,
+uses System.Math, UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UClassBiblioteca, UClassForeignKeyForms,
   UClassUsuarioDao, UClassBolsaDao;
 
 function TFrmConsEntrada.BolsaPossuiEstoque: Boolean;

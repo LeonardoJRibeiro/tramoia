@@ -42,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses UClassMensagem, UClassUsuarioDao, UDMConexao, UClassSaidaDao, UBiblioteca, USaida, UClassForeignKeyForms;
+uses UClassMensagem, UClassUsuarioDao, UDMConexao, UClassSaidaDao, UClassBiblioteca, USaida, UClassForeignKeyForms;
 { TFrmConsSaidas }
 
 procedure TFrmConsSaidas.BtnAlterarClick(Sender: TObject);

@@ -46,7 +46,7 @@ var
 
 implementation
 
-uses System.Math, UBiblioteca, UClassMensagem, UDMConexao, UClassConsEstoqueDAO;
+uses System.Math, UClassBiblioteca, UClassMensagem, UDMConexao, UClassConsEstoqueDAO;
 
 {$R *.dfm}
 

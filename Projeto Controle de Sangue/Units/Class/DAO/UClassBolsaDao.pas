@@ -133,7 +133,8 @@ begin
         lPersistencia.Query.SQL.Add('  origem,');
         lPersistencia.Query.SQL.Add('  volume,');
         lPersistencia.Query.SQL.Add('  sorologia,');
-        lPersistencia.Query.SQL.Add('  possui_estoque');
+        lPersistencia.Query.SQL.Add('  possui_estoque,');
+        lPersistencia.Query.SQL.Add('  pai');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pNumero_Da_Bolsa,');
         lPersistencia.Query.SQL.Add('  :pTipo,');
@@ -142,7 +143,8 @@ begin
         lPersistencia.Query.SQL.Add('  :pOrigem,');
         lPersistencia.Query.SQL.Add('  :pVolume,');
         lPersistencia.Query.SQL.Add('  :pSorologia,');
-        lPersistencia.Query.SQL.Add('  :pPossui_Estoque');
+        lPersistencia.Query.SQL.Add('  :pPossui_Estoque,');
+        lPersistencia.Query.SQL.Add('  :pPai');
         lPersistencia.Query.SQL.Add(');');
 
       end
@@ -157,7 +159,8 @@ begin
         lPersistencia.Query.SQL.Add('  origem= :pOrigem,');
         lPersistencia.Query.SQL.Add('  volume= :pVolume,');
         lPersistencia.Query.SQL.Add('  sorologia= :pSorologia,');
-        lPersistencia.Query.SQL.Add('  possui_estoque= :pPossui_Estoque');
+        lPersistencia.Query.SQL.Add('  possui_estoque= :pPossui_Estoque,');
+        lPersistencia.Query.SQL.Add('  pai = :pPai');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
         lPersistencia.setParametro('pId', pObjeto.Id);
@@ -172,6 +175,7 @@ begin
       lPersistencia.setParametro('pVolume', pObjeto.Volume);
       lPersistencia.setParametro('pSorologia', pObjeto.Sorologia);
       lPersistencia.setParametro('pPossui_Estoque', pObjeto.PossuiEstoque);
+      lPersistencia.setParametro('pPai', pObjeto.Pai);
 
       lPersistencia.Query.ExecSQL;
 
@@ -291,7 +295,8 @@ begin
       lPersistencia.Query.SQL.Add('  origem,');
       lPersistencia.Query.SQL.Add('  volume,');
       lPersistencia.Query.SQL.Add('  sorologia,');
-      lPersistencia.Query.SQL.Add('  possui_estoque');
+      lPersistencia.Query.SQL.Add('  possui_estoque,');
+      lPersistencia.Query.SQL.Add('  pai');
       lPersistencia.Query.SQL.Add('FROM bolsa');
 
       lPersistencia.Query.SQL.Add('WHERE id= :pId');
@@ -308,6 +313,7 @@ begin
       pObjeto.Volume := lPersistencia.Query.FieldByName('volume').AsInteger;
       pObjeto.Sorologia := lPersistencia.Query.FieldByName('sorologia').Asstring;
       pObjeto.PossuiEstoque := lPersistencia.Query.FieldByName('possui_estoque').Asstring;
+      pObjeto.Pai := lPersistencia.Query.FieldByName('pai').Asstring;
 
       Result := True;
 

@@ -22,7 +22,7 @@ type
 
 implementation
 
-uses Vcl.Forms, UBiblioteca;
+uses Vcl.Forms, UClassBiblioteca;
 { TConexao }
 
 constructor TConexao.Create;

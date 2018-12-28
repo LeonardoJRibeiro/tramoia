@@ -30,7 +30,7 @@ uses
   UConsMunicipio in 'Units\Forms\Municipio\UConsMunicipio.pas' {FrmConsMunicipio},
   UClassActiveControl in 'Units\Class\Utils\UClassActiveControl.pas',
   ULogin in 'Units\Forms\Usuario\ULogin.pas' {FrmLogin},
-  UBiblioteca in 'Units\Class\Utils\UBiblioteca.pas',
+  UClassBiblioteca in 'Units\Class\Utils\UClassBiblioteca.pas',
   UClassBibliotecaDao in 'Units\Class\Utils\UClassBibliotecaDao.pas',
   UCadUsuario in 'Units\Forms\Usuario\UCadUsuario.pas' {Form1},
   UEntrada in 'Units\Forms\Entrada\UEntrada.pas' {FrmEntrada},
@@ -61,7 +61,9 @@ uses
   UClassConsEstoqueDAO in 'Units\Class\DAO\UClassConsEstoqueDAO.pas',
   USelCons in 'Units\Forms\Selecionar consulta\USelCons.pas' {FrmSelCons},
   UClassGeraBackup in 'Units\Class\UClassGeraBackup.pas',
-  UAutenticacao in 'Units\Forms\Usuario\UAutenticacao.pas' {FrmAutenticacao};
+  UAutenticacao in 'Units\Forms\Usuario\UAutenticacao.pas' {FrmAutenticacao},
+  UClassTelefone in 'Units\Class\Controll\UClassTelefone.pas',
+  UClassTelefoneDao in 'Units\Class\DAO\UClassTelefoneDao.pas';
 
 {$R *.res}
 

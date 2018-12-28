@@ -63,7 +63,7 @@ var
 
 implementation
 
-uses System.DateUtils, UBiblioteca, UBibliotecaRelatorio, UClassMensagem, UClassRelEstoque, URlRelEstoque,
+uses System.DateUtils, UClassBiblioteca, UBibliotecaRelatorio, UClassMensagem, UClassRelEstoque, URlRelEstoque,
   UEnumsRelatorio, UClassForeignKeyForms;
 
 {$R *.dfm}

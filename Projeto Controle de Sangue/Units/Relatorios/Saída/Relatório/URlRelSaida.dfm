@@ -96,7 +96,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel3: TRLPanel
-        Left = 640
+        Left = 668
         Top = -2
         Width = 1
         Height = 57
@@ -105,7 +105,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelPacienteABO: TRLLabel
-        Left = 587
+        Left = 621
         Top = 34
         Width = 46
         Height = 15
@@ -121,15 +121,6 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-      end
-      object RLPanel6: TRLPanel
-        Left = 1016
-        Top = -1
-        Width = 1
-        Height = 57
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
       end
       object RLLabelOrdem: TRLLabel
         Left = 0
@@ -181,7 +172,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
       object RLLabelPacienteNome: TRLLabel
         Left = 384
         Top = 34
-        Width = 197
+        Width = 232
         Height = 16
         Alignment = taJustify
         AutoSize = False
@@ -208,9 +199,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelBolsa: TRLLabel
-        Left = 640
+        Left = 712
         Top = 6
-        Width = 274
+        Width = 231
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -228,9 +219,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelBolsaNumero: TRLLabel
-        Left = 640
+        Left = 688
         Top = 34
-        Width = 148
+        Width = 147
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -248,7 +239,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLPanel4: TRLPanel
-        Left = 869
+        Left = 870
         Top = 28
         Width = 1
         Height = 28
@@ -257,7 +248,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelBolsaTipo: TRLLabel
-        Left = 790
+        Left = 841
         Top = 34
         Width = 28
         Height = 15
@@ -276,7 +267,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelBolsaABO: TRLLabel
-        Left = 817
+        Left = 871
         Top = 34
         Width = 46
         Height = 15
@@ -294,7 +285,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLPanel16: TRLPanel
-        Left = 789
+        Left = 918
         Top = 27
         Width = 1
         Height = 28
@@ -303,7 +294,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelBolsaVolume: TRLLabel
-        Left = 868
+        Left = 919
         Top = 34
         Width = 45
         Height = 15
@@ -321,7 +312,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLPanel17: TRLPanel
-        Left = 817
+        Left = 838
         Top = 27
         Width = 1
         Height = 28
@@ -330,7 +321,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLLabelCompatibilidade: TRLLabel
-        Left = 928
+        Left = 968
         Top = 6
         Width = 76
         Height = 15
@@ -349,9 +340,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelCompatibilidadeTA: TRLLabel
-        Left = 919
+        Left = 968
         Top = 34
-        Width = 26
+        Width = 20
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -369,9 +360,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelCompatibilidadeAGH: TRLLabel
-        Left = 981
+        Left = 993
         Top = 34
-        Width = 36
+        Width = 26
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -389,9 +380,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLLabelCompatibilidade37: TRLLabel
-        Left = 950
+        Left = 1024
         Top = 34
-        Width = 30
+        Width = 20
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -409,7 +400,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentFont = False
       end
       object RLPanel19: TRLPanel
-        Left = 946
+        Left = 991
         Top = 27
         Width = 1
         Height = 27
@@ -418,7 +409,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel20: TRLPanel
-        Left = 978
+        Left = 1020
         Top = 28
         Width = 1
         Height = 27
@@ -454,7 +445,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel26: TRLPanel
-        Left = 587
+        Left = 620
         Top = 27
         Width = 1
         Height = 28
@@ -490,28 +481,8 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentColor = False
         Transparent = False
       end
-      object RLLabelPai: TRLLabel
-        Left = 1019
-        Top = 20
-        Width = 28
-        Height = 16
-        Alignment = taCenter
-        AutoSize = False
-        Borders.Sides = sdCustom
-        Borders.DrawLeft = False
-        Borders.DrawTop = False
-        Borders.DrawRight = False
-        Borders.DrawBottom = False
-        Caption = 'PAI'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object RLPanel2: TRLPanel
-        Left = 917
+        Left = 963
         Top = -1
         Width = 1
         Height = 57
@@ -522,14 +493,14 @@ object FrmRlRelSaida: TFrmRlRelSaida
       object RLPanel28: TRLPanel
         Left = 917
         Top = 27
-        Width = 99
+        Width = 130
         Height = 1
         Color = clBlack
         ParentColor = False
         Transparent = False
       end
       object RLLabel1: TRLLabel
-        Left = 270
+        Left = 272
         Top = 34
         Width = 104
         Height = 16
@@ -553,6 +524,35 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Top = 28
         Width = 1
         Height = 30
+        Color = clBlack
+        ParentColor = False
+        Transparent = False
+      end
+      object RLLabelPai: TRLLabel
+        Left = 671
+        Top = 6
+        Width = 24
+        Height = 16
+        Alignment = taCenter
+        AutoSize = False
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        Caption = 'PAI'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLPanel6: TRLPanel
+        Left = 695
+        Top = -1
+        Width = 1
+        Height = 57
         Color = clBlack
         ParentColor = False
         Transparent = False
@@ -596,7 +596,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel8: TRLPanel
-        Left = 978
+        Left = 1020
         Top = 0
         Width = 1
         Height = 30
@@ -605,7 +605,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel9: TRLPanel
-        Left = 640
+        Left = 668
         Top = 0
         Width = 1
         Height = 30
@@ -614,16 +614,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel10: TRLPanel
-        Left = 869
-        Top = 0
-        Width = 1
-        Height = 30
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLPanel11: TRLPanel
-        Left = 1016
+        Left = 918
         Top = 0
         Width = 1
         Height = 30
@@ -632,7 +623,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel12: TRLPanel
-        Left = 946
+        Left = 991
         Top = 0
         Width = 1
         Height = 30
@@ -668,8 +659,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
       object RLDBTextPacienteNome: TRLDBText
         Left = 384
         Top = 6
-        Width = 35
+        Width = 232
         Height = 15
+        AutoSize = False
         DataField = 'nome'
         DataSource = DataSource
         Font.Charset = DEFAULT_CHARSET
@@ -681,16 +673,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLPanel5: TRLPanel
-        Left = 789
-        Top = 0
-        Width = 1
-        Height = 30
-        Color = clBlack
-        ParentColor = False
-        Transparent = False
-      end
-      object RLPanel18: TRLPanel
-        Left = 818
+        Left = 870
         Top = 0
         Width = 1
         Height = 30
@@ -699,7 +682,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLDBTextPacienteABO: TRLDBText
-        Left = 587
+        Left = 616
         Top = 6
         Width = 52
         Height = 15
@@ -715,9 +698,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaNumero: TRLDBText
-        Left = 661
+        Left = 697
         Top = 6
-        Width = 106
+        Width = 138
         Height = 15
         Alignment = taCenter
         DataField = 'numero_da_bolsa'
@@ -731,7 +714,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaTipo: TRLDBText
-        Left = 792
+        Left = 841
         Top = 6
         Width = 24
         Height = 15
@@ -747,9 +730,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaABO: TRLDBText
-        Left = 818
+        Left = 871
         Top = 6
-        Width = 48
+        Width = 46
         Height = 15
         Alignment = taCenter
         DataField = 'abo_bol'
@@ -763,7 +746,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextBolsaVolume: TRLDBText
-        Left = 871
+        Left = 919
         Top = 6
         Width = 44
         Height = 15
@@ -779,9 +762,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextCompatibilidadeTA: TRLDBText
-        Left = 859
+        Left = 968
         Top = 6
-        Width = 146
+        Width = 20
         Height = 15
         Alignment = taCenter
         DataField = 'prova_compatibilidade_ta'
@@ -795,9 +778,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextCompatibilidadeAGH: TRLDBText
-        Left = 922
+        Left = 993
         Top = 6
-        Width = 156
+        Width = 26
         Height = 15
         Alignment = taCenter
         DataField = 'prova_compatibilidade_agh'
@@ -811,9 +794,9 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLDBTextCompatibilidade37: TRLDBText
-        Left = 889
+        Left = 1024
         Top = 6
-        Width = 150
+        Width = 20
         Height = 15
         Alignment = taCenter
         DataField = 'prova_compatibilidade_37'
@@ -851,7 +834,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Text = ''
       end
       object RLPanel24: TRLPanel
-        Left = 587
+        Left = 620
         Top = -1
         Width = 1
         Height = 30
@@ -884,7 +867,7 @@ object FrmRlRelSaida: TFrmRlRelSaida
         Transparent = False
       end
       object RLPanel27: TRLPanel
-        Left = 917
+        Left = 963
         Top = -1
         Width = 1
         Height = 30
@@ -892,26 +875,10 @@ object FrmRlRelSaida: TFrmRlRelSaida
         ParentColor = False
         Transparent = False
       end
-      object RLDBTextPai: TRLDBText
-        Left = 958
+      object RLDBTextNumeroProntuario: TRLDBText
+        Left = 285
         Top = 6
-        Width = 150
-        Height = 15
-        Alignment = taCenter
-        DataField = 'prova_compatibilidade_37'
-        DataSource = DataSource
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Text = ''
-      end
-      object RLDBText1: TRLDBText
-        Left = 267
-        Top = 6
-        Width = 107
+        Width = 91
         Height = 15
         Alignment = taRightJustify
         DataField = 'num_prontuario'
@@ -926,6 +893,40 @@ object FrmRlRelSaida: TFrmRlRelSaida
       end
       object RLPanel29: TRLPanel
         Left = 380
+        Top = 0
+        Width = 1
+        Height = 30
+        Color = clBlack
+        ParentColor = False
+        Transparent = False
+      end
+      object RLDBTextPai: TRLDBText
+        Left = 673
+        Top = 6
+        Width = 20
+        Height = 15
+        Alignment = taCenter
+        DataField = 'pai'
+        DataSource = DataSource
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Text = ''
+      end
+      object RLPanel31: TRLPanel
+        Left = 695
+        Top = -2
+        Width = 1
+        Height = 30
+        Color = clBlack
+        ParentColor = False
+        Transparent = False
+      end
+      object RLPanel18: TRLPanel
+        Left = 838
         Top = 0
         Width = 1
         Height = 30

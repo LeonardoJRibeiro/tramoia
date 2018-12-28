@@ -38,7 +38,7 @@ type
 
 implementation
 
-uses UBiblioteca, UClassBibliotecaDAO, System.StrUtils;
+uses UClassBiblioteca, UClassBibliotecaDAO, System.StrUtils;
 
 constructor TUsuarioDAO.Create(const pCONEXAO: TConexao);
 begin

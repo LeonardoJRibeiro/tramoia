@@ -5,13 +5,15 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.ComCtrls, Vcl.Buttons,
-  sBitBtn;
+  UClassTelefone, UClassTelefoneDao;
 
 type
   TFrmCadPaciente = class(TForm)
     PanelBotoes: TPanel;
     BtnSalvar: TSpeedButton;
     BtnSair: TSpeedButton;
+    PageControl: TPageControl;
+    TabSheetGeral: TTabSheet;
     GroupBoxDadosPessoais: TGroupBox;
     LabelSexo: TLabel;
     LabelCpf: TLabel;
@@ -45,6 +47,8 @@ type
     GroupBoxInfoComplementares: TGroupBox;
     Label12: TLabel;
     EdtTelefone: TMaskEdit;
+    TabSheetObservacoes: TTabSheet;
+    MemoObservacoes: TMemo;
     procedure BtnSalvarClick(Sender: TObject);
     procedure EdtCodMunicipioExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -80,6 +84,8 @@ type
 
     function SalvaPaciente: Boolean;
 
+    function SalvaTelefone: Boolean;
+
     function SalvaEndereco: Boolean;
 
     function getExisteCpf: Boolean;
@@ -96,7 +102,7 @@ implementation
 
 uses System.StrUtils, System.Math, UClassMensagem, UClassPaciente, UClassPacienteDao, UDMConexao, UClassEndereco,
   UClassEnderecoDao, UClassMunicipioDao, UClassMunicipio, UConsMunicipio, UClassForeignKeyForms, UClassBibliotecaDao,
-  UBiblioteca;
+  UClassBiblioteca;
 {$R *.dfm}
 { TFrmCadPaciente }
 
@@ -114,17 +120,22 @@ begin
     if (Self.SalvaPaciente) then
     begin
 
-      if (Self.SalvaEndereco) then
+      if (Self.SalvaTelefone) then
       begin
-        TBiblioteca.AtivaDesativaCompontes(Self, True);
 
-        Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Paciente'])), PChar('Informação'),
-          MB_OK + MB_ICONINFORMATION);
+        if (Self.SalvaEndereco) then
+        begin
+          TBiblioteca.AtivaDesativaCompontes(Self, True);
 
-        TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'CodigoIbge', 'FrmCadPaciente.EdtCodMunicipio',
-          Trim(EdtCodMunicipio.Text));
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['Paciente'])), PChar('Informação'),
+            MB_OK + MB_ICONINFORMATION);
 
-        ModalResult := mrOk;
+          TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'CodigoIbge', 'FrmCadPaciente.EdtCodMunicipio',
+            Trim(EdtCodMunicipio.Text));
+
+          ModalResult := mrOk;
+        end;
+
       end;
 
     end;
@@ -150,7 +161,13 @@ begin
         lEndereco.Logradouro := EdtLogradouro.Text;
         lEndereco.Bairro := EdtBairro.Text;
         lEndereco.Numero := EdtNumero.Text;
-        lEndereco.Id_Municipio := Self.getIdMunicipio;
+
+        lEndereco.Id_Municipio := -1;
+        if (not Trim(EdtCodMunicipio.Text).IsEmpty) then
+        begin
+          lEndereco.Id_Municipio := Self.getIdMunicipio;
+        end;
+
         lEndereco.Cep := EdtCep.Text;
         lEndereco.Complemento := EdtComplemento.Text;
         lEndereco.Id_Paciente := Self.FIdPaciente;
@@ -161,7 +178,7 @@ begin
         on E: Exception do
         begin
           Result := False;
-          Application.MessageBox(PChar(Format(TMensagem.getMensagem(8), ['endereço', E.Message])), PChar('Erro'),
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['endereço', E.Message])), PChar('Erro'),
             MB_OK + MB_ICONERROR);
         end;
       end;
@@ -198,8 +215,8 @@ begin
       lPaciente.Rh := (Trim(Copy(ComboBoxABO.Text, Length(ComboBoxABO.Text), 1)));
       lPaciente.Cpf := EdtCpf.Text;
       lPaciente.Rg := EdtRg.Text;
-      lPaciente.Telefone := EdtTelefone.Text;
       lPaciente.Sus := EdtSus.Text;
+      lPaciente.Observacao := MemoObservacoes.Text;
 
       lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
       try
@@ -225,6 +242,53 @@ begin
 
   finally
     FreeAndNil(lPaciente);
+  end;
+
+end;
+
+function TFrmCadPaciente.SalvaTelefone: Boolean;
+var
+  lTelefone: TTelefone;
+  lTelefoneDao: TTelefoneDAO;
+begin
+
+  if ((Trim(EdtTelefone.Text).IsEmpty) or ((Trim(EdtTelefone.Text) = '62'))) then
+  begin
+    Result := True;
+    Exit;
+  end;
+
+  lTelefone := TTelefone.Create;
+  try
+
+    lTelefoneDao := TTelefoneDAO.Create(DataModuleConexao.Conexao);
+    try
+
+      try
+
+        lTelefone.Id := lTelefoneDao.getId(Self.FIdPaciente);
+        lTelefone.Id_Paciente := Self.FIdPaciente;
+        lTelefone.Ddd := Copy(Trim(EdtTelefone.Text), 0, 2);
+        lTelefone.Numero := Copy(Trim(EdtTelefone.Text), 3, Trim(EdtTelefone.Text).Length);
+        lTelefone.Tipo_Telefone := 'C';
+
+        Result := lTelefoneDao.Salvar(lTelefone);
+
+      except
+        on E: Exception do
+        begin
+          Result := False;
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(4), ['telefone', E.Message])), PChar('Erro'),
+            MB_OK + MB_ICONERROR);
+        end;
+      end;
+
+    finally
+      FreeAndNil(lTelefoneDao);
+    end;
+
+  finally
+    FreeAndNil(lTelefone);
   end;
 
 end;
@@ -262,6 +326,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label5.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtNumProntuario.SetFocus;
     Exit;
 
@@ -272,6 +337,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [EdtNome.EditLabel.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtNome.SetFocus;
     Exit;
 
@@ -282,6 +348,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelSexo.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     ComboboxSexo.SetFocus;
     ComboboxSexo.DroppedDown := True;
     Exit;
@@ -293,6 +360,7 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelDtNascimento.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     EdtDataNascimento.SetFocus;
     Exit;
 
@@ -303,18 +371,9 @@ begin
 
     Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [Label11.Caption])), PChar('Informação'),
       MB_OK + MB_ICONINFORMATION);
+    PageControl.TabIndex := 0;
     ComboBoxABO.SetFocus;
     ComboBoxABO.DroppedDown := True;
-    Exit;
-
-  end;
-
-  if (Trim(EdtCodMunicipio.Text).IsEmpty) then
-  begin
-
-    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelMunicipio.Caption])), PChar('Informação'),
-      MB_OK + MB_ICONINFORMATION);
-    EdtCodMunicipio.SetFocus;
     Exit;
 
   end;
@@ -544,11 +603,15 @@ end;
 procedure TFrmCadPaciente.EdtTelefoneExit(Sender: TObject);
 begin
 
+  if (Trim(EdtTelefone.Text) = '62') then
+  begin
+    EdtTelefone.Clear;
+  end;
+
   if (not Trim(EdtTelefone.Text).IsEmpty) then
   begin
 
     // Máscara para celular e número fixo.
-    // EdtTelefone.EditMask := IfThen(Trim(EdtTelefone.Text).Length = 11, '!\(99\)00000-0000;0;_', '!\(99\)0000-0000;0;_');
     EdtTelefone.EditMask := IfThen(Trim(EdtTelefone.Text).Length = 11, '!\(99\)99999-9999;0;_', '!(99)9999-9999;0;_');
 
   end;
@@ -685,6 +748,8 @@ var
   lPacienteDao: TPacienteDao;
   lEndereco: TEndereco;
   lEnderecoDao: TEnderecoDao;
+  lTelefone: TTelefone;
+  lTelefoneDao: TTelefoneDAO;
 begin
   lPaciente := TPaciente.Create;
   try
@@ -706,7 +771,7 @@ begin
         ComboBoxABO.ItemIndex := ComboBoxABO.Items.IndexOf(lPaciente.Abo + lPaciente.Rh);
         EdtNomePai.Text := lPaciente.Nome_Pai;
         EdtNomeMae.Text := lPaciente.Nome_Mae;
-        EdtTelefone.Text := lPaciente.Telefone;
+        MemoObservacoes.Text := lPaciente.Observacao;
 
         lEndereco := TEndereco.Create;
         try
@@ -734,6 +799,30 @@ begin
 
               EdtCep.Text := lEndereco.Cep;
               EdtComplemento.Text := lEndereco.Complemento;
+
+              lTelefone := TTelefone.Create;
+              try
+
+                lTelefoneDao := TTelefoneDAO.Create(DataModuleConexao.Conexao);
+                try
+
+                  if (lTelefoneDao.getObjetoTelefone(lPaciente.Id, lTelefone)) then
+                  begin
+
+                    if (not(Trim(lTelefone.Ddd).IsEmpty) or Trim(lTelefone.Numero).IsEmpty) then
+                    begin
+                      EdtTelefone.Text := lTelefone.Ddd + lTelefone.Numero;
+                    end;
+
+                  end;
+
+                finally
+                  lTelefoneDao.Destroy;
+                end;
+
+              finally
+                FreeAndNil(lTelefone);
+              end;
 
             end;
 

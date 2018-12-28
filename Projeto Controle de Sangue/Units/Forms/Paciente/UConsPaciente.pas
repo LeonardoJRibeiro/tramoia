@@ -47,7 +47,7 @@ var
 implementation
 
 uses System.Math, UDMConexao, UClassMensagem, UClassPacienteDAO, UCadPaciente, UClassPersistencia,
-  UClassForeignKeyForms, UBiblioteca, UClassUsuarioDao, UClassSaidaDao;
+  UClassForeignKeyForms, UClassBiblioteca, UClassUsuarioDao, UClassSaidaDao;
 
 {$R *.dfm}
 

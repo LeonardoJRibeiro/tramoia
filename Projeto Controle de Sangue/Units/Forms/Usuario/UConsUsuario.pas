@@ -34,7 +34,7 @@ implementation
 {$R *.dfm}
 
 uses UClassMensagem, UClassUsuarioDao, UClassUsuario, UDMConexao, UCadUsuario,
-  UClassForeignKeyForms, UBiblioteca;
+  UClassForeignKeyForms, UClassBiblioteca;
 
 procedure TFrmConsUsuario.BtnAlterarClick(Sender: TObject);
 begin

@@ -39,7 +39,7 @@ var
 
 implementation
 
-uses Winapi.ShellAPI, UBiblioteca, UClassMensagem;
+uses Winapi.ShellAPI, UClassBiblioteca, UClassMensagem;
 
 {$R *.dfm}
 

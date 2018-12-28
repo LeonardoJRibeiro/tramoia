@@ -4,8 +4,8 @@ object FrmEntrada: TFrmEntrada
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Entrada de sangue'
-  ClientHeight = 192
-  ClientWidth = 383
+  ClientHeight = 242
+  ClientWidth = 382
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,14 +24,15 @@ object FrmEntrada: TFrmEntrada
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 383
-    Height = 151
+    Width = 382
+    Height = 201
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitHeight = 194
+    ExplicitWidth = 383
+    ExplicitHeight = 151
     object LabelData: TLabel
       Left = 83
       Top = 12
@@ -191,18 +192,32 @@ object FrmEntrada: TFrmEntrada
       CharCase = ecUpperCase
       TabOrder = 2
     end
+    object RadioGroupPai: TRadioGroup
+      Left = 10
+      Top = 147
+      Width = 355
+      Height = 37
+      Caption = 'Pai'
+      Columns = 2
+      ItemIndex = 1
+      Items.Strings = (
+        'Positivo'
+        'Negativo')
+      TabOrder = 8
+    end
   end
   object PanelBottom: TPanel
     Left = 0
-    Top = 151
-    Width = 383
+    Top = 201
+    Width = 382
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitTop = 194
+    ExplicitTop = 151
+    ExplicitWidth = 383
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9

@@ -22,7 +22,7 @@ type
 
 implementation
 
-uses Vcl.Forms, ShellAPI, WinAPI.Windows, UBiblioteca;
+uses Vcl.Forms, ShellAPI, WinAPI.Windows, UClassBiblioteca;
 
 { TGeraBackup }
 

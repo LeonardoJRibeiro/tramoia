@@ -85,7 +85,7 @@ implementation
 
 uses ShellAPI, UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
   URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
-  USelCons, URelEstoque, UBiblioteca, UClassBibliotecaDao, UClassGeraBackup;
+  USelCons, URelEstoque, UClassBiblioteca, UClassBibliotecaDao, UClassGeraBackup;
 
 procedure TFrmPrincipal.BtnConsultasClick(Sender: TObject);
 begin

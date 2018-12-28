@@ -40,7 +40,7 @@ var
 implementation
 
 uses
-  UClassUsuario, UClassUsuarioDao, UDMConexao, UBiblioteca, System.StrUtils, UClassMensagem;
+  UClassUsuario, UClassUsuarioDao, UDMConexao, UClassBiblioteca, System.StrUtils, UClassMensagem;
 
 {$R *.dfm}
 { TFrmCadUsuario }

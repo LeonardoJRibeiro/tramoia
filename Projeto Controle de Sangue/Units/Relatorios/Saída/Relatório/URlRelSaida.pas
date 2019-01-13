@@ -37,7 +37,6 @@ type
     RLLabelBolsaNumero: TRLLabel;
     RLPanel4: TRLPanel;
     RLLabelBolsaTipo: TRLLabel;
-    RLLabelBolsaABO: TRLLabel;
     RLPanel16: TRLPanel;
     RLLabelBolsaVolume: TRLLabel;
     RLPanel17: TRLPanel;
@@ -82,10 +81,19 @@ type
     RLDBTextPai: TRLDBText;
     RLPanel31: TRLPanel;
     RLPanel18: TRLPanel;
+    RLPanel11: TRLPanel;
+    RLLabel2: TRLLabel;
+    RLLabel3: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLPanel32: TRLPanel;
+    RLPanel33: TRLPanel;
+    RLLabel5: TRLLabel;
+    RLLabelProcedimentos: TRLLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure RLReportBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLBand1BeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
 
     FForeignFormKey: SmallInt;
@@ -220,6 +228,67 @@ begin
   finally
     lRelSaidaDAO.Destroy;
   end;
+
+end;
+
+procedure TFrmRlRelSaida.RLBand1BeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  lTexto: string;
+begin
+
+  if (Self.FPersistencia.Query.FieldByName('irradiada').AsString = 'S') then
+  begin
+    lTexto := lTexto + 'I';
+  end;
+
+  if (Self.FPersistencia.Query.FieldByName('filtrada').AsString = 'S') then
+  begin
+
+    if (lTexto.Trim.IsEmpty) then
+    begin
+      lTexto := lTexto + 'FI';
+    end
+    else
+    begin
+      lTexto := lTexto + ',FI';
+    end;
+
+  end;
+
+  if (Self.FPersistencia.Query.FieldByName('fracionada').AsString = 'S') then
+  begin
+
+    if (lTexto.Trim.IsEmpty) then
+    begin
+      lTexto := lTexto + 'FR';
+    end
+    else
+    begin
+      lTexto := lTexto + ',FR';
+    end;
+
+  end;
+
+  if (Self.FPersistencia.Query.FieldByName('fenotipada').AsString = 'S') then
+  begin
+
+    if (lTexto.Trim.IsEmpty) then
+    begin
+      lTexto := lTexto + 'FE';
+    end
+    else
+    begin
+      lTexto := lTexto + ',FE';
+    end;
+
+  end;
+
+  if (lTexto.Trim.IsEmpty) then
+  begin
+    lTexto := 'NH';
+  end;
+
+  RLLabelProcedimentos.Caption := lTexto;
 
 end;
 

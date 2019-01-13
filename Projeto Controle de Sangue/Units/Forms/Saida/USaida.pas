@@ -46,6 +46,11 @@ type
     EdtAboPaciente: TEdit;
     ComboBoxResponsavel: TComboBox;
     Label2: TLabel;
+    GroupBox1: TGroupBox;
+    RadioGroupIrradiada: TRadioGroup;
+    RadioGroupFiltrada: TRadioGroup;
+    RadioGroupFracionada: TRadioGroup;
+    RadioGroupFenotipada: TRadioGroup;
     procedure BtnGravarClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -56,6 +61,7 @@ type
     procedure BtnNovoClick(Sender: TObject);
     procedure btnCadPacienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure EdtVolumeExit(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -68,11 +74,13 @@ type
 
     procedure CarregaUsuarios;
 
-    procedure setIndexByIdUsuario(pIdUsuario: Integer);
+    procedure setIndexByIdUsuario(const pIdUsuario: Integer);
 
     procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
 
     function SalvaSaida: Boolean;
+
+    function AlteraProcedimentosEspeciais: Boolean;
 
   public
     class function getSaida(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
@@ -84,12 +92,42 @@ var
 
 implementation
 
-uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO, UClassBiblioteca,
+uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO,
+  UClassBiblioteca,
   UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao,
-  System.Generics.Collections, UClassUsuario, UClassUsuarioDAO, UAutenticacao;
+  System.Generics.Collections, UClassUsuario, UClassUsuarioDAO, UAutenticacao, USelBolsa;
 
 {$R *.dfm}
 { TFrmSaida }
+
+function TFrmSaida.AlteraProcedimentosEspeciais: Boolean;
+var
+  lBolsaDao: TBolsaDAO;
+begin
+
+  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    try
+      Result := lBolsaDao.AlteraProcessoEspeciais(Self.FIdBolsa,
+        Copy(RadioGroupIrradiada.Items[RadioGroupIrradiada.ItemIndex], 1, 1),
+        Copy(RadioGroupFiltrada.Items[RadioGroupFiltrada.ItemIndex], 1, 1),
+        Copy(RadioGroupFracionada.Items[RadioGroupFracionada.ItemIndex], 1, 1),
+        Copy(RadioGroupFenotipada.Items[RadioGroupFenotipada.ItemIndex], 1, 1));
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+
+    end;
+
+  finally
+    lBolsaDao.Destroy;
+  end;
+
+end;
 
 procedure TFrmSaida.btnCadPacienteClick(Sender: TObject);
 begin
@@ -203,8 +241,11 @@ begin
     if (Self.SalvaSaida) then
     begin
 
-      TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital',
-        Trim(EdtHospital.Text));
+      if (Self.AlteraProcedimentosEspeciais) then
+      begin
+        TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital',
+          Trim(EdtHospital.Text));
+      end;
 
     end;
 
@@ -235,9 +276,9 @@ begin
   EdtTipo.Clear;
   EdtVolume.Clear;
   RadioGroupPai.ItemIndex := 1;
-  RadioGroupTA.ItemIndex := 1;
-  RadioGroupAGH.ItemIndex := 1;
-  RadioGroup37.ItemIndex := 1;
+  RadioGroupTA.ItemIndex := 0;
+  RadioGroupAGH.ItemIndex := 0;
+  RadioGroup37.ItemIndex := 0;
   ComboBoxResponsavel.SetFocus;
 
   BtnGravar.Enabled := true;
@@ -273,9 +314,12 @@ begin
           EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
           Self.FNumBolsa := lBolsa.NumeroBolsa;
           EdtTipo.Text := lBolsa.Tipo;
-          EdtVolume.Text := lBolsa.Volume.ToString;
+          EdtVolume.Text := lBolsa.VolumeAtual.ToString;
           EdtAboBolsa.Text := lBolsa.Abo + lBolsa.Rh;
-
+          RadioGroupIrradiada.ItemIndex := IfThen(lBolsa.Irradiada = 'S', 0, 1);
+          RadioGroupFiltrada.ItemIndex := IfThen(lBolsa.Filtrada = 'S', 0, 1);
+          RadioGroupFracionada.ItemIndex := IfThen(lBolsa.Fracionada = 'S', 0, 1);
+          RadioGroupFenotipada.ItemIndex := IfThen(lBolsa.Fenotipada = 'S', 0, 1);
         end;
 
       except
@@ -317,18 +361,14 @@ begin
             lSaida.Id_Paciente, DataModuleConexao.Conexao);
           EdtRegistroPacienteExit(Self);
           Self.CarregaDadosBolsa(lSaida.Id_Bolsa);
+          EdtVolume.Text := lSaida.Volume.ToString;
           DateTimePickerData.Date := lSaida.Data_Saida;
           EdtHospital.Text := lSaida.Hospital;
           RadioGroupPai.ItemIndex := IfThen(lSaida.Pai = 'P', 0, 1);
-          RadioGroupTA.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Ta = 'P', 0, 1);
-          RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'P', 0, 1);
-          RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'P', 0, 1);
+          RadioGroupTA.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Ta = 'C', 0, 1);
+          RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'C', 0, 1);
+          RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'C', 0, 1);
           Self.FIdBolsa := lSaida.Id_Bolsa;
-          CarregaUsuarios;
-
-          // Maneira com mais acessos ao banco
-          // ComboBoxResponsavel.ItemIndex := ComboBoxResponsavel.Items.IndexOf(lSaida.Id_Usuario.ToString+ ' - ' +
-          // TClassBibliotecaDao.getNomeUsuario(lSaida.Id_Usuario, DataModuleConexao.Conexao));
 
           setIndexByIdUsuario(lSaida.Id_Usuario);
 
@@ -355,7 +395,6 @@ end;
 
 procedure TFrmSaida.EdtNumeroBolsaExit(Sender: TObject);
 var
-  lSaidaDAO: TSaidaDAO;
   lBolsaDao: TBolsaDAO;
   lVerificaNumBolsa: Boolean;
 begin
@@ -375,34 +414,34 @@ begin
     if (lVerificaNumBolsa) then
     begin
 
-      lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
-      try
-
-        Self.FIdBolsa := lBolsaDao.getIdBolsa(EdtNumeroBolsa.Text);
-
-      finally
-        lBolsaDao.Destroy;
+      if (not TFrmSelBolsa.getSelBolsa(TForeignKeyForms.FIdUSaida, Self.FIdUsuario, Trim(EdtNumeroBolsa.Text),
+        Self.FIdBolsa)) then
+      begin
+        EdtNumeroBolsa.SetFocus;
+        exit;
       end;
 
       if (Self.FIdBolsa > 0) then
       begin
 
-        lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
+        lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
         try
 
           try
 
-            if (not lSaidaDAO.getExisteBolsaVinculada(Self.FIdBolsa)) then
+            if (lBolsaDao.getPermiteMovimentacao(Self.FIdBolsa)) then
             begin
 
               Self.CarregaDadosBolsa(Self.FIdBolsa);
+              EdtVolume.Enabled := true;
+              EdtVolume.SetFocus;
 
             end
             else
             begin
 
               Self.FIdBolsa := -1;
-              Application.MessageBox('Número da bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
+              Application.MessageBox('Bolsa já vinculado a uma saída', 'Aviso', MB_ICONWARNING + MB_OK);
               EdtNumeroBolsa.SetFocus;
 
             end;
@@ -418,7 +457,7 @@ begin
           end;
 
         finally
-          lSaidaDAO.Destroy;
+          lBolsaDao.Destroy;
         end;
 
       end
@@ -432,6 +471,10 @@ begin
 
     end;
 
+  end
+  else
+  begin
+    EdtVolume.Enabled := False;
   end;
 
 end;
@@ -462,7 +505,9 @@ begin
         else
         begin
 
-          MessageDlg(Format(TMensagem.getMensagem(6), ['Paciente']), mtWarning, [mbOK], -1);
+          Application.MessageBox(PChar(Format(TMensagem.getMensagem(6), ['Paciente'])), 'Aviso',
+            MB_OK + MB_ICONINFORMATION);
+
           EdtRegistroPaciente.SetFocus;
 
         end;
@@ -505,6 +550,30 @@ begin
 
 end;
 
+procedure TFrmSaida.EdtVolumeExit(Sender: TObject);
+var
+  lVolumeAtual: Integer;
+  lBolsaDao: TBolsaDAO;
+begin
+
+  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  try
+
+    lVolumeAtual := lBolsaDao.getVolumeAtual(Self.FIdBolsa);
+
+    if (StrToIntDef(EdtVolume.Text, 0) > lVolumeAtual) then
+    begin
+      Application.MessageBox(pWideChar('Você ultrapassou o volume máximo da bolsa de ' + lVolumeAtual.ToString + 'mL.'),
+        'Aviso', MB_ICONWARNING + MB_OK);
+      EdtVolume.SetFocus;
+    end;
+
+  finally
+    lBolsaDao.Destroy;
+  end;
+
+end;
+
 procedure TFrmSaida.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
@@ -529,6 +598,7 @@ end;
 
 procedure TFrmSaida.FormShow(Sender: TObject);
 begin
+  Self.CarregaUsuarios;
 
   if (Self.FId <> -1) then
   begin
@@ -539,7 +609,6 @@ begin
     EdtHospital.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', '');
     DateTimePickerData.Date := now;
 
-    CarregaUsuarios;
     setIndexByIdUsuario(Self.FIdUsuario);
     ComboBoxResponsavel.SetFocus;
 
@@ -553,7 +622,7 @@ procedure TFrmSaida.CarregaUsuarios;
 var
   lListaUsuario: TObjectList<TUsuario>;
   lUsuarioDAO: TUsuarioDAO;
-  I: Integer;
+  lCount: Integer;
 begin
   ComboBoxResponsavel.Clear;
 
@@ -566,9 +635,10 @@ begin
       if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
       begin
 
-        for I := 0 to lListaUsuario.Count - 1 do
+        for lCount := 0 to lListaUsuario.Count - 1 do
         begin
-          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[I].Id.ToString + ' - ' + lListaUsuario.Items[I].Nome);
+          ComboBoxResponsavel.Items.Add(lListaUsuario.Items[lCount].Id.ToString + ' - ' + lListaUsuario.Items
+            [lCount].Nome);
         end;
 
       end
@@ -587,7 +657,7 @@ begin
   end;
 end;
 
-procedure TFrmSaida.setIndexByIdUsuario(pIdUsuario: Integer);
+procedure TFrmSaida.setIndexByIdUsuario(const pIdUsuario: Integer);
 var
   lCount: SmallInt;
 begin
@@ -648,9 +718,6 @@ begin
     lSaida.Id_Paciente := TClassBibliotecaDao.getValorAtributo('paciente', 'id', 'num_prontuario',
       EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
 
-    // Retira apenas o ID do usuário da string
-    // lFimCopy := AnsiPos('-', ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]) - 1;
-    // lSaida.Id_Usuario := Trim(Copy(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex],1,lFimCopy)).ToInteger;
     lSaida.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
 
     lSaida.Id_Bolsa := Self.FIdBolsa;
@@ -660,13 +727,15 @@ begin
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_Agh := Copy(RadioGroupAGH.Items[RadioGroupAGH.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_37 := Copy(RadioGroup37.Items[RadioGroup37.ItemIndex], 1, 1);
+    lSaida.Volume := StrToInt(EdtVolume.Text);
 
     lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
     try
 
       try
 
-        if (lSaidaDAO.Salvar(lSaida)) then
+        Result := lSaidaDAO.Salvar(lSaida);
+        if (Result) then
         begin
 
           EdtId.Text := lSaida.Id.ToString;

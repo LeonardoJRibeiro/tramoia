@@ -131,7 +131,8 @@ begin
 
           end;
 
-          pPersistencia.Query.SQL.Add('ORDER BY p.num_prontuario');
+          pPersistencia.Query.SQL.Add('ORDER BY');
+          pPersistencia.Query.SQL.Add('  p.num_prontuario');
 
         end;
     end;

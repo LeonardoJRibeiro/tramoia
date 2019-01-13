@@ -6,14 +6,13 @@ uses System.SysUtils, System.Classes, UClassPersistencia;
 
 type
   TConsEstoqueDAO = class(TPersistent)
-  private
-    function getSqlComEstoque: string;
-    function getSqlSemEstoque: string;
 
   public
 
-    function getConsulta(const pTIPOCONS, pLISTESTOQUE: SmallInt; const pCHAVE: string;
+    function getConsulta(const pTIPOCONS, pFILTRARPOR: SmallInt; const pCHAVE: string;
       var pPersistencia: TPersistencia): Boolean;
+
+    function getSqlQuantidade: string;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -35,61 +34,7 @@ begin
   inherited;
 end;
 
-function TConsEstoqueDAO.getSqlComEstoque: string;
-var
-  SQL: TStringBuilder;
-begin
-  SQL := TStringBuilder.Create;
-
-  try
-    SQL.Append('SELECT');
-    SQL.Append('  COUNT(b.id) AS quantidade,');
-    SQL.Append('  CONCAT(SUM(b.volume), ' + QuotedStr(' mL') + ') AS volume,');
-    SQL.Append('  CONCAT(b.abo, b.rh) AS abo,');
-    SQL.Append('  b.tipo,');
-    SQL.Append('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
-      ') AS sorologia,');
-    SQL.Append('  IF(b.possui_estoque=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
-      QuotedStr('NÃO') + ') AS possui_estoque ');
-    SQL.Append('FROM bolsa b ');
-
-    SQL.Append(' WHERE b.possui_estoque = ' + QuotedStr('S'));
-
-    Result := SQL.ToString;
-  finally
-    SQL.Free;
-  end;
-end;
-
-function TConsEstoqueDAO.getSqlSemEstoque: string;
-var
-  SQL: TStringBuilder;
-begin
-  SQL := TStringBuilder.Create;
-
-  try
-    SQL.Append('SELECT');
-    SQL.Append('  CONCAT(b.abo, b.rh) AS abo,');
-    SQL.Append('  b.tipo,');
-    SQL.Append('  IF(b.sorologia=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO') +
-    ') AS sorologia,');
-    SQL.Append('  IF(b.possui_estoque=' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
-    QuotedStr('NÃO') + ') AS possui_estoque ');
-    SQL.Append('FROM bolsa b ');
-    SQL.Append(' INNER JOIN saida s ');
-    SQL.Append(' ON b.id = s.id_bolsa');
-
-    SQL.Append(' WHERE  b.possui_estoque = '+QuotedStr('N')+' and CONCAT(b.abo, b.rh)'+
-    ' NOT IN (SELECT CONCAT(b.abo, b.rh) FROM bolsa b WHERE b.possui_estoque = '+QuotedStr('S')+')');
-
-    Result := SQL.ToString;
-  finally
-    SQL.Free;
-  end;
-
-end;
-
-function TConsEstoqueDAO.getConsulta(const pTIPOCONS, pLISTESTOQUE: SmallInt; const pCHAVE: string;
+function TConsEstoqueDAO.getConsulta(const pTIPOCONS, pFILTRARPOR: SmallInt; const pCHAVE: string;
   var pPersistencia: TPersistencia): Boolean;
 var
   lOrderBy: string;
@@ -100,25 +45,26 @@ begin
 
   try
 
-    lGroupBy.Append(' GROUP BY');
-    lGroupBy.Append('  b.abo,');
-    lGroupBy.Append('  b.rh,');
-    lGroupBy.Append('  b.tipo,');
-    lGroupBy.Append('  b.sorologia,');
-
     pPersistencia.IniciaTransacao;
 
-    case (pLISTESTOQUE) of
+    pPersistencia.Query.SQL.Add('SELECT');
+    pPersistencia.Query.SQL.Add(self.getSqlQuantidade);
+    pPersistencia.Query.SQL.Add('  CONCAT(SUM(volume_atual), ' + QuotedStr(' mL') + ') AS volume,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS abo,');
+    pPersistencia.Query.SQL.Add('  b.tipo');
+
+    pPersistencia.Query.SQL.Add('FROM bolsa b ');
+    pPersistencia.Query.SQL.Add('WHERE 0 = 0');
+
+    case (pFILTRARPOR) of
       0: // Com estoque.
         begin
-          pPersistencia.Query.SQL.Add(getSqlComEstoque);
-          lGroupBy.Append('  b.possui_estoque');
+          pPersistencia.Query.SQL.Add('AND b.volume_atual > 0');
         end;
+
       1: // Sem estoque.
         begin
-          pPersistencia.Query.SQL.Add(getSqlSemEstoque);
-          lGroupBy.Append('  b.possui_estoque,');
-          lGroupBy.Append('  s.data_saida ');
+          pPersistencia.Query.SQL.Add('AND b.volume_atual <= 0');
         end;
     end;
 
@@ -151,7 +97,11 @@ begin
 
     end;
 
-    pPersistencia.Query.SQL.Add(lGroupBy.ToString);
+    pPersistencia.Query.SQL.Add(' GROUP BY');
+    pPersistencia.Query.SQL.Add('  b.abo,');
+    pPersistencia.Query.SQL.Add('  b.rh,');
+    pPersistencia.Query.SQL.Add('  b.tipo');
+
     pPersistencia.Query.SQL.Add(' ORDER BY ' + lOrderBy + ';');
 
     pPersistencia.Query.Open;
@@ -166,6 +116,30 @@ begin
     end;
   end;
 
+end;
+
+function TConsEstoqueDAO.getSqlQuantidade: string;
+var
+  lSql: TStringList;
+begin
+
+  lSql := TStringList.Create;
+  try
+
+    lSql.Add('(SELECT');
+    lSql.Add('  COUNT(bo.id)');
+    lSql.Add('FROM bolsa bo');
+
+    lSql.Add('WHERE bo.volume_atual > 0');
+    lSql.Add('AND bo.abo = b.abo');
+    lSql.Add('AND bo.rh = b.rh');
+    lSql.Add('AND bo.tipo = b.tipo)AS quantidade,');
+
+    Result := lSql.Text;
+
+  finally
+    FreeAndNil(lSql);
+  end;
 end;
 
 end.

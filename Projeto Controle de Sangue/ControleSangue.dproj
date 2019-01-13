@@ -46,10 +46,10 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <Custom_Styles>&quot;Smokey Quartz Kamri|VCLSTYLE|$(BDSCOMMONDIR)\Styles\SmokeyQuartzKamri.vsf&quot;</Custom_Styles>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <SanitizedProjectName>ControleSangue</SanitizedProjectName>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
-        <Custom_Styles>&quot;Smokey Quartz Kamri|VCLSTYLE|$(BDSCOMMONDIR)\Styles\SmokeyQuartzKamri.vsf&quot;</Custom_Styles>
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
         <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
@@ -218,6 +218,30 @@
         </DCCReference>
         <DCCReference Include="Units\Class\Controll\UClassTelefone.pas"/>
         <DCCReference Include="Units\Class\DAO\UClassTelefoneDao.pas"/>
+        <DCCReference Include="Units\Class\Controll\UClassDescarte.pas"/>
+        <DCCReference Include="Units\Class\DAO\UClassDescarteDao.pas"/>
+        <DCCReference Include="Units\Relatorios\Descarte\Class\UClassRelDescarte.pas"/>
+        <DCCReference Include="Units\Relatorios\Descarte\Class\UClassRelDescarteDAO.pas"/>
+        <DCCReference Include="Units\Forms\Descarte\UConsDescarte.pas">
+            <Form>FrmConsDescarte</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Forms\Descarte\UDescarte.pas">
+            <Form>FrmDescarte</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Descarte\Relatorio\URlRelDescarte.pas">
+            <Form>FrmRlRelDescarte</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Descarte\Form\URelDescarte.pas">
+            <Form>FrmRelDescarte</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Forms\Saida\USelBolsa.pas">
+            <Form>FrmSelBolsa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

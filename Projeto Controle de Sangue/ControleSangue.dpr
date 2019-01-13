@@ -63,7 +63,16 @@ uses
   UClassGeraBackup in 'Units\Class\UClassGeraBackup.pas',
   UAutenticacao in 'Units\Forms\Usuario\UAutenticacao.pas' {FrmAutenticacao},
   UClassTelefone in 'Units\Class\Controll\UClassTelefone.pas',
-  UClassTelefoneDao in 'Units\Class\DAO\UClassTelefoneDao.pas';
+  UClassTelefoneDao in 'Units\Class\DAO\UClassTelefoneDao.pas',
+  UClassDescarte in 'Units\Class\Controll\UClassDescarte.pas',
+  UClassDescarteDao in 'Units\Class\DAO\UClassDescarteDao.pas',
+  UClassRelDescarte in 'Units\Relatorios\Descarte\Class\UClassRelDescarte.pas',
+  UClassRelDescarteDAO in 'Units\Relatorios\Descarte\Class\UClassRelDescarteDAO.pas',
+  UConsDescarte in 'Units\Forms\Descarte\UConsDescarte.pas' {FrmConsDescarte},
+  UDescarte in 'Units\Forms\Descarte\UDescarte.pas' {FrmDescarte},
+  URlRelDescarte in 'Units\Relatorios\Descarte\Relatorio\URlRelDescarte.pas' {FrmRlRelDescarte},
+  URelDescarte in 'Units\Relatorios\Descarte\Form\URelDescarte.pas' {FrmRelDescarte},
+  USelBolsa in 'Units\Forms\Saida\USelBolsa.pas' {FrmSelBolsa};
 
 {$R *.res}
 
@@ -71,7 +80,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Smokey Quartz Kamri');
-
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   if (DataModuleConexao.Conexao.PreparaConexao) then
   begin

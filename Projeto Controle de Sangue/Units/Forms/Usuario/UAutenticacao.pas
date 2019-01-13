@@ -4,15 +4,15 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, acPNG, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, acPNG, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask, Vcl.Buttons;
 
 type
   TFrmAutenticacao = class(TForm)
     Image1: TImage;
     Label1: TLabel;
     EdtUsuario: TLabeledEdit;
-    BtnAutenticar: TButton;
-    BtnCancelar: TButton;
+    BtnAutenticar: TBitBtn;
+    BtnCancelar: TBitBtn;
     EdtSenha: TMaskEdit;
     Label2: TLabel;
     procedure EdtSenhaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -30,7 +30,6 @@ var
   FrmAutenticacao: TFrmAutenticacao;
 
 implementation
-
 
 {$R *.dfm}
 
@@ -52,11 +51,11 @@ begin
 
         Self.FIdUsuario := lId;
         ModalResult := mrOk;
-        
+
       end
       else
       begin
-        
+
         Self.FNumTentativas := Self.FNumTentativas + 1;
 
         Application.MessageBox(PChar(TMensagem.getMensagem(13)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
@@ -69,13 +68,13 @@ begin
         EdtSenha.SetFocus;
 
       end;
-      
+
     except
       on E: Exception do
       begin
         Application.MessageBox(PChar(TMensagem.getMensagem(27)), PChar('Erro'), MB_OK + MB_ICONERROR);
       end;
-    end;                      
+    end;
 
   finally
     lUsuarioDAO.Destroy;
@@ -120,10 +119,10 @@ begin
   try
 
     try
-    
+
       FrmAutenticacao.FIdUsuario := pIdUsuario;
       Result := FrmAutenticacao.ShowModal = mrOk;
-      
+
     except
       on E: Exception do
       begin
@@ -132,11 +131,11 @@ begin
       end;
 
     end;
-    
+
   finally
     FrmAutenticacao.Free;
   end;
-  
+
 end;
 
 end.

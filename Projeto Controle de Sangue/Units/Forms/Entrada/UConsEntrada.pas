@@ -30,7 +30,7 @@ type
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
 
-    function getBolsaPossuiEstoque: Boolean;
+    function getPermiteAlteracaoOuExclusao: Boolean;
 
     function getAdmin: Boolean;
 
@@ -75,7 +75,7 @@ begin
   if (not Self.FPersistencia.Query.IsEmpty) then
   begin
 
-    if (Self.getBolsaPossuiEstoque) then
+    if (Self.getPermiteAlteracaoOuExclusao) then
     begin
       TFrmEntrada.getEntrada(TForeignKeyForms.FIdUConsEntrada, Self.FIdUsuario,
         Self.FPersistencia.Query.FieldByName('id').AsInteger);
@@ -108,7 +108,7 @@ begin
     if (Self.getAdmin) then
     begin
 
-      if (Self.getBolsaPossuiEstoque) then
+      if (Self.getPermiteAlteracaoOuExclusao) then
       begin
 
         if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['entrada'])), PChar('Cuidado'),
@@ -310,7 +310,12 @@ end;
 procedure TFrmConsEntrada.EdtDataFinalExit(Sender: TObject);
 begin
   inherited;
-  BtnLocalizarClick(Self);
+
+  if (GetKeyState(VK_RETURN) < 0) then
+  begin
+    BtnLocalizarClick(Self);
+  end;
+
 end;
 
 procedure TFrmConsEntrada.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -369,7 +374,7 @@ begin
 
 end;
 
-function TFrmConsEntrada.getBolsaPossuiEstoque: Boolean;
+function TFrmConsEntrada.getPermiteAlteracaoOuExclusao: Boolean;
 var
   lBolsaDao: TBolsaDAO;
 begin
@@ -379,7 +384,7 @@ begin
 
     try
 
-      Result := lBolsaDao.getPossuiEmEstoque(Self.FPersistencia.Query.FieldByName('id_bolsa').AsInteger);
+      Result := lBolsaDao.getPermiteAlteracaoOuExclusao(Self.FPersistencia.Query.FieldByName('id_bolsa').AsInteger);
 
     except
       on E: Exception do

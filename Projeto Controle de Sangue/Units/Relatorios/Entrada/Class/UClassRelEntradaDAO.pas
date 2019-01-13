@@ -47,11 +47,32 @@ begin
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');
     pPersistencia.Query.SQL.Add('  b.rh,');
-    pPersistencia.Query.SQL.Add('  b.pai,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS aborh,');
     pPersistencia.Query.SQL.Add('  b.origem,');
-    pPersistencia.Query.SQL.Add('  if(b.sorologia = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('NÃO')
-      + ') AS sorologia,');
+
+    pPersistencia.Query.SQL.Add('  if(b.pai = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
+      ') AS pai,');
+
+    pPersistencia.Query.SQL.Add('  if(b.chagas = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
+      ') AS chagas,');
+
+    pPersistencia.Query.SQL.Add('  if(b.sifilis = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
+      ') AS sifilis,');
+
+    pPersistencia.Query.SQL.Add('  if(b.hepatiteB = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg')
+      + ') AS hepatiteB,');
+
+    pPersistencia.Query.SQL.Add('  if(b.hepatiteC = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg')
+      + ') AS hepatiteC,');
+
+    pPersistencia.Query.SQL.Add('  if(b.hiv = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
+      ') AS  hiv,');
+
+    pPersistencia.Query.SQL.Add('  if(b.htlv = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
+      ') AS htlv,');
+
+    pPersistencia.Query.SQL.Add('  if(b.hemoglobinas = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' +
+      QuotedStr('Neg') + ') AS hemoglobinas,');
 
     pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
     pPersistencia.Query.SQL.Add('  u.nome AS responsavel');
@@ -64,6 +85,7 @@ begin
     pPersistencia.Query.SQL.Add('ON(e.id_usuario = u.id)');
 
     pPersistencia.Query.SQL.Add('WHERE e.data_entrada BETWEEN :pDataIni AND :pDataFim');
+
     pPersistencia.setParametro('pDataIni', pRELENTRADA.DataIni);
     pPersistencia.setParametro('pDataFim', pRELENTRADA.DataFim);
 
@@ -76,6 +98,7 @@ begin
 
     pPersistencia.Query.SQL.Add('ORDER BY');
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
+    pPersistencia.Query.SQL.Add('  e.id,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa');
 
     pPersistencia.Query.Open;

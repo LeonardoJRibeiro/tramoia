@@ -4,7 +4,7 @@ object FrmSelRelatorio: TFrmSelRelatorio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Selecionar relat'#243'rio'
-  ClientHeight = 161
+  ClientHeight = 200
   ClientWidth = 245
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,12 +22,13 @@ object FrmSelRelatorio: TFrmSelRelatorio
     Left = 0
     Top = 0
     Width = 245
-    Height = 120
+    Height = 159
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitHeight = 120
     object BtnRelEntradaSangue: TBitBtn
       Left = 2
       Top = 2
@@ -202,7 +203,7 @@ object FrmSelRelatorio: TFrmSelRelatorio
     end
     object BtnRelEstoque: TBitBtn
       Left = 2
-      Top = 80
+      Top = 119
       Width = 241
       Height = 39
       Align = alTop
@@ -244,12 +245,22 @@ object FrmSelRelatorio: TFrmSelRelatorio
         3FBABD853FFFBD853FB9BD853F00BD853F00BD853F00BD853F00}
       TabOrder = 2
       OnClick = BtnRelEstoqueClick
-      ExplicitTop = 77
+      ExplicitTop = 80
+    end
+    object BtnDescartes: TBitBtn
+      Left = 2
+      Top = 80
+      Width = 241
+      Height = 39
+      Align = alTop
+      Caption = 'Descartes de bolsa de sangue'
+      TabOrder = 3
+      OnClick = BtnDescartesClick
     end
   end
   object PanelBotoes: TPanel
     Left = 0
-    Top = 120
+    Top = 159
     Width = 245
     Height = 41
     Align = alBottom
@@ -257,6 +268,7 @@ object FrmSelRelatorio: TFrmSelRelatorio
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitTop = 120
     object BtnSair: TBitBtn
       Left = 2
       Top = 2

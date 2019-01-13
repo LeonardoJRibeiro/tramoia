@@ -28,8 +28,6 @@ object FrmCadPaciente: TFrmCadPaciente
     Align = alBottom
     BorderStyle = bsSingle
     TabOrder = 0
-    ExplicitTop = 402
-    ExplicitWidth = 560
     object BtnSalvar: TSpeedButton
       Left = 140
       Top = 4
@@ -140,11 +138,8 @@ object FrmCadPaciente: TFrmCadPaciente
     ActivePage = TabSheetGeral
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 563
     object TabSheetGeral: TTabSheet
       Caption = 'Geral'
-      ExplicitWidth = 552
-      ExplicitHeight = 374
       object GroupBoxDadosPessoais: TGroupBox
         AlignWithMargins = True
         Left = 3
@@ -160,7 +155,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 554
         object LabelSexo: TLabel
           Left = 10
           Top = 62
@@ -359,7 +353,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alTop
         Caption = 'Endere'#231'o'
         TabOrder = 1
-        ExplicitWidth = 554
         object LabelMunicipio: TLabel
           Left = 10
           Top = 61
@@ -526,7 +519,6 @@ object FrmCadPaciente: TFrmCadPaciente
         Align = alTop
         Caption = 'Informa'#231#245'es Complementares'
         TabOrder = 2
-        ExplicitWidth = 554
         object Label12: TLabel
           Left = 10
           Top = 20
@@ -552,11 +544,10 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
-      ExplicitWidth = 555
       object MemoObservacoes: TMemo
         Left = 11
         Top = 7
-        Width = 534
+        Width = 526
         Height = 394
         MaxLength = 255
         TabOrder = 0

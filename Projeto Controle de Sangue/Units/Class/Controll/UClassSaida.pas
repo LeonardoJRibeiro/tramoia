@@ -18,6 +18,7 @@ type
     FProva_Compatibilidade_Agh: string[1];
     FProva_Compatibilidade_37: string[1];
     FResponsavel: string[45];
+    FVolume: Integer;
 
     function getId: Integer;
     function getId_Paciente: Integer;
@@ -29,6 +30,7 @@ type
     function getProva_Compatibilidade_Ta: string;
     function getProva_Compatibilidade_Agh: string;
     function getProva_Compatibilidade_37: string;
+    function getVolume: Integer;
 
     procedure setId(const pID: Integer);
     procedure setId_Paciente(const pID_PACIENTE: Integer);
@@ -40,6 +42,7 @@ type
     procedure setProva_Compatibilidade_Ta(const pPROVA_COMPATIBILIDADE_TA: string);
     procedure setProva_Compatibilidade_Agh(const pPROVA_COMPATIBILIDADE_AGH: string);
     procedure setProva_Compatibilidade_37(const pPROVA_COMPATIBILIDADE_37: string);
+    procedure setVolume(const pVOLUME: Integer);
 
   public
     property Id: Integer read getId write setId;
@@ -52,6 +55,7 @@ type
     property Prova_Compatibilidade_Ta: string read getProva_Compatibilidade_Ta write setProva_Compatibilidade_Ta;
     property Prova_Compatibilidade_Agh: string read getProva_Compatibilidade_Agh write setProva_Compatibilidade_Agh;
     property Prova_Compatibilidade_37: string read getProva_Compatibilidade_37 write setProva_Compatibilidade_37;
+    property Volume: Integer read getVolume write setVolume;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -59,7 +63,7 @@ type
 
 implementation
 
-{ TSaida}
+{ TSaida }
 
 constructor TSaida.Create;
 begin
@@ -71,6 +75,7 @@ begin
 
   inherited;
 end;
+
 function TSaida.getId: Integer;
 begin
   Result := Self.FId;
@@ -111,6 +116,11 @@ begin
   Result := Self.FProva_Compatibilidade_Ta;
 end;
 
+function TSaida.getVolume: Integer;
+begin
+  Result := Self.FVolume;
+end;
+
 function TSaida.getProva_Compatibilidade_Agh: string;
 begin
   Result := Self.FProva_Compatibilidade_Agh;
@@ -123,52 +133,57 @@ end;
 
 procedure TSaida.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TSaida.setId_Paciente(const pID_PACIENTE: Integer);
 begin
-  Self.FId_Paciente:= pId_Paciente;
+  Self.FId_Paciente := pID_PACIENTE;
 end;
 
 procedure TSaida.setId_Usuario(const pID_USUARIO: Integer);
 begin
-  Self.FId_Usuario:= pId_Usuario;
+  Self.FId_Usuario := pID_USUARIO;
 end;
 
 procedure TSaida.setId_Bolsa(const pID_BOLSA: Integer);
 begin
-  Self.FId_Bolsa:= pId_Bolsa;
+  Self.FId_Bolsa := pID_BOLSA;
 end;
 
 procedure TSaida.setData_Saida(const pDATA_SAIDA: TDate);
 begin
-  Self.FData_Saida:= pData_Saida;
+  Self.FData_Saida := pDATA_SAIDA;
 end;
 
 procedure TSaida.setHospital(const pHOSPITAL: string);
 begin
-  Self.FHospital:= pHospital;
+  Self.FHospital := pHOSPITAL;
 end;
 
 procedure TSaida.setPai(const pPAI: string);
 begin
-  Self.FPai:= pPai;
+  Self.FPai := pPAI;
 end;
 
 procedure TSaida.setProva_Compatibilidade_Ta(const pPROVA_COMPATIBILIDADE_TA: string);
 begin
-  Self.FProva_Compatibilidade_Ta:= pProva_Compatibilidade_Ta;
+  Self.FProva_Compatibilidade_Ta := pPROVA_COMPATIBILIDADE_TA;
+end;
+
+procedure TSaida.setVolume(const pVOLUME: Integer);
+begin
+  Self.FVolume := pVOLUME;
 end;
 
 procedure TSaida.setProva_Compatibilidade_Agh(const pPROVA_COMPATIBILIDADE_AGH: string);
 begin
-  Self.FProva_Compatibilidade_Agh:= pProva_Compatibilidade_Agh;
+  Self.FProva_Compatibilidade_Agh := pPROVA_COMPATIBILIDADE_AGH;
 end;
 
 procedure TSaida.setProva_Compatibilidade_37(const pPROVA_COMPATIBILIDADE_37: string);
 begin
-  Self.FProva_Compatibilidade_37:= pProva_Compatibilidade_37;
+  Self.FProva_Compatibilidade_37 := pPROVA_COMPATIBILIDADE_37;
 end;
 
 end.

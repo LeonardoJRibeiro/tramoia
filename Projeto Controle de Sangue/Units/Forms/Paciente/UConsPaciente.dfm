@@ -1,21 +1,21 @@
 inherited FrmConsPaciente: TFrmConsPaciente
   Caption = 'Consulta do paciente'
-  ClientHeight = 386
-  ClientWidth = 802
+  ClientHeight = 365
+  ClientWidth = 658
   OnClose = FormClose
   OnShow = FormShow
-  ExplicitWidth = 808
-  ExplicitHeight = 415
+  ExplicitWidth = 664
+  ExplicitHeight = 394
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanelGrid: TPanel
-    Width = 802
-    Height = 231
-    ExplicitWidth = 802
-    ExplicitHeight = 273
+    Width = 658
+    Height = 210
+    ExplicitWidth = 658
+    ExplicitHeight = 210
     inherited DBGrid: TDBGrid
-      Width = 800
-      Height = 229
+      Width = 656
+      Height = 208
       DataSource = DataSource
       OnDblClick = DBGridDblClick
       Columns = <
@@ -24,7 +24,7 @@ inherited FrmConsPaciente: TFrmConsPaciente
           Expanded = False
           FieldName = 'num_prontuario'
           Title.Alignment = taCenter
-          Title.Caption = 'Registro'
+          Title.Caption = 'N'#250'm. Prontu'#225'rio'
           Width = 115
           Visible = True
         end
@@ -47,19 +47,10 @@ inherited FrmConsPaciente: TFrmConsPaciente
         item
           Alignment = taCenter
           Expanded = False
-          FieldName = 'cpf'
+          FieldName = 'sus'
           Title.Alignment = taCenter
-          Title.Caption = 'CPF'
-          Width = 85
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 'rg'
-          Title.Alignment = taCenter
-          Title.Caption = 'RG'
-          Width = 56
+          Title.Caption = 'SUS'
+          Width = 107
           Visible = True
         end
         item
@@ -70,24 +61,15 @@ inherited FrmConsPaciente: TFrmConsPaciente
           Title.Caption = 'Telefone'
           Width = 81
           Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 'sus'
-          Title.Alignment = taCenter
-          Title.Caption = 'SUS'
-          Width = 107
-          Visible = True
         end>
     end
   end
   inherited PanelBotoes: TPanel
-    Top = 303
-    Width = 802
+    Top = 282
+    Width = 658
     Height = 41
-    ExplicitTop = 345
-    ExplicitWidth = 802
+    ExplicitTop = 282
+    ExplicitWidth = 658
     ExplicitHeight = 41
     inherited BtnNovo: TSpeedButton
       OnClick = BtnNovoClick
@@ -100,11 +82,11 @@ inherited FrmConsPaciente: TFrmConsPaciente
     end
   end
   inherited PanelConsulta: TPanel
-    Width = 802
-    ExplicitWidth = 802
+    Width = 658
+    ExplicitWidth = 658
     inherited GroupBoxConsulta: TGroupBox
-      Width = 800
-      ExplicitWidth = 800
+      Width = 656
+      ExplicitWidth = 656
       inherited GroupBoxTipoCons: TGroupBox
         Width = 136
         ExplicitWidth = 136
@@ -121,26 +103,24 @@ inherited FrmConsPaciente: TFrmConsPaciente
       end
       inherited EdtCons: TSearchBox
         Left = 154
-        Width = 627
+        Width = 471
         OnExit = EdtConsExit
         OnInvokeSearch = EdtConsInvokeSearch
         ExplicitLeft = 154
-        ExplicitWidth = 627
+        ExplicitWidth = 471
       end
     end
   end
   object Panel: TPanel
     Left = 0
-    Top = 344
-    Width = 802
+    Top = 323
+    Width = 658
     Height = 42
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 3
-    ExplicitLeft = 8
-    ExplicitTop = 345
     object btnOk: TSpeedButton
       Left = 8
       Top = 5

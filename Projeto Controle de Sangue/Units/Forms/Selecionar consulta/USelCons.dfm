@@ -3,7 +3,7 @@ object FrmSelCons: TFrmSelCons
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Selecionar consulta'
-  ClientHeight = 199
+  ClientHeight = 237
   ClientWidth = 235
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object FrmSelCons: TFrmSelCons
   TextHeight = 13
   object PanelBotoes: TPanel
     Left = 0
-    Top = 158
+    Top = 196
     Width = 235
     Height = 41
     Align = alBottom
@@ -27,6 +27,7 @@ object FrmSelCons: TFrmSelCons
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitTop = 158
     object BtnSair: TBitBtn
       Left = 2
       Top = 2
@@ -78,31 +79,35 @@ object FrmSelCons: TFrmSelCons
     Left = 0
     Top = 0
     Width = 235
-    Height = 158
+    Height = 196
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitTop = -4
+    ExplicitHeight = 158
     object BtnConsEstoque: TBitBtn
       Left = 2
-      Top = 119
+      Top = 158
       Width = 231
       Height = 39
       Align = alTop
       Caption = '&Estoque de bolsas'
       TabOrder = 3
       OnClick = BtnConsEstoqueClick
+      ExplicitTop = 119
     end
     object BtnConsSaidas: TBitBtn
       Left = 2
-      Top = 80
+      Top = 119
       Width = 231
       Height = 39
       Align = alTop
       Caption = '&Saidas'
       TabOrder = 2
       OnClick = BtnConsSaidasClick
+      ExplicitTop = 80
     end
     object BtnConsPacientes: TBitBtn
       Left = 2
@@ -123,6 +128,18 @@ object FrmSelCons: TFrmSelCons
       Caption = '&Entradas'
       TabOrder = 1
       OnClick = BtnConsEntradasClick
+    end
+    object BtnDescartes: TBitBtn
+      Left = 2
+      Top = 80
+      Width = 231
+      Height = 39
+      Align = alTop
+      Caption = '&Descartes'
+      TabOrder = 4
+      OnClick = BtnDescartesClick
+      ExplicitLeft = 18
+      ExplicitTop = 86
     end
   end
 end

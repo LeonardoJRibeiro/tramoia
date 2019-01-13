@@ -51,16 +51,23 @@ begin
     pPersistencia.Query.SQL.Add('  CONCAT(p.abo, p.rh) AS abo_pac,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
+    pPersistencia.Query.SQL.Add('  b.irradiada,');
+    pPersistencia.Query.SQL.Add('  b.filtrada,');
+    pPersistencia.Query.SQL.Add('  b.fracionada,');
+    pPersistencia.Query.SQL.Add('  b.fenotipada,');;
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS abo_bol,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
+    pPersistencia.Query.SQL.Add('  CONCAT(s.volume,' + QuotedStr(' mL') + ') AS volume,');
 
-    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_ta = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
-      QuotedStr('Não') + ') AS prova_compatibilidade_ta,');
-    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_agh = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
-      QuotedStr('Não') + ') AS prova_compatibilidade_agh,');
-    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_37 = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' +
-      QuotedStr('Não') + ') AS prova_compatibilidade_37,');
-    pPersistencia.Query.SQL.Add('  if(s.pai = ' + QuotedStr('S') + ',' + QuotedStr('SIM') + ',' + QuotedStr('Não') +
+    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_ta = ' + QuotedStr('C') + ',' + QuotedStr('Cp') + ',' +
+      QuotedStr('Icp') + ') AS prova_compatibilidade_ta,');
+
+    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_agh = ' + QuotedStr('C') + ',' + QuotedStr('Cp') + ',' +
+      QuotedStr('Icp') + ') AS prova_compatibilidade_agh,');
+
+    pPersistencia.Query.SQL.Add('  if(s.prova_compatibilidade_37 = ' + QuotedStr('C') + ',' + QuotedStr('Cp') + ',' +
+      QuotedStr('Icp') + ') AS prova_compatibilidade_37,');
+
+    pPersistencia.Query.SQL.Add('  if(s.pai = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
       ') AS pai');
 
     pPersistencia.Query.SQL.Add('FROM saida s');
@@ -86,6 +93,7 @@ begin
     TBibliotecaRelatorio.setSqlFiltro('b.volume', pRELSAIDA.FiltroVolume, pRELSAIDA.ListVolume, pPersistencia);
 
     pPersistencia.Query.SQL.Add('ORDER BY');
+    pPersistencia.Query.SQL.Add('  s.id,');
     pPersistencia.Query.SQL.Add('  s.data_saida,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa');
 

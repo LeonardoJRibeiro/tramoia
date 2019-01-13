@@ -21,18 +21,14 @@ type
     RLLabelABO: TRLLabel;
     RLPanel3: TRLPanel;
     RLLabelTipo: TRLLabel;
-    RLPanel4: TRLPanel;
-    RLLabelSorologia: TRLLabel;
     RLBand1: TRLBand;
     RLDBTextQuantidade: TRLDBText;
     RLDBTextVolume: TRLDBText;
     RLDBTextABO: TRLDBText;
     RLDBTextTipo: TRLDBText;
-    RLDBTextSorologia: TRLDBText;
     RLPanel7: TRLPanel;
     RLPanel8: TRLPanel;
     RLPanel9: TRLPanel;
-    RLPanel10: TRLPanel;
     RLBand2: TRLBand;
     RLLabelQuantidadeTotal: TRLLabel;
     RLDBResultQuantidadeTotal: TRLDBResult;

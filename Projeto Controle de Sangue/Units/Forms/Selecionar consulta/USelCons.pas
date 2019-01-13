@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, UConsDescarte;
 
 type
   TFrmSelCons = class(TForm)
@@ -15,12 +15,14 @@ type
     BtnConsSaidas: TBitBtn;
     BtnConsPacientes: TBitBtn;
     BtnConsEntradas: TBitBtn;
+    BtnDescartes: TBitBtn;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure BtnConsEstoqueClick(Sender: TObject);
     procedure BtnConsEntradasClick(Sender: TObject);
     procedure BtnConsPacientesClick(Sender: TObject);
     procedure BtnConsSaidasClick(Sender: TObject);
+    procedure BtnDescartesClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
@@ -52,6 +54,11 @@ begin
 
   TFrmConsSaidas.getConsSaida(Self.FForeignFormKey, Self.FCodUsu);
 
+end;
+
+procedure TFrmSelCons.BtnDescartesClick(Sender: TObject);
+begin
+  TFrmConsDescarte.getConsDescarte(Self.FForeignFormKey, Self.FCodUsu);
 end;
 
 procedure TFrmSelCons.BtnConsEntradasClick(Sender: TObject);

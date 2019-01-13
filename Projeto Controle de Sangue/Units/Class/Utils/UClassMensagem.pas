@@ -158,6 +158,11 @@ begin
         Result := 'Erro ao realizar a autenticação do usuário. Motivo: %s';
       end;
 
+    28:
+      begin
+        Result := 'Descarte gravado com sucesso.';
+      end;
+
   end;
 
 end;

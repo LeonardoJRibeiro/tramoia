@@ -14,11 +14,13 @@ type
     BtnRelEntradaSangue: TBitBtn;
     BtnRelSaidaSangue: TBitBtn;
     BtnRelEstoque: TBitBtn;
+    BtnDescartes: TBitBtn;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure BtnRelSaidaSangueClick(Sender: TObject);
     procedure BtnRelEntradaSangueClick(Sender: TObject);
     procedure BtnRelEstoqueClick(Sender: TObject);
+    procedure BtnDescartesClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
@@ -31,10 +33,15 @@ var
 
 implementation
 
-uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida, URelEstoque;
+uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida, URelEstoque, URelDescarte;
 
 {$R *.dfm}
 { TFrmSelRelatorio }
+
+procedure TFrmSelRelatorio.BtnDescartesClick(Sender: TObject);
+begin
+  TFrmRelDescarte.getRelDescarte(TForeignKeyForms.FIdUSelRelatorio, Self.FCodUsu);
+end;
 
 procedure TFrmSelRelatorio.BtnRelEntradaSangueClick(Sender: TObject);
 begin

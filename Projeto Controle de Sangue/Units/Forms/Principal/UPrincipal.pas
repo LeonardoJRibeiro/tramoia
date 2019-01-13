@@ -41,6 +41,11 @@ type
     MenuItemBackup: TMenuItem;
     MenuItemGerarBackup: TMenuItem;
     MenuItemConsPaciente: TMenuItem;
+    BtnRetiradas: TSpeedButton;
+    Descarte1: TMenuItem;
+    Cadastro1: TMenuItem;
+    Consultar1: TMenuItem;
+    Descarte2: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -66,6 +71,10 @@ type
     procedure MenuItemRelEstoqueClick(Sender: TObject);
     procedure MenuItemGerarBackupClick(Sender: TObject);
     procedure MenuItemConsPacienteClick(Sender: TObject);
+    procedure BtnRetiradasClick(Sender: TObject);
+    procedure Cadastro1Click(Sender: TObject);
+    procedure Consultar1Click(Sender: TObject);
+    procedure Descarte2Click(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -85,7 +94,8 @@ implementation
 
 uses ShellAPI, UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
   URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
-  USelCons, URelEstoque, UClassBiblioteca, UClassBibliotecaDao, UClassGeraBackup;
+  USelCons, URelEstoque, UClassBiblioteca, UClassBibliotecaDao, UClassGeraBackup, UDescarte, UConsDescarte,
+  URelDescarte;
 
 procedure TFrmPrincipal.BtnConsultasClick(Sender: TObject);
 begin
@@ -117,6 +127,11 @@ begin
 
 end;
 
+procedure TFrmPrincipal.BtnRetiradasClick(Sender: TObject);
+begin
+  TFrmDescarte.getDescarte(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
 procedure TFrmPrincipal.BtnSaidaClick(Sender: TObject);
 begin
 
@@ -137,6 +152,21 @@ begin
 
   Close;
 
+end;
+
+procedure TFrmPrincipal.Cadastro1Click(Sender: TObject);
+begin
+  TFrmDescarte.getDescarte(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
+procedure TFrmPrincipal.Consultar1Click(Sender: TObject);
+begin
+  TFrmConsDescarte.getConsDescarte(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario);
+end;
+
+procedure TFrmPrincipal.Descarte2Click(Sender: TObject);
+begin
+  TFrmRelDescarte.getRelDescarte(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.MenuItemCadPacienteClick(Sender: TObject);
@@ -208,7 +238,8 @@ begin
 
     try
 
-      if (lGeraBackup.CriaBackup(Application.MessageBox(PChar('Deseja subir o backup para o Google Drive?(Recomendado)'), 'Saindo do sistema',
+      if (lGeraBackup.CriaBackup(Application.MessageBox
+        (PChar('Deseja subir o backup para o Google Drive?(Recomendado)'), 'Saindo do sistema',
         MB_YESNO + MB_ICONQUESTION) = 6)) then
       begin
 
@@ -243,7 +274,6 @@ begin
   TFrmRelEstoque.getRelEstoque(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
 end;
-
 
 procedure TFrmPrincipal.FormCreate(Sender: TObject);
 begin

@@ -57,7 +57,7 @@ begin
     MB_YESNO + MB_ICONQUESTION) = IDYES) then
   begin
 
-    lUsuarioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+    lUsuarioDao := TUsuarioDAO.Create(DMConexao.Conexao);
     try
 
       try
@@ -136,7 +136,7 @@ var
 begin
   inherited;
 
-  lUsuarioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  lUsuarioDao := TUsuarioDAO.Create(DMConexao.Conexao);
   try
 
     try

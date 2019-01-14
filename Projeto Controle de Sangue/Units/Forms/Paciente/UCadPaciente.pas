@@ -74,7 +74,9 @@ type
 
     FCpf: string;
 
-    function CarregaPaciente: Boolean;
+    function CarregaDadosPaciente: Boolean;
+    function CarregaDadosEndereco: Boolean;
+    function CarregaDadosTelefone: Boolean;
 
     function getIdMunicipio(): Integer;
 
@@ -153,7 +155,7 @@ begin
   lEndereco := TEndereco.Create;
   try
 
-    lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
+    lEnderecoDao := TEnderecoDao.Create(DMConexao.Conexao);
     try
 
       try
@@ -218,7 +220,7 @@ begin
       lPaciente.Sus := EdtSus.Text;
       lPaciente.Observacao := MemoObservacoes.Text;
 
-      lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
+      lPacienteDao := TPacienteDao.Create(DMConexao.Conexao);
       try
 
         Result := lPacienteDao.Salvar(lPaciente);
@@ -261,7 +263,7 @@ begin
   lTelefone := TTelefone.Create;
   try
 
-    lTelefoneDao := TTelefoneDAO.Create(DataModuleConexao.Conexao);
+    lTelefoneDao := TTelefoneDAO.Create(DMConexao.Conexao);
     try
 
       try
@@ -392,7 +394,7 @@ begin
   if (Trim(EdtCodMunicipio.Text) <> '') then
   begin
 
-    lMunicipioDao := TMunicipioDAO.Create(DataModuleConexao.Conexao);
+    lMunicipioDao := TMunicipioDAO.Create(DMConexao.Conexao);
     try
 
       if (lMunicipioDao.getNomeAndUF(StrToInt(EdtCodMunicipio.Text), lNome, lUf)) then
@@ -528,7 +530,7 @@ begin
     if (EdtNumProntuario.Text <> Self.FNumeroProntuario) then
     begin
 
-      lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
+      lPacienteDao := TPacienteDao.Create(DMConexao.Conexao);
       try
 
         if (lPacienteDao.getExisteProntuario(EdtNumProntuario.Text)) then
@@ -640,6 +642,12 @@ begin
         BtnSalvarClick(Self);
       end;
   end;
+
+  if (Shift = [ssCtrl]) and (Key = Ord('A')) then
+  begin
+    PageControl.SelectNextPage(True);
+  end;
+
 end;
 
 procedure TFrmCadPaciente.FormShow(Sender: TObject);
@@ -671,7 +679,7 @@ begin
 
       if (FrmCadPaciente.FIdPaciente > 0) then
       begin
-        FrmCadPaciente.CarregaPaciente;
+        FrmCadPaciente.CarregaDadosPaciente;
       end;
 
       Result := FrmCadPaciente.ShowModal = mrOk;
@@ -695,9 +703,20 @@ var
   lMunicipioDao: TMunicipioDAO;
 begin
 
-  lMunicipioDao := TMunicipioDAO.Create(DataModuleConexao.Conexao);
+  lMunicipioDao := TMunicipioDAO.Create(DMConexao.Conexao);
   try
-    Result := lMunicipioDao.getCodigoIBGE(pID);
+
+    try
+      Result := lMunicipioDao.getCodigoIBGE(pID);
+    except
+      on E: Exception do
+      begin
+        Result := -1;
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(1), ['informações do município', E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
+      end;
+    end;
+
   finally
     FreeAndNil(lMunicipioDao);
   end;
@@ -709,7 +728,7 @@ var
   lPacienteDao: TPacienteDao;
 begin
 
-  lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
+  lPacienteDao := TPacienteDao.Create(DMConexao.Conexao);
   try
 
     try
@@ -733,7 +752,7 @@ var
   lMunicipioDao: TMunicipioDAO;
 begin
 
-  lMunicipioDao := TMunicipioDAO.Create(DataModuleConexao.Conexao);
+  lMunicipioDao := TMunicipioDAO.Create(DMConexao.Conexao);
   try
     Result := lMunicipioDao.getIdMunicipio(StrToInt(EdtCodMunicipio.Text));
   finally
@@ -742,98 +761,99 @@ begin
 
 end;
 
-function TFrmCadPaciente.CarregaPaciente: Boolean;
+function TFrmCadPaciente.CarregaDadosEndereco: Boolean;
+var
+  lEndereco: TEndereco;
+  lEnderecoDao: TEnderecoDao;
+begin
+
+  lEndereco := TEndereco.Create;
+  try
+
+    lEnderecoDao := TEnderecoDao.Create(DMConexao.Conexao);
+    try
+
+      Result := lEnderecoDao.getObjetoPorIdPaciente(Self.FIdPaciente, lEndereco);
+
+      if (Result) then
+      begin
+
+        EdtLogradouro.Text := lEndereco.Logradouro;
+        EdtBairro.Text := lEndereco.Bairro;
+        EdtNumero.Text := lEndereco.Numero;
+
+        if (lEndereco.Id_Municipio > 0) then
+        begin
+
+          EdtCodMunicipio.Text := Self.getCodigoMunicipio(lEndereco.Id_Municipio).ToString;
+          if (EdtCodMunicipio.Text <> '') then
+          begin
+            EdtCodMunicipioExit(Self);
+          end;
+
+        end;
+
+        EdtCep.Text := lEndereco.Cep;
+        EdtComplemento.Text := lEndereco.Complemento;
+
+      end;
+
+    finally
+      FreeAndNil(lEnderecoDao);
+    end;
+
+  finally
+    FreeAndNil(lEndereco);
+  end;
+
+end;
+
+function TFrmCadPaciente.CarregaDadosPaciente: Boolean;
 var
   lPaciente: TPaciente;
   lPacienteDao: TPacienteDao;
-  lEndereco: TEndereco;
-  lEnderecoDao: TEnderecoDao;
   lTelefone: TTelefone;
   lTelefoneDao: TTelefoneDAO;
 begin
+
   lPaciente := TPaciente.Create;
   try
 
-    lPacienteDao := TPacienteDao.Create(DataModuleConexao.Conexao);
+    lPacienteDao := TPacienteDao.Create(DMConexao.Conexao);
     try
 
-      if (lPacienteDao.getObjeto(Self.FIdPaciente, lPaciente)) then
-      begin
-        EdtNome.Text := lPaciente.Nome;
-        ComboboxSexo.ItemIndex := IfThen(lPaciente.Sexo = 'M', 0, 1);
-        EdtDataNascimento.Text := DateToStr(lPaciente.Data_Nascimento);
-        Self.FCpf := lPaciente.Cpf;
-        EdtCpf.Text := lPaciente.Cpf;
-        EdtRg.Text := lPaciente.Rg;
-        Self.FNumeroProntuario := lPaciente.Num_Prontuario;
-        EdtNumProntuario.Text := lPaciente.Num_Prontuario;
-        EdtSus.Text := lPaciente.Sus;
-        ComboBoxABO.ItemIndex := ComboBoxABO.Items.IndexOf(lPaciente.Abo + lPaciente.Rh);
-        EdtNomePai.Text := lPaciente.Nome_Pai;
-        EdtNomeMae.Text := lPaciente.Nome_Mae;
-        MemoObservacoes.Text := lPaciente.Observacao;
+      try
 
-        lEndereco := TEndereco.Create;
-        try
+        if (lPacienteDao.getObjeto(Self.FIdPaciente, lPaciente)) then
+        begin
 
-          lEnderecoDao := TEnderecoDao.Create(DataModuleConexao.Conexao);
-          try
+          EdtNome.Text := lPaciente.Nome;
+          ComboboxSexo.ItemIndex := IfThen(lPaciente.Sexo = 'M', 0, 1);
+          EdtDataNascimento.Text := DateToStr(lPaciente.Data_Nascimento);
+          Self.FCpf := lPaciente.Cpf;
+          EdtCpf.Text := lPaciente.Cpf;
+          EdtRg.Text := lPaciente.Rg;
+          Self.FNumeroProntuario := lPaciente.Num_Prontuario;
+          EdtNumProntuario.Text := lPaciente.Num_Prontuario;
+          EdtSus.Text := lPaciente.Sus;
+          ComboBoxABO.ItemIndex := ComboBoxABO.Items.IndexOf(lPaciente.Abo + lPaciente.Rh);
+          EdtNomePai.Text := lPaciente.Nome_Pai;
+          EdtNomeMae.Text := lPaciente.Nome_Mae;
+          MemoObservacoes.Text := lPaciente.Observacao;
 
-            if (lEnderecoDao.getObjetoEndereco(lPaciente.Id, lEndereco)) then
-            begin
-
-              EdtLogradouro.Text := lEndereco.Logradouro;
-              EdtBairro.Text := lEndereco.Bairro;
-              EdtNumero.Text := lEndereco.Numero;
-
-              if (lEndereco.Id_Municipio > 0) then
-              begin
-
-                EdtCodMunicipio.Text := Self.getCodigoMunicipio(lEndereco.Id_Municipio).ToString;
-                if (EdtCodMunicipio.Text <> '') then
-                begin
-                  EdtCodMunicipioExit(Self);
-                end;
-
-              end;
-
-              EdtCep.Text := lEndereco.Cep;
-              EdtComplemento.Text := lEndereco.Complemento;
-
-              lTelefone := TTelefone.Create;
-              try
-
-                lTelefoneDao := TTelefoneDAO.Create(DataModuleConexao.Conexao);
-                try
-
-                  if (lTelefoneDao.getObjetoTelefone(lPaciente.Id, lTelefone)) then
-                  begin
-
-                    if (not(Trim(lTelefone.Ddd).IsEmpty) or Trim(lTelefone.Numero).IsEmpty) then
-                    begin
-                      EdtTelefone.Text := lTelefone.Ddd + lTelefone.Numero;
-                    end;
-
-                  end;
-
-                finally
-                  lTelefoneDao.Destroy;
-                end;
-
-              finally
-                FreeAndNil(lTelefone);
-              end;
-
-            end;
-
-          finally
-            FreeAndNil(lEnderecoDao);
+          if (Self.CarregaDadosEndereco) then
+          begin
+            Result := Self.CarregaDadosTelefone;
           end;
 
-        finally
-          FreeAndNil(lEndereco);
         end;
 
+      except
+        on E: Exception do
+        begin
+          Result := False;
+          raise Exception.Create(E.Message);
+        end;
       end;
 
     finally
@@ -842,6 +862,40 @@ begin
 
   finally
     FreeAndNil(lPaciente)
+  end;
+
+end;
+
+function TFrmCadPaciente.CarregaDadosTelefone: Boolean;
+var
+  lTelefone: TTelefone;
+  lTelefoneDao: TTelefoneDAO;
+begin
+
+  lTelefone := TTelefone.Create;
+  try
+
+    lTelefoneDao := TTelefoneDAO.Create(DMConexao.Conexao);
+    try
+
+      Result := lTelefoneDao.getObjetoTelefone(Self.FIdPaciente, lTelefone);
+
+      if (Result) then
+      begin
+
+        if (not(Trim(lTelefone.Ddd).IsEmpty) or Trim(lTelefone.Numero).IsEmpty) then
+        begin
+          EdtTelefone.Text := lTelefone.Ddd + lTelefone.Numero;
+        end;
+
+      end;
+
+    finally
+      lTelefoneDao.Destroy;
+    end;
+
+  finally
+    FreeAndNil(lTelefone);
   end;
 
 end;

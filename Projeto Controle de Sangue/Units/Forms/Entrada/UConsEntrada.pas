@@ -34,8 +34,6 @@ type
 
     function getAdmin: Boolean;
 
-    function BolsaPossuiEstoque: Boolean;
-
   public
     class function getConsEntrada(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer): Boolean;
   end;
@@ -49,22 +47,6 @@ implementation
 
 uses System.Math, UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UClassBiblioteca, UClassForeignKeyForms,
   UClassUsuarioDao, UClassBolsaDao;
-
-function TFrmConsEntrada.BolsaPossuiEstoque: Boolean;
-var
-  lBolsaDao: TBolsaDAO;
-begin
-
-  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
-  try
-
-    Result := lBolsaDao.getPossuiEmEstoque(Self.FPersistencia.Query.FieldByName('id_bolsa').AsInteger);
-
-  finally
-    lBolsaDao.Destroy;
-  end;
-
-end;
 
 procedure TFrmConsEntrada.BtnAlterarClick(Sender: TObject);
 var
@@ -115,7 +97,7 @@ begin
           MB_YESNO + MB_ICONQUESTION) = IDYES) then
         begin
 
-          lEntradaDao := TEntradaDAO.Create(DataModuleConexao.Conexao);
+          lEntradaDao := TEntradaDAO.Create(DMConexao.Conexao);
           try
 
             try
@@ -252,7 +234,7 @@ var
 begin
   inherited;
 
-  lEntradaDao := TEntradaDAO.Create(DataModuleConexao.Conexao);
+  lEntradaDao := TEntradaDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -352,7 +334,7 @@ var
   lUsuaioDao: TUsuarioDAO;
 begin
 
-  lUsuaioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  lUsuaioDao := TUsuarioDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -379,7 +361,7 @@ var
   lBolsaDao: TBolsaDAO;
 begin
 
-  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  lBolsaDao := TBolsaDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -390,6 +372,8 @@ begin
       on E: Exception do
       begin
         Result := False;
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(29), [FrmConsEntrada.Caption, E.Message])), 'Erro',
+          MB_ICONERROR + MB_OK);
       end;
     end;
 

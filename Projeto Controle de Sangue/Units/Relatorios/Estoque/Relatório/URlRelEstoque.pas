@@ -77,7 +77,7 @@ end;
 procedure TFrmRlRelEstoque.FormCreate(Sender: TObject);
 begin
 
-  Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+  Self.FPersistencia := TPersistencia.Create(DMConexao.Conexao);
 
 end;
 
@@ -141,7 +141,7 @@ var
   lRelEstoqueDAO: TRelEstoqueDAO;
 begin
 
-  lRelEstoqueDAO := TRelEstoqueDAO.Create(DataModuleConexao.Conexao);
+  lRelEstoqueDAO := TRelEstoqueDAO.Create(DMConexao.Conexao);
   try
 
     try

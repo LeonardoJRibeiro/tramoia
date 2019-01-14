@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, UClassConexao;
 
 type
-  TDataModuleConexao = class(TDataModule)
+  TDMConexao = class(TDataModule)
     procedure DataModuleCreate(Sender: TObject);
   private
     FConexao: TConexao;
@@ -20,24 +20,24 @@ type
   end;
 
 var
-  DataModuleConexao: TDataModuleConexao;
+  DMConexao: TDMConexao;
 
 implementation
 
 { %CLASSGROUP 'Vcl.Controls.TControl' }
 {$R *.dfm}
 
-procedure TDataModuleConexao.DataModuleCreate(Sender: TObject);
+procedure TDMConexao.DataModuleCreate(Sender: TObject);
 begin
   Self.FConexao := TConexao.Create;
 end;
 
-function TDataModuleConexao.getConexao: TConexao;
+function TDMConexao.getConexao: TConexao;
 begin
   Result := Self.FConexao;
 end;
 
-procedure TDataModuleConexao.setConexao(const pCONEXAO: TConexao);
+procedure TDMConexao.setConexao(const pCONEXAO: TConexao);
 begin
   Self.FConexao := pCONEXAO;
 end;

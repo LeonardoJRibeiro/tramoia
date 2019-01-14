@@ -163,6 +163,11 @@ begin
         Result := 'Descarte gravado com sucesso.';
       end;
 
+    29:
+      begin
+        Result := 'Erro ao verificar permissão de alteração ou exclusão. Motivo: %S'
+      end;
+
   end;
 
 end;

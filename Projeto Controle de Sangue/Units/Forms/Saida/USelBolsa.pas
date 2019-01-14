@@ -71,7 +71,7 @@ end;
 
 procedure TFrmSelBolsa.FormCreate(Sender: TObject);
 begin
-  Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+  Self.FPersistencia := TPersistencia.Create(DMConexao.Conexao);
 end;
 
 procedure TFrmSelBolsa.FormDestroy(Sender: TObject);
@@ -101,7 +101,7 @@ var
   lBolsaDao: TBolsaDAO;
 begin
 
-  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+  lBolsaDao := TBolsaDAO.Create(DMConexao.Conexao);
   try
 
     Result := lBolsaDao.getConsulta(pNUMERO_DA_BOLSA, Self.FPersistencia);

@@ -24,10 +24,6 @@ type
     FHiv: string[1];
     FHtlv: string[1];
     FHemoglobinas: string[1];
-    FIrradiada: string[1];
-    FFiltrada: string[1];
-    FFracionada: string[1];
-    FFenotipada: string[1];
     FDataVencimento: TDate;
     FVolumeAtual: Integer;
 
@@ -47,10 +43,6 @@ type
     function getHiv: string;
     function getHtlv: string;
     function getHemoglobinas: string;
-    function getIrradiada: string;
-    function getFiltrada: string;
-    function getFracionada: string;
-    function getFenotipada: string;
     function getDataVencimento: TDate;
     function getVolumeAtual: Integer;
 
@@ -70,10 +62,6 @@ type
     procedure setHiv(const pHIV: string);
     procedure setHtlv(const pHTLV: string);
     procedure setHemoglobinas(const pHEMOGLOBINAS: string);
-    procedure setIrradiada(const pIRRADIADA: string);
-    procedure setFiltrada(const pFILTRADA: string);
-    procedure setFracionada(const pFRACIONADA: string);
-    procedure setFenotipada(const pFENOTIPADA: string);
     procedure setDataVencimento(const pDATAVENCIMENTO: TDate);
     procedure setVolumeAtual(const pVOLUMEATUAL: Integer);
 
@@ -95,10 +83,6 @@ type
     property Hiv: string read getHiv write setHiv;
     property Htlv: string read getHtlv write setHtlv;
     property Hemoglobinas: string read getHemoglobinas write setHemoglobinas;
-    property Irradiada: string read getIrradiada write setIrradiada;
-    property Filtrada: string read getFiltrada write setFiltrada;
-    property Fracionada: string read getFracionada write setFracionada;
-    property Fenotipada: string read getFenotipada write setFenotipada;
     property DataVencimento: TDate read getDataVencimento write setDataVencimento;
     property VolumeAtual: Integer read getVolumeAtual write setVolumeAtual;
 
@@ -138,21 +122,6 @@ begin
   Result := Self.FDataVencimento;
 end;
 
-function TBolsa.getFenotipada: string;
-begin
-  Result := Self.FFenotipada;
-end;
-
-function TBolsa.getFiltrada: string;
-begin
-  Result := Self.FFiltrada;
-end;
-
-function TBolsa.getFracionada: string;
-begin
-  Result := Self.FFracionada;
-end;
-
 function TBolsa.getHemoglobinas: string;
 begin
   Result := Self.FHemoglobinas;
@@ -181,11 +150,6 @@ end;
 function TBolsa.getId: Integer;
 begin
   Result := Self.FId;
-end;
-
-function TBolsa.getIrradiada: string;
-begin
-  Result := Self.FIrradiada;
 end;
 
 function TBolsa.getNumeroBolsa: string;
@@ -248,21 +212,6 @@ begin
   Self.FDataVencimento := pDATAVENCIMENTO;
 end;
 
-procedure TBolsa.setFenotipada(const pFENOTIPADA: string);
-begin
-  Self.FFenotipada := pFENOTIPADA;
-end;
-
-procedure TBolsa.setFiltrada(const pFILTRADA: string);
-begin
-  Self.FFiltrada := pFILTRADA;
-end;
-
-procedure TBolsa.setFracionada(const pFRACIONADA: string);
-begin
-  Self.FFracionada := pFRACIONADA;
-end;
-
 procedure TBolsa.setHemoglobinas(const pHEMOGLOBINAS: string);
 begin
   Self.FHemoglobinas := pHEMOGLOBINAS;
@@ -291,11 +240,6 @@ end;
 procedure TBolsa.setId(const pID: Integer);
 begin
   Self.FId := pID;
-end;
-
-procedure TBolsa.setIrradiada(const pIRRADIADA: string);
-begin
-  Self.FIrradiada := pIRRADIADA;
 end;
 
 procedure TBolsa.setNumeroBolsa(const pNUMERO_DA_BOLSA: string);

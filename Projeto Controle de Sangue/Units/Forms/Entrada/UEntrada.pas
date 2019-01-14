@@ -51,9 +51,9 @@ type
     procedure ComboBoxTipoEnter(Sender: TObject);
     procedure ComboBoxTipoExit(Sender: TObject);
   private
-
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
+
     FId: Integer;
     FIdBolsa: Integer;
     FNumBolsa: string;
@@ -63,8 +63,8 @@ type
     procedure setIndexByIdUsuario(pIdUsuario: Integer);
 
     function CarregaObjetos: Boolean;
-    function CarregaEntrada: Boolean;
-    function CarregaBolsa(const pID_BOLSA: Integer): Boolean;
+    function CarregaDadosEntrada: Boolean;
+    function CarregaDadosBolsa: Boolean;
 
     function getExisteBolsa: Boolean;
 
@@ -239,18 +239,16 @@ end;
 
 procedure TFrmEntrada.BtnSairClick(Sender: TObject);
 begin
-
   Close;
-
 end;
 
-function TFrmEntrada.CarregaBolsa(const pID_BOLSA: Integer): Boolean;
+function TFrmEntrada.CarregaDadosBolsa: Boolean;
 var
   lBolsaDao: TBolsaDao;
   lBolsa: TBolsa;
 begin
 
-  lBolsaDao := TBolsaDao.Create(DataModuleConexao.Conexao);
+  lBolsaDao := TBolsaDao.Create(DMConexao.Conexao);
   try
 
     lBolsa := TBolsa.Create;
@@ -258,7 +256,7 @@ begin
 
       try
 
-        Result := lBolsaDao.getObjeto(pID_BOLSA, lBolsa);
+        Result := lBolsaDao.getObjeto(Self.FIdBolsa, lBolsa);
         if (Result) then
         begin
 
@@ -299,13 +297,13 @@ begin
 
 end;
 
-function TFrmEntrada.CarregaEntrada: Boolean;
+function TFrmEntrada.CarregaDadosEntrada: Boolean;
 var
   lEntradaDAO: TEntradaDAO;
   lEntrada: TEntrada;
 begin
 
-  lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
+  lEntradaDAO := TEntradaDAO.Create(DMConexao.Conexao);
   try
 
     lEntrada := TEntrada.Create;
@@ -347,9 +345,9 @@ end;
 function TFrmEntrada.CarregaObjetos: Boolean;
 begin
 
-  if (Self.CarregaEntrada) then
+  if (Self.CarregaDadosEntrada) then
   begin
-    Self.CarregaBolsa(Self.FIdBolsa);
+    Self.CarregaDadosBolsa;
   end;
 
   ComboBoxResponsavel.SetFocus;
@@ -367,7 +365,7 @@ begin
   lListaUsuario := TObjectList<TUsuario>.Create();
   try
 
-    lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+    lUsuarioDAO := TUsuarioDAO.Create(DMConexao.Conexao);
     try
 
       if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
@@ -534,7 +532,7 @@ begin
     if (lVerificaNumBolsa) then
     begin
 
-      lBolsaDao := TBolsaDao.Create(DataModuleConexao.Conexao);
+      lBolsaDao := TBolsaDao.Create(DMConexao.Conexao);
       try
 
         Result := lBolsaDao.getExiste(EdtNumeroBolsa.Text, ComboBoxTipo.Text);
@@ -582,16 +580,12 @@ begin
     lBolsa.Hiv := Copy(RadioGroupHIV.Items[RadioGroupHIV.ItemIndex], 1, 1);
     lBolsa.Htlv := Copy(RadioGroupHTLV.Items[RadioGroupHTLV.ItemIndex], 1, 1);
     lBolsa.Hemoglobinas := Copy(RadioGroupHemoglobina.Items[RadioGroupHemoglobina.ItemIndex], 1, 1);
-    lBolsa.Irradiada := 'N';
-    lBolsa.Filtrada := 'N';
-    lBolsa.Fracionada := 'N';
-    lBolsa.Fenotipada := 'N';
     lBolsa.DataVencimento := EdtDataVencimento.Date;
     lBolsa.VolumeAtual := StrToInt(EdtVolume.Text);
 
     try
 
-      lBolsaDao := TBolsaDao.Create(DataModuleConexao.Conexao);
+      lBolsaDao := TBolsaDao.Create(DMConexao.Conexao);
       try
 
         Result := lBolsaDao.Salvar(lBolsa);
@@ -633,7 +627,7 @@ begin
     lEntrada.IdBolsa := Self.FIdBolsa;
     lEntrada.DataEntrada := Now;
 
-    lEntradaDAO := TEntradaDAO.Create(DataModuleConexao.Conexao);
+    lEntradaDAO := TEntradaDAO.Create(DMConexao.Conexao);
     try
 
       try

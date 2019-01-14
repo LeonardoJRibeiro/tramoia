@@ -93,7 +93,7 @@ begin
         MB_YESNO + MB_ICONQUESTION) = IDYES) then
       begin
 
-        lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+        lPacienteDao := TPacienteDAO.Create(DMConexao.Conexao);
         try
 
           try
@@ -235,7 +235,7 @@ var
 begin
   inherited;
 
-  lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+  lPacienteDao := TPacienteDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -305,7 +305,7 @@ var
   lUsuaioDao: TUsuarioDAO;
 begin
 
-  lUsuaioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  lUsuaioDao := TUsuarioDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -366,7 +366,7 @@ var
   lSaidaDao: TSaidaDAO;
 begin
 
-  lSaidaDao := TSaidaDAO.Create(DataModuleConexao.Conexao);
+  lSaidaDao := TSaidaDAO.Create(DMConexao.Conexao);
   try
 
     try

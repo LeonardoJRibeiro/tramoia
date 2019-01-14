@@ -29,7 +29,7 @@ type
     EdtId: TEdit;
     EdtDataDescarte: TDateTimePicker;
     ComboBoxResponsavel: TComboBox;
-    LabelHospital: TLabel;
+    LabelMotivo: TLabel;
     GroupBox1: TGroupBox;
     RadioGroupIrradiada: TRadioGroup;
     RadioGroupFiltrada: TRadioGroup;
@@ -38,17 +38,18 @@ type
     EdtMotivoDescarte: TEdit;
     procedure FormShow(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure BtnGravarClick(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
     procedure BtnSairClick(Sender: TObject);
     procedure EdtNumeroBolsaExit(Sender: TObject);
     procedure EdtVolumeExit(Sender: TObject);
+    procedure BtnGravarClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
 
     FId: Integer;
     FIdBolsa: Integer;
+    FIdProcedimentosEspeciais: Integer;
     FNumBolsa: string;
 
     procedure CarregaUsuarios;
@@ -58,6 +59,14 @@ type
     procedure setIndexByIdUsuario(const pIDUSUARIO: Integer);
 
     procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
+
+    procedure CarregaDadosProcedEspeciais;
+
+    function SalvaDescarte: Boolean;
+
+    function SalvaProcedimentoEspeciais: Boolean;
+
+    function getBolsaJaVinculada: Boolean;
   public
     class function getDescarte(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
       const pID: Integer = -1): Boolean;
@@ -74,62 +83,85 @@ implementation
 
 uses System.Generics.Collections, UClassUsuario, UClassUsuarioDao, UDMConexao, UClassBiblioteca, UClassMensagem,
   UClassSaida, UClassSaidaDao, UClassBolsaDao, UClassBolsa, System.Math, UClassDescarte, UClassDescarteDao, USelBolsa,
-  UClassForeignKeyForms;
+  UClassForeignKeyForms, UClassProcedimento_Especial, UClassProcedimento_EspecialDao, UAutenticacao,
+  UClassBibliotecaDao;
 
 procedure TFrmDescarte.BtnGravarClick(Sender: TObject);
-var
-  lDescarte: TDescarte;
-  lDescarteDao: TDescarteDAO;
 begin
+  if (ComboBoxResponsavel.ItemIndex = -1) then
+  begin
 
-  lDescarte := TDescarte.Create;
-  try
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelResponsavel.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
 
-    lDescarte.Id := Self.FId;
-    lDescarte.Id_Bolsa := Self.FIdBolsa;
-    lDescarte.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
-    lDescarte.Data_Coleta := now;
-    lDescarte.Motivo := EdtMotivoDescarte.Text;
-    lDescarte.Volume := StrToInt(EdtVolume.Text);
-    lDescarte.Data_Descarte := EdtDataDescarte.Date;
+    ComboBoxResponsavel.SetFocus;
 
-    lDescarteDao := TDescarteDAO.Create(DataModuleConexao.Conexao);
-    try
+    exit;
 
-      try
-
-        if (lDescarteDao.Salvar(lDescarte)) then
-        begin
-          EdtId.Text := lDescarte.Id.ToString;
-
-          TBiblioteca.AtivaDesativaCompontes(Self, False);
-
-          Application.MessageBox(PChar(TMensagem.getMensagem(28)), 'Informação', MB_ICONINFORMATION + MB_OK);
-
-          BtnGravar.Enabled := False;
-
-          TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Descarte', 'FrmDescarte.EdtMotivoDescarte',
-            Trim(EdtMotivoDescarte.Text));
-
-          BtnNovo.SetFocus;
-        end;
-
-      except
-        on E: Exception do
-        begin
-          Application.MessageBox(pWideChar(Format(TMensagem.getMensagem(4), ['retirada de sangue', E.Message])),
-            'Aviso', MB_ICONWARNING + MB_OK);
-        end;
-      end;
-
-    finally
-      lDescarteDao.Destroy;
-    end;
-
-  finally
-    lDescarte.Destroy;
   end;
 
+  if (Trim(EdtMotivoDescarte.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelMotivo.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
+
+    EdtMotivoDescarte.SetFocus;
+
+    exit;
+
+  end;
+
+  if (Trim(EdtNumeroBolsa.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelNumeroBolsa.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
+
+    EdtNumeroBolsa.SetFocus;
+
+    exit;
+
+  end;
+
+  if (Trim(EdtVolume.Text).IsEmpty) then
+  begin
+
+    Application.MessageBox(PChar(Format(TMensagem.getMensagem(3), [LabelVolume.Caption])), 'Aviso',
+      MB_OK + MB_ICONINFORMATION);
+
+    EdtVolume.SetFocus;
+
+    exit;
+
+  end;
+
+  if (TFrmAutenticacao.getAutenticacao(TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items
+    [ComboBoxResponsavel.ItemIndex]))) then
+  begin
+
+    if (Self.SalvaDescarte) then
+    begin
+
+      if (Self.SalvaProcedimentoEspeciais) then
+      begin
+        EdtId.Text := Self.FId.ToString;
+
+        TBiblioteca.AtivaDesativaCompontes(Self, False);
+
+        Application.MessageBox(PChar(TMensagem.getMensagem(28)), 'Informação', MB_ICONINFORMATION + MB_OK);
+
+        BtnGravar.Enabled := False;
+
+        TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Descarte', 'FrmDescarte.EdtMotivoDescarte',
+          Trim(EdtMotivoDescarte.Text));
+
+        BtnNovo.SetFocus;
+      end;
+
+    end;
+
+  end;
 end;
 
 procedure TFrmDescarte.BtnNovoClick(Sender: TObject);
@@ -177,7 +209,7 @@ begin
   lBolsa := TBolsa.Create;
   try
 
-    lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+    lBolsaDao := TBolsaDAO.Create(DMConexao.Conexao);
     try
 
       try
@@ -190,10 +222,6 @@ begin
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.VolumeAtual.ToString;
           EdtAboBolsa.Text := lBolsa.Abo + lBolsa.Rh;
-          RadioGroupIrradiada.ItemIndex := IfThen(lBolsa.Irradiada = 'S', 0, 1);
-          RadioGroupFiltrada.ItemIndex := IfThen(lBolsa.Filtrada = 'S', 0, 1);
-          RadioGroupFracionada.ItemIndex := IfThen(lBolsa.Fracionada = 'S', 0, 1);
-          RadioGroupFenotipada.ItemIndex := IfThen(lBolsa.Fenotipada = 'S', 0, 1);
         end;
 
       except
@@ -213,6 +241,39 @@ begin
 
 end;
 
+procedure TFrmDescarte.CarregaDadosProcedEspeciais;
+var
+  lProcedimentoEspecial: TProcedimento_Especial;
+  lProcedimentoEspecialDao: TProcedimento_EspecialDao;
+begin
+
+  Self.FIdProcedimentosEspeciais := TClassBibliotecaDao.getValorAtributo('procedimento_especial', 'id', 'id_descarte',
+    Self.FId, DMConexao.Conexao);
+
+  lProcedimentoEspecial := TProcedimento_Especial.Create;
+  try
+
+    lProcedimentoEspecialDao := TProcedimento_EspecialDao.Create(DMConexao.Conexao);
+    try
+
+      if (lProcedimentoEspecialDao.getObjeto(Self.FIdProcedimentosEspeciais, lProcedimentoEspecial)) then
+      begin
+        RadioGroupIrradiada.ItemIndex := IfThen(lProcedimentoEspecial.Irradiacao = 'S', 0, 1);
+        RadioGroupFiltrada.ItemIndex := IfThen(lProcedimentoEspecial.Filtracao = 'S', 0, 1);
+        RadioGroupFracionada.ItemIndex := IfThen(lProcedimentoEspecial.Fracionamento = 'S', 0, 1);
+        RadioGroupFenotipada.ItemIndex := IfThen(lProcedimentoEspecial.Fenotipagem = 'S', 0, 1);
+      end;
+
+    finally
+      lProcedimentoEspecialDao.Destroy;
+    end;
+
+  finally
+    lProcedimentoEspecial.Destroy;
+  end;
+
+end;
+
 procedure TFrmDescarte.CarregaUsuarios;
 var
   lListaUsuario: TObjectList<TUsuario>;
@@ -224,7 +285,7 @@ begin
   lListaUsuario := TObjectList<TUsuario>.Create();
   try
 
-    lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+    lUsuarioDAO := TUsuarioDAO.Create(DMConexao.Conexao);
     try
 
       if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
@@ -277,13 +338,13 @@ begin
         Self.FIdBolsa)) then
       begin
         EdtNumeroBolsa.SetFocus;
-        Exit;
+        exit;
       end;
 
       if (Self.FIdBolsa > 0) then
       begin
 
-        lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+        lBolsaDao := TBolsaDAO.Create(DMConexao.Conexao);
         try
 
           try
@@ -323,8 +384,16 @@ begin
       else
       begin
 
-        Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
-        EdtNumeroBolsa.SetFocus;
+        if (Self.getBolsaJaVinculada) then
+        begin
+          Application.MessageBox('Bolsa já vinculada a uma saída ou a um descarte.', 'Aviso', MB_ICONWARNING + MB_OK);
+          EdtNumeroBolsa.SetFocus;
+        end
+        else
+        begin
+          Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
+          EdtNumeroBolsa.SetFocus;
+        end;
 
       end;
 
@@ -341,13 +410,11 @@ end;
 procedure TFrmDescarte.EdtVolumeExit(Sender: TObject);
 var
   lVolumeAtual: Integer;
-  lBolsaDao: TBolsaDAO;
 begin
 
-  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
   try
-
-    lVolumeAtual := lBolsaDao.getVolumeAtual(Self.FIdBolsa);
+    lVolumeAtual := TClassBibliotecaDao.getValorAtributo('bolsa', 'volume_atual', 'id', Self.FIdBolsa,
+      DMConexao.Conexao);
 
     if (StrToIntDef(EdtVolume.Text, 0) > lVolumeAtual) then
     begin
@@ -356,8 +423,12 @@ begin
       EdtVolume.SetFocus;
     end;
 
-  finally
-    lBolsaDao.Destroy;
+  except
+    on E: Exception do
+    begin
+      Application.MessageBox(pWideChar(Format(TMensagem.getMensagem(1), ['volume da bolsa', E.Message])), 'Erro',
+        MB_ICONERROR + MB_OK);
+    end;
   end;
 
 end;
@@ -408,6 +479,34 @@ begin
 
 end;
 
+function TFrmDescarte.getBolsaJaVinculada: Boolean;
+var
+  lVinculadaASaida: Boolean;
+  lVinculadaADescarte: Boolean;
+
+  lSaidaDAO: TSaidaDAO;
+  lDescarteDAO: TDescarteDAO;
+begin
+  Result := False;
+
+  lSaidaDAO := TSaidaDAO.Create(DMConexao.Conexao);
+  try
+    lVinculadaASaida := lSaidaDAO.getBolsaJaVinculada(Trim(EdtNumeroBolsa.Text));
+  finally
+    lSaidaDAO.Destroy;
+  end;
+
+  lDescarteDAO := TDescarteDAO.Create(DMConexao.Conexao);
+  try
+    lVinculadaADescarte := lDescarteDAO.getBolsaJaVinculada(Trim(EdtNumeroBolsa.Text));
+  finally
+    lDescarteDAO.Destroy;
+  end;
+
+  Result := lVinculadaASaida or lVinculadaADescarte;
+
+end;
+
 class function TFrmDescarte.getDescarte(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO, pID: Integer): Boolean;
 begin
 
@@ -440,18 +539,18 @@ end;
 function TFrmDescarte.getObjeto: Boolean;
 var
   lDescarte: TDescarte;
-  lDescarteDao: TDescarteDAO;
+  lDescarteDAO: TDescarteDAO;
 begin
 
   lDescarte := TDescarte.Create;
   try
 
-    lDescarteDao := TDescarteDAO.Create(DataModuleConexao.Conexao);
+    lDescarteDAO := TDescarteDAO.Create(DMConexao.Conexao);
     try
 
       try
 
-        Result := lDescarteDao.getObjeto(Self.FId, lDescarte);
+        Result := lDescarteDAO.getObjeto(Self.FId, lDescarte);
         if (Result) then
         begin
           EdtId.Text := lDescarte.Id.ToString;
@@ -461,6 +560,8 @@ begin
           EdtVolume.Text := lDescarte.Volume.ToString;
           EdtDataDescarte.Date := lDescarte.Data_Descarte;
           Self.FIdBolsa := lDescarte.Id_Bolsa;
+
+          Self.CarregaDadosProcedEspeciais;
 
           setIndexByIdUsuario(lDescarte.Id_Usuario);
 
@@ -475,11 +576,98 @@ begin
       end;
 
     finally
-      lDescarteDao.Destroy;
+      lDescarteDAO.Destroy;
     end;
 
   finally
     lDescarte.Destroy;
+  end;
+
+end;
+
+function TFrmDescarte.SalvaDescarte: Boolean;
+var
+  lDescarte: TDescarte;
+  lDescarteDAO: TDescarteDAO;
+begin
+
+  lDescarte := TDescarte.Create;
+  try
+
+    lDescarte.Id := Self.FId;
+    lDescarte.Id_Bolsa := Self.FIdBolsa;
+    lDescarte.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
+    lDescarte.Data_Coleta := now;
+    lDescarte.Motivo := EdtMotivoDescarte.Text;
+    lDescarte.Volume := StrToInt(EdtVolume.Text);
+    lDescarte.Data_Descarte := EdtDataDescarte.Date;
+
+    lDescarteDAO := TDescarteDAO.Create(DMConexao.Conexao);
+    try
+
+      try
+
+        Result := lDescarteDAO.Salvar(lDescarte);
+        if (Result) then
+        begin
+          Self.FId := lDescarte.Id;
+        end;
+
+      except
+        on E: Exception do
+        begin
+          Result := False;
+          Application.MessageBox(pWideChar(Format(TMensagem.getMensagem(4), ['retirada de sangue', E.Message])),
+            'Aviso', MB_ICONWARNING + MB_OK);
+        end;
+      end;
+
+    finally
+      lDescarteDAO.Destroy;
+    end;
+
+  finally
+    lDescarte.Destroy;
+  end;
+
+end;
+
+function TFrmDescarte.SalvaProcedimentoEspeciais: Boolean;
+var
+  lProcedimetoEspecialDao: TProcedimento_EspecialDao;
+  lProcedimetoEspecial: TProcedimento_Especial;
+begin
+
+  lProcedimetoEspecial := TProcedimento_Especial.Create;
+  try
+
+    lProcedimetoEspecial.Id := -1;
+    lProcedimetoEspecial.Id_Saida := -1;
+    lProcedimetoEspecial.Id_Descarte := Self.FId;
+    lProcedimetoEspecial.Irradiacao := Copy(RadioGroupIrradiada.Items[RadioGroupIrradiada.ItemIndex], 1, 1);
+    lProcedimetoEspecial.Filtracao := Copy(RadioGroupFiltrada.Items[RadioGroupFiltrada.ItemIndex], 1, 1);
+    lProcedimetoEspecial.Fracionamento := Copy(RadioGroupFracionada.Items[RadioGroupFracionada.ItemIndex], 1, 1);
+    lProcedimetoEspecial.Fenotipagem := Copy(RadioGroupFenotipada.Items[RadioGroupFenotipada.ItemIndex], 1, 1);
+
+    lProcedimetoEspecialDao := TProcedimento_EspecialDao.Create(DMConexao.Conexao);
+    try
+
+      try
+        Result := lProcedimetoEspecialDao.Salvar(lProcedimetoEspecial);
+      except
+        on E: Exception do
+        begin
+          Result := False;
+          raise Exception.Create(Format(TMensagem.getMensagem(4), ['procedimentos especias', E.Message]));
+        end;
+      end;
+
+    finally
+      lProcedimetoEspecialDao.Destroy;
+    end;
+
+  finally
+    lProcedimetoEspecial.Destroy;
   end;
 
 end;

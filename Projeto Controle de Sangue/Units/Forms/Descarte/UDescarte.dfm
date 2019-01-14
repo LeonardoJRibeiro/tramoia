@@ -196,7 +196,7 @@ object FrmDescarte: TFrmDescarte
       Caption = 'Respons'#225'vel(*)'
       FocusControl = ComboBoxResponsavel
     end
-    object LabelHospital: TLabel
+    object LabelMotivo: TLabel
       Left = 19
       Top = 51
       Width = 46

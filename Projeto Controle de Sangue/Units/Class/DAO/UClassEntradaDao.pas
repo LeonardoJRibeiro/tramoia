@@ -82,25 +82,13 @@ begin
     pPersistencia.Query.SQL.Add('  u.nome AS responsavel,');
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue,');
-    pPersistencia.Query.SQL.Add('  b.id id_bolsa,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS grupo_sanguineo,');
+    pPersistencia.Query.SQL.Add('  b.id AS id_bolsa,');
     pPersistencia.Query.SQL.Add('  b.origem,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
-    pPersistencia.Query.SQL.Add('  if(b.pai = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
+    pPersistencia.Query.SQL.Add('  IF(b.pai = ' + QuotedStr('P') + ',' + QuotedStr('Pos') + ',' + QuotedStr('Neg') +
       ') AS pai,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
-
-    pPersistencia.Query.SQL.Add('  if(b.irradiada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' + QuotedStr('Não')
-      + ') AS irradiada,');
-
-    pPersistencia.Query.SQL.Add('  if(b.filtrada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' + QuotedStr('Não')
-      + ') AS filtrada,');
-
-    pPersistencia.Query.SQL.Add('  if(b.fracionada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
-      QuotedStr('Não') + ') AS fracionada,');
-
-    pPersistencia.Query.SQL.Add('  if(b.fenotipada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
-      QuotedStr('Não') + ') AS fenotipada');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume');
 
     pPersistencia.Query.SQL.Add('FROM entrada e');
 
@@ -239,9 +227,9 @@ begin
       else
       begin
         lPersistencia.Query.SQL.Add('UPDATE entrada SET');
-        lPersistencia.Query.SQL.Add('  id_usuario= :pId_Usuario,');
-        lPersistencia.Query.SQL.Add('  id_bolsa= :pId_Bolsa,');
-        lPersistencia.Query.SQL.Add('  data_entrada= :pData_Entrada');
+        lPersistencia.Query.SQL.Add('  id_usuario = :pId_Usuario,');
+        lPersistencia.Query.SQL.Add('  id_bolsa = :pId_Bolsa,');
+        lPersistencia.Query.SQL.Add('  data_entrada = :pData_Entrada');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
       end;
@@ -274,15 +262,17 @@ function TEntradaDAO.getObjeto(const pID: Integer; var pObjeto: TEntrada): Boole
 var
   lPersistencia: TPersistencia;
 begin
+
   lPersistencia := TPersistencia.Create(Self.FConexao);
   try
+
     try
       lPersistencia.IniciaTransacao;
 
       lPersistencia.Query.SQL.Add('SELECT');
       lPersistencia.Query.SQL.Add('  *');
       lPersistencia.Query.SQL.Add('FROM entrada');
-      lPersistencia.Query.SQL.Add('WHERE id= :pId');
+      lPersistencia.Query.SQL.Add('WHERE id = :pId');
 
       lPersistencia.setParametro('pId', pID);
 

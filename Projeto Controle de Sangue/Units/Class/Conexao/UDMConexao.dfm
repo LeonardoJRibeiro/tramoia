@@ -1,4 +1,4 @@
-object DataModuleConexao: TDataModuleConexao
+object DMConexao: TDMConexao
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   Height = 150

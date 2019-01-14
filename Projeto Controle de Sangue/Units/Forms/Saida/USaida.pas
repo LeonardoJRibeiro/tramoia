@@ -68,9 +68,10 @@ type
 
     FId: Integer;
     FIdBolsa: Integer;
+    FIdProcedimentosEspeciais: Integer;
     FNumBolsa: string;
 
-    procedure CarregaSaida;
+    procedure CarregaDadosSaida;
 
     procedure CarregaUsuarios;
 
@@ -78,9 +79,13 @@ type
 
     procedure CarregaDadosBolsa(const pID_BOLSA: Integer);
 
+    procedure CarregaDadosProcedEspeciais;
+
     function SalvaSaida: Boolean;
 
-    function AlteraProcedimentosEspeciais: Boolean;
+    function SalvaProcedimentoEspeciais: Boolean;
+
+    function getBolsaJaVinculada: Boolean;
 
   public
     class function getSaida(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
@@ -93,41 +98,12 @@ var
 implementation
 
 uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO,
-  UClassBiblioteca,
-  UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao,
-  System.Generics.Collections, UClassUsuario, UClassUsuarioDAO, UAutenticacao, USelBolsa;
+  UClassBiblioteca, UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao,
+  System.Generics.Collections, UClassUsuario, UClassUsuarioDAO, UAutenticacao, USelBolsa, UClassProcedimento_Especial,
+  UClassProcedimento_EspecialDao, UClassDescarteDao;
 
 {$R *.dfm}
 { TFrmSaida }
-
-function TFrmSaida.AlteraProcedimentosEspeciais: Boolean;
-var
-  lBolsaDao: TBolsaDAO;
-begin
-
-  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
-  try
-
-    try
-      Result := lBolsaDao.AlteraProcessoEspeciais(Self.FIdBolsa,
-        Copy(RadioGroupIrradiada.Items[RadioGroupIrradiada.ItemIndex], 1, 1),
-        Copy(RadioGroupFiltrada.Items[RadioGroupFiltrada.ItemIndex], 1, 1),
-        Copy(RadioGroupFracionada.Items[RadioGroupFracionada.ItemIndex], 1, 1),
-        Copy(RadioGroupFenotipada.Items[RadioGroupFenotipada.ItemIndex], 1, 1));
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lBolsaDao.Destroy;
-  end;
-
-end;
 
 procedure TFrmSaida.btnCadPacienteClick(Sender: TObject);
 begin
@@ -170,8 +146,6 @@ begin
 end;
 
 procedure TFrmSaida.BtnGravarClick(Sender: TObject);
-var
-  lIdBolsa: Integer;
 begin
 
   if (ComboBoxResponsavel.ItemIndex = -1) then
@@ -241,8 +215,18 @@ begin
     if (Self.SalvaSaida) then
     begin
 
-      if (Self.AlteraProcedimentosEspeciais) then
+      if (Self.SalvaProcedimentoEspeciais) then
       begin
+        EdtId.Text := Self.FId.ToString;
+
+        TBiblioteca.AtivaDesativaCompontes(Self, False);
+
+        Application.MessageBox(PChar(TMensagem.getMensagem(24)), 'Informação', MB_ICONINFORMATION + MB_OK);
+
+        BtnGravar.Enabled := False;
+
+        BtnNovo.SetFocus;
+
         TBiblioteca.GravaArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital',
           Trim(EdtHospital.Text));
       end;
@@ -285,6 +269,8 @@ begin
 
   Self.FId := -1;
   Self.FIdBolsa := -1;
+  Self.FIdProcedimentosEspeciais := -1;
+  FIdProcedimentosEspeciais := -1;
   Self.FNumBolsa := '-1';
 
 end;
@@ -303,7 +289,7 @@ begin
   lBolsa := TBolsa.Create;
   try
 
-    lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+    lBolsaDao := TBolsaDAO.Create(DMConexao.Conexao);
     try
 
       try
@@ -316,10 +302,7 @@ begin
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.VolumeAtual.ToString;
           EdtAboBolsa.Text := lBolsa.Abo + lBolsa.Rh;
-          RadioGroupIrradiada.ItemIndex := IfThen(lBolsa.Irradiada = 'S', 0, 1);
-          RadioGroupFiltrada.ItemIndex := IfThen(lBolsa.Filtrada = 'S', 0, 1);
-          RadioGroupFracionada.ItemIndex := IfThen(lBolsa.Fracionada = 'S', 0, 1);
-          RadioGroupFenotipada.ItemIndex := IfThen(lBolsa.Fenotipada = 'S', 0, 1);
+
         end;
 
       except
@@ -339,7 +322,40 @@ begin
 
 end;
 
-procedure TFrmSaida.CarregaSaida;
+procedure TFrmSaida.CarregaDadosProcedEspeciais;
+var
+  lProcedimentoEspecial: TProcedimento_Especial;
+  lProcedimentoEspecialDao: TProcedimento_EspecialDao;
+begin
+
+  Self.FIdProcedimentosEspeciais := TClassBibliotecaDao.getValorAtributo('procedimento_especial', 'id', 'id_saida',
+    Self.FId, DMConexao.Conexao);
+
+  lProcedimentoEspecial := TProcedimento_Especial.Create;
+  try
+
+    lProcedimentoEspecialDao := TProcedimento_EspecialDao.Create(DMConexao.Conexao);
+    try
+
+      if (lProcedimentoEspecialDao.getObjeto(Self.FIdProcedimentosEspeciais, lProcedimentoEspecial)) then
+      begin
+        RadioGroupIrradiada.ItemIndex := IfThen(lProcedimentoEspecial.Irradiacao = 'S', 0, 1);
+        RadioGroupFiltrada.ItemIndex := IfThen(lProcedimentoEspecial.Filtracao = 'S', 0, 1);
+        RadioGroupFracionada.ItemIndex := IfThen(lProcedimentoEspecial.Fracionamento = 'S', 0, 1);
+        RadioGroupFenotipada.ItemIndex := IfThen(lProcedimentoEspecial.Fenotipagem = 'S', 0, 1);
+      end;
+
+    finally
+      lProcedimentoEspecialDao.Destroy;
+    end;
+
+  finally
+    lProcedimentoEspecial.Destroy;
+  end;
+
+end;
+
+procedure TFrmSaida.CarregaDadosSaida;
 var
   lSaida: TSaida;
   lSaidaDAO: TSaidaDAO;
@@ -348,7 +364,7 @@ begin
   lSaida := TSaida.Create;
   try
 
-    lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
+    lSaidaDAO := TSaidaDAO.Create(DMConexao.Conexao);
     try
 
       try
@@ -358,7 +374,7 @@ begin
 
           EdtId.Text := lSaida.Id.ToString;
           EdtRegistroPaciente.Text := TClassBibliotecaDao.getValorAtributo('paciente', 'num_prontuario', 'id',
-            lSaida.Id_Paciente, DataModuleConexao.Conexao);
+            lSaida.Id_Paciente, DMConexao.Conexao);
           EdtRegistroPacienteExit(Self);
           Self.CarregaDadosBolsa(lSaida.Id_Bolsa);
           EdtVolume.Text := lSaida.Volume.ToString;
@@ -369,6 +385,8 @@ begin
           RadioGroupAGH.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Agh = 'C', 0, 1);
           RadioGroup37.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_37 = 'C', 0, 1);
           Self.FIdBolsa := lSaida.Id_Bolsa;
+
+          Self.CarregaDadosProcedEspeciais;
 
           setIndexByIdUsuario(lSaida.Id_Usuario);
 
@@ -424,7 +442,7 @@ begin
       if (Self.FIdBolsa > 0) then
       begin
 
-        lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
+        lBolsaDao := TBolsaDAO.Create(DMConexao.Conexao);
         try
 
           try
@@ -464,8 +482,16 @@ begin
       else
       begin
 
-        Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
-        EdtNumeroBolsa.SetFocus;
+        if (Self.getBolsaJaVinculada) then
+        begin
+          Application.MessageBox('Bolsa já vinculada a uma saída ou a um descarte.', 'Aviso', MB_ICONWARNING + MB_OK);
+          EdtNumeroBolsa.SetFocus;
+        end
+        else
+        begin
+          Application.MessageBox('Número da bolsa não cadastrado', 'Aviso', MB_ICONWARNING + MB_OK);
+          EdtNumeroBolsa.SetFocus;
+        end;
 
       end;
 
@@ -489,7 +515,7 @@ begin
   if (not Trim(EdtRegistroPaciente.Text).IsEmpty) then
   begin
 
-    lPacienteDao := TPacienteDAO.Create(DataModuleConexao.Conexao);
+    lPacienteDao := TPacienteDAO.Create(DMConexao.Conexao);
     try
 
       if (lPacienteDao.getNomeEABO(Trim(EdtRegistroPaciente.Text), lNomePaciente, lAboPaciente)) then
@@ -553,13 +579,11 @@ end;
 procedure TFrmSaida.EdtVolumeExit(Sender: TObject);
 var
   lVolumeAtual: Integer;
-  lBolsaDao: TBolsaDAO;
 begin
 
-  lBolsaDao := TBolsaDAO.Create(DataModuleConexao.Conexao);
   try
-
-    lVolumeAtual := lBolsaDao.getVolumeAtual(Self.FIdBolsa);
+    lVolumeAtual := TClassBibliotecaDao.getValorAtributo('bolsa', 'volume_atual', 'id', Self.FIdBolsa,
+      DMConexao.Conexao);
 
     if (StrToIntDef(EdtVolume.Text, 0) > lVolumeAtual) then
     begin
@@ -568,8 +592,12 @@ begin
       EdtVolume.SetFocus;
     end;
 
-  finally
-    lBolsaDao.Destroy;
+  except
+    on E: Exception do
+    begin
+      Application.MessageBox(pWideChar(Format(TMensagem.getMensagem(1), ['volume da bolsa', E.Message])), 'Erro',
+        MB_ICONERROR + MB_OK);
+    end;
   end;
 
 end;
@@ -602,7 +630,7 @@ begin
 
   if (Self.FId <> -1) then
   begin
-    Self.CarregaSaida;
+    Self.CarregaDadosSaida;
   end
   else
   begin
@@ -613,7 +641,9 @@ begin
     ComboBoxResponsavel.SetFocus;
 
     Self.FIdBolsa := -1;
+    Self.FIdProcedimentosEspeciais := -1;
     Self.FNumBolsa := '1';
+    FIdProcedimentosEspeciais := -1;
   end;
 
 end;
@@ -629,7 +659,7 @@ begin
   lListaUsuario := TObjectList<TUsuario>.Create();
   try
 
-    lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+    lUsuarioDAO := TUsuarioDAO.Create(DMConexao.Conexao);
     try
 
       if (lUsuarioDAO.getListaObjeto(lListaUsuario)) then
@@ -675,6 +705,34 @@ begin
 
 end;
 
+function TFrmSaida.getBolsaJaVinculada: Boolean;
+var
+  lVinculadaASaida: Boolean;
+  lVinculadaADescarte: Boolean;
+
+  lSaidaDAO: TSaidaDAO;
+  lDescarteDAO: TDescarteDAO;
+begin
+  Result := False;
+
+  lSaidaDAO := TSaidaDAO.Create(DMConexao.Conexao);
+  try
+    lVinculadaASaida := lSaidaDAO.getBolsaJaVinculada(Trim(EdtNumeroBolsa.Text));
+  finally
+    lSaidaDAO.Destroy;
+  end;
+
+  lDescarteDAO := TDescarteDAO.Create(DMConexao.Conexao);
+  try
+    lVinculadaADescarte := lDescarteDAO.getBolsaJaVinculada(Trim(EdtNumeroBolsa.Text));
+  finally
+    lDescarteDAO.Destroy;
+  end;
+
+  Result := lVinculadaASaida or lVinculadaADescarte;
+
+end;
+
 class function TFrmSaida.getSaida(const pFOREIGNFORMKEY: SmallInt; const pID_USUARIO: Integer;
   const pID: Integer = -1): Boolean;
 begin
@@ -705,6 +763,46 @@ begin
 
 end;
 
+function TFrmSaida.SalvaProcedimentoEspeciais: Boolean;
+var
+  lProcedimetoEspecialDao: TProcedimento_EspecialDao;
+  lProcedimetoEspecial: TProcedimento_Especial;
+begin
+
+  lProcedimetoEspecial := TProcedimento_Especial.Create;
+  try
+
+    lProcedimetoEspecial.Id := Self.FIdProcedimentosEspeciais;
+    lProcedimetoEspecial.Id_Saida := Self.FId;
+    lProcedimetoEspecial.Id_Descarte := -1;
+    lProcedimetoEspecial.Irradiacao := Copy(RadioGroupIrradiada.Items[RadioGroupIrradiada.ItemIndex], 1, 1);
+    lProcedimetoEspecial.Filtracao := Copy(RadioGroupFiltrada.Items[RadioGroupFiltrada.ItemIndex], 1, 1);
+    lProcedimetoEspecial.Fracionamento := Copy(RadioGroupFracionada.Items[RadioGroupFracionada.ItemIndex], 1, 1);
+    lProcedimetoEspecial.Fenotipagem := Copy(RadioGroupFenotipada.Items[RadioGroupFenotipada.ItemIndex], 1, 1);
+
+    lProcedimetoEspecialDao := TProcedimento_EspecialDao.Create(DMConexao.Conexao);
+    try
+
+      try
+        Result := lProcedimetoEspecialDao.Salvar(lProcedimetoEspecial);
+      except
+        on E: Exception do
+        begin
+          Result := False;
+          raise Exception.Create(Format(TMensagem.getMensagem(4), ['procedimentos especias', E.Message]));
+        end;
+      end;
+
+    finally
+      lProcedimetoEspecialDao.Destroy;
+    end;
+
+  finally
+    lProcedimetoEspecial.Destroy;
+  end;
+
+end;
+
 function TFrmSaida.SalvaSaida: Boolean;
 var
   lSaida: TSaida;
@@ -716,7 +814,7 @@ begin
 
     lSaida.Id := StrToIntDef(EdtId.Text, -1);
     lSaida.Id_Paciente := TClassBibliotecaDao.getValorAtributo('paciente', 'id', 'num_prontuario',
-      EdtRegistroPaciente.Text, DataModuleConexao.Conexao);
+      EdtRegistroPaciente.Text, DMConexao.Conexao);
 
     lSaida.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
 
@@ -729,7 +827,7 @@ begin
     lSaida.Prova_Compatibilidade_37 := Copy(RadioGroup37.Items[RadioGroup37.ItemIndex], 1, 1);
     lSaida.Volume := StrToInt(EdtVolume.Text);
 
-    lSaidaDAO := TSaidaDAO.Create(DataModuleConexao.Conexao);
+    lSaidaDAO := TSaidaDAO.Create(DMConexao.Conexao);
     try
 
       try
@@ -737,17 +835,7 @@ begin
         Result := lSaidaDAO.Salvar(lSaida);
         if (Result) then
         begin
-
-          EdtId.Text := lSaida.Id.ToString;
-
-          TBiblioteca.AtivaDesativaCompontes(Self, False);
-
-          Application.MessageBox(PChar(TMensagem.getMensagem(24)), 'Informação', MB_ICONINFORMATION + MB_OK);
-
-          BtnGravar.Enabled := False;
-
-          BtnNovo.SetFocus;
-
+          Self.FId := lSaida.Id;
         end;
 
       except

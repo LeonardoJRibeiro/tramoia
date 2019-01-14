@@ -4,7 +4,7 @@ object FrmSaida: TFrmSaida
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Sa'#237'da de sangue'
-  ClientHeight = 585
+  ClientHeight = 578
   ClientWidth = 427
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -23,12 +23,13 @@ object FrmSaida: TFrmSaida
     Left = 0
     Top = 0
     Width = 427
-    Height = 544
+    Height = 537
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitHeight = 538
     object LabelId: TLabel
       Left = 19
       Top = 8
@@ -53,7 +54,7 @@ object FrmSaida: TFrmSaida
     end
     object GroupBoxSangue: TGroupBox
       Left = 9
-      Top = 123
+      Top = 117
       Width = 404
       Height = 415
       Caption = 'Bolsa de sangue'
@@ -167,7 +168,7 @@ object FrmSaida: TFrmSaida
           Height = 41
           Caption = 'TA'
           Columns = 2
-          ItemIndex = 1
+          ItemIndex = 0
           Items.Strings = (
             'Compat'#237'vel'
             'Incompat'#237'vel')
@@ -180,7 +181,7 @@ object FrmSaida: TFrmSaida
           Height = 41
           Caption = 'AGH'
           Columns = 2
-          ItemIndex = 1
+          ItemIndex = 0
           Items.Strings = (
             'Compat'#237'vel'
             'Incompat'#237'vel')
@@ -193,7 +194,7 @@ object FrmSaida: TFrmSaida
           Height = 41
           Caption = '37'
           Columns = 2
-          ItemIndex = 1
+          ItemIndex = 0
           Items.Strings = (
             'Compat'#237'vel'
             'Incompat'#237'vel')
@@ -215,28 +216,28 @@ object FrmSaida: TFrmSaida
     end
     object GroupBoxPaciente: TGroupBox
       Left = 9
-      Top = 50
+      Top = 49
       Width = 404
-      Height = 65
+      Height = 63
       Caption = 'Paciente'
       TabOrder = 3
       object LabelRegistroPaciente: TLabel
         Left = 10
-        Top = 18
+        Top = 17
         Width = 64
         Height = 13
         Caption = 'Prontu'#225'rio(*)'
       end
       object LabelNomePaciente: TLabel
         Left = 142
-        Top = 18
+        Top = 17
         Width = 86
         Height = 13
         Caption = 'Nome do paciente'
       end
       object BtnConsPaciente: TSpeedButton
         Left = 94
-        Top = 33
+        Top = 32
         Width = 23
         Height = 21
         Flat = True
@@ -279,7 +280,7 @@ object FrmSaida: TFrmSaida
       end
       object btnCadPaciente: TSpeedButton
         Left = 117
-        Top = 33
+        Top = 32
         Width = 23
         Height = 21
         Flat = True
@@ -322,14 +323,14 @@ object FrmSaida: TFrmSaida
       end
       object Label1: TLabel
         Left = 351
-        Top = 18
+        Top = 17
         Width = 21
         Height = 13
         Caption = 'ABO'
       end
       object EdtNomePaciente: TEdit
         Left = 141
-        Top = 33
+        Top = 32
         Width = 206
         Height = 21
         Color = clInfoBk
@@ -338,7 +339,7 @@ object FrmSaida: TFrmSaida
       end
       object EdtRegistroPaciente: TEdit
         Left = 6
-        Top = 33
+        Top = 32
         Width = 88
         Height = 21
         HelpType = htKeyword
@@ -350,7 +351,7 @@ object FrmSaida: TFrmSaida
       end
       object EdtAboPaciente: TEdit
         Left = 351
-        Top = 33
+        Top = 32
         Width = 40
         Height = 21
         TabStop = False
@@ -391,7 +392,7 @@ object FrmSaida: TFrmSaida
     end
     object GroupBox1: TGroupBox
       Left = 19
-      Top = 422
+      Top = 417
       Width = 381
       Height = 107
       Caption = 'Procedimentos Especiais'
@@ -452,7 +453,7 @@ object FrmSaida: TFrmSaida
   end
   object PanelBottom: TPanel
     Left = 0
-    Top = 544
+    Top = 537
     Width = 427
     Height = 41
     Align = alBottom
@@ -460,11 +461,15 @@ object FrmSaida: TFrmSaida
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitTop = 545
     object BtnGravar: TBitBtn
       Left = 9
       Top = 9
       Width = 130
       Height = 27
+      Hint = 
+        'Gravar as informa'#231#245'es de sa'#237'da Voc'#234' pode utilizar o atalho press' +
+        'ionando a tecla F6.'
       Caption = '&Gravar - F6'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -502,6 +507,8 @@ object FrmSaida: TFrmSaida
         CDFFB78115FFB782187CB78114FFB57E0FFFB57C0BFFB57C09FFB57C09FFB57C
         09FFB57C09FFB57C09FFB57C09FFB57C09FFB57C09FFB57C0BFFB57E0FFFB781
         14FFB782187C}
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 0
       OnClick = BtnGravarClick
     end
@@ -510,6 +517,7 @@ object FrmSaida: TFrmSaida
       Top = 9
       Width = 130
       Height = 27
+      Hint = 'Sair. Voc'#234' pode utilizar o atalho pressionando a tecla ESC.'
       Caption = '&Sair - Esc'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -555,6 +563,7 @@ object FrmSaida: TFrmSaida
       Top = 9
       Width = 130
       Height = 27
+      Hint = 'Novo. Voc'#234' pode utilizar o atalho pressionando a tecla F7.'
       Caption = '&Novo - F7'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -592,6 +601,8 @@ object FrmSaida: TFrmSaida
         B300B5B5B300B3B3B1EFB0B0ADFFAEAEACFFAEAEABFFAEAEABFFAEAEABFFADAE
         ABFFAEAEABFFAFAFADFFB0B0AEEAB3B3B100B5B5B300B5B5B300B5B5B300B5B5
         B300B5B5B300}
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 1
       OnClick = BtnNovoClick
     end

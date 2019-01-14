@@ -101,7 +101,7 @@ begin
       lUsuario.Senha := TBiblioteca.Crypt('C', Trim(EdtSenha.Text));
       lUsuario.Admin := IfThen(CheckBoxAdministrador.Checked, 'S', 'N');
 
-      lUsuarioDao := TUsuarioDao.Create(DataModuleConexao.Conexao);
+      lUsuarioDao := TUsuarioDao.Create(DMConexao.Conexao);
       try
 
         if (Trim(EdtNome.Text) <> Trim(Self.FNomeUsuario)) then
@@ -163,7 +163,7 @@ begin
   lUsuario := TUsuario.Create;
   try
 
-    lUsuarioDao := TUsuarioDao.Create(DataModuleConexao.Conexao);
+    lUsuarioDao := TUsuarioDao.Create(DMConexao.Conexao);
     try
 
       if (lUsuarioDao.getObjeto(Self.FIdUsuario, lUsuario)) then

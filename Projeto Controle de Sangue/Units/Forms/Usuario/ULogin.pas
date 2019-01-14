@@ -87,7 +87,7 @@ var
   lUsuarioDAO: TUsuarioDAO;
 begin
 
-  lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  lUsuarioDAO := TUsuarioDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -141,7 +141,7 @@ var
   lId: Integer;
 begin
 
-  lUsuarioDAO := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  lUsuarioDAO := TUsuarioDAO.Create(DMConexao.Conexao);
   try
 
     try

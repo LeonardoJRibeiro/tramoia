@@ -105,7 +105,7 @@ end;
 procedure TFrmRlRelDescarte.FormCreate(Sender: TObject);
 begin
 
-  Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+  Self.FPersistencia := TPersistencia.Create(DMConexao.Conexao);
 
   Self.FClientDataSet := TClientDataSet.Create(nil);
   Self.FClientDataSet.Aggregates.Clear;
@@ -178,7 +178,7 @@ var
   lRelDescarteDAO: TRelDescarteDAO;
 begin
 
-  lRelDescarteDAO := TRelDescarteDAO.Create(DataModuleConexao.Conexao);
+  lRelDescarteDAO := TRelDescarteDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -223,12 +223,12 @@ var
   lTexto: string;
 begin
 
-  if (Self.FPersistencia.Query.FieldByName('irradiada').AsString = 'S') then
+  if (Self.FPersistencia.Query.FieldByName('irradiacao').AsString = 'S') then
   begin
     lTexto := lTexto + 'I';
   end;
 
-  if (Self.FPersistencia.Query.FieldByName('filtrada').AsString = 'S') then
+  if (Self.FPersistencia.Query.FieldByName('filtracao').AsString = 'S') then
   begin
 
     if (lTexto.Trim.IsEmpty) then
@@ -242,7 +242,7 @@ begin
 
   end;
 
-  if (Self.FPersistencia.Query.FieldByName('fracionada').AsString = 'S') then
+  if (Self.FPersistencia.Query.FieldByName('fracionamento').AsString = 'S') then
   begin
 
     if (lTexto.Trim.IsEmpty) then
@@ -256,7 +256,7 @@ begin
 
   end;
 
-  if (Self.FPersistencia.Query.FieldByName('fenotipada').AsString = 'S') then
+  if (Self.FPersistencia.Query.FieldByName('fenotipagem').AsString = 'S') then
   begin
 
     if (lTexto.Trim.IsEmpty) then

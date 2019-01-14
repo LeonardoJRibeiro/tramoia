@@ -15,11 +15,11 @@ type
     function Salvar(var pObjeto: TSaida): Boolean;
     function getObjeto(const pID: Integer; var pObjeto: TSaida): Boolean;
 
-    function getExisteBolsaVinculada(const pID_BOLSA: Integer): Boolean;
-
     function getIdSaidaByNumeroBolsa(const pNUMERO_DA_BOLSA: string): Integer;
 
     function getExisteSaidaPaciente(const pID_PACIENTE: Integer): Boolean;
+
+    function getBolsaJaVinculada(const pNUMERO_DA_BOLSA: string): Boolean;
 
     function getConsulta(const pCHAVE: string; const pDATAINI, pDATAFIM: TDate; const pTIPOCONS: SmallInt;
       var pPersistencia: TPersistencia): Boolean;
@@ -59,6 +59,46 @@ begin
       lPersistencia.setParametro('pId', pID);
 
       lPersistencia.Query.ExecSQL;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
+function TSaidaDAO.getBolsaJaVinculada(const pNUMERO_DA_BOLSA: string): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  COUNT(s.id)');
+      lPersistencia.Query.SQL.Add('FROM saida s');
+
+      lPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
+      lPersistencia.Query.SQL.Add('ON(s.id_bolsa = b.id)');
+
+      lPersistencia.Query.SQL.Add('WHERE b.numero_da_bolsa = :pNumero_Da_Bolsa');
+      lPersistencia.setParametro('pNumero_Da_Bolsa', pNUMERO_DA_BOLSA);
+
+      lPersistencia.Query.Open;
+
+      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
 
     except
       on E: Exception do
@@ -118,7 +158,10 @@ begin
 
           end;
 
-          pPersistencia.Query.SQL.Add('ORDER BY b.numero_da_bolsa');
+          pPersistencia.Query.SQL.Add('ORDER BY');
+          pPersistencia.Query.SQL.Add('  b.numero_da_bolsa');
+          pPersistencia.Query.SQL.Add('  s.id');
+
         end;
 
       1: // Ordem
@@ -197,43 +240,6 @@ begin
 
       lPersistencia.Query.SQL.Add('WHERE id = :pId');
       lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TSaidaDAO.getExisteBolsaVinculada(const pID_BOLSA: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  COUNT(id)');
-      lPersistencia.Query.SQL.Add('FROM saida s');
-
-      lPersistencia.Query.SQL.Add('WHERE id_bolsa = :pId_Bolsa');
-      lPersistencia.setParametro('pId_Bolsa', pID_BOLSA);
 
       lPersistencia.Query.Open;
 
@@ -388,15 +394,15 @@ begin
       begin
 
         lPersistencia.Query.SQL.Add('UPDATE saida SET');
-        lPersistencia.Query.SQL.Add('  id_paciente= :pId_Paciente,');
-        lPersistencia.Query.SQL.Add('  id_usuario= :pId_Usuario,');
-        lPersistencia.Query.SQL.Add('  id_bolsa= :pId_Bolsa,');
-        lPersistencia.Query.SQL.Add('  data_saida= :pData_Saida,');
-        lPersistencia.Query.SQL.Add('  hospital= :pHospital,');
-        lPersistencia.Query.SQL.Add('  pai= :pPai,');
-        lPersistencia.Query.SQL.Add('  prova_compatibilidade_ta= :pProva_Compatibilidade_Ta,');
-        lPersistencia.Query.SQL.Add('  prova_compatibilidade_agh= :pProva_Compatibilidade_Agh,');
-        lPersistencia.Query.SQL.Add('  prova_compatibilidade_37= :pProva_Compatibilidade_37,');
+        lPersistencia.Query.SQL.Add('  id_paciente = :pId_Paciente,');
+        lPersistencia.Query.SQL.Add('  id_usuario = :pId_Usuario,');
+        lPersistencia.Query.SQL.Add('  id_bolsa = :pId_Bolsa,');
+        lPersistencia.Query.SQL.Add('  data_saida = :pData_Saida,');
+        lPersistencia.Query.SQL.Add('  hospital = :pHospital,');
+        lPersistencia.Query.SQL.Add('  pai = :pPai,');
+        lPersistencia.Query.SQL.Add('  prova_compatibilidade_ta = :pProva_Compatibilidade_Ta,');
+        lPersistencia.Query.SQL.Add('  prova_compatibilidade_agh = :pProva_Compatibilidade_Agh,');
+        lPersistencia.Query.SQL.Add('  prova_compatibilidade_37 = :pProva_Compatibilidade_37,');
         lPersistencia.Query.SQL.Add('  volume = :pVolume');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 

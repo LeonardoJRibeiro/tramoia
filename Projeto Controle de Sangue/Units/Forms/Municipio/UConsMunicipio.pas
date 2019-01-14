@@ -66,7 +66,7 @@ var
 begin
   inherited;
 
-  lMunicipioDao := TMunicipioDAO.Create(DataModuleConexao.Conexao);
+  lMunicipioDao := TMunicipioDAO.Create(DMConexao.Conexao);
   try
 
     try

@@ -29,19 +29,19 @@ inherited FrmConsDescarte: TFrmConsDescarte
           Visible = True
         end
         item
+          Expanded = False
+          FieldName = 'responsavel'
+          Title.Caption = 'Respons'#225'vel'
+          Width = 116
+          Visible = True
+        end
+        item
           Alignment = taCenter
           Expanded = False
           FieldName = 'data_descarte'
           Title.Alignment = taCenter
           Title.Caption = 'Dt. descarte'
           Width = 65
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'responsavel'
-          Title.Caption = 'Respons'#225'vel'
-          Width = 116
           Visible = True
         end
         item
@@ -69,42 +69,6 @@ inherited FrmConsDescarte: TFrmConsDescarte
           Title.Alignment = taCenter
           Title.Caption = 'Volume'
           Width = 55
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 'irradiada'
-          Title.Alignment = taCenter
-          Title.Caption = 'Irradiada'
-          Width = 48
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 'filtrada'
-          Title.Alignment = taCenter
-          Title.Caption = 'Filtrada'
-          Width = 44
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 'fracionada'
-          Title.Alignment = taCenter
-          Title.Caption = 'Fracionada'
-          Width = 55
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 'fenotipada'
-          Title.Alignment = taCenter
-          Title.Caption = 'Fenotipada'
-          Width = 59
           Visible = True
         end>
     end

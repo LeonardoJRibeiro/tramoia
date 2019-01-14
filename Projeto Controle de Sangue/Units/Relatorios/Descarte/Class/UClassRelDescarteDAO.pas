@@ -50,10 +50,10 @@ begin
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');
     pPersistencia.Query.SQL.Add('  b.rh,');
-    pPersistencia.Query.SQL.Add('  b.irradiada,');
-    pPersistencia.Query.SQL.Add('  b.filtrada,');
-    pPersistencia.Query.SQL.Add('  b.fracionada,');
-    pPersistencia.Query.SQL.Add('  b.fenotipada,');
+    pPersistencia.Query.SQL.Add('  pe.irradiacao,');
+    pPersistencia.Query.SQL.Add('  pe.filtracao,');
+    pPersistencia.Query.SQL.Add('  pe.fracionamento,');
+    pPersistencia.Query.SQL.Add('  pe.fenotipagem,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS aborh,');
     pPersistencia.Query.SQL.Add('  b.origem,');
     pPersistencia.Query.SQL.Add('  b.data_vencimento,');
@@ -91,6 +91,9 @@ begin
 
     pPersistencia.Query.SQL.Add('INNER JOIN usuario u');
     pPersistencia.Query.SQL.Add('ON(d.id_usuario = u.id)');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN procedimento_especial pe');
+    pPersistencia.Query.SQL.Add('ON (d.id = pe.id_descarte)');
 
     pPersistencia.Query.SQL.Add('WHERE d.data_descarte BETWEEN :pDataIni AND :pDataFim');
     pPersistencia.setParametro('pDataIni', pRELDESCARTE.DataIni);

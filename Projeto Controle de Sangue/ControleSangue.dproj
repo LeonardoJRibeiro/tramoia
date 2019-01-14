@@ -110,7 +110,7 @@
         <DCCReference Include="Units\Class\Conexao\UClassConexao.pas"/>
         <DCCReference Include="Units\Class\Conexao\UClassPersistencia.pas"/>
         <DCCReference Include="Units\Class\Conexao\UDMConexao.pas">
-            <Form>DataModuleConexao</Form>
+            <Form>DMConexao</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Units\Class\DAO\InterfaceDAO\UInterfaceDAO.pas"/>
@@ -242,6 +242,8 @@
             <Form>FrmSelBolsa</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Units\Class\DAO\UClassProcedimento_EspecialDao.pas"/>
+        <DCCReference Include="Units\Class\Controll\UClassProcedimento_Especial.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

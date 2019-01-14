@@ -18,6 +18,8 @@ type
     function getConsulta(const pCHAVE: string; const pDATAINI, pDATAFIM: TDate; const pTIPOCONS: SmallInt;
       var pPersistencia: TPersistencia): Boolean;
 
+    function getBolsaJaVinculada(const pNUMERO_DA_BOLSA: string): Boolean;
+
     constructor Create(const pCONEXAO: TConexao); overload;
     destructor Destroy; override;
 
@@ -69,6 +71,46 @@ begin
 
 end;
 
+function TDescarteDAO.getBolsaJaVinculada(const pNUMERO_DA_BOLSA: string): Boolean;
+var
+  lPersistencia: TPersistencia;
+begin
+
+  lPersistencia := TPersistencia.Create(Self.FConexao);
+  try
+
+    try
+
+      lPersistencia.IniciaTransacao;
+
+      lPersistencia.Query.SQL.Add('SELECT');
+      lPersistencia.Query.SQL.Add('  COUNT(d.id)');
+      lPersistencia.Query.SQL.Add('FROM descarte d');
+
+      lPersistencia.Query.SQL.Add('INNER JOIN bolsa b');
+      lPersistencia.Query.SQL.Add('ON(d.id_bolsa = b.id)');
+
+      lPersistencia.Query.SQL.Add('WHERE b.numero_da_bolsa = :pNumero_Da_Bolsa');
+      lPersistencia.setParametro('pNumero_Da_Bolsa', pNUMERO_DA_BOLSA);
+
+      lPersistencia.Query.Open;
+
+      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lPersistencia.Destroy;
+  end;
+
+end;
+
 function TDescarteDAO.getConsulta(const pCHAVE: string; const pDATAINI, pDATAFIM: TDate; const pTIPOCONS: SmallInt;
   var pPersistencia: TPersistencia): Boolean;
 begin
@@ -83,18 +125,18 @@ begin
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue,');
     pPersistencia.Query.SQL.Add('  b.id id_bolsa,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.volume,' + QuotedStr(' mL') + ') AS volume,');
+    pPersistencia.Query.SQL.Add('  CONCAT(d.volume,' + QuotedStr(' mL') + ') AS volume,');
 
-    pPersistencia.Query.SQL.Add('  if(b.irradiada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' + QuotedStr('Não')
-      + ') AS irradiada,');
+    pPersistencia.Query.SQL.Add('  if(pe.irradiacao = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
+      QuotedStr('Não') + ') AS irradiada,');
 
-    pPersistencia.Query.SQL.Add('  if(b.filtrada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' + QuotedStr('Não')
-      + ') AS filtrada,');
+    pPersistencia.Query.SQL.Add('  if(pe.filtracao = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
+      QuotedStr('Não') + ') AS filtrada,');
 
-    pPersistencia.Query.SQL.Add('  if(b.fracionada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
+    pPersistencia.Query.SQL.Add('  if(pe.fracionamento = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
       QuotedStr('Não') + ') AS fracionada,');
 
-    pPersistencia.Query.SQL.Add('  if(b.fenotipada = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
+    pPersistencia.Query.SQL.Add('  if(pe.fenotipagem = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
       QuotedStr('Não') + ') AS fenotipada');
 
     pPersistencia.Query.SQL.Add('FROM descarte d');
@@ -104,6 +146,9 @@ begin
 
     pPersistencia.Query.SQL.Add('INNER JOIN usuario u');
     pPersistencia.Query.SQL.Add('ON (d.id_usuario = u.id)');
+
+    pPersistencia.Query.SQL.Add('INNER JOIN procedimento_especial pe');
+    pPersistencia.Query.SQL.Add('ON (d.id = pe.id_descarte)');
 
     pPersistencia.Query.SQL.Add('WHERE 0=0');
 
@@ -148,6 +193,8 @@ begin
     end;
 
     pPersistencia.Query.SQL.Add('LIMIT 500;');
+
+    pPersistencia.Query.SQL.SaveToFile('c:\teste.txt');
 
     pPersistencia.Query.Open;
 

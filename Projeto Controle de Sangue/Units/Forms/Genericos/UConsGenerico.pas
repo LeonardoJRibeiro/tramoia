@@ -94,7 +94,7 @@ end;
 procedure TFrmCons.FormCreate(Sender: TObject);
 begin
 
-  Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+  Self.FPersistencia := TPersistencia.Create(DMConexao.Conexao);
 
 end;
 

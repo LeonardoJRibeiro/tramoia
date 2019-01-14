@@ -309,7 +309,7 @@ var
   lUsuaioDao: TUsuarioDAO;
 begin
 
-  lUsuaioDao := TUsuarioDAO.Create(DataModuleConexao.Conexao);
+  lUsuaioDao := TUsuarioDAO.Create(DMConexao.Conexao);
   try
 
     try
@@ -361,7 +361,7 @@ begin
 
   if (TFrmLogin.getLogin(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario)) then
   begin
-    StatusBar.Panels.Items[1].Text := TClassBibliotecaDao.getNomeUsuario(Self.FIdUsuario, DataModuleConexao.Conexao);
+    StatusBar.Panels.Items[1].Text := TClassBibliotecaDao.getNomeUsuario(Self.FIdUsuario, DMConexao.Conexao);
     StatusBar.Panels.Items[3].Text := DateToStr(now);
     StatusBar.Panels.Items[5].Text := TBiblioteca.getVersaoExe;
   end

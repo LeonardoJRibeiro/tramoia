@@ -121,7 +121,7 @@ end;
 procedure TFrmRlRelEntrada.FormCreate(Sender: TObject);
 begin
 
-  Self.FPersistencia := TPersistencia.Create(DataModuleConexao.Conexao);
+  Self.FPersistencia := TPersistencia.Create(DMConexao.Conexao);
 
   Self.FClientDataSet := TClientDataSet.Create(nil);
   Self.FClientDataSet.Aggregates.Clear;
@@ -194,7 +194,7 @@ var
   lRelEntradaDAO: TRelEntradaDAO;
 begin
 
-  lRelEntradaDAO := TRelEntradaDAO.Create(DataModuleConexao.Conexao);
+  lRelEntradaDAO := TRelEntradaDAO.Create(DMConexao.Conexao);
   try
 
     try

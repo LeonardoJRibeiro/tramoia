@@ -2,9 +2,10 @@ object FrmDescarte: TFrmDescarte
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Descarte de sangue'
-  ClientHeight = 337
-  ClientWidth = 432
+  ClientHeight = 347
+  ClientWidth = 442
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,19 +21,24 @@ object FrmDescarte: TFrmDescarte
   TextHeight = 13
   object PanelBottom: TPanel
     Left = 0
-    Top = 296
-    Width = 432
+    Top = 306
+    Width = 442
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitTop = 296
+    ExplicitWidth = 432
     object BtnGravar: TBitBtn
       Left = 18
       Top = 9
       Width = 130
       Height = 27
+      Hint = 
+        'Gravar as informa'#231#245'es do descarte. Voc'#234' pode utilizar o atalho p' +
+        'ressionando a tecla F6.'
       Caption = '&Gravar - F6'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -70,6 +76,8 @@ object FrmDescarte: TFrmDescarte
         CDFFB78115FFB782187CB78114FFB57E0FFFB57C0BFFB57C09FFB57C09FFB57C
         09FFB57C09FFB57C09FFB57C09FFB57C09FFB57C09FFB57C0BFFB57E0FFFB781
         14FFB782187C}
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 0
       OnClick = BtnGravarClick
     end
@@ -78,6 +86,7 @@ object FrmDescarte: TFrmDescarte
       Top = 9
       Width = 130
       Height = 27
+      Hint = 'Sair. Voc'#234' pode utilizar o atalho pressionando a tecla ESC.'
       Caption = '&Sair - Esc'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -115,6 +124,8 @@ object FrmDescarte: TFrmDescarte
         F2FF4279A5FF4A7CA5004A7CA5004A7CA5004A7CA5004A7EA7004A7EA8004A7E
         A8004A7EA8004A7EA800497DA7004579A400709BBE00B5D2EA00C3DAEF58CDE3
         F5FB3F75A1FF}
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 2
       OnClick = BtnSairClick
     end
@@ -123,6 +134,7 @@ object FrmDescarte: TFrmDescarte
       Top = 9
       Width = 130
       Height = 27
+      Hint = 'Novo. Voc'#234' pode utilizar o atalho pressionando a tecla F7.'
       Caption = '&Novo - F7'
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -160,6 +172,8 @@ object FrmDescarte: TFrmDescarte
         B300B5B5B300B3B3B1EFB0B0ADFFAEAEACFFAEAEABFFAEAEABFFAEAEABFFADAE
         ABFFAEAEABFFAFAFADFFB0B0AEEAB3B3B100B5B5B300B5B5B300B5B5B300B5B5
         B300B5B5B300}
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 1
       OnClick = BtnNovoClick
     end
@@ -167,13 +181,15 @@ object FrmDescarte: TFrmDescarte
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 432
-    Height = 296
+    Width = 442
+    Height = 306
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitWidth = 432
+    ExplicitHeight = 296
     object LabelId: TLabel
       Left = 19
       Top = 8

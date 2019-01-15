@@ -168,6 +168,16 @@ begin
         Result := 'Erro ao verificar permissão de alteração ou exclusão. Motivo: %S'
       end;
 
+    30:
+      begin
+        Result := 'Erro ao carregar informações do descarte. Motivo %s';
+      end;
+
+    31:
+      begin
+        Result := 'ABO do paciente não compatível com o da bolsa. Deseja continuar?';
+      end;
+
   end;
 
 end;

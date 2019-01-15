@@ -122,9 +122,11 @@ begin
     pPersistencia.Query.SQL.Add('  d.id,');
     pPersistencia.Query.SQL.Add('  u.nome AS responsavel,');
     pPersistencia.Query.SQL.Add('  d.data_descarte,');
+    pPersistencia.Query.SQL.Add('  d.motivo,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
-    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) tipo_sangue,');
+    pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) grupo_sanguineo,');
     pPersistencia.Query.SQL.Add('  b.id id_bolsa,');
+    pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  CONCAT(d.volume,' + QuotedStr(' mL') + ') AS volume,');
 
     pPersistencia.Query.SQL.Add('  if(pe.irradiacao = ' + QuotedStr('S') + ',' + QuotedStr('Sim') + ',' +
@@ -263,7 +265,6 @@ begin
         lPersistencia.Query.SQL.Add('  id,');
         lPersistencia.Query.SQL.Add('  id_bolsa,');
         lPersistencia.Query.SQL.Add('  id_usuario,');
-        lPersistencia.Query.SQL.Add('  data_coleta,');
         lPersistencia.Query.SQL.Add('  motivo,');
         lPersistencia.Query.SQL.Add('  volume,');
         lPersistencia.Query.SQL.Add('  data_descarte');
@@ -271,7 +272,6 @@ begin
         lPersistencia.Query.SQL.Add('  :pId,');
         lPersistencia.Query.SQL.Add('  :pId_Bolsa,');
         lPersistencia.Query.SQL.Add('  :pId_Usuario,');
-        lPersistencia.Query.SQL.Add('  :pData_Coleta,');
         lPersistencia.Query.SQL.Add('  :pMotivo,');
         lPersistencia.Query.SQL.Add('  :pVolume,');
         lPersistencia.Query.SQL.Add('  :pData_Descarte');
@@ -282,7 +282,6 @@ begin
         lPersistencia.Query.SQL.Add('UPDATE descarte SET');
         lPersistencia.Query.SQL.Add('  id_bolsa= :pId_Bolsa,');
         lPersistencia.Query.SQL.Add('  id_usuario= :pId_Usuario,');
-        lPersistencia.Query.SQL.Add('  data_coleta= :pData_Coleta,');
         lPersistencia.Query.SQL.Add('  motivo= :pMotivo,');
         lPersistencia.Query.SQL.Add('  volume= :pVolume,');
         lPersistencia.Query.SQL.Add('  data_descarte= :pData_Descarte');
@@ -293,7 +292,6 @@ begin
       lPersistencia.setParametro('pId', pObjeto.Id);
       lPersistencia.setParametro('pId_Bolsa', pObjeto.Id_Bolsa);
       lPersistencia.setParametro('pId_Usuario', pObjeto.Id_Usuario);
-      lPersistencia.setParametro('pData_Coleta', pObjeto.Data_Coleta);
       lPersistencia.setParametro('pMotivo', pObjeto.Motivo);
       lPersistencia.setParametro('pVolume', pObjeto.Volume);
       lPersistencia.setParametro('pData_Descarte', pObjeto.Data_Descarte);
@@ -338,7 +336,6 @@ begin
       pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
       pObjeto.Id_Bolsa := lPersistencia.Query.FieldByName('id_bolsa').AsInteger;
       pObjeto.Id_Usuario := lPersistencia.Query.FieldByName('id_usuario').AsInteger;
-      pObjeto.Data_Coleta := lPersistencia.Query.FieldByName('data_coleta').AsDateTime;
       pObjeto.Motivo := lPersistencia.Query.FieldByName('motivo').Asstring;
       pObjeto.Volume := lPersistencia.Query.FieldByName('volume').AsInteger;
       pObjeto.Data_Descarte := lPersistencia.Query.FieldByName('data_descarte').AsDateTime;

@@ -15,7 +15,6 @@ type
     FRh: string[1];
     FOrigem: string[15];
     FVolume: Integer;
-    FPossuiEstoque: string[1];
     FPai: string[1];
     FSifilis: string[1];
     FChagas: string[1];
@@ -26,12 +25,12 @@ type
     FHemoglobinas: string[1];
     FDataVencimento: TDate;
     FVolumeAtual: Integer;
+    FDataColeta: TDate;
 
     function getAbo: string;
     function getId: Integer;
     function getNumeroBolsa: string;
     function getOrigem: string;
-    function getPossuiEstoque: string;
     function getRh: string;
     function getTipo: string;
     function getVolume: Integer;
@@ -45,12 +44,12 @@ type
     function getHemoglobinas: string;
     function getDataVencimento: TDate;
     function getVolumeAtual: Integer;
+    function getDataColeta: TDate;
 
     procedure setAbo(const pABO: string);
     procedure setId(const pID: Integer);
     procedure setNumeroBolsa(const pNUMERO_DA_BOLSA: string);
     procedure setOrigem(const pORIGEM: string);
-    procedure setPossuiEstoque(const pPOSSUI_ESTOQUE: string);
     procedure setRh(const pRH: string);
     procedure setTipo(const pTIPO: string);
     procedure setVolume(const pVOLUME: Integer);
@@ -64,6 +63,7 @@ type
     procedure setHemoglobinas(const pHEMOGLOBINAS: string);
     procedure setDataVencimento(const pDATAVENCIMENTO: TDate);
     procedure setVolumeAtual(const pVOLUMEATUAL: Integer);
+    procedure setDataColeta(const pDATACOLETA: TDate);
 
   public
 
@@ -74,7 +74,6 @@ type
     property Rh: string read getRh write setRh;
     property Origem: string read getOrigem write setOrigem;
     property Volume: Integer read getVolume write setVolume;
-    property PossuiEstoque: string read getPossuiEstoque write setPossuiEstoque;
     property Pai: string read getPai write setPai;
     property Sifilis: string read getSifilis write setSifilis;
     property Chagas: string read getChagas write setChagas;
@@ -85,6 +84,7 @@ type
     property Hemoglobinas: string read getHemoglobinas write setHemoglobinas;
     property DataVencimento: TDate read getDataVencimento write setDataVencimento;
     property VolumeAtual: Integer read getVolumeAtual write setVolumeAtual;
+    property DataColeta: TDate read getDataColeta write setDataColeta;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -115,6 +115,11 @@ end;
 function TBolsa.getChagas: string;
 begin
   Result := Self.FChagas;
+end;
+
+function TBolsa.getDataColeta: TDate;
+begin
+  Result := Self.FDataColeta;
 end;
 
 function TBolsa.getDataVencimento: TDate;
@@ -167,11 +172,6 @@ begin
   Result := Self.FPai;
 end;
 
-function TBolsa.getPossuiEstoque: string;
-begin
-  Result := Self.FPossuiEstoque;
-end;
-
 function TBolsa.getRh: string;
 begin
   Result := Self.FRh;
@@ -205,6 +205,11 @@ end;
 procedure TBolsa.setChagas(const pCHAGAS: string);
 begin
   Self.FChagas := pCHAGAS;
+end;
+
+procedure TBolsa.setDataColeta(const pDATACOLETA: TDate);
+begin
+  Self.FDataColeta := pDATACOLETA;
 end;
 
 procedure TBolsa.setDataVencimento(const pDATAVENCIMENTO: TDate);
@@ -255,11 +260,6 @@ end;
 procedure TBolsa.setPai(const pPAI: string);
 begin
   Self.FPai := pPAI;
-end;
-
-procedure TBolsa.setPossuiEstoque(const pPOSSUI_ESTOQUE: string);
-begin
-  Self.FPossuiEstoque := pPOSSUI_ESTOQUE;
 end;
 
 procedure TBolsa.setRh(const pRH: string);

@@ -32,7 +32,7 @@ inherited FrmConsDescarte: TFrmConsDescarte
           Expanded = False
           FieldName = 'responsavel'
           Title.Caption = 'Respons'#225'vel'
-          Width = 116
+          Width = 114
           Visible = True
         end
         item
@@ -41,7 +41,6 @@ inherited FrmConsDescarte: TFrmConsDescarte
           FieldName = 'data_descarte'
           Title.Alignment = taCenter
           Title.Caption = 'Dt. descarte'
-          Width = 65
           Visible = True
         end
         item
@@ -50,16 +49,25 @@ inherited FrmConsDescarte: TFrmConsDescarte
           FieldName = 'numero_da_bolsa'
           Title.Alignment = taCenter
           Title.Caption = 'N'#250'mero da bolsa'
-          Width = 109
+          Width = 106
           Visible = True
         end
         item
           Alignment = taCenter
           Expanded = False
-          FieldName = 'tipo_sangue'
+          FieldName = 'grupo_sanguineo'
           Title.Alignment = taCenter
           Title.Caption = 'ABO/Rh'
           Width = 41
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'tipo'
+          Title.Alignment = taCenter
+          Title.Caption = 'Tipo'
+          Width = 35
           Visible = True
         end
         item
@@ -69,6 +77,12 @@ inherited FrmConsDescarte: TFrmConsDescarte
           Title.Alignment = taCenter
           Title.Caption = 'Volume'
           Width = 55
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'motivo'
+          Title.Caption = 'Motivo'
           Visible = True
         end>
     end

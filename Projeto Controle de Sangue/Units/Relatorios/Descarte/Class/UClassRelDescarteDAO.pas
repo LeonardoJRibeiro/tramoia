@@ -43,13 +43,13 @@ begin
 
     pPersistencia.Query.SQL.Add('SELECT');
     pPersistencia.Query.SQL.Add('  d.id,');
-    pPersistencia.Query.SQL.Add('  d.data_coleta,');
     pPersistencia.Query.SQL.Add('  d.data_descarte,');
     pPersistencia.Query.SQL.Add('  d.motivo,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');
     pPersistencia.Query.SQL.Add('  b.rh,');
+    pPersistencia.Query.SQL.Add('  b.data_coleta,');
     pPersistencia.Query.SQL.Add('  pe.irradiacao,');
     pPersistencia.Query.SQL.Add('  pe.filtracao,');
     pPersistencia.Query.SQL.Add('  pe.fracionamento,');

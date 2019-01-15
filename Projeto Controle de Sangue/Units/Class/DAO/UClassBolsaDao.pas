@@ -146,7 +146,8 @@ begin
         lPersistencia.Query.SQL.Add('  htlv,');
         lPersistencia.Query.SQL.Add('  hemoglobinas,');
         lPersistencia.Query.SQL.Add('  data_vencimento,');
-        lPersistencia.Query.SQL.Add('  volume_atual');
+        lPersistencia.Query.SQL.Add('  volume_atual,');
+        lPersistencia.Query.SQL.Add('  data_coleta');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pNumero_Da_Bolsa,');
         lPersistencia.Query.SQL.Add('  :pTipo,');
@@ -163,7 +164,8 @@ begin
         lPersistencia.Query.SQL.Add('  :pHtlv,');
         lPersistencia.Query.SQL.Add('  :pHemoglobinas,');
         lPersistencia.Query.SQL.Add('  :pData_Vencimento,');
-        lPersistencia.Query.SQL.Add('  :pVolume_Atual');
+        lPersistencia.Query.SQL.Add('  :pVolume_Atual,');
+        lPersistencia.Query.SQL.Add('  :pData_Coleta');
         lPersistencia.Query.SQL.Add(');');
 
       end
@@ -186,7 +188,8 @@ begin
         lPersistencia.Query.SQL.Add('  htlv = :pHtlv,');
         lPersistencia.Query.SQL.Add('  hemoglobinas = :pHemoglobinas,');
         lPersistencia.Query.SQL.Add('  data_vencimento = :pData_Vencimento,');
-        lPersistencia.Query.SQL.Add('  volume_atual = :pVolume_Atual');
+        lPersistencia.Query.SQL.Add('  volume_atual = :pVolume_Atual,');
+        lPersistencia.Query.SQL.Add('  data_coleta :pData_Coleta');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
         lPersistencia.setParametro('pId', pObjeto.Id);
@@ -209,6 +212,7 @@ begin
       lPersistencia.setParametro('pHemoglobinas', pObjeto.Hemoglobinas);
       lPersistencia.setParametro('pData_Vencimento', pObjeto.DataVencimento);
       lPersistencia.setParametro('pVolume_Atual', pObjeto.VolumeAtual);
+      lPersistencia.setParametro('pData_Coleta', pObjeto.DataColeta);
 
       lPersistencia.Query.ExecSQL;
 
@@ -375,7 +379,8 @@ begin
       lPersistencia.Query.SQL.Add('  htlv,');
       lPersistencia.Query.SQL.Add('  hemoglobinas,');
       lPersistencia.Query.SQL.Add('  data_vencimento,');
-      lPersistencia.Query.SQL.Add('  volume_atual');
+      lPersistencia.Query.SQL.Add('  volume_atual,');
+      lPersistencia.Query.SQL.Add('  data_coleta');
       lPersistencia.Query.SQL.Add('FROM bolsa');
 
       lPersistencia.Query.SQL.Add('WHERE id= :pId');
@@ -400,6 +405,7 @@ begin
       pObjeto.Hemoglobinas := lPersistencia.Query.FieldByName('hemoglobinas').Asstring;
       pObjeto.DataVencimento := lPersistencia.Query.FieldByName('data_vencimento').AsDateTime;
       pObjeto.VolumeAtual := lPersistencia.Query.FieldByName('volume_atual').AsInteger;
+      pObjeto.DataColeta := lPersistencia.Query.FieldByName('data_coleta').AsDateTime;
 
       Result := True;
 

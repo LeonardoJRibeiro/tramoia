@@ -5,7 +5,7 @@ object FrmEntrada: TFrmEntrada
   BorderStyle = bsSingle
   Caption = 'Entrada de sangue'
   ClientHeight = 407
-  ClientWidth = 385
+  ClientWidth = 408
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,13 +22,14 @@ object FrmEntrada: TFrmEntrada
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 385
+    Width = 408
     Height = 366
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitWidth = 385
     object LabelData: TLabel
       Left = 83
       Top = 12
@@ -44,7 +45,7 @@ object FrmEntrada: TFrmEntrada
       Caption = 'N'#250'mero da bolsa(*)'
     end
     object LabelOrigem: TLabel
-      Left = 121
+      Left = 220
       Top = 104
       Width = 48
       Height = 13
@@ -58,7 +59,7 @@ object FrmEntrada: TFrmEntrada
       Caption = 'Tipo(*)'
     end
     object LabelAboSangue: TLabel
-      Left = 287
+      Left = 312
       Top = 57
       Width = 78
       Height = 13
@@ -86,18 +87,25 @@ object FrmEntrada: TFrmEntrada
       Caption = 'Respons'#225'vel(*)'
     end
     object Label1: TLabel
-      Left = 267
+      Left = 294
       Top = 75
       Width = 13
       Height = 13
       Caption = 'mL'
     end
     object LabelDataDeVencimento: TLabel
-      Left = 10
+      Left = 113
       Top = 104
       Width = 102
       Height = 13
       Caption = 'Dt. de vencimento(*)'
+    end
+    object LabelDtColeta: TLabel
+      Left = 10
+      Top = 104
+      Width = 76
+      Height = 13
+      Caption = 'Dt. de coleta(*)'
     end
     object EdtDataEntrada: TDateTimePicker
       Left = 83
@@ -118,18 +126,18 @@ object FrmEntrada: TFrmEntrada
       TabOrder = 3
     end
     object EdtOrigem: TEdit
-      Left = 121
+      Left = 220
       Top = 120
-      Width = 244
+      Width = 170
       Height = 21
       CharCase = ecUpperCase
       MaxLength = 15
-      TabOrder = 8
+      TabOrder = 9
     end
     object EdtVolume: TEdit
       Left = 217
       Top = 72
-      Width = 48
+      Width = 74
       Height = 21
       Alignment = taRightJustify
       MaxLength = 11
@@ -147,7 +155,7 @@ object FrmEntrada: TFrmEntrada
       TabOrder = 0
     end
     object ComboBoxAboBolsa: TComboBox
-      Left = 287
+      Left = 312
       Top = 72
       Width = 78
       Height = 22
@@ -188,7 +196,7 @@ object FrmEntrada: TFrmEntrada
     object ComboBoxResponsavel: TComboBox
       Left = 206
       Top = 27
-      Width = 159
+      Width = 184
       Height = 22
       AutoCompleteDelay = 1000
       Style = csOwnerDrawFixed
@@ -198,7 +206,7 @@ object FrmEntrada: TFrmEntrada
     object RadioGroupPai: TRadioGroup
       Left = 10
       Top = 147
-      Width = 169
+      Width = 180
       Height = 37
       Caption = 'Pai'
       Columns = 2
@@ -206,19 +214,19 @@ object FrmEntrada: TFrmEntrada
       Items.Strings = (
         'Positivo'
         'Negativo')
-      TabOrder = 9
+      TabOrder = 10
     end
     object GroupBoxProvaCompatibilidade: TGroupBox
       Left = 10
       Top = 190
-      Width = 355
+      Width = 380
       Height = 163
       Caption = 'Sorologias'
-      TabOrder = 11
+      TabOrder = 12
       object RadioGroupSifilis: TRadioGroup
         Left = 7
         Top = 14
-        Width = 162
+        Width = 172
         Height = 41
         Caption = 'S'#237'filis'
         Columns = 2
@@ -229,9 +237,9 @@ object FrmEntrada: TFrmEntrada
         TabOrder = 0
       end
       object RadioGroupChagas: TRadioGroup
-        Left = 182
+        Left = 201
         Top = 14
-        Width = 162
+        Width = 172
         Height = 41
         Caption = 'Chagas'
         Columns = 2
@@ -244,7 +252,7 @@ object FrmEntrada: TFrmEntrada
       object RadioGroupHepatiteB: TRadioGroup
         Left = 7
         Top = 61
-        Width = 162
+        Width = 172
         Height = 41
         Caption = 'Hepatite B'
         Columns = 2
@@ -255,9 +263,9 @@ object FrmEntrada: TFrmEntrada
         TabOrder = 2
       end
       object RadioGroupHepatiteC: TRadioGroup
-        Left = 182
+        Left = 201
         Top = 61
-        Width = 162
+        Width = 172
         Height = 41
         Caption = 'Hepatite C'
         Columns = 2
@@ -270,7 +278,7 @@ object FrmEntrada: TFrmEntrada
       object RadioGroupHIV: TRadioGroup
         Left = 7
         Top = 108
-        Width = 162
+        Width = 172
         Height = 41
         Caption = 'HIV I e II'
         Columns = 2
@@ -281,9 +289,9 @@ object FrmEntrada: TFrmEntrada
         TabOrder = 4
       end
       object RadioGroupHTLV: TRadioGroup
-        Left = 182
+        Left = 201
         Top = 109
-        Width = 162
+        Width = 172
         Height = 41
         Caption = 'HTLV I e II'
         Columns = 2
@@ -295,9 +303,9 @@ object FrmEntrada: TFrmEntrada
       end
     end
     object RadioGroupHemoglobina: TRadioGroup
-      Left = 195
+      Left = 210
       Top = 147
-      Width = 169
+      Width = 180
       Height = 37
       Caption = 'Hemoglobinas'
       Columns = 2
@@ -305,12 +313,21 @@ object FrmEntrada: TFrmEntrada
       Items.Strings = (
         'Positivo'
         'Negativo')
-      TabOrder = 10
+      TabOrder = 11
     end
     object EdtDataVencimento: TDateTimePicker
+      Left = 112
+      Top = 120
+      Width = 102
+      Height = 21
+      Date = 43248.939316319450000000
+      Time = 43248.939316319450000000
+      TabOrder = 8
+    end
+    object EdtDataColeta: TDateTimePicker
       Left = 10
       Top = 120
-      Width = 104
+      Width = 96
       Height = 21
       Date = 43248.939316319450000000
       Time = 43248.939316319450000000
@@ -320,17 +337,18 @@ object FrmEntrada: TFrmEntrada
   object PanelBottom: TPanel
     Left = 0
     Top = 366
-    Width = 385
+    Width = 408
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitWidth = 385
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9
-      Width = 115
+      Width = 125
       Height = 27
       Hint = 
         'Gravar as informa'#231#245'es de entrada. Voc'#234' pode utilizar o atalho pr' +
@@ -378,9 +396,9 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 250
+      Left = 265
       Top = 9
-      Width = 115
+      Width = 125
       Height = 27
       Hint = 'Sair. Voc'#234' pode utilizar o atalho pressionando a tecla ESC.'
       Caption = '&Sair - Esc'
@@ -426,9 +444,9 @@ object FrmEntrada: TFrmEntrada
       OnClick = BtnSairClick
     end
     object BtnNovo: TBitBtn
-      Left = 130
+      Left = 137
       Top = 9
-      Width = 115
+      Width = 125
       Height = 27
       Hint = 'Novo. Voc'#234' pode utilizar o atalho pressionando a tecla F7.'
       Caption = '&Novo - F7'

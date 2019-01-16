@@ -4,8 +4,8 @@ object FrmDescarte: TFrmDescarte
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Descarte de sangue'
-  ClientHeight = 347
-  ClientWidth = 442
+  ClientHeight = 335
+  ClientWidth = 435
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,16 +21,18 @@ object FrmDescarte: TFrmDescarte
   TextHeight = 13
   object PanelBottom: TPanel
     Left = 0
-    Top = 306
-    Width = 442
+    Top = 294
+    Width = 435
     Height = 41
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
+    ExplicitTop = 306
+    ExplicitWidth = 442
     object BtnGravar: TBitBtn
-      Left = 18
+      Left = 12
       Top = 9
       Width = 130
       Height = 27
@@ -80,7 +82,7 @@ object FrmDescarte: TFrmDescarte
       OnClick = BtnGravarClick
     end
     object BtnSair: TBitBtn
-      Left = 292
+      Left = 286
       Top = 9
       Width = 130
       Height = 27
@@ -128,7 +130,7 @@ object FrmDescarte: TFrmDescarte
       OnClick = BtnSairClick
     end
     object BtnNovo: TBitBtn
-      Left = 155
+      Left = 149
       Top = 9
       Width = 130
       Height = 27
@@ -179,29 +181,31 @@ object FrmDescarte: TFrmDescarte
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 442
-    Height = 306
+    Width = 435
+    Height = 294
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
+    ExplicitWidth = 442
+    ExplicitHeight = 306
     object LabelId: TLabel
-      Left = 19
+      Left = 16
       Top = 8
       Width = 32
       Height = 13
       Caption = 'Ordem'
     end
     object LabelData: TLabel
-      Left = 85
+      Left = 82
       Top = 8
       Width = 83
       Height = 13
       Caption = 'Data do descarte'
     end
     object LabelResponsavel: TLabel
-      Left = 210
+      Left = 207
       Top = 8
       Width = 75
       Height = 13
@@ -209,14 +213,14 @@ object FrmDescarte: TFrmDescarte
       FocusControl = ComboBoxResponsavel
     end
     object LabelMotivo: TLabel
-      Left = 19
+      Left = 16
       Top = 51
-      Width = 46
+      Width = 106
       Height = 13
-      Caption = 'Motivo(*)'
+      Caption = 'Motivo do descarte(*)'
     end
     object GroupBoxSangue: TGroupBox
-      Left = 11
+      Left = 8
       Top = 99
       Width = 412
       Height = 186
@@ -361,7 +365,7 @@ object FrmDescarte: TFrmDescarte
       end
     end
     object EdtId: TEdit
-      Left = 19
+      Left = 16
       Top = 23
       Width = 59
       Height = 21
@@ -372,7 +376,7 @@ object FrmDescarte: TFrmDescarte
       TabOrder = 0
     end
     object edtDataDescarte: TDateTimePicker
-      Left = 85
+      Left = 82
       Top = 23
       Width = 102
       Height = 21
@@ -381,7 +385,7 @@ object FrmDescarte: TFrmDescarte
       TabOrder = 1
     end
     object ComboBoxResponsavel: TComboBox
-      Left = 210
+      Left = 207
       Top = 23
       Width = 203
       Height = 22
@@ -391,7 +395,7 @@ object FrmDescarte: TFrmDescarte
       TabOrder = 2
     end
     object EdtMotivoDescarte: TEdit
-      Left = 19
+      Left = 16
       Top = 67
       Width = 394
       Height = 21

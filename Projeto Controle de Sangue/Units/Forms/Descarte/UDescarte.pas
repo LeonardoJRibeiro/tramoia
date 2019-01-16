@@ -479,6 +479,7 @@ begin
 
     Self.FIdBolsa := -1;
     Self.FIdProcedimentosEspeciais := -1;
+    Self.FNumBolsa := '-1';
   end;
 
 end;
@@ -648,7 +649,7 @@ begin
   lProcedimetoEspecial := TProcedimento_Especial.Create;
   try
 
-    lProcedimetoEspecial.Id := -1;
+    lProcedimetoEspecial.Id := Self.FIdProcedimentosEspeciais;
     lProcedimetoEspecial.Id_Saida := -1;
     lProcedimetoEspecial.Id_Descarte := Self.FId;
     lProcedimetoEspecial.Irradiacao := Copy(RadioGroupIrradiada.Items[RadioGroupIrradiada.ItemIndex], 1, 1);

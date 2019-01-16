@@ -189,7 +189,7 @@ begin
         lPersistencia.Query.SQL.Add('  hemoglobinas = :pHemoglobinas,');
         lPersistencia.Query.SQL.Add('  data_vencimento = :pData_Vencimento,');
         lPersistencia.Query.SQL.Add('  volume_atual = :pVolume_Atual,');
-        lPersistencia.Query.SQL.Add('  data_coleta :pData_Coleta');
+        lPersistencia.Query.SQL.Add('  data_coleta = :pData_Coleta');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
         lPersistencia.setParametro('pId', pObjeto.Id);

@@ -46,7 +46,7 @@ implementation
 {$R *.dfm}
 
 uses System.Math, UEntrada, UClassEntradaDao, UDMConexao, UClassMensagem, UClassBiblioteca, UClassForeignKeyForms,
-  UClassUsuarioDao, UClassBolsaDao;
+  UClassUsuarioDao, UClassBolsaDao, UAutenticacao;
 
 procedure TFrmConsEntrada.BtnAlterarClick(Sender: TObject);
 var
@@ -97,30 +97,35 @@ begin
           MB_YESNO + MB_ICONQUESTION) = IDYES) then
         begin
 
-          lEntradaDao := TEntradaDAO.Create(DMConexao.Conexao);
-          try
+          if (TFrmAutenticacao.getAutenticacao(Self.FIdUsuario)) then
+          begin
 
+            lEntradaDao := TEntradaDAO.Create(DMConexao.Conexao);
             try
 
-              if (lEntradaDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-              begin
-                lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+              try
 
-                EdtConsInvokeSearch(Self);
+                if (lEntradaDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+                begin
+                  lPosicaoQuery := Self.FPersistencia.Query.RecNo;
 
-                Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
+                  EdtConsInvokeSearch(Self);
+
+                  Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
+                end;
+
+              except
+                on E: Exception do
+                begin
+                  Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+                    MB_OK + MB_ICONSTOP);
+                end;
               end;
 
-            except
-              on E: Exception do
-              begin
-                Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
-                  MB_OK + MB_ICONSTOP);
-              end;
+            finally
+              lEntradaDao.Destroy;
             end;
 
-          finally
-            lEntradaDao.Destroy;
           end;
 
         end;

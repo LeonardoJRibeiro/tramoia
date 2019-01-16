@@ -29,8 +29,6 @@ object FrmDescarte: TFrmDescarte
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitTop = 296
-    ExplicitWidth = 432
     object BtnGravar: TBitBtn
       Left = 18
       Top = 9
@@ -188,8 +186,6 @@ object FrmDescarte: TFrmDescarte
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitWidth = 432
-    ExplicitHeight = 296
     object LabelId: TLabel
       Left = 19
       Top = 8

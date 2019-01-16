@@ -42,7 +42,8 @@ implementation
 
 {$R *.dfm}
 
-uses UClassMensagem, UClassUsuarioDao, UDMConexao, UClassSaidaDao, UClassBiblioteca, USaida, UClassForeignKeyForms;
+uses UClassMensagem, UClassUsuarioDao, UDMConexao, UClassSaidaDao, UClassBiblioteca, USaida, UClassForeignKeyForms,
+  UAutenticacao;
 { TFrmConsSaidas }
 
 procedure TFrmConsSaidas.BtnAlterarClick(Sender: TObject);
@@ -82,30 +83,35 @@ begin
         MB_YESNO + MB_ICONQUESTION) = IDYES) then
       begin
 
-        lSaidaDao := TSaidaDAO.Create(DMConexao.Conexao);
-        try
+        if (TFrmAutenticacao.getAutenticacao(Self.FIdUsuario)) then
+        begin
 
+          lSaidaDao := TSaidaDAO.Create(DMConexao.Conexao);
           try
 
-            if (lSaidaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-            begin
-              lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+            try
 
-              EdtConsInvokeSearch(Self);
+              if (lSaidaDao.excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+              begin
+                lPosicaoQuery := Self.FPersistencia.Query.RecNo;
 
-              Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
+                EdtConsInvokeSearch(Self);
+
+                Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
+              end;
+
+            except
+              on E: Exception do
+              begin
+                Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['saída', E.Message])), '1',
+                  MB_OK + MB_ICONSTOP);
+              end;
             end;
 
-          except
-            on E: Exception do
-            begin
-              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['saída', E.Message])), '1',
-                MB_OK + MB_ICONSTOP);
-            end;
+          finally
+            lSaidaDao.Destroy;
           end;
 
-        finally
-          lSaidaDao.Destroy;
         end;
 
       end;

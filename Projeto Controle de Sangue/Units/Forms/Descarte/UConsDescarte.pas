@@ -44,7 +44,7 @@ implementation
 {$R *.dfm}
 
 uses System.Math, UDMConexao, UClassMensagem, UClassBiblioteca, UClassForeignKeyForms,
-  UClassUsuarioDao, UClassBolsaDao, UClassDescarte, UClassDescarteDao, UDescarte;
+  UClassUsuarioDao, UClassBolsaDao, UClassDescarte, UClassDescarteDao, UDescarte, UAutenticacao;
 
 procedure TFrmConsDescarte.BtnAlterarClick(Sender: TObject);
 var
@@ -85,30 +85,35 @@ begin
         MB_YESNO + MB_ICONQUESTION) = IDYES) then
       begin
 
-        lDescarteDao := TDescarteDAO.Create(DMConexao.Conexao);
-        try
+        if (TFrmAutenticacao.getAutenticacao(Self.FIdUsuario)) then
+        begin
 
+          lDescarteDao := TDescarteDAO.Create(DMConexao.Conexao);
           try
 
-            if (lDescarteDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
-            begin
-              lPosicaoQuery := Self.FPersistencia.Query.RecNo;
+            try
 
-              EdtConsInvokeSearch(Self);
+              if (lDescarteDao.Excluir(Self.FPersistencia.Query.FieldByName('id').AsInteger)) then
+              begin
+                lPosicaoQuery := Self.FPersistencia.Query.RecNo;
 
-              Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
+                EdtConsInvokeSearch(Self);
+
+                Self.FPersistencia.Query.RecNo := lPosicaoQuery - 1;
+              end;
+
+            except
+              on E: Exception do
+              begin
+                Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+                  MB_OK + MB_ICONSTOP);
+              end;
             end;
 
-          except
-            on E: Exception do
-            begin
-              Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
-                MB_OK + MB_ICONSTOP);
-            end;
+          finally
+            lDescarteDao.Destroy;
           end;
 
-        finally
-          lDescarteDao.Destroy;
         end;
 
       end;

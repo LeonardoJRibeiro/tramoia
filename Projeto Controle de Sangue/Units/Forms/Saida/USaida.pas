@@ -277,6 +277,10 @@ begin
   RadioGroupTA.ItemIndex := 0;
   RadioGroupAGH.ItemIndex := 0;
   RadioGroup37.ItemIndex := 0;
+  RadioGroupIrradiada.ItemIndex := 1;
+  RadioGroupFiltrada.ItemIndex := 1;
+  RadioGroupFracionada.ItemIndex := 1;
+  RadioGroupFenotipada.ItemIndex := 1;
   ComboBoxResponsavel.SetFocus;
 
   BtnGravar.Enabled := true;

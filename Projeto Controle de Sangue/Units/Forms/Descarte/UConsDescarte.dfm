@@ -168,7 +168,8 @@ inherited FrmConsDescarte: TFrmConsDescarte
       inherited EdtCons: TSearchBox [3]
         Left = 163
         Width = 604
-        NumbersOnly = True
+        OnKeyDown = EdtConsKeyDown
+        OnKeyPress = EdtConsKeyPress
         OnInvokeSearch = EdtConsInvokeSearch
         ExplicitLeft = 163
         ExplicitWidth = 604

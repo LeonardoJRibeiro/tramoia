@@ -62,6 +62,7 @@ type
     procedure btnCadPacienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdtVolumeExit(Sender: TObject);
+    procedure EdtNumeroBolsaKeyPress(Sender: TObject; var Key: Char);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -314,7 +315,15 @@ begin
         if (lBolsaDao.getObjeto(pID_BOLSA, lBolsa)) then
         begin
 
-          EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          if (lBolsa.NumeroDoacoes > 0) then
+          begin
+            EdtNumeroBolsa.Text := lBolsa.NumeroBolsa + '-' + lBolsa.NumeroDoacoes.ToString;
+          end
+          else
+          begin
+            EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          end;
+
           Self.FNumBolsa := lBolsa.NumeroBolsa;
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.VolumeAtual.ToString;
@@ -432,14 +441,36 @@ procedure TFrmSaida.EdtNumeroBolsaExit(Sender: TObject);
 var
   lBolsaDao: TBolsaDAO;
   lVerificaNumBolsa: Boolean;
+  lPos: Integer;
+  lNumeroBolsa: string;
 begin
 
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
+    lPos := Pos('-', Trim(EdtNumeroBolsa.Text));
+
+    if (lPos <> 0) then
+    begin
+
+      if (Copy(Trim(EdtNumeroBolsa.Text), lPos + 1, Trim(EdtNumeroBolsa.Text).Length).Trim = '') then
+      begin
+        lNumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, Trim(EdtNumeroBolsa.Text).Length - 1).Trim;
+      end
+      else
+      begin
+        lNumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, lPos - 1).Trim;
+      end;
+
+    end
+    else
+    begin
+      lNumeroBolsa := Trim(EdtNumeroBolsa.Text);
+    end;
+
     if (Self.FId > 0) then
     begin
-      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> (EdtNumeroBolsa.Text)))
+      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> (lNumeroBolsa)))
     end
     else
     begin
@@ -449,8 +480,7 @@ begin
     if (lVerificaNumBolsa) then
     begin
 
-      if (not TFrmSelBolsa.getSelBolsa(TForeignKeyForms.FIdUSaida, Self.FIdUsuario, Trim(EdtNumeroBolsa.Text),
-        Self.FIdBolsa)) then
+      if (not TFrmSelBolsa.getSelBolsa(TForeignKeyForms.FIdUSaida, Self.FIdUsuario, lNumeroBolsa, Self.FIdBolsa)) then
       begin
         EdtNumeroBolsa.SetFocus;
         exit;
@@ -484,10 +514,10 @@ begin
           except
             on E: Exception do
             begin
-              raise Exception.Create('Erro ao verificar se o número da bolsa já esta vinculado a uma saída. Motivo ' +
-                E.Message);
               Self.FIdBolsa := -1;
               EdtNumeroBolsa.SetFocus;
+              raise Exception.Create('Erro ao verificar se o número da bolsa já esta vinculado a uma saída. Motivo ' +
+                E.Message);
             end;
           end;
 
@@ -518,6 +548,25 @@ begin
   else
   begin
     EdtVolume.Enabled := False;
+  end;
+
+end;
+
+procedure TFrmSaida.EdtNumeroBolsaKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  if (Key in ['-']) then
+  begin
+
+    if (Pos('-', Trim(EdtNumeroBolsa.Text)) > 0) then
+    begin
+      Key := #0;
+    end;
+
+  end
+  else if (not(Key in ['0' .. '9', #8])) then
+  begin
+    Key := #0;
   end;
 
 end;

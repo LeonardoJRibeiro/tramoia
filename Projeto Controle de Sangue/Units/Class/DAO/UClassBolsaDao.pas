@@ -147,7 +147,8 @@ begin
         lPersistencia.Query.SQL.Add('  hemoglobinas,');
         lPersistencia.Query.SQL.Add('  data_vencimento,');
         lPersistencia.Query.SQL.Add('  volume_atual,');
-        lPersistencia.Query.SQL.Add('  data_coleta');
+        lPersistencia.Query.SQL.Add('  data_coleta,');
+        lPersistencia.Query.SQL.Add('  numero_doacoes');
         lPersistencia.Query.SQL.Add(') VALUES (');
         lPersistencia.Query.SQL.Add('  :pNumero_Da_Bolsa,');
         lPersistencia.Query.SQL.Add('  :pTipo,');
@@ -165,7 +166,8 @@ begin
         lPersistencia.Query.SQL.Add('  :pHemoglobinas,');
         lPersistencia.Query.SQL.Add('  :pData_Vencimento,');
         lPersistencia.Query.SQL.Add('  :pVolume_Atual,');
-        lPersistencia.Query.SQL.Add('  :pData_Coleta');
+        lPersistencia.Query.SQL.Add('  :pData_Coleta,');
+        lPersistencia.Query.SQL.Add('  :pNumero_Doacoes');
         lPersistencia.Query.SQL.Add(');');
 
       end
@@ -189,7 +191,8 @@ begin
         lPersistencia.Query.SQL.Add('  hemoglobinas = :pHemoglobinas,');
         lPersistencia.Query.SQL.Add('  data_vencimento = :pData_Vencimento,');
         lPersistencia.Query.SQL.Add('  volume_atual = :pVolume_Atual,');
-        lPersistencia.Query.SQL.Add('  data_coleta = :pData_Coleta');
+        lPersistencia.Query.SQL.Add('  data_coleta = :pData_Coleta,');
+        lPersistencia.Query.SQL.Add('  numero_doacoes = :pNumero_Doacoes');
         lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
 
         lPersistencia.setParametro('pId', pObjeto.Id);
@@ -213,6 +216,7 @@ begin
       lPersistencia.setParametro('pData_Vencimento', pObjeto.DataVencimento);
       lPersistencia.setParametro('pVolume_Atual', pObjeto.VolumeAtual);
       lPersistencia.setParametro('pData_Coleta', pObjeto.DataColeta);
+      lPersistencia.setParametro('pNumero_Doacoes', pObjeto.NumeroDoacoes);
 
       lPersistencia.Query.ExecSQL;
 
@@ -234,6 +238,10 @@ begin
 end;
 
 function TBolsaDAO.getConsulta(const pNUMERO_DA_BOLSA: string; var pPersistencia: TPersistencia): Boolean;
+var
+  lPos: Integer;
+  lNumeroBolsa: string;
+  lNumeroDoacoes: Integer;
 begin
 
   try
@@ -242,15 +250,46 @@ begin
 
     pPersistencia.Query.SQL.Add('SELECT');
     pPersistencia.Query.SQL.Add('  id,');
-    pPersistencia.Query.SQL.Add('  numero_da_bolsa,');
+    pPersistencia.Query.SQL.Add('  CONCAT(numero_da_bolsa,' + QuotedStr('-') + ', numero_doacoes) AS numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  tipo,');
     pPersistencia.Query.SQL.Add('  CONCAT(abo, rh)AS grupo_sanguineo,');
     pPersistencia.Query.SQL.Add('  CONCAT(volume_atual,' + QuotedStr(' mL') + ') AS volume_atual');
     pPersistencia.Query.SQL.Add('FROM bolsa');
-    pPersistencia.Query.SQL.Add('WHERE numero_da_bolsa = :pNumero_Da_Bolsa');
-    pPersistencia.Query.SQL.Add('AND volume_atual > 0');
+    pPersistencia.Query.SQL.Add('WHERE 0=0');
 
-    pPersistencia.setParametro('pNumero_Da_Bolsa', pNUMERO_DA_BOLSA);
+    lPos := Pos('-', Trim(pNUMERO_DA_BOLSA));
+
+    if (lPos <> 0) then
+    begin
+
+      if (Copy(Trim(pNUMERO_DA_BOLSA), lPos + 1, Trim(pNUMERO_DA_BOLSA).Length).Trim = '') then
+      begin
+        lNumeroBolsa := Copy(Trim(pNUMERO_DA_BOLSA), 0, Trim(pNUMERO_DA_BOLSA).Length - 1).Trim;
+        lNumeroDoacoes := -1;
+      end
+      else
+      begin
+        lNumeroBolsa := Copy(Trim(pNUMERO_DA_BOLSA), 0, lPos - 1).Trim;
+        lNumeroDoacoes := Copy(Trim(pNUMERO_DA_BOLSA), lPos + 1, Trim(pNUMERO_DA_BOLSA).Length).Trim.ToInteger;
+      end;
+
+    end
+    else
+    begin
+      lNumeroBolsa := Trim(pNUMERO_DA_BOLSA);
+      lNumeroDoacoes := -1;
+    end;
+
+    pPersistencia.Query.SQL.Add('AND numero_da_bolsa = :pNumero_Da_Bolsa');
+    pPersistencia.setParametro('pNumero_Da_Bolsa', lNumeroBolsa);
+
+    if (lNumeroDoacoes > 0) then
+    begin
+      pPersistencia.Query.SQL.Add('AND numero_doacoes = :pNumero_Doacoes');
+      pPersistencia.setParametro('pNumero_Doacoes', lNumeroDoacoes);
+    end;
+
+    pPersistencia.Query.SQL.Add('AND volume_atual > 0');
 
     pPersistencia.Query.Open;
 
@@ -380,7 +419,8 @@ begin
       lPersistencia.Query.SQL.Add('  hemoglobinas,');
       lPersistencia.Query.SQL.Add('  data_vencimento,');
       lPersistencia.Query.SQL.Add('  volume_atual,');
-      lPersistencia.Query.SQL.Add('  data_coleta');
+      lPersistencia.Query.SQL.Add('  data_coleta,');
+      lPersistencia.Query.SQL.Add('  numero_doacoes');
       lPersistencia.Query.SQL.Add('FROM bolsa');
 
       lPersistencia.Query.SQL.Add('WHERE id= :pId');
@@ -406,6 +446,7 @@ begin
       pObjeto.DataVencimento := lPersistencia.Query.FieldByName('data_vencimento').AsDateTime;
       pObjeto.VolumeAtual := lPersistencia.Query.FieldByName('volume_atual').AsInteger;
       pObjeto.DataColeta := lPersistencia.Query.FieldByName('data_coleta').AsDateTime;
+      pObjeto.NumeroDoacoes := lPersistencia.Query.FieldByName('numero_doacoes').AsInteger;
 
       Result := True;
 

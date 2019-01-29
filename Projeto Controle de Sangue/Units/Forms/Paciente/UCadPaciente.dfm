@@ -140,10 +140,6 @@ object FrmCadPaciente: TFrmCadPaciente
     TabOrder = 1
     object TabSheetGeral: TTabSheet
       Caption = 'Geral'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBoxDadosPessoais: TGroupBox
         AlignWithMargins = True
         Left = 3
@@ -339,10 +335,10 @@ object FrmCadPaciente: TFrmCadPaciente
         object EdtSus: TMaskEdit
           Left = 365
           Top = 77
-          Width = 113
+          Width = 111
           Height = 21
-          EditMask = '!99999999999 9999 9;0;_'
-          MaxLength = 18
+          EditMask = '!9999999999 9999 9;0;_'
+          MaxLength = 17
           TabOrder = 6
           Text = ''
           OnExit = EdtSusExit
@@ -548,10 +544,6 @@ object FrmCadPaciente: TFrmCadPaciente
     object TabSheetObservacoes: TTabSheet
       Caption = 'Observa'#231#245'es'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object MemoObservacoes: TMemo
         Left = 11
         Top = 7

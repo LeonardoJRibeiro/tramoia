@@ -113,11 +113,6 @@ begin
       lPassWord := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'password', '');
       lHostName := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Conexao', 'hostname', 'localhost');
 
-      // Meus documentos.
-      { lStringListScript.Add('mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' +
-        lUserName + ' --password="' + lPassWord + '" -h ' + lHostName + ' > ' +
-        '"%userprofile%\documents\Controle de sangue\Backups\backup_%data%.sql"'); }
-
       lStringListScript.Add('mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u ' +
         lUserName + ' --password="' + lPassWord + '" -h ' + lHostName + ' > ' + '"%~dp0Backup\backup_%data%.sql"');
 

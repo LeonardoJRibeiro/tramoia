@@ -52,6 +52,7 @@ type
     procedure ComboBoxAboBolsaEnter(Sender: TObject);
     procedure ComboBoxTipoEnter(Sender: TObject);
     procedure ComboBoxTipoExit(Sender: TObject);
+    procedure EdtNumeroBolsaKeyPress(Sender: TObject; var Key: Char);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -263,7 +264,15 @@ begin
         if (Result) then
         begin
 
-          EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          if (lBolsa.NumeroDoacoes > 0) then
+          begin
+            EdtNumeroBolsa.Text := lBolsa.NumeroBolsa + '-' + lBolsa.NumeroDoacoes.ToString;
+          end
+          else
+          begin
+            EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          end;
+
           Self.FNumBolsa := lBolsa.NumeroBolsa;
           Self.FTipo := lBolsa.Tipo;
           ComboBoxTipo.ItemIndex := (ComboBoxTipo.Items.IndexOf(Trim(lBolsa.Tipo)));
@@ -434,6 +443,25 @@ begin
 
 end;
 
+procedure TFrmEntrada.EdtNumeroBolsaKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  if (Key in ['-']) then
+  begin
+
+    if (Pos('-', Trim(EdtNumeroBolsa.Text)) > 0) then
+    begin
+      Key := #0;
+    end;
+
+  end
+  else if (not(Key in ['0' .. '9', #8])) then
+  begin
+    Key := #0;
+  end;
+
+end;
+
 procedure TFrmEntrada.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 
@@ -520,6 +548,8 @@ function TFrmEntrada.getExisteBolsa: Boolean;
 var
   lVerificaNumBolsa: Boolean;
   lBolsaDao: TBolsaDao;
+  lPos: Integer;
+  lNumeroBolsa: string;
 begin
 
   Result := False;
@@ -527,10 +557,30 @@ begin
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
+    lPos := Pos('-', Trim(EdtNumeroBolsa.Text));
+
+    if (lPos <> 0) then
+    begin
+
+      if (Copy(Trim(EdtNumeroBolsa.Text), lPos + 1, Trim(EdtNumeroBolsa.Text).Length).Trim = '') then
+      begin
+        lNumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, Trim(EdtNumeroBolsa.Text).Length - 1).Trim;
+      end
+      else
+      begin
+        lNumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, lPos - 1).Trim;
+      end;
+
+    end
+    else
+    begin
+      lNumeroBolsa := Trim(EdtNumeroBolsa.Text);
+    end;
+
     lVerificaNumBolsa := True;
     if (Self.FId > 0) then
     begin
-      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> Trim(EdtNumeroBolsa.Text)) or
+      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> Trim(lNumeroBolsa)) or
         (Trim(Self.FTipo) <> Trim(ComboBoxTipo.Text)));
     end;
 
@@ -540,10 +590,10 @@ begin
       lBolsaDao := TBolsaDao.Create(DMConexao.Conexao);
       try
 
-        Result := lBolsaDao.getExiste(EdtNumeroBolsa.Text, ComboBoxTipo.Text);
+        Result := lBolsaDao.getExiste(lNumeroBolsa, ComboBoxTipo.Text);
         if (Result) then
         begin
-          Application.MessageBox(pWideChar('Bolsa de n° ' + EdtNumeroBolsa.Text + ' e tipo ' + ComboBoxTipo.Text +
+          Application.MessageBox(pWideChar('Bolsa de n° ' + lNumeroBolsa + ' e tipo ' + ComboBoxTipo.Text +
             ' já cadastrada.'), 'Aviso', MB_ICONWARNING + MB_OK);
 
           EdtNumeroBolsa.SetFocus;
@@ -563,13 +613,38 @@ function TFrmEntrada.SalvaBolsa: Boolean;
 var
   lBolsaDao: TBolsaDao;
   lBolsa: TBolsa;
+  lPos: Integer;
 begin
 
   lBolsa := TBolsa.Create;
   try
 
     lBolsa.Id := Self.FIdBolsa;
-    lBolsa.NumeroBolsa := EdtNumeroBolsa.Text;
+
+    lPos := Pos('-', Trim(EdtNumeroBolsa.Text));
+
+    if (lPos <> 0) then
+    begin
+
+      if (Copy(Trim(EdtNumeroBolsa.Text), lPos, Trim(EdtNumeroBolsa.Text).Length).Trim = '') then
+      begin
+        lBolsa.NumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, Trim(EdtNumeroBolsa.Text).Length - 1).Trim;
+        lBolsa.NumeroDoacoes := -1;
+      end
+      else
+      begin
+        lBolsa.NumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, lPos - 1).Trim;
+        lBolsa.NumeroDoacoes := Copy(Trim(EdtNumeroBolsa.Text), lPos + 1, Trim(EdtNumeroBolsa.Text).Length)
+          .Trim.ToInteger;
+      end;
+
+    end
+    else
+    begin
+      lBolsa.NumeroBolsa := Trim(EdtNumeroBolsa.Text);
+      lBolsa.NumeroDoacoes := -1;
+    end;
+
     lBolsa.Tipo := ComboBoxTipo.Text;
     lBolsa.Abo := Copy(ComboBoxAboBolsa.Text, 0, string(ComboBoxAboBolsa.Text).Length - 1);
     lBolsa.Rh := Copy(ComboBoxAboBolsa.Text, string(ComboBoxAboBolsa.Text).Length,
@@ -630,7 +705,7 @@ begin
     lEntrada.Id := StrToIntDef(EdtOrdemSaida.Text, -1);
     lEntrada.IdUsuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
     lEntrada.IdBolsa := Self.FIdBolsa;
-    lEntrada.DataEntrada := Now;
+    lEntrada.DataEntrada := EdtDataEntrada.Date;
 
     lEntradaDAO := TEntradaDAO.Create(DMConexao.Conexao);
     try

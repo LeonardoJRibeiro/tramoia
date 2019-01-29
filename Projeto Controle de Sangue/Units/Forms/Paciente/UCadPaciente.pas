@@ -574,7 +574,7 @@ begin
   if (not Trim(EdtSus.Text).IsEmpty) then
   begin
 
-    if (Trim(EdtSus.Text).Length <> 16) then
+    if (Trim(EdtSus.Text).Length <> 15) then
     begin
 
       Application.MessageBox(PChar(TMensagem.getMensagem(17)), 'Atenção', MB_ICONWARNING + MB_OK);

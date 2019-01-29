@@ -29,8 +29,6 @@ object FrmDescarte: TFrmDescarte
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitTop = 306
-    ExplicitWidth = 442
     object BtnGravar: TBitBtn
       Left = 12
       Top = 9
@@ -188,8 +186,6 @@ object FrmDescarte: TFrmDescarte
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitWidth = 442
-    ExplicitHeight = 306
     object LabelId: TLabel
       Left = 16
       Top = 8
@@ -277,9 +273,9 @@ object FrmDescarte: TFrmDescarte
         Width = 191
         Height = 21
         MaxLength = 20
-        NumbersOnly = True
         TabOrder = 0
         OnExit = EdtNumeroBolsaExit
+        OnKeyPress = EdtNumeroBolsaKeyPress
       end
       object EdtTipo: TEdit
         Left = 273

@@ -70,7 +70,7 @@ object FrmRlRelDescarte: TFrmRlRelDescarte
       Borders.DrawRight = True
       Borders.DrawBottom = True
       object RLLabelDataColeta: TRLLabel
-        Left = 54
+        Left = 55
         Top = 20
         Width = 57
         Height = 16
@@ -90,7 +90,7 @@ object FrmRlRelDescarte: TFrmRlRelDescarte
         ParentFont = False
       end
       object RLPanel1: TRLPanel
-        Left = 114
+        Left = 115
         Top = 0
         Width = 1
         Height = 56
@@ -410,7 +410,7 @@ object FrmRlRelDescarte: TFrmRlRelDescarte
       Borders.FixedBottom = True
       BeforePrint = RLBand1BeforePrint
       object RLDBTextDataDescarte: TRLDBText
-        Left = 54
+        Left = 55
         Top = 7
         Width = 57
         Height = 15
@@ -490,7 +490,7 @@ object FrmRlRelDescarte: TFrmRlRelDescarte
         Text = ''
       end
       object RLPanel13: TRLPanel
-        Left = 114
+        Left = 115
         Top = 0
         Width = 1
         Height = 30

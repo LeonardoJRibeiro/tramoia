@@ -251,7 +251,8 @@ begin
     except
       on E: Exception do
       begin
-        raise Exception.Create(E.Message);
+        Application.MessageBox(PChar(Format('Erro ao gerar backup. Motivo : %S', [E.Message])), PChar('Erro'),
+          MB_OK + MB_ICONERROR);
       end;
     end;
 

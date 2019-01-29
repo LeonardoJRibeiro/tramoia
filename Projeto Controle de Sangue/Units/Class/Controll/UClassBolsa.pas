@@ -26,6 +26,7 @@ type
     FDataVencimento: TDate;
     FVolumeAtual: Integer;
     FDataColeta: TDate;
+    FNumeroDoacoes: Integer;
 
     function getAbo: string;
     function getId: Integer;
@@ -45,6 +46,7 @@ type
     function getDataVencimento: TDate;
     function getVolumeAtual: Integer;
     function getDataColeta: TDate;
+    function getNumeroDoacoes: Integer;
 
     procedure setAbo(const pABO: string);
     procedure setId(const pID: Integer);
@@ -64,6 +66,7 @@ type
     procedure setDataVencimento(const pDATAVENCIMENTO: TDate);
     procedure setVolumeAtual(const pVOLUMEATUAL: Integer);
     procedure setDataColeta(const pDATACOLETA: TDate);
+    procedure setNumeroDoacoes(const pNUMERODOACOES: Integer);
 
   public
 
@@ -85,6 +88,7 @@ type
     property DataVencimento: TDate read getDataVencimento write setDataVencimento;
     property VolumeAtual: Integer read getVolumeAtual write setVolumeAtual;
     property DataColeta: TDate read getDataColeta write setDataColeta;
+    property NumeroDoacoes: Integer read getNumeroDoacoes write setNumeroDoacoes;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -160,6 +164,11 @@ end;
 function TBolsa.getNumeroBolsa: string;
 begin
   Result := Self.FNumeroBolsa;
+end;
+
+function TBolsa.getNumeroDoacoes: Integer;
+begin
+  Result := Self.FNumeroDoacoes;
 end;
 
 function TBolsa.getOrigem: string;
@@ -250,6 +259,11 @@ end;
 procedure TBolsa.setNumeroBolsa(const pNUMERO_DA_BOLSA: string);
 begin
   Self.FNumeroBolsa := pNUMERO_DA_BOLSA;
+end;
+
+procedure TBolsa.setNumeroDoacoes(const pNUMERODOACOES: Integer);
+begin
+  Self.FNumeroDoacoes := pNUMERODOACOES;
 end;
 
 procedure TBolsa.setOrigem(const pORIGEM: string);

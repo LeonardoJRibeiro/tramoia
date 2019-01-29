@@ -26,6 +26,8 @@ type
     procedure ComboBoxTipoConsChange(Sender: TObject);
     procedure BtnLocalizarClick(Sender: TObject);
     procedure EdtDataFinalExit(Sender: TObject);
+    procedure EdtConsKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtConsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -157,10 +159,23 @@ begin
 
   case (ComboBoxTipoCons.ItemIndex) of
 
-    0, 1: // 0 = Código e 1 = Número da bolsa.
+    0: // Código
       begin
 
-        EdtCons.MaxLength := IfThen(ComboBoxTipoCons.ItemIndex = 0, 11, 20);
+        EdtCons.MaxLength := 11;
+
+        EdtCons.SetFocus;
+
+        EdtCons.NumbersOnly := True;
+
+      end;
+
+    1: // Número da bolsa.
+      begin
+
+        EdtCons.MaxLength := 20;
+
+        EdtCons.NumbersOnly := False;
 
         EdtCons.SetFocus;
 
@@ -218,6 +233,7 @@ end;
 procedure TFrmConsDescarte.EdtConsInvokeSearch(Sender: TObject);
 var
   lDescarteDao: TDescarteDAO;
+  lChave: string;
 begin
   inherited;
 
@@ -272,6 +288,42 @@ begin
 
   finally
     lDescarteDao.Destroy;
+  end;
+
+end;
+
+procedure TFrmConsDescarte.EdtConsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+
+  if (Key = VK_RETURN) then
+  begin
+    EdtConsInvokeSearch(Self);
+  end;
+
+end;
+
+procedure TFrmConsDescarte.EdtConsKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+  if (ComboBoxTipoCons.ItemIndex = 1) then
+  begin
+
+    if (Key in ['-']) then
+    begin
+
+      if (Pos('-', Trim(EdtCons.Text)) > 0) then
+      begin
+        Key := #0;
+      end;
+
+    end
+    else if (not(Key in ['0' .. '9', #8])) then
+    begin
+      Key := #0;
+    end;
+
   end;
 
 end;

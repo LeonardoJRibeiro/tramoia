@@ -29,7 +29,6 @@ object FrmEntrada: TFrmEntrada
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitWidth = 385
     object LabelData: TLabel
       Left = 83
       Top = 12
@@ -122,8 +121,8 @@ object FrmEntrada: TFrmEntrada
       Width = 144
       Height = 21
       MaxLength = 20
-      NumbersOnly = True
       TabOrder = 3
+      OnKeyPress = EdtNumeroBolsaKeyPress
     end
     object EdtOrigem: TEdit
       Left = 220
@@ -344,7 +343,6 @@ object FrmEntrada: TFrmEntrada
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitWidth = 385
     object BtnGravar: TBitBtn
       Left = 10
       Top = 9

@@ -71,6 +71,10 @@ end;
 
 function TEntradaDAO.getConsulta(const pCHAVE: string; const pDATAINI, pDATAFIM: TDate; const pTIPOCONS: SmallInt;
   var pPersistencia: TPersistencia): Boolean;
+var
+  lPos: Integer;
+  lNumeroBolsa: string;
+  lNumeroDoacoes: Integer;
 begin
 
   try
@@ -81,7 +85,8 @@ begin
     pPersistencia.Query.SQL.Add('  e.id,');
     pPersistencia.Query.SQL.Add('  u.nome AS responsavel,');
     pPersistencia.Query.SQL.Add('  e.data_entrada,');
-    pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
+    pPersistencia.Query.SQL.Add('  IF(b.numero_doacoes > 0 , CONCAT(b.numero_da_bolsa, ' + QuotedStr('-') +
+      ', b.numero_doacoes), b.numero_da_bolsa) AS numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  CONCAT(b.abo, b.rh) AS grupo_sanguineo,');
     pPersistencia.Query.SQL.Add('  b.id AS id_bolsa,');
     pPersistencia.Query.SQL.Add('  b.origem,');
@@ -121,8 +126,38 @@ begin
 
           if (not pCHAVE.Trim.IsEmpty) then
           begin
+
+            lPos := Pos('-', Trim(pCHAVE));
+
+            if (lPos <> 0) then
+            begin
+
+              if (Copy(Trim(pCHAVE), lPos + 1, Trim(pCHAVE).Length).Trim = '') then
+              begin
+                lNumeroBolsa := Copy(Trim(pCHAVE), 0, Trim(pCHAVE).Length - 1).Trim;
+                lNumeroDoacoes := -1;
+              end
+              else
+              begin
+                lNumeroBolsa := Copy(Trim(pCHAVE), 0, lPos - 1).Trim;
+                lNumeroDoacoes := Copy(Trim(pCHAVE), lPos + 1, Trim(pCHAVE).Length).Trim.ToInteger;
+              end;
+
+            end
+            else
+            begin
+              lNumeroBolsa := Trim(pCHAVE);
+              lNumeroDoacoes := -1;
+            end;
+
             pPersistencia.Query.SQL.Add('AND b.numero_da_bolsa = :pNumero_Da_Bolsa');
-            pPersistencia.setParametro('pNumero_Da_Bolsa', pCHAVE);
+            pPersistencia.setParametro('pNumero_Da_Bolsa', lNumeroBolsa);
+
+            if (lNumeroDoacoes > 0) then
+            begin
+              pPersistencia.Query.SQL.Add('AND b.numero_doacoes = :pNumero_Doacoes');
+              pPersistencia.setParametro('pNumero_Doacoes', lNumeroDoacoes);
+            end;
 
             pPersistencia.Query.SQL.Add('ORDER BY');
             pPersistencia.Query.SQL.Add('  e.id,');

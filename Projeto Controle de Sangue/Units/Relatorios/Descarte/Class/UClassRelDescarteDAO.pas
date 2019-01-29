@@ -45,7 +45,8 @@ begin
     pPersistencia.Query.SQL.Add('  d.id,');
     pPersistencia.Query.SQL.Add('  d.data_descarte,');
     pPersistencia.Query.SQL.Add('  d.motivo,');
-    pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
+    pPersistencia.Query.SQL.Add('  IF(b.numero_doacoes > 0 , CONCAT(b.numero_da_bolsa, ' + QuotedStr('-') +
+      ', b.numero_doacoes), b.numero_da_bolsa) AS numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  b.abo,');
     pPersistencia.Query.SQL.Add('  b.rh,');

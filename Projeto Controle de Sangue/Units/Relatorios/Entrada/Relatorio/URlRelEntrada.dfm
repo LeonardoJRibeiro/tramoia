@@ -683,7 +683,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
         Transparent = False
       end
       object RLPanel8: TRLPanel
-        Left = 208
+        Left = 207
         Top = 0
         Width = 1
         Height = 30

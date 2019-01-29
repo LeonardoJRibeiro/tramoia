@@ -49,7 +49,8 @@ begin
     pPersistencia.Query.SQL.Add('  p.nome,');
     pPersistencia.Query.SQL.Add('  p.num_prontuario,');
     pPersistencia.Query.SQL.Add('  CONCAT(p.abo, p.rh) AS abo_pac,');
-    pPersistencia.Query.SQL.Add('  b.numero_da_bolsa,');
+    pPersistencia.Query.SQL.Add('  IF(b.numero_doacoes > 0 , CONCAT(b.numero_da_bolsa, ' + QuotedStr('-') +
+      ', b.numero_doacoes), b.numero_da_bolsa) AS numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  b.tipo,');
     pPersistencia.Query.SQL.Add('  pe.irradiacao,');
     pPersistencia.Query.SQL.Add('  pe.filtracao,');

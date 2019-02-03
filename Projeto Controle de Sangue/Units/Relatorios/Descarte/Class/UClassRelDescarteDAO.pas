@@ -109,6 +109,7 @@ begin
 
     pPersistencia.Query.SQL.Add('ORDER BY');
     pPersistencia.Query.SQL.Add('  d.data_descarte,');
+    pPersistencia.Query.SQL.Add('  d.id,');
     pPersistencia.Query.SQL.Add('  b.numero_da_bolsa');
 
     pPersistencia.Query.Open;

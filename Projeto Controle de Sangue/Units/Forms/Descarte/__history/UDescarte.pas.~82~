@@ -43,6 +43,7 @@ type
     procedure EdtNumeroBolsaExit(Sender: TObject);
     procedure EdtVolumeExit(Sender: TObject);
     procedure BtnGravarClick(Sender: TObject);
+    procedure EdtNumeroBolsaKeyPress(Sender: TObject; var Key: Char);
   private
     FForeignFormKey: SmallInt;
     FIdUsuario: Integer;
@@ -219,7 +220,15 @@ begin
         if (lBolsaDao.getObjeto(pID_BOLSA, lBolsa)) then
         begin
 
-          EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          if (lBolsa.NumeroDoacoes > 0) then
+          begin
+            EdtNumeroBolsa.Text := lBolsa.NumeroBolsa + '-' + lBolsa.NumeroDoacoes.ToString;
+          end
+          else
+          begin
+            EdtNumeroBolsa.Text := lBolsa.NumeroBolsa;
+          end;
+
           Self.FNumBolsa := lBolsa.NumeroBolsa;
           EdtTipo.Text := lBolsa.Tipo;
           EdtVolume.Text := lBolsa.VolumeAtual.ToString;
@@ -319,14 +328,36 @@ procedure TFrmDescarte.EdtNumeroBolsaExit(Sender: TObject);
 var
   lBolsaDao: TBolsaDAO;
   lVerificaNumBolsa: Boolean;
+  lPos: Integer;
+  lNumeroBolsa: string;
 begin
 
   if (not Trim(EdtNumeroBolsa.Text).IsEmpty) then
   begin
 
+   lPos := Pos('-', Trim(EdtNumeroBolsa.Text));
+
+    if (lPos <> 0) then
+    begin
+
+      if (Copy(Trim(EdtNumeroBolsa.Text), lPos + 1, Trim(EdtNumeroBolsa.Text).Length).Trim = '') then
+      begin
+        lNumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, Trim(EdtNumeroBolsa.Text).Length - 1).Trim;
+      end
+      else
+      begin
+        lNumeroBolsa := Copy(Trim(EdtNumeroBolsa.Text), 0, lPos - 1).Trim;
+      end;
+
+    end
+    else
+    begin
+      lNumeroBolsa := Trim(EdtNumeroBolsa.Text);
+    end;
+
     if (Self.FId > 0) then
     begin
-      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> (EdtNumeroBolsa.Text)))
+      lVerificaNumBolsa := ((Trim(Self.FNumBolsa) <> (lNumeroBolsa)))
     end
     else
     begin
@@ -409,6 +440,25 @@ begin
 
 end;
 
+procedure TFrmDescarte.EdtNumeroBolsaKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  if (Key in ['-']) then
+  begin
+
+    if (Pos('-', Trim(EdtNumeroBolsa.Text)) > 0) then
+    begin
+      Key := #0;
+    end;
+
+  end
+  else if (not(Key in ['0' .. '9', #8])) then
+  begin
+    Key := #0;
+  end;
+
+end;
+
 procedure TFrmDescarte.EdtVolumeExit(Sender: TObject);
 var
   lVolumeAtual: Integer;
@@ -479,7 +529,6 @@ begin
 
     Self.FIdBolsa := -1;
     Self.FIdProcedimentosEspeciais := -1;
-    Self.FId := -1;
     Self.FNumBolsa := '-1';
   end;
 
@@ -650,7 +699,7 @@ begin
   lProcedimetoEspecial := TProcedimento_Especial.Create;
   try
 
-    lProcedimetoEspecial.Id := -1;
+    lProcedimetoEspecial.Id := Self.FIdProcedimentosEspeciais;
     lProcedimetoEspecial.Id_Saida := -1;
     lProcedimetoEspecial.Id_Descarte := Self.FId;
     lProcedimetoEspecial.Irradiacao := Copy(RadioGroupIrradiada.Items[RadioGroupIrradiada.ItemIndex], 1, 1);

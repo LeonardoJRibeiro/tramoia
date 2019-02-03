@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 14-Jan-2019 às 17:49
+-- Data de Criação: 02-Fev-2019 às 21:00
 -- Versão do servidor: 5.5.20
 -- versão do PHP: 5.3.11
 
@@ -44,24 +44,10 @@ CREATE TABLE IF NOT EXISTS `bolsa` (
   `hemoglobinas` char(1) NOT NULL DEFAULT 'N',
   `data_vencimento` date NOT NULL,
   `volume_atual` int(11) NOT NULL,
+  `data_coleta` date NOT NULL,
+  `numero_doacoes` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=94 ;
-
---
--- Extraindo dados da tabela `bolsa`
---
-
-INSERT INTO `bolsa` (`id`, `numero_da_bolsa`, `tipo`, `abo`, `rh`, `origem`, `volume`, `pai`, `sifilis`, `chagas`, `hepatiteb`, `hepatitec`, `hiv`, `htlv`, `hemoglobinas`, `data_vencimento`, `volume_atual`) VALUES
-(83, '123456789', 'CH', 'A', '+', 'HEMOGO', 430, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 0),
-(84, '123456789', 'PFC', 'B', '+', 'HEMOGO', 250, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 0),
-(85, '123456789', 'PLQ', 'A', '-', 'HEMOGO', 250, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 0),
-(87, '123456789', 'CRIO', 'A', '-', 'HEMOGO', 150, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 0),
-(88, '123789456', 'CH', 'A', '+', 'HEMOGO', 390, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 390),
-(89, '123789456', 'PFC', 'A', '+', 'HEMOGO', 250, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 250),
-(90, '123789456', 'CRIO', 'A', '-', 'HEMOGO', 450, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 450),
-(91, '123789456', 'PLQ', 'B', '+', 'HEMOGO', 250, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 250),
-(92, '1', 'CH', 'A', '-', 'HEMOGO', 150, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 0),
-(93, '2', 'CH', 'A', '-', 'HEMOGO', 123, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-01-14', 0);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
 
@@ -73,7 +59,6 @@ CREATE TABLE IF NOT EXISTS `descarte` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_bolsa` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `data_coleta` date NOT NULL,
   `motivo` varchar(100) NOT NULL,
   `volume` int(11) NOT NULL,
   `data_descarte` date NOT NULL,
@@ -81,16 +66,7 @@ CREATE TABLE IF NOT EXISTS `descarte` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_descarte_id_bolsa_idx` (`id_bolsa`),
   KEY `fk_descarte_id_usuario_idx` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
---
--- Extraindo dados da tabela `descarte`
---
-
-INSERT INTO `descarte` (`id`, `id_bolsa`, `id_usuario`, `data_coleta`, `motivo`, `volume`, `data_descarte`) VALUES
-(1, 87, 4, '2019-01-14', 'Vencidooo', 150, '2019-01-14'),
-(2, 92, 4, '2019-01-14', 'Vencidooo', 150, '2019-01-14'),
-(3, 93, 4, '2019-01-14', 'Vencidooo', 123, '2019-01-14');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Acionadores `descarte`
@@ -139,18 +115,7 @@ CREATE TABLE IF NOT EXISTS `endereco` (
   PRIMARY KEY (`id`),
   KEY `fk_endereco_id_municipio` (`id_municipio`),
   KEY `fk_endereco_id_paciente` (`id_paciente`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
-
---
--- Extraindo dados da tabela `endereco`
---
-
-INSERT INTO `endereco` (`id`, `id_municipio`, `id_paciente`, `logradouro`, `bairro`, `complemento`, `numero`, `cep`) VALUES
-(8, NULL, 11, NULL, NULL, NULL, NULL, NULL),
-(10, NULL, 13, NULL, NULL, NULL, NULL, NULL),
-(11, NULL, 14, NULL, NULL, NULL, 'S/N', NULL),
-(12, NULL, 15, NULL, NULL, NULL, NULL, NULL),
-(13, NULL, 16, NULL, NULL, NULL, NULL, NULL);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -166,23 +131,7 @@ CREATE TABLE IF NOT EXISTS `entrada` (
   PRIMARY KEY (`id`),
   KEY `fk_entrada_id_usuario` (`id_usuario`),
   KEY `fk_entrada_id_bolsa_idx` (`id_bolsa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
-
---
--- Extraindo dados da tabela `entrada`
---
-
-INSERT INTO `entrada` (`id`, `id_usuario`, `data_entrada`, `id_bolsa`) VALUES
-(1, 4, '2019-01-14', 83),
-(2, 4, '2019-01-14', 84),
-(3, 4, '2019-01-14', 85),
-(4, 4, '2019-01-14', 87),
-(5, 4, '2019-01-14', 88),
-(6, 4, '2019-01-14', 89),
-(7, 4, '2019-01-14', 90),
-(8, 4, '2019-01-14', 91),
-(9, 4, '2019-01-14', 92),
-(10, 4, '2019-01-14', 93);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Acionadores `entrada`
@@ -5858,18 +5807,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   UNIQUE KEY `num_prontuario_UNIQUE` (`num_prontuario`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   UNIQUE KEY `rg_UNIQUE` (`rg`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
-
---
--- Extraindo dados da tabela `paciente`
---
-
-INSERT INTO `paciente` (`id`, `nome`, `nome_pai`, `nome_mae`, `data_nascimento`, `sexo`, `num_prontuario`, `abo`, `rh`, `cpf`, `rg`, `sus`, `observacao`) VALUES
-(11, 'MARILDA CANDIDA DE MORAIS', NULL, NULL, '1998-02-18', 'F', '1137195', 'A', '+', NULL, NULL, NULL, NULL),
-(13, 'NORI NATALIA DE SOUZA OLIVEIRA', NULL, NULL, '2000-02-18', 'F', '2143548', 'A', '+', NULL, NULL, NULL, 'tETE DE OBSERVAÇOES'),
-(14, 'CAROLINA OLIVEIRA MORAIS', NULL, NULL, '1990-02-18', 'F', '1664109', 'O', '+', NULL, NULL, NULL, 'Teste de observações!'),
-(15, 'MARIA MAGALHÃES RIBEIRO', NULL, NULL, '1990-05-20', 'F', '1146644', 'A', '-', NULL, NULL, NULL, NULL),
-(16, 'VALDEMAR EMIRIO MATEUS', NULL, NULL, '1990-02-19', 'M', '2432443', 'O', '-', NULL, NULL, NULL, NULL);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -5888,19 +5826,7 @@ CREATE TABLE IF NOT EXISTS `procedimento_especial` (
   PRIMARY KEY (`id`),
   KEY `fk_proced_especial_id_saida_idx` (`id_saida`),
   KEY `fk_proced_especial_id_descarte_idx` (`id_descarte`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
-
---
--- Extraindo dados da tabela `procedimento_especial`
---
-
-INSERT INTO `procedimento_especial` (`id`, `id_saida`, `id_descarte`, `irradiacao`, `filtracao`, `fracionamento`, `fenotipagem`) VALUES
-(1, 1, NULL, 'N', 'N', 'N', 'N'),
-(2, 2, NULL, 'N', 'N', 'N', 'N'),
-(3, 3, NULL, 'N', 'N', 'N', 'N'),
-(4, NULL, 1, 'N', 'N', 'N', 'N'),
-(5, NULL, 2, 'N', 'N', 'N', 'N'),
-(6, NULL, 3, 'N', 'N', 'N', 'N');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -5925,15 +5851,6 @@ CREATE TABLE IF NOT EXISTS `saida` (
   KEY `fk_saida_id_usuario` (`id_usuario`),
   KEY `fk_saida_id_bolsa` (`id_bolsa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `saida`
---
-
-INSERT INTO `saida` (`id`, `id_paciente`, `id_usuario`, `id_bolsa`, `data_saida`, `hospital`, `pai`, `prova_compatibilidade_ta`, `prova_compatibilidade_agh`, `prova_compatibilidade_37`, `volume`) VALUES
-(1, 11, 4, 83, '2019-01-14', 'HMI', 'N', 'C', 'C', 'C', 430),
-(2, 14, 4, 84, '2019-01-14', 'HMI', 'N', 'C', 'C', 'C', 250),
-(3, 11, 4, 85, '2019-01-14', 'HMI', 'N', 'C', 'C', 'C', 250);
 
 --
 -- Acionadores `saida`
@@ -5978,7 +5895,7 @@ CREATE TABLE IF NOT EXISTS `telefone` (
   `tipo_telefone` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_id_paciente_idx` (`id_paciente`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -5992,16 +5909,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `senha` varchar(80) NOT NULL,
   `admin` char(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Extraindo dados da tabela `usuario`
---
-
-INSERT INTO `usuario` (`id`, `nome`, `senha`, `admin`) VALUES
-(4, 'DENISA', '68C0A78B', 'S'),
-(5, 'WALQUIRIA', '1810171B', 'S'),
-(6, 'HELIO', '959F84E6', 'S');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Constraints for dumped tables
@@ -6038,8 +5946,8 @@ ALTER TABLE `municipio`
 -- Limitadores para a tabela `procedimento_especial`
 --
 ALTER TABLE `procedimento_especial`
-  ADD CONSTRAINT `fk_proced_especial_id_saida` FOREIGN KEY (`id_saida`) REFERENCES `saida` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_proced_especial_id_descarte` FOREIGN KEY (`id_descarte`) REFERENCES `descarte` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_proced_especial_id_descarte` FOREIGN KEY (`id_descarte`) REFERENCES `descarte` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proced_especial_id_saida` FOREIGN KEY (`id_saida`) REFERENCES `saida` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `saida`

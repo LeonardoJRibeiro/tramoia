@@ -37,7 +37,7 @@ type
     EdtVolume: TEdit;
     BtnConsPaciente: TSpeedButton;
     EdtRegistroPaciente: TEdit;
-    DateTimePickerData: TDateTimePicker;
+    EdtDataSaida: TDateTimePicker;
     LabelData: TLabel;
     BtnNovo: TBitBtn;
     LabelResponsavel: TLabel;
@@ -267,7 +267,7 @@ begin
   EdtTipo.Enabled := False;
   EdtVolume.Enabled := False;
   EdtId.Clear;
-  DateTimePickerData.Date := now;
+  EdtDataSaida.Date := now;
   EdtRegistroPaciente.Clear;
   EdtNomePaciente.Clear;
   EdtNumeroBolsa.Clear;
@@ -404,7 +404,7 @@ begin
           EdtRegistroPacienteExit(Self);
           Self.CarregaDadosBolsa(lSaida.Id_Bolsa);
           EdtVolume.Text := lSaida.Volume.ToString;
-          DateTimePickerData.Date := lSaida.Data_Saida;
+          EdtDataSaida.Date := lSaida.Data_Saida;
           EdtHospital.Text := lSaida.Hospital;
           RadioGroupPai.ItemIndex := IfThen(lSaida.Pai = 'P', 0, 1);
           RadioGroupTA.ItemIndex := IfThen(lSaida.Prova_Compatibilidade_Ta = 'C', 0, 1);
@@ -701,7 +701,7 @@ begin
   else
   begin
     EdtHospital.Text := TBiblioteca.LeArquivoIni('cnfConfiguracoes.ini', 'Hospital', 'FrmConsSaidas.EdtHospital', '');
-    DateTimePickerData.Date := now;
+    EdtDataSaida.Date := now;
 
     setIndexByIdUsuario(Self.FIdUsuario);
     ComboBoxResponsavel.SetFocus;
@@ -1029,7 +1029,7 @@ begin
     lSaida.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
 
     lSaida.Id_Bolsa := Self.FIdBolsa;
-    lSaida.Data_Saida := now;
+    lSaida.Data_Saida := EdtDataSaida.Date;
     lSaida.Hospital := EdtHospital.Text;
     lSaida.Pai := Copy(RadioGroupPai.Items[RadioGroupPai.ItemIndex], 1, 1);
     lSaida.Prova_Compatibilidade_Ta := Copy(RadioGroupTA.Items[RadioGroupTA.ItemIndex], 1, 1);

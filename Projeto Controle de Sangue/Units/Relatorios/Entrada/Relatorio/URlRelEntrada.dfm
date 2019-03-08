@@ -63,7 +63,7 @@ object FrmRlRelEntrada: TFrmRlRelEntrada
       Top = 97
       Width = 1047
       Height = 56
-      BandType = btTitle
+      BandType = btHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = True

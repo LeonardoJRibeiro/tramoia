@@ -370,7 +370,7 @@ object FrmSaida: TFrmSaida
       ReadOnly = True
       TabOrder = 0
     end
-    object DateTimePickerData: TDateTimePicker
+    object EdtDataSaida: TDateTimePicker
       Left = 85
       Top = 23
       Width = 102

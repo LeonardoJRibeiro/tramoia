@@ -250,7 +250,8 @@ begin
 
     pPersistencia.Query.SQL.Add('SELECT');
     pPersistencia.Query.SQL.Add('  id,');
-    pPersistencia.Query.SQL.Add('  CONCAT(numero_da_bolsa,' + QuotedStr('-') + ', numero_doacoes) AS numero_da_bolsa,');
+    pPersistencia.Query.SQL.Add('  IF(numero_doacoes > 0 , CONCAT(numero_da_bolsa, ' + QuotedStr('-') +
+      ', numero_doacoes), numero_da_bolsa) AS numero_da_bolsa,');
     pPersistencia.Query.SQL.Add('  tipo,');
     pPersistencia.Query.SQL.Add('  CONCAT(abo, rh)AS grupo_sanguineo,');
     pPersistencia.Query.SQL.Add('  CONCAT(volume_atual,' + QuotedStr(' mL') + ') AS volume_atual');

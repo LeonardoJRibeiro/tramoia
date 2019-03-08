@@ -51,7 +51,7 @@ object FrmSelBolsa: TFrmSelBolsa
           FieldName = 'numero_da_bolsa'
           Title.Alignment = taCenter
           Title.Caption = 'N'#250'mero da bolsa'
-          Width = 165
+          Width = 164
           Visible = True
         end
         item

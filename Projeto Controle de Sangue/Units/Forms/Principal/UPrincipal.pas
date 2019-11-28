@@ -46,6 +46,7 @@ type
     Cadastro1: TMenuItem;
     Consultar1: TMenuItem;
     Descarte2: TMenuItem;
+    SpeedButton1: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -71,10 +72,10 @@ type
     procedure MenuItemRelEstoqueClick(Sender: TObject);
     procedure MenuItemGerarBackupClick(Sender: TObject);
     procedure MenuItemConsPacienteClick(Sender: TObject);
-    procedure BtnRetiradasClick(Sender: TObject);
     procedure Cadastro1Click(Sender: TObject);
     procedure Consultar1Click(Sender: TObject);
     procedure Descarte2Click(Sender: TObject);
+    procedure BtnRetiradasClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;

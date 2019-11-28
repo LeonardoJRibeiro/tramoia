@@ -246,6 +246,7 @@
         </DCCReference>
         <DCCReference Include="Units\Class\DAO\UClassProcedimento_EspecialDao.pas"/>
         <DCCReference Include="Units\Class\Controll\UClassProcedimento_Especial.pas"/>
+        <DCCReference Include="Units\Class\Utils\UClassPersistBaseDados.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

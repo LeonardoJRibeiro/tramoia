@@ -76,6 +76,7 @@ type
     procedure Consultar1Click(Sender: TObject);
     procedure Descarte2Click(Sender: TObject);
     procedure BtnRetiradasClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -96,7 +97,7 @@ implementation
 uses ShellAPI, UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
   URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
   USelCons, URelEstoque, UClassBiblioteca, UClassBibliotecaDao, UClassGeraBackup, UDescarte, UConsDescarte,
-  URelDescarte;
+  URelDescarte, Unit1, Unit2;
 
 procedure TFrmPrincipal.BtnConsultasClick(Sender: TObject);
 begin
@@ -152,6 +153,35 @@ begin
   end;
 
   Close;
+
+end;
+
+procedure TFrmPrincipal.Button1Click(Sender: TObject);
+var
+  lCliente: TGIPICliente;
+  lClienteDao: tgipiClienteDao;
+begin
+
+  lCliente := TGIPICliente.Create;
+  try
+
+    lCliente.Id := 5;
+    lCliente.Nome := 'João';
+    lCliente.Data := now;
+    lCliente.DataHora := now;
+
+    lClienteDao := tgipiClienteDao.Create(DMConexao.Conexao);
+    try
+
+      lClienteDao.Salvar(lCliente);
+
+    finally
+      lClienteDao.Destroy;
+    end;
+
+  finally
+    lCliente.Destroy;
+  end;
 
 end;
 

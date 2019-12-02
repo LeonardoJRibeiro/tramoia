@@ -2,9 +2,11 @@ unit UClassPaciente;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('paciente')]
   TPaciente = class(TPersistent)
   private
     FId: Integer;
@@ -50,18 +52,45 @@ type
     procedure setObservacao(const pOBSERVACAO: string);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('nome')]
     property Nome: string read getNome write setNome;
+
+    [TAtributo('nome_pai')]
     property Nome_Pai: string read getNome_Pai write setNome_Pai;
+
+    [TAtributo('nome_mae')]
     property Nome_Mae: string read getNome_Mae write setNome_Mae;
+
+    [TAtributo('data_nascimento')]
     property Data_Nascimento: TDate read getData_Nascimento write setData_Nascimento;
+
+    [TAtributo('sexo')]
     property Sexo: string read getSexo write setSexo;
+
+    [TAtributo('num_prontuario')]
     property Num_Prontuario: string read getNum_Prontuario write setNum_Prontuario;
+
+    [TAtributo('abo')]
     property Abo: string read getAbo write setAbo;
+
+    [TAtributo('rh')]
     property Rh: string read getRh write setRh;
+
+    [TAtributo('cpf')]
     property Cpf: string read getCpf write setCpf;
+
+    [TAtributo('rg')]
     property Rg: string read getRg write setRg;
+
+    [TAtributo('sus')]
     property Sus: string read getSus write setSus;
+
+    [TAtributo('observacao')]
     property Observacao: string read getObservacao write setObservacao;
 
     constructor Create; overload;

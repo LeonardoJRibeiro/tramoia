@@ -75,7 +75,8 @@ uses
   USelBolsa in 'Units\Forms\Saida\USelBolsa.pas' {FrmSelBolsa},
   UClassProcedimento_EspecialDao in 'Units\Class\DAO\UClassProcedimento_EspecialDao.pas',
   UClassProcedimento_Especial in 'Units\Class\Controll\UClassProcedimento_Especial.pas',
-  UClassPersistBaseDados in 'Units\Class\Utils\UClassPersistBaseDados.pas';
+  UClassPersistBaseDados in 'Units\Class\Utils\UClassPersistBaseDados.pas',
+  UAtributos in 'Units\Class\Utils\UAtributos.pas';
 
 {$R *.res}
 

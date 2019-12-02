@@ -2,18 +2,14 @@ unit UClassPacienteDAO;
 
 interface
 
-uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassPaciente, System.Variants;
+uses System.Classes, System.SysUtils, UClassPersistencia, UClassPaciente, System.Variants,
+  UClassPersistBaseDados;
 
 type
-  TPacienteDAO = class(TInterfacedPersistent, IInterfaceDao<TPaciente>)
+  TPacienteDAO = class(TPersistBase<TPaciente>)
   private
-    FConexao: TConexao;
 
   public
-    function getExiste(const pID: Integer): Boolean;
-    function Excluir(const pID: Integer): Boolean;
-    function Salvar(var pObjeto: TPaciente): Boolean;
-    function getObjeto(const pID: Integer; var pObjeto: TPaciente): Boolean;
 
     function getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt; var pPersistencia: TPersistencia): Boolean;
 
@@ -25,59 +21,11 @@ type
 
     function getNomeEABO(const pNUM_PRONTUARIO: string; var pNOME, pABO: string): Boolean;
 
-    constructor Create(const pCONEXAO: TConexao); overload;
-    destructor Destroy; override;
-
   end;
 
 implementation
 
 uses System.StrUtils;
-
-constructor TPacienteDAO.Create(const pCONEXAO: TConexao);
-begin
-  Self.FConexao := pCONEXAO;
-end;
-
-destructor TPacienteDAO.Destroy;
-begin
-
-  inherited;
-end;
-
-function TPacienteDAO.Excluir(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('DELETE');
-      lPersistencia.Query.SQL.Add('FROM paciente');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.ExecSQL;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
 
 function TPacienteDAO.getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt;
   var pPersistencia: TPersistencia): Boolean;
@@ -147,42 +95,6 @@ begin
       Result := False;
       raise Exception.Create(E.Message);
     end;
-  end;
-
-end;
-
-function TPacienteDAO.getExiste(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  count(*)');
-      lPersistencia.Query.SQL.Add('FROM paciente');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-    end;
-
-  finally
-    lPersistencia.Destroy;
   end;
 
 end;
@@ -324,149 +236,6 @@ begin
 
       pNOME := lPersistencia.Query.FieldByName('nome').AsString;
       pABO := lPersistencia.Query.FieldByName('aborh').AsString;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TPacienteDAO.Salvar(var pObjeto: TPaciente): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      if (not Self.getExiste(pObjeto.Id)) then
-      begin
-
-        lPersistencia.Query.SQL.Add('INSERT INTO paciente (');
-        lPersistencia.Query.SQL.Add('  nome,');
-        lPersistencia.Query.SQL.Add('  nome_pai,');
-        lPersistencia.Query.SQL.Add('  nome_mae,');
-        lPersistencia.Query.SQL.Add('  data_nascimento,');
-        lPersistencia.Query.SQL.Add('  sexo,');
-        lPersistencia.Query.SQL.Add('  num_prontuario,');
-        lPersistencia.Query.SQL.Add('  abo,');
-        lPersistencia.Query.SQL.Add('  rh,');
-        lPersistencia.Query.SQL.Add('  cpf,');
-        lPersistencia.Query.SQL.Add('  rg,');
-        lPersistencia.Query.SQL.Add('  sus,');
-        lPersistencia.Query.SQL.Add('  observacao');
-        lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pNome,');
-        lPersistencia.Query.SQL.Add('  :pNome_Pai,');
-        lPersistencia.Query.SQL.Add('  :pNome_Mae,');
-        lPersistencia.Query.SQL.Add('  :pData_Nascimento,');
-        lPersistencia.Query.SQL.Add('  :pSexo,');
-        lPersistencia.Query.SQL.Add('  :pNum_Prontuario,');
-        lPersistencia.Query.SQL.Add('  :pAbo,');
-        lPersistencia.Query.SQL.Add('  :pRh,');
-        lPersistencia.Query.SQL.Add('  :pCpf,');
-        lPersistencia.Query.SQL.Add('  :pRg,');
-        lPersistencia.Query.SQL.Add('  :pSus,');
-        lPersistencia.Query.SQL.Add('  :pObservacao');
-        lPersistencia.Query.SQL.Add(');');
-      end
-      else
-      begin
-        lPersistencia.Query.SQL.Add('UPDATE paciente SET');
-        lPersistencia.Query.SQL.Add('  nome = :pNome,');
-        lPersistencia.Query.SQL.Add('  nome_pai = :pNome_Pai,');
-        lPersistencia.Query.SQL.Add('  nome_mae = :pNome_Mae,');
-        lPersistencia.Query.SQL.Add('  data_nascimento = :pData_Nascimento,');
-        lPersistencia.Query.SQL.Add('  sexo = :pSexo,');
-        lPersistencia.Query.SQL.Add('  num_prontuario = :pNum_Prontuario,');
-        lPersistencia.Query.SQL.Add('  abo = :pAbo,');
-        lPersistencia.Query.SQL.Add('  rh = :pRh,');
-        lPersistencia.Query.SQL.Add('  cpf = :pCpf,');
-        lPersistencia.Query.SQL.Add('  rg = :pRg,');
-        lPersistencia.Query.SQL.Add('  sus = :pSus,');
-        lPersistencia.Query.SQL.Add('  observacao = :pObservacao');
-        lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
-
-        lPersistencia.setParametro('pId', pObjeto.Id);
-      end;
-
-      lPersistencia.setParametro('pNome', pObjeto.Nome);
-      lPersistencia.setParametro('pNome_Pai', pObjeto.Nome_Pai);
-      lPersistencia.setParametro('pNome_Mae', pObjeto.Nome_Mae);
-      lPersistencia.setParametro('pData_Nascimento', pObjeto.Data_Nascimento);
-      lPersistencia.setParametro('pSexo', pObjeto.Sexo);
-      lPersistencia.setParametro('pNum_Prontuario', pObjeto.Num_Prontuario);
-      lPersistencia.setParametro('pAbo', pObjeto.Abo);
-      lPersistencia.setParametro('pRh', pObjeto.Rh);
-      lPersistencia.setParametro('pCpf', pObjeto.Cpf);
-      lPersistencia.setParametro('pRg', pObjeto.Rg);
-      lPersistencia.setParametro('pSus', pObjeto.Sus);
-      lPersistencia.setParametro('pObservacao', pObjeto.Observacao);
-
-      lPersistencia.Query.ExecSQL;
-
-      Result := True;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TPacienteDAO.getObjeto(const pID: Integer; var pObjeto: TPaciente): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  *');
-      lPersistencia.Query.SQL.Add('FROM paciente');
-      lPersistencia.Query.SQL.Add('WHERE id= :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').AsString;
-      pObjeto.Nome_Pai := lPersistencia.Query.FieldByName('nome_pai').AsString;
-      pObjeto.Nome_Mae := lPersistencia.Query.FieldByName('nome_mae').AsString;
-      pObjeto.Data_Nascimento := lPersistencia.Query.FieldByName('data_nascimento').AsDateTime;
-      pObjeto.Sexo := lPersistencia.Query.FieldByName('sexo').AsString;
-      pObjeto.Num_Prontuario := lPersistencia.Query.FieldByName('num_prontuario').AsString;
-      pObjeto.Abo := lPersistencia.Query.FieldByName('abo').AsString;
-      pObjeto.Rh := lPersistencia.Query.FieldByName('rh').AsString;
-      pObjeto.Cpf := lPersistencia.Query.FieldByName('cpf').AsString;
-      pObjeto.Rg := lPersistencia.Query.FieldByName('rg').AsString;
-      pObjeto.Sus := lPersistencia.Query.FieldByName('sus').AsString;
-      pObjeto.Observacao := lPersistencia.Query.FieldByName('observacao').AsString;
-
-      Result := True;
 
     except
       on E: Exception do

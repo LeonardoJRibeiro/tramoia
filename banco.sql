@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 02-Fev-2019 às 21:00
+-- Data de Criação: 02-Dez-2019 às 21:08
 -- Versão do servidor: 5.5.20
 -- versão do PHP: 5.3.11
 
@@ -47,7 +47,41 @@ CREATE TABLE IF NOT EXISTS `bolsa` (
   `data_coleta` date NOT NULL,
   `numero_doacoes` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=53 ;
+
+--
+-- Extraindo dados da tabela `bolsa`
+--
+
+INSERT INTO `bolsa` (`id`, `numero_da_bolsa`, `tipo`, `abo`, `rh`, `origem`, `volume`, `pai`, `sifilis`, `chagas`, `hepatiteb`, `hepatitec`, `hiv`, `htlv`, `hemoglobinas`, `data_vencimento`, `volume_atual`, `data_coleta`, `numero_doacoes`) VALUES
+(25, '123456', 'CH', 'A', '+', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-02-02', 100, '2019-02-02', 6),
+(26, '123456', 'PFC', 'A', '+', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-02-02', 0, '2019-02-02', NULL),
+(27, '1', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-07', 100, '2019-03-07', NULL),
+(28, '2', 'CH', 'A', '-', 'HEMOGO', 1000, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-07', 1000, '2019-03-07', NULL),
+(29, '3', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-07', 100, '2019-03-07', NULL),
+(30, '4', 'CH', 'A', '+', 'HEMOGO', 150, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-07', 150, '2019-03-07', NULL),
+(31, '5', 'CH', 'B', '+', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-07', 100, '2019-03-07', NULL),
+(32, '7', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-07', 100, '2019-03-07', NULL),
+(33, '7', 'PFC', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 100, '2019-03-08', NULL),
+(34, '8', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 100, '2019-03-08', NULL),
+(35, '9', 'CH', 'A', '-', 'HEMOGO', 250, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 250, '2019-03-08', NULL),
+(36, '10', 'CH', 'B', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 100, '2019-03-08', NULL),
+(37, '11', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 100, '2019-03-08', NULL),
+(38, '123', 'CH', 'A', '+', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 0, '2019-03-08', NULL),
+(39, '12345', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 100, '2019-03-08', NULL),
+(40, '65', 'CH', 'A', '+', 'HEMOGO', 123, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 123, '2019-03-08', NULL),
+(41, '6985', 'CH', 'A', '-', 'HEMOGO', 123, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 123, '2019-03-08', NULL),
+(42, '123456789', 'CH', 'A', '-', 'HEMOGO', 150, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 150, '2019-03-08', NULL),
+(43, '124564', 'CH', 'B', '+', 'HEMOGO', 10, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 10, '2019-03-08', NULL),
+(44, '123456789', 'PFC', 'A', '-', 'HEMOGO', 140, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 140, '2019-03-08', NULL),
+(45, '231454', 'CH', 'A', '-', 'HEMOGO', 123, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 123, '2019-03-08', NULL),
+(46, '23132', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 100, '2019-03-08', NULL),
+(47, '123456', 'CRIO', 'B', '+', 'HEMOGO', 150, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 150, '2019-03-08', NULL),
+(48, '568', 'CH', 'A', '-', 'HEMOGO', 45, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 45, '2019-03-08', NULL),
+(49, '5456', 'CH', 'A', '-', 'HEMOGO', 150, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 150, '2019-03-08', NULL),
+(50, '1', 'PFC', 'A', '+', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-03-08', 0, '2019-03-08', NULL),
+(51, '12346123', 'CH', 'A', '-', 'HEMOGO', 1000, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-11-30', 1000, '2019-11-30', NULL),
+(52, '523132132', 'CH', 'A', '-', 'HEMOGO', 100, 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '2019-11-30', 100, '2019-11-30', NULL);
 
 -- --------------------------------------------------------
 
@@ -66,7 +100,16 @@ CREATE TABLE IF NOT EXISTS `descarte` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_descarte_id_bolsa_idx` (`id_bolsa`),
   KEY `fk_descarte_id_usuario_idx` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `descarte`
+--
+
+INSERT INTO `descarte` (`id`, `id_bolsa`, `id_usuario`, `motivo`, `volume`, `data_descarte`) VALUES
+(1, 26, 11, 'Vencidooo', 50, '2019-02-02'),
+(2, 26, 11, 'Vencidooo', 50, '2019-02-02'),
+(3, 38, 11, 'vencido fdsafadsfasdf', 100, '2019-11-30');
 
 --
 -- Acionadores `descarte`
@@ -115,7 +158,15 @@ CREATE TABLE IF NOT EXISTS `endereco` (
   PRIMARY KEY (`id`),
   KEY `fk_endereco_id_municipio` (`id_municipio`),
   KEY `fk_endereco_id_paciente` (`id_paciente`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `endereco`
+--
+
+INSERT INTO `endereco` (`id`, `id_municipio`, `id_paciente`, `logradouro`, `bairro`, `complemento`, `numero`, `cep`) VALUES
+(2, 5438, 2, NULL, NULL, NULL, NULL, '76680000'),
+(3, 5438, 4, 'RUA 45', 'CENTRO', 'NETSIDE', '1029', '76680000');
 
 -- --------------------------------------------------------
 
@@ -131,7 +182,41 @@ CREATE TABLE IF NOT EXISTS `entrada` (
   PRIMARY KEY (`id`),
   KEY `fk_entrada_id_usuario` (`id_usuario`),
   KEY `fk_entrada_id_bolsa_idx` (`id_bolsa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+
+--
+-- Extraindo dados da tabela `entrada`
+--
+
+INSERT INTO `entrada` (`id`, `id_usuario`, `data_entrada`, `id_bolsa`) VALUES
+(1, 11, '2019-02-02', 25),
+(2, 11, '2019-02-02', 26),
+(3, 11, '2019-03-07', 27),
+(4, 11, '2019-03-07', 28),
+(5, 11, '2019-03-07', 29),
+(6, 11, '2019-03-07', 30),
+(7, 11, '2019-03-07', 31),
+(8, 11, '2019-03-07', 32),
+(9, 11, '2019-03-08', 33),
+(10, 11, '2019-03-08', 34),
+(11, 11, '2019-03-08', 35),
+(12, 11, '2019-03-08', 36),
+(13, 11, '2019-03-08', 37),
+(14, 11, '2019-03-08', 38),
+(15, 11, '2019-03-08', 39),
+(16, 11, '2019-03-08', 40),
+(17, 11, '2019-03-08', 41),
+(18, 11, '2019-03-08', 42),
+(19, 11, '2019-03-08', 43),
+(20, 11, '2019-03-08', 44),
+(21, 11, '2019-03-08', 45),
+(22, 11, '2019-03-08', 46),
+(23, 11, '2019-03-08', 47),
+(24, 11, '2019-03-08', 48),
+(25, 11, '2019-03-08', 49),
+(26, 11, '2019-03-08', 50),
+(27, 11, '2019-11-30', 51),
+(28, 11, '2019-11-30', 52);
 
 --
 -- Acionadores `entrada`
@@ -5807,7 +5892,15 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   UNIQUE KEY `num_prontuario_UNIQUE` (`num_prontuario`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   UNIQUE KEY `rg_UNIQUE` (`rg`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Extraindo dados da tabela `paciente`
+--
+
+INSERT INTO `paciente` (`id`, `nome`, `nome_pai`, `nome_mae`, `data_nascimento`, `sexo`, `num_prontuario`, `abo`, `rh`, `cpf`, `rg`, `sus`, `observacao`) VALUES
+(2, 'JOAO VINICIUS RODRIGUES DO NASCIMENTO', 'JOAO SANTANA RODRIGUES DO NASCIMENTO', 'ILMECINA DE MORAIS RODRIGUES', '1198-02-18', 'M', '123456789', 'A', '+', '06011573118', '6266980', '123123123132132', NULL),
+(4, 'ALEXANDRE ROSA CARVALHO', 'ADENILTON ', 'MARLENE', '1998-06-12', 'M', '123456780', 'B', '+', '70033041121', '5614173', '000000   ', 'HKJGJKLJHGFDSAGHJKLKJHGFDSAHJKLKJHGFDS');
 
 -- --------------------------------------------------------
 
@@ -5827,6 +5920,16 @@ CREATE TABLE IF NOT EXISTS `procedimento_especial` (
   KEY `fk_proced_especial_id_saida_idx` (`id_saida`),
   KEY `fk_proced_especial_id_descarte_idx` (`id_descarte`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Extraindo dados da tabela `procedimento_especial`
+--
+
+INSERT INTO `procedimento_especial` (`id`, `id_saida`, `id_descarte`, `irradiacao`, `filtracao`, `fracionamento`, `fenotipagem`) VALUES
+(3, NULL, 1, 'N', 'N', 'N', 'N'),
+(4, NULL, 2, 'N', 'N', 'N', 'N'),
+(5, 1, NULL, 'N', 'N', 'N', 'N'),
+(6, NULL, 3, 'N', 'N', 'N', 'N');
 
 -- --------------------------------------------------------
 
@@ -5851,6 +5954,13 @@ CREATE TABLE IF NOT EXISTS `saida` (
   KEY `fk_saida_id_usuario` (`id_usuario`),
   KEY `fk_saida_id_bolsa` (`id_bolsa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `saida`
+--
+
+INSERT INTO `saida` (`id`, `id_paciente`, `id_usuario`, `id_bolsa`, `data_saida`, `hospital`, `pai`, `prova_compatibilidade_ta`, `prova_compatibilidade_agh`, `prova_compatibilidade_37`, `volume`) VALUES
+(1, 2, 11, 50, '2019-03-08', 'HMI', 'N', 'C', 'C', 'C', 100);
 
 --
 -- Acionadores `saida`
@@ -5895,7 +6005,14 @@ CREATE TABLE IF NOT EXISTS `telefone` (
   `tipo_telefone` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_id_paciente_idx` (`id_paciente`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Extraindo dados da tabela `telefone`
+--
+
+INSERT INTO `telefone` (`id`, `id_paciente`, `ddd`, `numero`, `tipo_telefone`) VALUES
+(1, 4, '62', '999613872', 'C');
 
 -- --------------------------------------------------------
 
@@ -5909,7 +6026,14 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `senha` varchar(80) NOT NULL,
   `admin` char(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nome`, `senha`, `admin`) VALUES
+(11, 'JOAO', 'C6AEB5B9', 'S');
 
 --
 -- Constraints for dumped tables

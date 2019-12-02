@@ -40986,7 +40986,6 @@ object FrmPrincipal: TFrmPrincipal
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
-    ExplicitWidth = 919
     object BtnEntrada: TSpeedButton
       Left = 2
       Top = 14
@@ -53045,8 +53044,6 @@ object FrmPrincipal: TFrmPrincipal
       item
         Width = 50
       end>
-    ExplicitTop = 710
-    ExplicitWidth = 919
   end
   object MainMenu: TMainMenu
     Left = 64

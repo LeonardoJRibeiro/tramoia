@@ -2,18 +2,13 @@ unit UClassMunicipioDAO;
 
 interface
 
-uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassMunicipio;
+uses System.Classes, System.SysUtils, UClassPersistBaseDados, UClassPersistencia, UClassMunicipio;
 
 type
-  TMunicipioDAO = class(TInterfacedPersistent, IInterfaceDao<TMunicipio>)
+  TMunicipioDAO = class(TPersistBase<TMunicipio>)
   private
-    FConexao: TConexao;
 
   public
-    function getExiste(const pID: Integer): Boolean;
-    function Excluir(const pID: Integer): Boolean;
-    function Salvar(var pObjeto: TMunicipio): Boolean;
-    function getObjeto(const pID: Integer; var pObjeto: TMunicipio): Boolean;
 
     function getIdMunicipio(const pCODIGO_IBGE: Integer): Integer;
     function getNomeAndUF(const pCODIGO_IBGE: Integer; var pNomeMunicpio, pUF: string): Boolean;
@@ -21,58 +16,11 @@ type
 
     function getConsulta(const pCHAVE: string; const pTIPOCONS: SmallInt; var pPersistencia: TPersistencia): Boolean;
 
-    constructor Create(const pCONEXAO: TConexao); overload;
-    destructor Destroy; override;
-
   end;
 
 implementation
 
 uses System.StrUtils;
-
-constructor TMunicipioDAO.Create(const pCONEXAO: TConexao);
-begin
-  Self.FConexao := pCONEXAO;
-end;
-
-destructor TMunicipioDAO.Destroy;
-begin
-
-  inherited;
-end;
-
-function TMunicipioDAO.Excluir(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('DELETE');
-      lPersistencia.Query.SQL.Add('FROM municipio');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.ExecSQL;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
 
 function TMunicipioDAO.getCodigoIbge(const pID: Integer): Integer;
 var
@@ -173,42 +121,6 @@ begin
 
 end;
 
-function TMunicipioDAO.getExiste(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  count(*)');
-      lPersistencia.Query.SQL.Add('FROM municipio');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      Result := lPersistencia.Query.FieldByName('count').AsInteger > 0;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
 function TMunicipioDAO.getIdMunicipio(const pCODIGO_IBGE: Integer): Integer;
 var
   lPersistencia: TPersistencia;
@@ -273,104 +185,6 @@ begin
         pUF := lPersistencia.Query.FieldByName('uf').AsString;
         Result := True;
       end;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TMunicipioDAO.Salvar(var pObjeto: TMunicipio): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-    try
-      lPersistencia.IniciaTransacao;
-
-      if (not Self.getExiste(pObjeto.Id)) then
-      begin
-
-        lPersistencia.Query.SQL.Add('INSERT INTO municipio (');
-        lPersistencia.Query.SQL.Add('  id_estado,');
-        lPersistencia.Query.SQL.Add('  codigo_ibge,');
-        lPersistencia.Query.SQL.Add('  nome');
-        lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pId_Estado,');
-        lPersistencia.Query.SQL.Add('  :pCodigo_Ibge,');
-        lPersistencia.Query.SQL.Add('  :pNome');
-        lPersistencia.Query.SQL.Add(');');
-
-      end
-      else
-      begin
-        lPersistencia.Query.SQL.Add('UPDATE municipio SET');
-        lPersistencia.Query.SQL.Add('  id_estado= :pId_Estado,');
-        lPersistencia.Query.SQL.Add('  codigo_ibge= :pCodigo_Ibge,');
-        lPersistencia.Query.SQL.Add('  nome= :pNome');
-        lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
-
-        lPersistencia.setParametro('pId', pObjeto.Id);
-
-      end;
-
-      lPersistencia.setParametro('pId_Estado', pObjeto.Id_Estado);
-      lPersistencia.setParametro('pCodigo_Ibge', pObjeto.Codigo_Ibge);
-      lPersistencia.setParametro('pNome', pObjeto.Nome);
-
-      lPersistencia.Query.ExecSQL;
-
-      Result := True;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TMunicipioDAO.getObjeto(const pID: Integer; var pObjeto: TMunicipio): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  *');
-      lPersistencia.Query.SQL.Add('FROM municipio');
-      lPersistencia.Query.SQL.Add('WHERE id= :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Id_Estado := lPersistencia.Query.FieldByName('id_estado').AsInteger;
-      pObjeto.Codigo_Ibge := lPersistencia.Query.FieldByName('codigo_ibge').AsInteger;
-      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').AsString;
-
-      Result := True;
 
     except
       on E: Exception do

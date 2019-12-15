@@ -141,6 +141,7 @@ begin
           Result := True;
         end;
 
+        pID_BOLSA := -1;
         if (Result) then
         begin
           pID_BOLSA := FrmSelBolsa.FPersistencia.Query.FieldByName('id').AsInteger;

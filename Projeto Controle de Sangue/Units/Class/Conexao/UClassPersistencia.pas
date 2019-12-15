@@ -4,18 +4,18 @@ interface
 
 uses
   System.SysUtils, System.Variants, System.Classes, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
-  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.DApt, UClassConexao;
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB,
+  FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, UClassConexao;
 
 type
   TPersistencia = class(TPersistent)
   private
 
+    FConexao: TConexao;
+
     FQuery: TFDQuery;
     FTransacao: TFDTransaction;
 
-    FConexao: TConexao;
   protected
 
   public
@@ -46,8 +46,7 @@ type
 
     constructor Create(const pCONEXAO: TConexao);
     destructor Destroy;
-  published
-    { published declarations }
+
   end;
 
 implementation
@@ -126,18 +125,16 @@ begin
 
       lPersistencia.Query.Open;
 
+      Result := -1;
       if (not lPersistencia.Query.IsEmpty) then
       begin
         Result := lPersistencia.Query.Fields[0].Value;
-      end
-      else
-      begin
-        Result := -1;
       end;
 
     except
       on E: Exception do
       begin
+        Result := -1;
         raise Exception.Create(E.Message);
       end;
     end;
@@ -153,6 +150,7 @@ class function TPersistencia.getValorAtributo(const pENTIDADE, pATRIBUTO_RETORNO
 var
   lPersistencia: TPersistencia;
 begin
+
   lPersistencia := TPersistencia.Create(pCONEXAO);
   try
 
@@ -168,18 +166,16 @@ begin
 
       lPersistencia.Query.Open;
 
+      Result := -1;
       if (not lPersistencia.Query.IsEmpty) then
       begin
         Result := lPersistencia.Query.FieldByName(pATRIBUTO_RETORNO).Value;
-      end
-      else
-      begin
-        Result := -1;
       end;
 
     except
       on E: Exception do
       begin
+        Result := -1;
         raise Exception.Create(E.Message);
       end;
     end;

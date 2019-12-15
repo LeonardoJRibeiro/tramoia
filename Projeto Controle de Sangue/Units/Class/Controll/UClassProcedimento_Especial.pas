@@ -2,9 +2,11 @@ unit UClassProcedimento_Especial;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('procedimento_especial')]
   TProcedimento_Especial = class(TPersistent)
   private
     FId: Integer;
@@ -32,12 +34,27 @@ type
     procedure setFenotipagem(const pFENOTIPAGEM: string);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('id_saida')]
     property Id_Saida: Integer read getId_Saida write setId_Saida;
+
+    [TAtributo('id_descarte')]
     property Id_Descarte: Integer read getId_Descarte write setId_Descarte;
+
+    [TAtributo('irradiacao')]
     property Irradiacao: string read getIrradiacao write setIrradiacao;
+
+    [TAtributo('filtracao')]
     property Filtracao: string read getFiltracao write setFiltracao;
+
+    [TAtributo('fracionamento')]
     property Fracionamento: string read getFracionamento write setFracionamento;
+
+    [TAtributo('fenotipagem')]
     property Fenotipagem: string read getFenotipagem write setFenotipagem;
 
     constructor Create; overload;
@@ -46,7 +63,7 @@ type
 
 implementation
 
-{ TProcedimento_Especial}
+{ TProcedimento_Especial }
 
 constructor TProcedimento_Especial.Create;
 begin
@@ -58,6 +75,7 @@ begin
 
   inherited;
 end;
+
 function TProcedimento_Especial.getId: Integer;
 begin
   Result := Self.FId;
@@ -95,37 +113,37 @@ end;
 
 procedure TProcedimento_Especial.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TProcedimento_Especial.setId_Saida(const pID_SAIDA: Integer);
 begin
-  Self.FId_Saida:= pId_Saida;
+  Self.FId_Saida := pID_SAIDA;
 end;
 
 procedure TProcedimento_Especial.setId_Descarte(const pID_DESCARTE: Integer);
 begin
-  Self.FId_Descarte:= pId_Descarte;
+  Self.FId_Descarte := pID_DESCARTE;
 end;
 
 procedure TProcedimento_Especial.setIrradiacao(const pIRRADIACAO: string);
 begin
-  Self.FIrradiacao:= pIrradiacao;
+  Self.FIrradiacao := pIRRADIACAO;
 end;
 
 procedure TProcedimento_Especial.setFiltracao(const pFILTRACAO: string);
 begin
-  Self.FFiltracao:= pFiltracao;
+  Self.FFiltracao := pFILTRACAO;
 end;
 
 procedure TProcedimento_Especial.setFracionamento(const pFRACIONAMENTO: string);
 begin
-  Self.FFracionamento:= pFracionamento;
+  Self.FFracionamento := pFRACIONAMENTO;
 end;
 
 procedure TProcedimento_Especial.setFenotipagem(const pFENOTIPAGEM: string);
 begin
-  Self.FFenotipagem:= pFenotipagem;
+  Self.FFenotipagem := pFENOTIPAGEM;
 end;
 
 end.

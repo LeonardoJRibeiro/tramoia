@@ -2,9 +2,11 @@ unit UClassEstado;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('estado')]
   TEstado = class(TPersistent)
   private
     FId: Integer;
@@ -23,9 +25,18 @@ type
     procedure setUf(const pUF: string);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('codigo_uf')]
     property Codigo_Uf: Integer read getCodigo_Uf write setCodigo_Uf;
+
+    [TAtributo('nome')]
     property Nome: string read getNome write setNome;
+
+    [TAtributo('uf')]
     property Uf: string read getUf write setUf;
 
     constructor Create; overload;
@@ -34,7 +45,7 @@ type
 
 implementation
 
-{ TEstado}
+{ TEstado }
 
 constructor TEstado.Create;
 begin
@@ -46,6 +57,7 @@ begin
 
   inherited;
 end;
+
 function TEstado.getId: Integer;
 begin
   Result := Self.FId;
@@ -68,22 +80,22 @@ end;
 
 procedure TEstado.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TEstado.setCodigo_Uf(const pCODIGO_UF: Integer);
 begin
-  Self.FCodigo_Uf:= pCodigo_Uf;
+  Self.FCodigo_Uf := pCODIGO_UF;
 end;
 
 procedure TEstado.setNome(const pNOME: string);
 begin
-  Self.FNome:= pNome;
+  Self.FNome := pNOME;
 end;
 
 procedure TEstado.setUf(const pUF: string);
 begin
-  Self.FUf:= pUf;
+  Self.FUf := pUF;
 end;
 
 end.

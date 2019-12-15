@@ -47,6 +47,11 @@ type
     Consultar1: TMenuItem;
     Descarte2: TMenuItem;
     SpeedButton1: TSpeedButton;
+    Devolues1: TMenuItem;
+    Cadastrar1: TMenuItem;
+    Consultar2: TMenuItem;
+    MenuItemDevolucao: TMenuItem;
+    MenuItemConfiguracoes: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -76,12 +81,20 @@ type
     procedure Consultar1Click(Sender: TObject);
     procedure Descarte2Click(Sender: TObject);
     procedure BtnRetiradasClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure Cadastrar1Click(Sender: TObject);
+    procedure Consultar2Click(Sender: TObject);
+    procedure MenuItemDevolucaoClick(Sender: TObject);
+    procedure MenuItemConfiguracoesClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
 
     function getAdmin: Boolean;
+
+    function getQuantDiasAvisoVencimento: Integer;
+
+    procedure RealizaAtualizacoes;
 
   public
 
@@ -97,7 +110,8 @@ implementation
 uses ShellAPI, UEntrada, USaida, UConsPaciente, UClassForeignKeyForms, ULogin, USelRelatorio, UCadUsuario, UCadPaciente,
   URelEntrada, URelSaida, UConsUsuario, UClassUsuarioDao, UDMConexao, UClassMensagem, USobre, UConsEntrada, UConsSaidas,
   USelCons, URelEstoque, UClassBiblioteca, UClassBibliotecaDao, UClassGeraBackup, UDescarte, UConsDescarte,
-  URelDescarte, Unit1, Unit2;
+  URelDescarte, UDevolucao, UConsDevolucao, URelDevolucao, UAvisoVencimento, UConfiguracoes, UClassConfiguracaoDao,
+  UClassAtualizaBase;
 
 procedure TFrmPrincipal.BtnConsultasClick(Sender: TObject);
 begin
@@ -156,33 +170,9 @@ begin
 
 end;
 
-procedure TFrmPrincipal.Button1Click(Sender: TObject);
-var
-  lCliente: TGIPICliente;
-  lClienteDao: tgipiClienteDao;
+procedure TFrmPrincipal.Cadastrar1Click(Sender: TObject);
 begin
-
-  lCliente := TGIPICliente.Create;
-  try
-
-    lCliente.Id := 5;
-    lCliente.Nome := 'João';
-    lCliente.Data := now;
-    lCliente.DataHora := now;
-
-    lClienteDao := tgipiClienteDao.Create(DMConexao.Conexao);
-    try
-
-      lClienteDao.Salvar(lCliente);
-
-    finally
-      lClienteDao.Destroy;
-    end;
-
-  finally
-    lCliente.Destroy;
-  end;
-
+  TFrmDevolucao.getDevolucao(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.Cadastro1Click(Sender: TObject);
@@ -195,6 +185,11 @@ begin
   TFrmConsDescarte.getConsDescarte(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario);
 end;
 
+procedure TFrmPrincipal.Consultar2Click(Sender: TObject);
+begin
+  TFrmConsDevolucao.getConsDevolucao(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
 procedure TFrmPrincipal.Descarte2Click(Sender: TObject);
 begin
   TFrmRelDescarte.getRelDescarte(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
@@ -202,9 +197,7 @@ end;
 
 procedure TFrmPrincipal.MenuItemCadPacienteClick(Sender: TObject);
 begin
-
   TFrmCadPaciente.getCadPaciente(TForeignKeyForms.FIdUConsPaciente, Self.FIdUsuario);
-
 end;
 
 procedure TFrmPrincipal.MenuItemCadastrarSaidaClick(Sender: TObject);
@@ -227,6 +220,11 @@ end;
 procedure TFrmPrincipal.MenuItemCadEntradaClick(Sender: TObject);
 begin
   TFrmEntrada.getEntrada(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+end;
+
+procedure TFrmPrincipal.MenuItemConfiguracoesClick(Sender: TObject);
+begin
+  TFrmConfiguracoes.getConfiguracoes(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.MenuItemConsPacienteClick(Sender: TObject);
@@ -257,6 +255,11 @@ begin
     Application.MessageBox(PChar(TMensagem.getMensagem(12)), PChar('Aviso'), MB_OK + MB_ICONINFORMATION);
   end;
 
+end;
+
+procedure TFrmPrincipal.MenuItemDevolucaoClick(Sender: TObject);
+begin
+  TFrmRelDevolucao.getRelDevolucao(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 end;
 
 procedure TFrmPrincipal.MenuItemGerarBackupClick(Sender: TObject);
@@ -326,6 +329,8 @@ end;
 procedure TFrmPrincipal.FormShow(Sender: TObject);
 begin
 
+  Self.RealizaAtualizacoes;
+
   TimerLogin.Enabled := True;
 
 end;
@@ -354,6 +359,32 @@ begin
 
 end;
 
+function TFrmPrincipal.getQuantDiasAvisoVencimento: Integer;
+var
+  lConfiguracoesDao: TConfiguracaoDAO;
+begin
+
+  lConfiguracoesDao := TConfiguracaoDAO.Create(DMConexao.Conexao);
+  try
+
+    try
+
+      Result := lConfiguracoesDao.getQuantDiasAvisoVencimento;
+
+    except
+      on E: Exception do
+      begin
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(1), ['configurações', E.Message])), PChar('Erro'),
+          MB_OK + MB_ICONERROR);
+      end;
+    end;
+
+  finally
+    lConfiguracoesDao.Destroy;
+  end;
+
+end;
+
 procedure TFrmPrincipal.MenuItemLogoffClick(Sender: TObject);
 begin
   TimerLogin.Enabled := True;
@@ -363,6 +394,39 @@ procedure TFrmPrincipal.MenuItemSobreClick(Sender: TObject);
 begin
 
   TFrmSobre.getSobre(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
+end;
+
+procedure TFrmPrincipal.RealizaAtualizacoes;
+var
+  lAtualizaBase: TAtualizacaoBase;
+begin
+
+  lAtualizaBase := TAtualizacaoBase.Create(DMConexao.Conexao);
+  try
+
+    try
+
+      lAtualizaBase.AtualizaBaseDados;
+
+    except
+      on E: Exception do
+      begin
+        Application.MessageBox(PChar(Format(TMensagem.getMensagem(1), ['configurações', E.Message])), PChar('Erro'),
+          MB_OK + MB_ICONERROR);
+      end;
+    end;
+
+  finally
+    lAtualizaBase.Destroy;
+  end;
+
+end;
+
+procedure TFrmPrincipal.SpeedButton1Click(Sender: TObject);
+begin
+
+  TFrmDevolucao.getDevolucao(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
 
 end;
 
@@ -381,6 +445,8 @@ begin
 end;
 
 procedure TFrmPrincipal.TimerLoginTimer(Sender: TObject);
+var
+  lQuantDiasAvisoVencimento: Integer;
 begin
 
   TimerLogin.Enabled := False;
@@ -390,6 +456,14 @@ begin
     StatusBar.Panels.Items[1].Text := TClassBibliotecaDao.getNomeUsuario(Self.FIdUsuario, DMConexao.Conexao);
     StatusBar.Panels.Items[3].Text := DateToStr(now);
     StatusBar.Panels.Items[5].Text := TBiblioteca.getVersaoExe;
+
+    lQuantDiasAvisoVencimento := Self.getQuantDiasAvisoVencimento;
+
+    if (lQuantDiasAvisoVencimento > 0) then
+    begin
+      TFrmAvisoSistema.getAvisoVencimento(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario, lQuantDiasAvisoVencimento);
+    end;
+
   end
   else
   begin

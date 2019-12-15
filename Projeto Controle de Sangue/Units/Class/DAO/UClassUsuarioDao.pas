@@ -2,20 +2,16 @@ unit UClassUsuarioDAO;
 
 interface
 
-uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassUsuario,
-  System.Generics.Collections;
+uses System.Classes, System.SysUtils, UClassPersistencia, UClassUsuario,
+  System.Generics.Collections, UClassPersistBaseDados;
 
 type
-  TUsuarioDAO = class(TInterfacedPersistent, IInterfaceDao<TUsuario>)
+  TUsuarioDAO = class(TPersistBase<TUsuario>)
   private
-    FConexao: TConexao;
 
   public
-    function getExiste(const pID: Integer): Boolean; overload;
+
     function getExiste(const pNOME: string): Boolean; overload;
-    function Excluir(const pID: Integer): Boolean;
-    function Salvar(var pObjeto: TUsuario): Boolean;
-    function getObjeto(const pID: Integer; var pObjeto: TUsuario): Boolean;
 
     function getPermiteExclusao(const pID: Integer; var pMensagem: string): Boolean;
 
@@ -31,58 +27,11 @@ type
 
     function getListaObjeto(var pLista: TObjectList<TUsuario>): Boolean;
 
-    constructor Create(const pCONEXAO: TConexao); overload;
-    destructor Destroy; override;
-
   end;
 
 implementation
 
 uses UClassBiblioteca, UClassBibliotecaDAO, System.StrUtils;
-
-constructor TUsuarioDAO.Create(const pCONEXAO: TConexao);
-begin
-  Self.FConexao := pCONEXAO;
-end;
-
-destructor TUsuarioDAO.Destroy;
-begin
-
-  inherited;
-end;
-
-function TUsuarioDAO.Excluir(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('DELETE');
-      lPersistencia.Query.SQL.Add('FROM usuario');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.ExecSQL;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
 
 function TUsuarioDAO.getAdmin(const pID: Integer): Boolean;
 var
@@ -176,42 +125,6 @@ begin
       Result := False;
       raise Exception.Create(E.Message);
     end;
-  end;
-
-end;
-
-function TUsuarioDAO.getExiste(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  count(*)');
-      lPersistencia.Query.SQL.Add('FROM usuario');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
   end;
 
 end;
@@ -324,7 +237,7 @@ begin
 
       end;
 
-      Result:= True;
+      Result := True;
 
     end
     else
@@ -423,148 +336,50 @@ begin
 
 end;
 
-function TUsuarioDAO.Salvar(var pObjeto: TUsuario): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      if (not Self.getExiste(pObjeto.Id)) then
-      begin
-        lPersistencia.Query.SQL.Add('INSERT INTO usuario (');
-        lPersistencia.Query.SQL.Add('  nome,');
-        lPersistencia.Query.SQL.Add('  senha,');
-        lPersistencia.Query.SQL.Add('  admin');
-        lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pNome,');
-        lPersistencia.Query.SQL.Add('  :pSenha,');
-        lPersistencia.Query.SQL.Add('  :pAdmin');
-        lPersistencia.Query.SQL.Add(');');
-      end
-      else
-      begin
-        lPersistencia.Query.SQL.Add('UPDATE usuario SET');
-        lPersistencia.Query.SQL.Add('  nome = :pNome,');
-        lPersistencia.Query.SQL.Add('  senha = :pSenha,');
-        lPersistencia.Query.SQL.Add('  admin = :pAdmin');
-        lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
-
-        lPersistencia.setParametro('pId', pObjeto.Id);
-      end;
-
-      lPersistencia.setParametro('pNome', pObjeto.Nome);
-      lPersistencia.setParametro('pSenha', pObjeto.Senha);
-      lPersistencia.setParametro('pAdmin', pObjeto.Admin);
-
-      lPersistencia.Query.ExecSQL;
-
-      Result := True;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TUsuarioDAO.getObjeto(const pID: Integer; var pObjeto: TUsuario): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  id,');
-      lPersistencia.Query.SQL.Add('  nome,');
-      lPersistencia.Query.SQL.Add('  senha,');
-      lPersistencia.Query.SQL.Add('  admin');
-      lPersistencia.Query.SQL.Add('FROM usuario');
-
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Nome := lPersistencia.Query.FieldByName('nome').AsString;
-      pObjeto.Senha := lPersistencia.Query.FieldByName('senha').AsString;
-      pObjeto.Admin := lPersistencia.Query.FieldByName('admin').AsString;
-
-      Result := True;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
 function TUsuarioDAO.getPermiteExclusao(const pID: Integer; var pMensagem: string): Boolean;
 var
   lExisteVinculoSaida: Boolean;
   lExisteVinculoEntrada: Boolean;
 begin
 
-    try
+  try
 
-      lExisteVinculoSaida :=  TClassBibliotecaDao.getValorAtributo('saida', 'id', 'id_usuario', pID, Self.FConexao) <> -1;
-      lExisteVinculoEntrada := TClassBibliotecaDao.getValorAtributo('entrada', 'id', 'id_usuario', pID, Self.FConexao) <> -1;
+    lExisteVinculoSaida := TClassBibliotecaDao.getValorAtributo('saida', 'id', 'id_usuario', pID, Self.FConexao) <> -1;
+    lExisteVinculoEntrada := TClassBibliotecaDao.getValorAtributo('entrada', 'id', 'id_usuario', pID,
+      Self.FConexao) <> -1;
 
-      Result := (not lExisteVinculoSaida) and (not lExisteVinculoEntrada);
+    Result := (not lExisteVinculoSaida) and (not lExisteVinculoEntrada);
 
-      if (not Result) then
+    if (not Result) then
+    begin
+
+      pMensagem := 'Usuário possui';
+
+      if (lExisteVinculoSaida) then
       begin
 
-        pMensagem := 'Usuário possui';
-
-        if (lExisteVinculoSaida) then
-        begin
-
-          pMensagem := pMensagem + ' saída(s)';
-
-        end;
-
-        if ( lExisteVinculoEntrada) then
-        begin
-
-          pMensagem := pMensagem + IfThen(lExisteVinculoSaida, ',', '') + ' entrada(s)';
-
-        end;
-
-        pMensagem := pMensagem + ' vinculadas';
+        pMensagem := pMensagem + ' saída(s)';
 
       end;
 
-    except
-      on E:Exception do
+      if (lExisteVinculoEntrada) then
       begin
-        Result := False;
-        raise Exception.Create(E.Message);
+
+        pMensagem := pMensagem + IfThen(lExisteVinculoSaida, ',', '') + ' entrada(s)';
+
       end;
+
+      pMensagem := pMensagem + ' vinculadas';
+
     end;
+
+  except
+    on E: Exception do
+    begin
+      Result := False;
+      raise Exception.Create(E.Message);
+    end;
+  end;
 
 end;
 

@@ -7,5 +7,4 @@ set ANO=%%c
 set data=%DIA%_%MES%_%ANO%
 mysqldump.exe -B -c --single-transaction --default-character-set=latin1 banco -u root --password="root" -h localhost > "%~dp0Backup\backup_%data%.sql"
 forfiles.exe -p"%~dp0Backup" -m*.sql -c"cmd /c del /f /q @FILE" -d-180
-gdrive-windows-386.exe upload "%~dp0Backup\backup_%data%.sql"
 

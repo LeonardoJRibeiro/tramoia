@@ -82,8 +82,8 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
-        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_MajorVer>2</VerInfo_MajorVer>
+        <VerInfo_Keys>CompanyName=;FileVersion=2.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <Icon_MainIcon>ControleSangue_Icon5.ico</Icon_MainIcon>
         <DCC_DcuOutput>..\Projeto Controle de Sangue\dcu\</DCC_DcuOutput>
         <DCC_ExeOutput>..\Projeto Controle de Sangue\exe\</DCC_ExeOutput>
@@ -170,9 +170,6 @@
         <DCCReference Include="Units\Relatorios\Entrada\Form\URelEntrada.pas">
             <Form>FrmRelEntrada</Form>
         </DCCReference>
-        <DCCReference Include="Units\Relatorios\Entrada\Relatorio\URlRelEntrada.pas">
-            <Form>FrmRlRelEntrada</Form>
-        </DCCReference>
         <DCCReference Include="Units\Relatorios\UBibliotecaRelatorio.pas"/>
         <DCCReference Include="Units\Class\Controll\UClassBolsa.pas"/>
         <DCCReference Include="Units\Class\DAO\UClassBolsaDao.pas"/>
@@ -248,6 +245,41 @@
         <DCCReference Include="Units\Class\Controll\UClassProcedimento_Especial.pas"/>
         <DCCReference Include="Units\Class\Utils\UClassPersistBaseDados.pas"/>
         <DCCReference Include="Units\Class\Utils\UAtributos.pas"/>
+        <DCCReference Include="Units\Forms\Devolucao\UDevolucao.pas">
+            <Form>FrmDevolucao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Class\DAO\UClassDevolucaoDao.pas"/>
+        <DCCReference Include="Units\Class\Controll\UClassDevolucao.pas"/>
+        <DCCReference Include="Units\Forms\Devolucao\UConsDevolucao.pas">
+            <Form>FrmConsDevolucao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Devolucao\Class\UClassRelDevolucao.pas"/>
+        <DCCReference Include="Units\Relatorios\Devolucao\Class\UClassRelDevolucaoDAO.pas"/>
+        <DCCReference Include="Units\Relatorios\Devolucao\Form\URelDevolucao.pas">
+            <Form>FrmRelDevolucao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Entrada\Relatorio\URlRelEntrada.pas">
+            <Form>FrmRlRelEntrada</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Relatorios\Devolucao\Relatorio\URlRelDevolucao.pas">
+            <Form>FrmRlRelDevolucao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Forms\UAvisoVencimento.pas">
+            <Form>FrmAvisoSistema</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Forms\UConfiguracoes.pas">
+            <Form>FrmConfiguracoes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Units\Class\DAO\UClassConfiguracaoDao.pas"/>
+        <DCCReference Include="Units\Class\Controll\UClassConfiguracao.pas"/>
+        <DCCReference Include="Units\Class\UClassAtualizaBase.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

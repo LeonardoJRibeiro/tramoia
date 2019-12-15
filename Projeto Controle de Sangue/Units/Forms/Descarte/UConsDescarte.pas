@@ -83,7 +83,7 @@ begin
     if (Self.getAdmin) then
     begin
 
-      if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['descarte'])), PChar('Cuidado'),
+      if (Application.MessageBox(PChar(Format(TMensagem.getMensagem(9), ['o descarte'])), PChar('Cuidado'),
         MB_YESNO + MB_ICONQUESTION) = IDYES) then
       begin
 
@@ -107,7 +107,7 @@ begin
             except
               on E: Exception do
               begin
-                Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['paciente', E.Message])), '1',
+                Application.MessageBox(PChar(Format(TMensagem.getMensagem(2), ['descarte', E.Message])), '1',
                   MB_OK + MB_ICONSTOP);
               end;
             end;

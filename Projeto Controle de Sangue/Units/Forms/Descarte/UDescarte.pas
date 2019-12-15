@@ -85,7 +85,7 @@ implementation
 uses System.Generics.Collections, UClassUsuario, UClassUsuarioDao, UDMConexao, UClassBiblioteca, UClassMensagem,
   UClassSaida, UClassSaidaDao, UClassBolsaDao, UClassBolsa, System.Math, UClassDescarte, UClassDescarteDao, USelBolsa,
   UClassForeignKeyForms, UClassProcedimento_Especial, UClassProcedimento_EspecialDao, UAutenticacao,
-  UClassBibliotecaDao;
+  UClassBibliotecaDao, UClassDevolucaoDao;
 
 procedure TFrmDescarte.BtnGravarClick(Sender: TObject);
 begin
@@ -537,10 +537,13 @@ function TFrmDescarte.getBolsaJaVinculada: Boolean;
 var
   lVinculadaASaida: Boolean;
   lVinculadaADescarte: Boolean;
+  lVinculadaADevolucao: Boolean;
 
   lSaidaDAO: TSaidaDAO;
   lDescarteDAO: TDescarteDAO;
+  lDevolucaoDAO: TDevolucaoDAO;
 begin
+
   Result := False;
 
   lSaidaDAO := TSaidaDAO.Create(DMConexao.Conexao);
@@ -557,7 +560,14 @@ begin
     lDescarteDAO.Destroy;
   end;
 
-  Result := lVinculadaASaida or lVinculadaADescarte;
+  lDevolucaoDAO := TDevolucaoDAO.Create(DMConexao.Conexao);
+  try
+    lVinculadaADevolucao := lDevolucaoDAO.getBolsaJaVinculada(Trim(EdtNumeroBolsa.Text));
+  finally
+    lDevolucaoDAO.Destroy;
+  end;
+
+  Result := lVinculadaASaida or lVinculadaADescarte or lVinculadaADevolucao;
 
 end;
 
@@ -653,8 +663,6 @@ begin
     lDescarte.Id := Self.FId;
     lDescarte.Id_Bolsa := Self.FIdBolsa;
     lDescarte.Id_Usuario := TBiblioteca.getIdUsuarioOnString(ComboBoxResponsavel.Items[ComboBoxResponsavel.ItemIndex]);
-    lDescarte.Data_Coleta := TClassBibliotecaDao.getValorAtributo('bolsa', 'data_coleta', 'id', Self.FIdBolsa,
-      DMConexao.Conexao);
     lDescarte.Motivo := EdtMotivoDescarte.Text;
     lDescarte.Volume := StrToInt(EdtVolume.Text);
     lDescarte.Data_Descarte := EdtDataDescarte.Date;

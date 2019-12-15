@@ -2,74 +2,22 @@ unit UClassDescarteDAO;
 
 interface
 
-uses System.Classes, System.SysUtils, UInterfaceDao, UClassConexao, UClassPersistencia, UClassDescarte;
+uses System.Classes, System.SysUtils, UClassPersistencia, UClassDescarte, UClassPersistBaseDados;
 
 type
-  TDescarteDAO = class(TInterfacedPersistent, IInterfaceDao<TDescarte>)
+  TDescarteDAO = class(TPersistBase<TDescarte>)
   private
-    FConexao: TConexao;
 
   public
-    function getExiste(const pID: Integer): Boolean;
-    function Excluir(const pID: Integer): Boolean;
-    function Salvar(var pObjeto: TDescarte): Boolean;
-    function getObjeto(const pID: Integer; var pObjeto: TDescarte): Boolean;
 
     function getConsulta(const pCHAVE: string; const pDATAINI, pDATAFIM: TDate; const pTIPOCONS: SmallInt;
       var pPersistencia: TPersistencia): Boolean;
 
     function getBolsaJaVinculada(const pNUMERO_DA_BOLSA: string): Boolean;
 
-    constructor Create(const pCONEXAO: TConexao); overload;
-    destructor Destroy; override;
-
   end;
 
 implementation
-
-constructor TDescarteDAO.Create(const pCONEXAO: TConexao);
-begin
-  Self.FConexao := pCONEXAO;
-end;
-
-destructor TDescarteDAO.Destroy;
-begin
-
-  inherited;
-end;
-
-function TDescarteDAO.Excluir(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('DELETE');
-      lPersistencia.Query.SQL.Add('FROM descarte');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.ExecSQL;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
 
 function TDescarteDAO.getBolsaJaVinculada(const pNUMERO_DA_BOLSA: string): Boolean;
 var
@@ -247,151 +195,6 @@ begin
       Result := False;
       raise Exception.Create(E.Message);
     end;
-  end;
-
-end;
-
-function TDescarteDAO.getExiste(const pID: Integer): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  count(*)');
-      lPersistencia.Query.SQL.Add('FROM descarte');
-      lPersistencia.Query.SQL.Add('WHERE id = :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      Result := lPersistencia.Query.Fields[0].AsInteger > 0;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TDescarteDAO.Salvar(var pObjeto: TDescarte): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-    try
-      lPersistencia.IniciaTransacao;
-
-      if (not Self.getExiste(pObjeto.Id)) then
-      begin
-
-        pObjeto.Id := lPersistencia.getProximoCodigo('descarte', 'id');
-        lPersistencia.Query.SQL.Add('INSERT INTO descarte (');
-        lPersistencia.Query.SQL.Add('  id,');
-        lPersistencia.Query.SQL.Add('  id_bolsa,');
-        lPersistencia.Query.SQL.Add('  id_usuario,');
-        lPersistencia.Query.SQL.Add('  motivo,');
-        lPersistencia.Query.SQL.Add('  volume,');
-        lPersistencia.Query.SQL.Add('  data_descarte');
-        lPersistencia.Query.SQL.Add(') VALUES (');
-        lPersistencia.Query.SQL.Add('  :pId,');
-        lPersistencia.Query.SQL.Add('  :pId_Bolsa,');
-        lPersistencia.Query.SQL.Add('  :pId_Usuario,');
-        lPersistencia.Query.SQL.Add('  :pMotivo,');
-        lPersistencia.Query.SQL.Add('  :pVolume,');
-        lPersistencia.Query.SQL.Add('  :pData_Descarte');
-        lPersistencia.Query.SQL.Add(');');
-      end
-      else
-      begin
-        lPersistencia.Query.SQL.Add('UPDATE descarte SET');
-        lPersistencia.Query.SQL.Add('  id_bolsa= :pId_Bolsa,');
-        lPersistencia.Query.SQL.Add('  id_usuario= :pId_Usuario,');
-        lPersistencia.Query.SQL.Add('  motivo= :pMotivo,');
-        lPersistencia.Query.SQL.Add('  volume= :pVolume,');
-        lPersistencia.Query.SQL.Add('  data_descarte= :pData_Descarte');
-        lPersistencia.Query.SQL.Add('WHERE (id = :pId);');
-
-      end;
-
-      lPersistencia.setParametro('pId', pObjeto.Id);
-      lPersistencia.setParametro('pId_Bolsa', pObjeto.Id_Bolsa);
-      lPersistencia.setParametro('pId_Usuario', pObjeto.Id_Usuario);
-      lPersistencia.setParametro('pMotivo', pObjeto.Motivo);
-      lPersistencia.setParametro('pVolume', pObjeto.Volume);
-      lPersistencia.setParametro('pData_Descarte', pObjeto.Data_Descarte);
-
-      lPersistencia.Query.ExecSQL;
-
-      Result := True;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
-  end;
-
-end;
-
-function TDescarteDAO.getObjeto(const pID: Integer; var pObjeto: TDescarte): Boolean;
-var
-  lPersistencia: TPersistencia;
-begin
-  lPersistencia := TPersistencia.Create(Self.FConexao);
-  try
-    try
-      lPersistencia.IniciaTransacao;
-
-      lPersistencia.Query.SQL.Add('SELECT');
-      lPersistencia.Query.SQL.Add('  *');
-      lPersistencia.Query.SQL.Add('FROM descarte');
-      lPersistencia.Query.SQL.Add('WHERE id= :pId');
-
-      lPersistencia.setParametro('pId', pID);
-
-      lPersistencia.Query.Open;
-
-      pObjeto.Id := lPersistencia.Query.FieldByName('id').AsInteger;
-      pObjeto.Id_Bolsa := lPersistencia.Query.FieldByName('id_bolsa').AsInteger;
-      pObjeto.Id_Usuario := lPersistencia.Query.FieldByName('id_usuario').AsInteger;
-      pObjeto.Motivo := lPersistencia.Query.FieldByName('motivo').Asstring;
-      pObjeto.Volume := lPersistencia.Query.FieldByName('volume').AsInteger;
-      pObjeto.Data_Descarte := lPersistencia.Query.FieldByName('data_descarte').AsDateTime;
-
-      Result := True;
-
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        raise Exception.Create(E.Message);
-      end;
-
-    end;
-
-  finally
-    lPersistencia.Destroy;
   end;
 
 end;

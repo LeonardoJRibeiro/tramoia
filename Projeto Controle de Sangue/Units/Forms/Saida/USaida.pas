@@ -103,7 +103,7 @@ implementation
 uses System.Math, UDMConexao, UClassMensagem, UClassEntrada, UClassEntradaDAO, UClassSaida, UClassSaidaDAO,
   UClassBiblioteca, UClassBibliotecaDao, UConsPaciente, UClassForeignKeyForms, UClassBolsa, UClassBolsaDao,
   System.Generics.Collections, UClassUsuario, UClassUsuarioDAO, UAutenticacao, USelBolsa, UClassProcedimento_Especial,
-  UClassProcedimento_EspecialDao, UClassDescarteDao, System.StrUtils;
+  UClassProcedimento_EspecialDao, UClassDescarteDao, System.StrUtils, UClassDevolucaoDao;
 
 {$R *.dfm}
 { TFrmSaida }
@@ -774,10 +774,13 @@ function TFrmSaida.getBolsaJaVinculada: Boolean;
 var
   lVinculadaASaida: Boolean;
   lVinculadaADescarte: Boolean;
+  lVinculadaADevolucao: Boolean;
 
   lSaidaDAO: TSaidaDAO;
   lDescarteDAO: TDescarteDAO;
+  lDevolucaoDAO: TDevolucaoDAO;
 begin
+
   Result := False;
 
   lSaidaDAO := TSaidaDAO.Create(DMConexao.Conexao);
@@ -794,7 +797,14 @@ begin
     lDescarteDAO.Destroy;
   end;
 
-  Result := lVinculadaASaida or lVinculadaADescarte;
+  lDevolucaoDAO := TDevolucaoDAO.Create(DMConexao.Conexao);
+  try
+    lVinculadaADevolucao := lDevolucaoDAO.getBolsaJaVinculada(Trim(EdtNumeroBolsa.Text));
+  finally
+    lDevolucaoDAO.Destroy;
+  end;
+
+  Result := lVinculadaASaida or lVinculadaADescarte or lVinculadaADevolucao;
 
 end;
 

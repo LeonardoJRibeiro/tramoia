@@ -2,9 +2,11 @@ unit UClassEntrada;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('Entrada')]
   TEntrada = class(TPersistent)
 
   private
@@ -25,13 +27,22 @@ type
 
   public
 
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('id_usuario')]
     property IdUsuario: Integer read getId_Usuario write setIdUsuario;
+
+    [TAtributo('data_entrada')]
     property DataEntrada: TDate read getData_Entrada write setDataEntrada;
+
+    [TAtributo('id_bolsA')]
     property IdBolsa: Integer read getIdBolsa write setIdBolsa;
 
     constructor Create; overload;
     destructor Destroy; override;
+
   end;
 
 implementation

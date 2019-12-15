@@ -2,9 +2,11 @@ unit UClassEndereco;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('endereco')]
   TEndereco = class
   private
     FId: Integer;
@@ -35,22 +37,40 @@ type
     procedure setCep(const pCEP: string);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('id_Municipio')]
     property Id_Municipio: Integer read getId_Municipio write setId_Municipio;
+
+    [TAtributo('id_paciente')]
     property Id_Paciente: Integer read getId_Paciente write setId_Paciente;
+
+    [TAtributo('logradouro')]
     property Logradouro: string read getLogradouro write setLogradouro;
+
+    [TAtributo('bairro')]
     property Bairro: string read getBairro write setBairro;
+
+    [TAtributo('complemento')]
     property Complemento: string read getComplemento write setComplemento;
+
+    [TAtributo('numero')]
     property Numero: string read getNumero write setNumero;
+
+    [TAtributo('cep')]
     property Cep: string read getCep write setCep;
 
     constructor Create; overload;
     destructor Destroy; override;
+
   end;
 
 implementation
 
-{ TEndereco}
+{ TEndereco }
 
 constructor TEndereco.Create;
 begin
@@ -62,6 +82,7 @@ begin
 
   inherited;
 end;
+
 function TEndereco.getId: Integer;
 begin
   Result := Self.FId;
@@ -104,42 +125,42 @@ end;
 
 procedure TEndereco.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TEndereco.setId_Municipio(const pID_MUNICIPIO: Integer);
 begin
-  Self.FId_Municipio:= pId_Municipio;
+  Self.FId_Municipio := pID_MUNICIPIO;
 end;
 
 procedure TEndereco.setId_Paciente(const pID_PACIENTE: Integer);
 begin
-  Self.FId_Paciente:= pId_Paciente;
+  Self.FId_Paciente := pID_PACIENTE;
 end;
 
 procedure TEndereco.setLogradouro(const pLOGRADOURO: string);
 begin
-  Self.FLogradouro:= pLogradouro;
+  Self.FLogradouro := pLOGRADOURO;
 end;
 
 procedure TEndereco.setBairro(const pBAIRRO: string);
 begin
-  Self.FBairro:= pBairro;
+  Self.FBairro := pBAIRRO;
 end;
 
 procedure TEndereco.setComplemento(const pCOMPLEMENTO: string);
 begin
-  Self.FComplemento:= pComplemento;
+  Self.FComplemento := pCOMPLEMENTO;
 end;
 
 procedure TEndereco.setNumero(const pNUMERO: string);
 begin
-  Self.FNumero:= pNumero;
+  Self.FNumero := pNUMERO;
 end;
 
 procedure TEndereco.setCep(const pCEP: string);
 begin
-  Self.FCep:= pCep;
+  Self.FCep := pCEP;
 end;
 
 end.

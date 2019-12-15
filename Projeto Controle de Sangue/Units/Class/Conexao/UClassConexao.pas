@@ -8,8 +8,10 @@ uses System.SysUtils, System.Classes, FireDAC.Phys.MySQLDef, FireDAC.Stan.Intf, 
 type
   TConexao = class(TPersistent)
   private
+
     FFDConnection: TFDConnection;
     FFDPhysMySQLDriverLink: TFDPhysMySQLDriverLink;
+
   public
 
     function PreparaConexao(): Boolean;
@@ -18,6 +20,7 @@ type
 
     constructor Create; overload;
     destructor Destroy; override;
+
   end;
 
 implementation
@@ -38,6 +41,7 @@ end;
 destructor TConexao.Destroy;
 begin
   FreeAndNil(Self.FFDConnection);
+
   inherited;
 end;
 

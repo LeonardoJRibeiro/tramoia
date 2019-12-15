@@ -2,14 +2,16 @@ unit UClassBolsa;
 
 interface
 
-uses System.SysUtils, System.Classes;
+uses System.SysUtils, System.Classes, UAtributos;
 
 type
+
+  [TEntidade('Bolsa')]
   TBolsa = class(TPersistent)
   private
 
     FId: Integer;
-    FNumeroBolsa: string[20];
+    FNumeroBolsa: string;
     FTipo: string[4];
     FAbo: string[2];
     FRh: string[1];
@@ -70,24 +72,62 @@ type
 
   public
 
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('numero_da_bolsa')]
     property NumeroBolsa: string read getNumeroBolsa write setNumeroBolsa;
+
+    [TAtributo('tipo')]
     property Tipo: string read getTipo write setTipo;
+
+    [TAtributo('abo')]
     property Abo: string read getAbo write setAbo;
+
+    [TAtributo('rh')]
     property Rh: string read getRh write setRh;
+
+    [TAtributo('origem')]
     property Origem: string read getOrigem write setOrigem;
+
+    [TAtributo('volume')]
     property Volume: Integer read getVolume write setVolume;
+
+    [TAtributo('pai')]
     property Pai: string read getPai write setPai;
+
+    [TAtributo('sifilis')]
     property Sifilis: string read getSifilis write setSifilis;
+
+    [TAtributo('chagas')]
     property Chagas: string read getChagas write setChagas;
+
+    [TAtributo('hepatiteB')]
     property HepatiteB: string read getHepatiteb write setHepatiteB;
+
+    [TAtributo('hepatiteC')]
     property HepatiteC: string read getHepatitec write setHepatiteC;
+
+    [TAtributo('hiv')]
     property Hiv: string read getHiv write setHiv;
+
+    [TAtributo('htlv')]
     property Htlv: string read getHtlv write setHtlv;
+
+    [TAtributo('hemoglobinas')]
     property Hemoglobinas: string read getHemoglobinas write setHemoglobinas;
+
+    [TAtributo('data_vencimento')]
     property DataVencimento: TDate read getDataVencimento write setDataVencimento;
+
+    [TAtributo('volume_atual')]
     property VolumeAtual: Integer read getVolumeAtual write setVolumeAtual;
+
+    [TAtributo('data_coleta')]
     property DataColeta: TDate read getDataColeta write setDataColeta;
+
+    [TAtributo('numero_doacoes')]
     property NumeroDoacoes: Integer read getNumeroDoacoes write setNumeroDoacoes;
 
     constructor Create; overload;

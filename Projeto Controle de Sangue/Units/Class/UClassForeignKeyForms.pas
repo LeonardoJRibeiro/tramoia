@@ -29,6 +29,8 @@ type
     FIdUDescarte: Byte = 16;
     FIdUConsDescarte: Byte = 17;
     FIdURelDescarte: Byte = 18;
+    FIdUDevolucao: Byte = 19;
+    FIdUConsDevolucao: Byte = 20;
 
   end;
 

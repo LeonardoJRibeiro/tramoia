@@ -65,7 +65,7 @@ begin
 
     9:
       begin
-        Result := 'Deseja realmente excluir o %s selecionado?'
+        Result := 'Deseja realmente excluir %s selecionado(a)?'
       end;
 
     10:
@@ -176,6 +176,21 @@ begin
     31:
       begin
         Result := 'ABO do paciente não compatível com o da bolsa. Deseja continuar?';
+      end;
+
+    32:
+      begin
+        Result := 'Devolucão gravada com sucesso.';
+      end;
+
+    33:
+      begin
+        Result := 'Configurações salvas com sucesso.'
+      end;
+
+    34:
+      begin
+        Result := 'Erro ao atulaizar base de dados. Motivo: %s';
       end;
 
   end;

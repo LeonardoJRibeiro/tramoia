@@ -15,12 +15,14 @@ type
     BtnRelSaidaSangue: TBitBtn;
     BtnRelEstoque: TBitBtn;
     BtnDescartes: TBitBtn;
+    BtnRelDevolucoes: TBitBtn;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure BtnRelSaidaSangueClick(Sender: TObject);
     procedure BtnRelEntradaSangueClick(Sender: TObject);
     procedure BtnRelEstoqueClick(Sender: TObject);
     procedure BtnDescartesClick(Sender: TObject);
+    procedure BtnRelDevolucoesClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
@@ -33,7 +35,7 @@ var
 
 implementation
 
-uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida, URelEstoque, URelDescarte;
+uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida, URelEstoque, URelDescarte, URelDevolucao;
 
 {$R *.dfm}
 { TFrmSelRelatorio }
@@ -41,6 +43,11 @@ uses UClassMensagem, UClassForeignKeyForms, URelEntrada, URelSaida, URelEstoque,
 procedure TFrmSelRelatorio.BtnDescartesClick(Sender: TObject);
 begin
   TFrmRelDescarte.getRelDescarte(TForeignKeyForms.FIdUSelRelatorio, Self.FCodUsu);
+end;
+
+procedure TFrmSelRelatorio.BtnRelDevolucoesClick(Sender: TObject);
+begin
+  TFrmRelDevolucao.getRelDevolucao(TForeignKeyForms.FIdUSelRelatorio, Self.FCodUsu);
 end;
 
 procedure TFrmSelRelatorio.BtnRelEntradaSangueClick(Sender: TObject);

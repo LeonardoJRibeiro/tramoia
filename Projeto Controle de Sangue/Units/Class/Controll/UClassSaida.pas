@@ -2,9 +2,11 @@ unit UClassSaida;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('saida')]
   TSaida = class(TPersistent)
   private
     FId: Integer;
@@ -45,20 +47,44 @@ type
     procedure setVolume(const pVOLUME: Integer);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('id_paciente')]
     property Id_Paciente: Integer read getId_Paciente write setId_Paciente;
+
+    [TAtributo('Id_usuario')]
     property Id_Usuario: Integer read getId_Usuario write setId_Usuario;
+
+    [TAtributo('id_bolsa')]
     property Id_Bolsa: Integer read getId_Bolsa write setId_Bolsa;
+
+    [TAtributo('data_saida')]
     property Data_Saida: TDate read getData_Saida write setData_Saida;
+
+    [TAtributo('hospital')]
     property Hospital: string read getHospital write setHospital;
+
+    [TAtributo('pai')]
     property Pai: string read getPai write setPai;
+
+    [TAtributo('prova_compatibilidade_ta')]
     property Prova_Compatibilidade_Ta: string read getProva_Compatibilidade_Ta write setProva_Compatibilidade_Ta;
+
+    [TAtributo('prova_compatibilidade_agh')]
     property Prova_Compatibilidade_Agh: string read getProva_Compatibilidade_Agh write setProva_Compatibilidade_Agh;
+
+    [TAtributo('prova_Compatibilidade_37')]
     property Prova_Compatibilidade_37: string read getProva_Compatibilidade_37 write setProva_Compatibilidade_37;
+
+    [TAtributo('volume')]
     property Volume: Integer read getVolume write setVolume;
 
     constructor Create; overload;
     destructor Destroy; override;
+
   end;
 
 implementation

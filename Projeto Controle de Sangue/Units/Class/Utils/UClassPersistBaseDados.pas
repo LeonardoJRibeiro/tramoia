@@ -17,7 +17,7 @@ type
     function ExecutaSqlUpdate(var pOBJETO: T): Boolean;
 
     procedure setParametrosInsertEUpdate(const pRTTIPROPERTY: TRttiProperty; const pOBJETO: T;
-      const pPERSISTENCIA: TPersistencia; const pNOME_ATRIBUTO: string);
+      const pPERSISTENCIA: TPersistencia; const pNOME_ATRIBUTO: string; const pINSERT: Boolean);
 
     function getNomeEntidade: string;
     function getNomeAtributoChave: string;
@@ -155,7 +155,7 @@ begin
 
             lNomeAtributo := (lAtributo as TAtributo).NomeAtributo;
 
-            Self.setParametrosInsertEUpdate(lRttiProperty, pOBJETO, lPersistencia, lNomeAtributo);
+            Self.setParametrosInsertEUpdate(lRttiProperty, pOBJETO, lPersistencia, lNomeAtributo, True);
 
           end;
 
@@ -234,7 +234,7 @@ begin
 
             lNomeAtributo := (lAtributo as TAtributo).NomeAtributo;
 
-            Self.setParametrosInsertEUpdate(lRttiProperty, pOBJETO, lPersistencia, lNomeAtributo);
+            Self.setParametrosInsertEUpdate(lRttiProperty, pOBJETO, lPersistencia, lNomeAtributo, False);
 
           end;
 
@@ -351,6 +351,7 @@ var
   lPersistencia: TPersistencia;
   lRttiProperty: TRttiProperty;
   lAtributo: TCustomAttribute;
+  lNomeAtributoBaseDados: string;
 begin
 
   lPersistencia := TPersistencia.Create(Self.FConexao);
@@ -378,23 +379,27 @@ begin
           if (lAtributo is TAtributo) then
           begin
 
+            lNomeAtributoBaseDados := (lAtributo as TAtributo).NomeAtributo;
+
             if (lRttiProperty.PropertyType.Name = 'string') then
             begin
-              lRttiProperty.SetValue(Pointer(pOBJETO), lPersistencia.Query.FieldByName(lRttiProperty.Name).AsString);
+              lRttiProperty.SetValue(Pointer(pOBJETO), lPersistencia.Query.FieldByName(lNomeAtributoBaseDados)
+                .AsString);
             end
             else if (lRttiProperty.PropertyType.Name = 'Integer') then
             begin
-              lRttiProperty.SetValue(Pointer(pOBJETO), lPersistencia.Query.FieldByName(lRttiProperty.Name).AsInteger);
+              lRttiProperty.SetValue(Pointer(pOBJETO), lPersistencia.Query.FieldByName(lNomeAtributoBaseDados)
+                .AsInteger);
             end
             else if (lRttiProperty.PropertyType.Name = 'TDate') then
             begin
-              lRttiProperty.SetValue(Pointer(pOBJETO),
-                StrToDate(lPersistencia.Query.FieldByName(lRttiProperty.Name).AsString));
+              lRttiProperty.SetValue(Pointer(pOBJETO), StrToDate(lPersistencia.Query.FieldByName(lNomeAtributoBaseDados)
+                .AsString));
             end
             else if (lRttiProperty.PropertyType.Name = 'TDateTime') then
             begin
-              lRttiProperty.SetValue(Pointer(pOBJETO), StrToDateTime(lPersistencia.Query.FieldByName(lRttiProperty.Name)
-                .AsString));
+              lRttiProperty.SetValue(Pointer(pOBJETO),
+                StrToDateTime(lPersistencia.Query.FieldByName(lNomeAtributoBaseDados).AsString));
             end;
 
           end;
@@ -471,7 +476,9 @@ begin
 end;
 
 procedure TPersistBase<T>.setParametrosInsertEUpdate(const pRTTIPROPERTY: TRttiProperty; const pOBJETO: T;
-  const pPERSISTENCIA: TPersistencia; const pNOME_ATRIBUTO: string);
+  const pPERSISTENCIA: TPersistencia; const pNOME_ATRIBUTO: string; const pINSERT: Boolean);
+var
+  lId: Integer;
 begin
 
   if (pRTTIPROPERTY.PropertyType.Name = 'string') then
@@ -480,7 +487,36 @@ begin
   end
   else if (pRTTIPROPERTY.PropertyType.Name = 'Integer') then
   begin
-    pPERSISTENCIA.setParametro('p' + pNOME_ATRIBUTO, pRTTIPROPERTY.GetValue(Pointer(pOBJETO)).ToString.ToInteger);
+
+    if (pINSERT) then
+    begin
+
+      if (UpperCase(pNOME_ATRIBUTO) = UpperCase(Self.FNomeAtributoChave)) then
+      begin
+
+        lId := pRTTIPROPERTY.GetValue(Pointer(pOBJETO)).ToString.ToInteger;
+
+        if (lId <= 0) then
+        begin
+          lId := pPERSISTENCIA.getProximoCodigo(Self.FNomeEntidade, pNOME_ATRIBUTO);
+
+          pRTTIPROPERTY.SetValue(Pointer(pOBJETO), lId);
+        end;
+
+      end
+      else
+      begin
+        lId := pRTTIPROPERTY.GetValue(Pointer(pOBJETO)).ToString.ToInteger;
+      end;
+
+      pPERSISTENCIA.setParametro('p' + pNOME_ATRIBUTO, lId);
+
+    end
+    else
+    begin
+      pPERSISTENCIA.setParametro('p' + pNOME_ATRIBUTO, pRTTIPROPERTY.GetValue(Pointer(pOBJETO)).ToString.ToInteger);
+    end;
+
   end
   else if (pRTTIPROPERTY.PropertyType.Name = 'TDate') then
   begin

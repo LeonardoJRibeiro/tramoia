@@ -16,6 +16,7 @@ type
     BtnConsPacientes: TBitBtn;
     BtnConsEntradas: TBitBtn;
     BtnDescartes: TBitBtn;
+    BtnDevolucoes: TBitBtn;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnSairClick(Sender: TObject);
     procedure BtnConsEstoqueClick(Sender: TObject);
@@ -23,6 +24,7 @@ type
     procedure BtnConsPacientesClick(Sender: TObject);
     procedure BtnConsSaidasClick(Sender: TObject);
     procedure BtnDescartesClick(Sender: TObject);
+    procedure BtnDevolucoesClick(Sender: TObject);
   private
     FForeignFormKey: SmallInt;
     FCodUsu: Integer;
@@ -36,7 +38,7 @@ var
 implementation
 
 uses UClassMensagem, UClassForeignKeyForms, UConsEstoque, UConsEntrada,
-  UConsSaidas, UConsPaciente;
+  UConsSaidas, UConsPaciente, UConsDevolucao;
 
 {$R *.dfm}
 
@@ -59,6 +61,11 @@ end;
 procedure TFrmSelCons.BtnDescartesClick(Sender: TObject);
 begin
   TFrmConsDescarte.getConsDescarte(Self.FForeignFormKey, Self.FCodUsu);
+end;
+
+procedure TFrmSelCons.BtnDevolucoesClick(Sender: TObject);
+begin
+  TFrmConsDevolucao.getConsDevolucao(Self.FForeignFormKey, Self.FCodUsu);
 end;
 
 procedure TFrmSelCons.BtnConsEntradasClick(Sender: TObject);

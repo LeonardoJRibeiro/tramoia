@@ -2,21 +2,34 @@ unit UClassBiblioteca;
 
 interface
 
-uses System.Classes, System.SysUtils, IniFiles, Vcl.Forms, Vcl.stdctrls, UClassUsuarioDao, Vcl.ComCtrls, Vcl.ExtCtrls;
+uses System.Classes, System.SysUtils, IniFiles, Vcl.Forms, Vcl.stdctrls, UClassUsuarioDao, Vcl.ComCtrls, Vcl.ExtCtrls,
+  UClassConexao;
 
 type
   TBiblioteca = class(TPersistent)
   public
+
     class function GravaArquivoIni(const pNOMEARQUIVO, pNOMECHAVE, pNOMESUBSHCAVE, pVALOR: string): Boolean;
+
     class function LeArquivoIni(const pNOMEARQUIVO, pNOMECHAVE, pNOMESUBSHCAVE, pDEFAULT: string): string;
+
     class function Crypt(Action, Src: string): string;
+
     class function getPrimeiroDiaMes(const pDATA: TDate): TDate;
+
     class function getUltimoDiaMes(const pDATA: TDate): TDate;
+
     class function IsCpfValido(const pCPF: string): Boolean;
+
     class function getVersaoExe: string;
+
     class function getIdUsuarioOnString(pString: String): SmallInt;
+
+    class function getUsuarioPossuiPermissao(const pCOD_USU: Integer; const pCONEXAO: TConexao): Boolean;
+
     class procedure LimparCampos;
     class procedure AtivaDesativaCompontes(const pFORM: TForm; const pATIVO: Boolean);
+
   end;
 
 implementation
@@ -136,7 +149,7 @@ begin
 
   Result := -1;
   lFimCopy := AnsiPos('-', pString) - 1;
-  Result := Trim(Copy(pString,1,lFimCopy)).ToInteger;
+  Result := Trim(copy(pString, 1, lFimCopy)).ToInteger;
 
 end;
 
@@ -151,6 +164,32 @@ class function TBiblioteca.getUltimoDiaMes(const pDATA: TDate): TDate;
 begin
 
   Result := EndOfTheMonth(pDATA);
+
+end;
+
+class function TBiblioteca.getUsuarioPossuiPermissao(const pCOD_USU: Integer; const pCONEXAO: TConexao): Boolean;
+var
+  lUsuaioDao: TUsuarioDAO;
+begin
+
+  lUsuaioDao := TUsuarioDAO.Create(pCONEXAO);
+  try
+
+    try
+
+      Result := lUsuaioDao.getAdmin(pCOD_USU);
+
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+
+  finally
+    lUsuaioDao.Destroy;
+  end;
 
 end;
 
@@ -205,7 +244,7 @@ begin
     lArquivoINI := TIniFile.Create(ExtractFilePath(ParamStr(0)) + pNOMEARQUIVO);
     try
       lArquivoINI.WriteString(pNOMECHAVE, pNOMESUBSHCAVE, pVALOR);
-      Result := true;
+      Result := True;
     finally
       lArquivoINI.Free;
     end;
@@ -279,7 +318,7 @@ begin
     // Verifica se os digitos calculados conferem com os digitos informados. }
     if ((lDig10 = pCPF[10]) and (lDig11 = pCPF[11])) then
     begin
-      Result := true
+      Result := True
     end
     else
     begin

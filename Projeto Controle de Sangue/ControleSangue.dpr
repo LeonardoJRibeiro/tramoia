@@ -41,7 +41,6 @@ uses
   UEnumsRelatorio in 'Units\Relatorios\UEnumsRelatorio.pas',
   UPrincipal in 'Units\Forms\Principal\UPrincipal.pas' {FrmPrincipal},
   URelEntrada in 'Units\Relatorios\Entrada\Form\URelEntrada.pas' {FrmRelEntrada},
-  URlRelEntrada in 'Units\Relatorios\Entrada\Relatorio\URlRelEntrada.pas' {FrmRlRelEntrada},
   UBibliotecaRelatorio in 'Units\Relatorios\UBibliotecaRelatorio.pas',
   UClassBolsa in 'Units\Class\Controll\UClassBolsa.pas',
   UClassBolsaDao in 'Units\Class\DAO\UClassBolsaDao.pas',
@@ -76,7 +75,21 @@ uses
   UClassProcedimento_EspecialDao in 'Units\Class\DAO\UClassProcedimento_EspecialDao.pas',
   UClassProcedimento_Especial in 'Units\Class\Controll\UClassProcedimento_Especial.pas',
   UClassPersistBaseDados in 'Units\Class\Utils\UClassPersistBaseDados.pas',
-  UAtributos in 'Units\Class\Utils\UAtributos.pas';
+  UAtributos in 'Units\Class\Utils\UAtributos.pas',
+  UDevolucao in 'Units\Forms\Devolucao\UDevolucao.pas' {FrmDevolucao},
+  UClassDevolucaoDao in 'Units\Class\DAO\UClassDevolucaoDao.pas',
+  UClassDevolucao in 'Units\Class\Controll\UClassDevolucao.pas',
+  UConsDevolucao in 'Units\Forms\Devolucao\UConsDevolucao.pas' {FrmConsDevolucao},
+  UClassRelDevolucao in 'Units\Relatorios\Devolucao\Class\UClassRelDevolucao.pas',
+  UClassRelDevolucaoDAO in 'Units\Relatorios\Devolucao\Class\UClassRelDevolucaoDAO.pas',
+  URelDevolucao in 'Units\Relatorios\Devolucao\Form\URelDevolucao.pas' {FrmRelDevolucao},
+  URlRelEntrada in 'Units\Relatorios\Entrada\Relatorio\URlRelEntrada.pas' {FrmRlRelEntrada},
+  URlRelDevolucao in 'Units\Relatorios\Devolucao\Relatorio\URlRelDevolucao.pas' {FrmRlRelDevolucao},
+  UAvisoVencimento in 'Units\Forms\UAvisoVencimento.pas' {FrmAvisoSistema},
+  UConfiguracoes in 'Units\Forms\UConfiguracoes.pas' {FrmConfiguracoes},
+  UClassConfiguracaoDao in 'Units\Class\DAO\UClassConfiguracaoDao.pas',
+  UClassConfiguracao in 'Units\Class\Controll\UClassConfiguracao.pas',
+  UClassAtualizaBase in 'Units\Class\UClassAtualizaBase.pas';
 
 {$R *.res}
 

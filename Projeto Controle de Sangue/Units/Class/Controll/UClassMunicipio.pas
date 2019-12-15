@@ -2,9 +2,11 @@ unit UClassMunicipio;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('municipio')]
   TMunicipio = class(TPersistent)
   private
     FId: Integer;
@@ -23,18 +25,28 @@ type
     procedure setNome(const pNOME: string);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('id_estado')]
     property Id_Estado: Integer read getId_Estado write setId_Estado;
+
+    [TAtributo('codigo_ibge')]
     property Codigo_Ibge: Integer read getCodigo_Ibge write setCodigo_Ibge;
+
+    [TAtributo('nome')]
     property Nome: string read getNome write setNome;
 
     constructor Create; overload;
     destructor Destroy; override;
+
   end;
 
 implementation
 
-{ TMunicipio}
+{ TMunicipio }
 
 constructor TMunicipio.Create;
 begin
@@ -46,6 +58,7 @@ begin
 
   inherited;
 end;
+
 function TMunicipio.getId: Integer;
 begin
   Result := Self.FId;
@@ -68,22 +81,22 @@ end;
 
 procedure TMunicipio.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TMunicipio.setId_Estado(const pID_ESTADO: Integer);
 begin
-  Self.FId_Estado:= pId_Estado;
+  Self.FId_Estado := pID_ESTADO;
 end;
 
 procedure TMunicipio.setCodigo_Ibge(const pCODIGO_IBGE: Integer);
 begin
-  Self.FCodigo_Ibge:= pCodigo_Ibge;
+  Self.FCodigo_Ibge := pCODIGO_IBGE;
 end;
 
 procedure TMunicipio.setNome(const pNOME: string);
 begin
-  Self.FNome:= pNome;
+  Self.FNome := pNOME;
 end;
 
 end.

@@ -40972,7 +40972,8 @@ object FrmPrincipal: TFrmPrincipal
     Proportional = True
     ShowHint = False
     Transparent = True
-    ExplicitLeft = 2
+    ExplicitWidth = 1149
+    ExplicitHeight = 285
   end
   object Panel1: TPanel
     Left = 0
@@ -53015,6 +53016,7 @@ object FrmPrincipal: TFrmPrincipal
       Layout = blGlyphTop
       ParentFont = False
       Spacing = 13
+      OnClick = SpeedButton1Click
     end
   end
   object StatusBar: TStatusBar
@@ -53092,6 +53094,17 @@ object FrmPrincipal: TFrmPrincipal
         OnClick = Consultar1Click
       end
     end
+    object Devolues1: TMenuItem
+      Caption = 'Devolu'#231#245'es'
+      object Cadastrar1: TMenuItem
+        Caption = 'Cadastrar'
+        OnClick = Cadastrar1Click
+      end
+      object Consultar2: TMenuItem
+        Caption = 'Consultar'
+        OnClick = Consultar2Click
+      end
+    end
     object MenuItemRelatorios: TMenuItem
       Caption = 'Relat'#243'rios'
       object MenuItemRelEntradas: TMenuItem
@@ -53105,6 +53118,10 @@ object FrmPrincipal: TFrmPrincipal
       object Descarte2: TMenuItem
         Caption = 'Descarte'
         OnClick = Descarte2Click
+      end
+      object MenuItemDevolucao: TMenuItem
+        Caption = 'Devolu'#231#227'o'
+        OnClick = MenuItemDevolucaoClick
       end
       object MenuItemRelEstoque: TMenuItem
         Caption = 'Estoque'
@@ -53128,6 +53145,10 @@ object FrmPrincipal: TFrmPrincipal
         Caption = 'Gerar backup'
         OnClick = MenuItemGerarBackupClick
       end
+    end
+    object MenuItemConfiguracoes: TMenuItem
+      Caption = 'Configura'#231#245'es'
+      OnClick = MenuItemConfiguracoesClick
     end
     object MenuItemSobre: TMenuItem
       Caption = 'Sobre'

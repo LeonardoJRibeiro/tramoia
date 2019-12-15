@@ -2,9 +2,11 @@ unit UClassUsuario;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('usuario')]
   TUsuario = class(TPersistent)
   private
     FId: Integer;
@@ -23,9 +25,18 @@ type
     procedure setAdmin(const pADMIN: string);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('nome')]
     property Nome: string read getNome write setNome;
+
+    [TAtributo('senha')]
     property Senha: string read getSenha write setSenha;
+
+    [TAtributo('admin')]
     property Admin: string read getAdmin write setAdmin;
 
     constructor Create; overload;
@@ -34,7 +45,7 @@ type
 
 implementation
 
-{ TUsuario}
+{ TUsuario }
 
 constructor TUsuario.Create;
 begin
@@ -69,22 +80,22 @@ end;
 
 procedure TUsuario.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TUsuario.setNome(const pNOME: string);
 begin
-  Self.FNome:= pNome;
+  Self.FNome := pNOME;
 end;
 
 procedure TUsuario.setSenha(const pSENHA: string);
 begin
-  Self.FSenha:= pSenha;
+  Self.FSenha := pSENHA;
 end;
 
 procedure TUsuario.setAdmin(const pADMIN: string);
 begin
-  Self.FAdmin:= pAdmin;
+  Self.FAdmin := pADMIN;
 end;
 
 end.

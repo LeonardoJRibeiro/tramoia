@@ -2,9 +2,11 @@ unit UClassTelefone;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('telefone')]
   TTelefone = class(TPersistent)
   private
     FId: Integer;
@@ -26,14 +28,26 @@ type
     procedure setTipo_Telefone(const pTIPO_TELEFONE: string);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('id_paciente')]
     property Id_Paciente: Integer read getId_Paciente write setId_Paciente;
+
+    [TAtributo('ddd')]
     property Ddd: string read getDdd write setDdd;
+
+    [TAtributo('numero')]
     property Numero: string read getNumero write setNumero;
+
+    [TAtributo('tipo_telefone')]
     property Tipo_Telefone: string read getTipo_Telefone write setTipo_Telefone;
 
     constructor Create; overload;
     destructor Destroy; override;
+
   end;
 
 implementation

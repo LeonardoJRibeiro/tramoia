@@ -4,7 +4,7 @@ object FrmSelRelatorio: TFrmSelRelatorio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Selecionar relat'#243'rio'
-  ClientHeight = 200
+  ClientHeight = 237
   ClientWidth = 198
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,13 +22,13 @@ object FrmSelRelatorio: TFrmSelRelatorio
     Left = 0
     Top = 0
     Width = 198
-    Height = 159
+    Height = 196
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 0
-    ExplicitWidth = 245
+    ExplicitHeight = 198
     object BtnRelEntradaSangue: TBitBtn
       Left = 2
       Top = 2
@@ -38,7 +38,6 @@ object FrmSelRelatorio: TFrmSelRelatorio
       Caption = 'Entradas de bolsa sangue'
       TabOrder = 0
       OnClick = BtnRelEntradaSangueClick
-      ExplicitWidth = 241
     end
     object BtnRelSaidaSangue: TBitBtn
       Left = 2
@@ -49,34 +48,41 @@ object FrmSelRelatorio: TFrmSelRelatorio
       Caption = 'Sa'#237'das de bolsa sangue'
       TabOrder = 1
       OnClick = BtnRelSaidaSangueClick
-      ExplicitWidth = 241
     end
     object BtnRelEstoque: TBitBtn
       Left = 2
-      Top = 119
+      Top = 158
       Width = 194
       Height = 39
       Align = alTop
       Caption = 'Bolsas em estoque'
       TabOrder = 2
       OnClick = BtnRelEstoqueClick
-      ExplicitWidth = 241
     end
     object BtnDescartes: TBitBtn
       Left = 2
-      Top = 80
+      Top = 119
       Width = 194
       Height = 39
       Align = alTop
       Caption = 'Descartes de bolsa de sangue'
       TabOrder = 3
       OnClick = BtnDescartesClick
-      ExplicitWidth = 241
+    end
+    object BtnRelDevolucoes: TBitBtn
+      Left = 2
+      Top = 80
+      Width = 194
+      Height = 39
+      Align = alTop
+      Caption = 'Devolu'#231#245'es de bolsa de sangue'
+      TabOrder = 4
+      OnClick = BtnRelDevolucoesClick
     end
   end
   object PanelBotoes: TPanel
     Left = 0
-    Top = 159
+    Top = 196
     Width = 198
     Height = 41
     Align = alBottom
@@ -84,7 +90,7 @@ object FrmSelRelatorio: TFrmSelRelatorio
     BevelOuter = bvNone
     BevelWidth = 2
     TabOrder = 1
-    ExplicitWidth = 245
+    ExplicitTop = 198
     object BtnSair: TBitBtn
       Left = 2
       Top = 2
@@ -130,7 +136,6 @@ object FrmSelRelatorio: TFrmSelRelatorio
         F5FB3F75A1FF}
       TabOrder = 0
       OnClick = BtnSairClick
-      ExplicitWidth = 241
     end
   end
 end

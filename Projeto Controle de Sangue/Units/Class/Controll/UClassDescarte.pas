@@ -2,15 +2,16 @@ unit UClassDescarte;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses System.Classes, System.SysUtils, UAtributos;
 
 type
+
+  [TEntidade('descarte')]
   TDescarte = class(TPersistent)
   private
     FId: Integer;
     FId_Bolsa: Integer;
     FId_Usuario: Integer;
-    FData_Coleta: TDate;
     FMotivo: string[80];
     FVolume: Integer;
     FData_Descarte: TDate;
@@ -18,7 +19,6 @@ type
     function getId: Integer;
     function getId_Bolsa: Integer;
     function getId_Usuario: Integer;
-    function getData_Coleta: TDate;
     function getMotivo: string;
     function getVolume: Integer;
     function getData_Descarte: TDate;
@@ -26,18 +26,29 @@ type
     procedure setId(const pID: Integer);
     procedure setId_Bolsa(const pID_BOLSA: Integer);
     procedure setId_Usuario(const pID_USUARIO: Integer);
-    procedure setData_Coleta(const pDATA_COLETA: TDate);
     procedure setMotivo(const pMOTIVO: string);
     procedure setVolume(const pVOLUME: Integer);
     procedure setData_Descarte(const pDATA_DESCARTE: TDate);
 
   public
+
+    [TChavePrimaria]
+    [TAtributo('id')]
     property Id: Integer read getId write setId;
+
+    [TAtributo('id_bolsa')]
     property Id_Bolsa: Integer read getId_Bolsa write setId_Bolsa;
+
+    [TAtributo('id_usuario')]
     property Id_Usuario: Integer read getId_Usuario write setId_Usuario;
-    property Data_Coleta: TDate read getData_Coleta write setData_Coleta;
+
+    [TAtributo('motivo')]
     property Motivo: string read getMotivo write setMotivo;
+
+    [TAtributo('volume')]
     property Volume: Integer read getVolume write setVolume;
+
+    [TAtributo('data_descarte')]
     property Data_Descarte: TDate read getData_Descarte write setData_Descarte;
 
     constructor Create; overload;
@@ -46,7 +57,7 @@ type
 
 implementation
 
-{ TDescarte}
+{ TDescarte }
 
 constructor TDescarte.Create;
 begin
@@ -58,6 +69,7 @@ begin
 
   inherited;
 end;
+
 function TDescarte.getId: Integer;
 begin
   Result := Self.FId;
@@ -71,11 +83,6 @@ end;
 function TDescarte.getId_Usuario: Integer;
 begin
   Result := Self.FId_Usuario;
-end;
-
-function TDescarte.getData_Coleta: TDate;
-begin
-  Result := Self.FData_Coleta;
 end;
 
 function TDescarte.getMotivo: string;
@@ -95,37 +102,32 @@ end;
 
 procedure TDescarte.setId(const pID: Integer);
 begin
-  Self.FId:= pId;
+  Self.FId := pID;
 end;
 
 procedure TDescarte.setId_Bolsa(const pID_BOLSA: Integer);
 begin
-  Self.FId_Bolsa:= pId_Bolsa;
+  Self.FId_Bolsa := pID_BOLSA;
 end;
 
 procedure TDescarte.setId_Usuario(const pID_USUARIO: Integer);
 begin
-  Self.FId_Usuario:= pId_Usuario;
-end;
-
-procedure TDescarte.setData_Coleta(const pDATA_COLETA: TDate);
-begin
-  Self.FData_Coleta:= pData_Coleta;
+  Self.FId_Usuario := pID_USUARIO;
 end;
 
 procedure TDescarte.setMotivo(const pMOTIVO: string);
 begin
-  Self.FMotivo:= pMotivo;
+  Self.FMotivo := pMOTIVO;
 end;
 
 procedure TDescarte.setVolume(const pVOLUME: Integer);
 begin
-  Self.FVolume:= pVolume;
+  Self.FVolume := pVOLUME;
 end;
 
 procedure TDescarte.setData_Descarte(const pDATA_DESCARTE: TDate);
 begin
-  Self.FData_Descarte:= pData_Descarte;
+  Self.FData_Descarte := pDATA_DESCARTE;
 end;
 
 end.

@@ -19,6 +19,7 @@ type
     LabelLeonardo: TLabel;
     LabelMaxoel: TLabel;
     LabelMurilo: TLabel;
+    LabelRicardo: TLabel;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ImageUEGClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

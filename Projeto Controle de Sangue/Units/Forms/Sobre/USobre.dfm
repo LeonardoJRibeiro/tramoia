@@ -4,7 +4,7 @@ object FrmSobre: TFrmSobre
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Sobre'
-  ClientHeight = 204
+  ClientHeight = 214
   ClientWidth = 518
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -23,15 +23,15 @@ object FrmSobre: TFrmSobre
     Left = 0
     Top = 0
     Width = 518
-    Height = 204
+    Height = 214
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 220
-    ExplicitWidth = 298
-    ExplicitHeight = 214
+    ExplicitLeft = 32
+    ExplicitTop = 8
+    ExplicitHeight = 204
     object LabelVersao: TLabel
       Left = 5
-      Top = 186
+      Top = 196
       Width = 163
       Height = 13
       AutoSize = False
@@ -114,6 +114,13 @@ object FrmSobre: TFrmSobre
       Width = 66
       Height = 13
       Caption = '- Murilo Olinto'
+    end
+    object LabelRicardo: TLabel
+      Left = 5
+      Top = 175
+      Width = 89
+      Height = 13
+      Caption = '- Ricardo Carvalho'
     end
   end
 end

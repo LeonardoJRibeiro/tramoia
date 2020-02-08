@@ -27,6 +27,8 @@ type
 
     class function getUsuarioPossuiPermissao(const pCOD_USU: Integer; const pCONEXAO: TConexao): Boolean;
 
+    class function ExecutaPrograma(const pCAMINHO: string): Boolean;
+
     class procedure LimparCampos;
     class procedure AtivaDesativaCompontes(const pFORM: TForm; const pATIVO: Boolean);
 
@@ -142,6 +144,41 @@ begin
 Fim:
 end;
 
+class function TBiblioteca.ExecutaPrograma(const pCAMINHO: string): Boolean;
+begin
+
+  try
+
+    if (FileExists(pCAMINHO)) then
+    begin
+
+      ShellExecute(Application.Handle, 'open', PCHAR(pCAMINHO), nil, nil, SW_SHOW);
+
+      Result := True;
+
+    end
+    else
+    begin
+
+      Result := False;
+
+      raise Exception.Create('Arquivo ' + pCAMINHO + ' não encontrado.');
+
+    end;
+
+  except
+    on E: Exception do
+    begin
+
+      Result := False;
+
+      raise Exception.Create(E.Message);
+
+    end;
+  end;
+
+end;
+
 class function TBiblioteca.getIdUsuarioOnString(pString: String): SmallInt;
 var
   lFimCopy: SmallInt;
@@ -200,10 +237,10 @@ var
   lPffi: PFFI;
   lHandle: Dword;
   lLen: Longint;
-  lData: PChar;
+  lData: PCHAR;
   lBuffer: Pointer;
   lTamanho: Dword;
-  lPArquivo: PChar;
+  lPArquivo: PCHAR;
   lArquivo: String;
 begin
 

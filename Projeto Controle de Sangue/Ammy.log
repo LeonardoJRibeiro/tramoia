@@ -1,0 +1,6 @@
+20200206-19:43:38.235000 0000328C - ERROR: ERROR: 2 RLEvent::TryToOpen(Global\AANS_FvwjZ_CHI)
+20200206-19:48:30.691000 00001ABC - ERROR: Error {12007} occured while connecting to server "http://rl.ammyy.com" 
+20200206-19:49:22.830000 000027BC - ERROR: Error {12007} occured while connecting to server "http://rl.ammyy.com" 
+20200206-19:49:34.303000 0000217C - ERROR: SetForegroundWindow()#1 Error 5
+20200206-19:49:36.930000 0000217C - ERROR: ERROR: 5 RLEvent::TryToOpen(Global\AANS_FvwjZ_CHI)
+20200208-15:40:35.536000 0000112C - ERROR: ERROR: 2 RLEvent::TryToOpen(Global\AANS_FvwjZ_CHI)

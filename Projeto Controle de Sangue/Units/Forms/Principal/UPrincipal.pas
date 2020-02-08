@@ -35,7 +35,6 @@ type
     MenuItemCadastrarSaida: TMenuItem;
     MenuItemConsultarSaida: TMenuItem;
     StatusBar: TStatusBar;
-    ImageUEG: TImage;
     BtnConsultas: TSpeedButton;
     MenuItemRelEstoque: TMenuItem;
     MenuItemBackup: TMenuItem;
@@ -52,6 +51,7 @@ type
     Consultar2: TMenuItem;
     MenuItemDevolucao: TMenuItem;
     MenuItemConfiguracoes: TMenuItem;
+    MenuItemSuporte: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtnPacientesClick(Sender: TObject);
@@ -86,6 +86,7 @@ type
     procedure Consultar2Click(Sender: TObject);
     procedure MenuItemDevolucaoClick(Sender: TObject);
     procedure MenuItemConfiguracoesClick(Sender: TObject);
+    procedure MenuItemSuporteClick(Sender: TObject);
   private
     FActiveControl: TActiveControl;
     FIdUsuario: Integer;
@@ -394,6 +395,29 @@ procedure TFrmPrincipal.MenuItemSobreClick(Sender: TObject);
 begin
 
   TFrmSobre.getSobre(TForeignKeyForms.FIdUPrincipal, Self.FIdUsuario);
+
+end;
+
+procedure TFrmPrincipal.MenuItemSuporteClick(Sender: TObject);
+var
+  lCaminhoExe: string;
+  lCaminhoAmmy: string;
+begin
+
+  try
+
+    lCaminhoExe := ExtractFilePath(Application.ExeName);
+
+    lCaminhoAmmy := Copy(lCaminhoExe, 1, Pos('\exe\', lCaminhoExe) - 1) + '\Ammy.exe';
+
+    TBiblioteca.ExecutaPrograma(lCaminhoAmmy);
+
+  except
+    on E: Exception do
+    begin
+      Application.MessageBox(PChar(E.Message), PChar('Erro'), MB_OK + MB_ICONERROR);
+    end;
+  end;
 
 end;
 

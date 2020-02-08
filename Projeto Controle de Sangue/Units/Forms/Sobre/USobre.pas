@@ -8,8 +8,6 @@ uses
 
 type
   TFrmSobre = class(TForm)
-    PanelFoto: TPanel;
-    ImageUEG: TImage;
     PanelClient: TPanel;
     LabelVersao: TLabel;
     LabelTramoia: TLabel;
@@ -21,8 +19,6 @@ type
     LabelLeonardo: TLabel;
     LabelMaxoel: TLabel;
     LabelMurilo: TLabel;
-    LabelRicardo: TLabel;
-    Label1: TLabel;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ImageUEGClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

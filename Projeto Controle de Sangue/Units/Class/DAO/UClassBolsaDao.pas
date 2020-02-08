@@ -108,7 +108,7 @@ begin
     pPersistencia.Query.SQL.Add('  data_coleta,');
     pPersistencia.Query.SQL.Add('  data_vencimento,');
     pPersistencia.Query.SQL.Add
-      ('  IF(data_vencimento - CURRENT_DATE() > 0, data_vencimento - CURRENT_DATE(),0) AS quant_dias_vencimento,');
+      ('  IF(DATEDIFF(data_vencimento, CURRENT_DATE())> 0, DATEDIFF(data_vencimento, CURRENT_DATE()),0) AS quant_dias_vencimento,');
     pPersistencia.Query.SQL.Add('  origem,');
     pPersistencia.Query.SQL.Add('  IF(numero_doacoes > 0 , CONCAT(numero_da_bolsa, ' + QuotedStr('-') +
       ', numero_doacoes), numero_da_bolsa) AS numero_da_bolsa,');
@@ -133,8 +133,8 @@ begin
 
     pPersistencia.Query.SQL.Add('AND volume_atual > 0');
 
-    pPersistencia.Query.SQL.Add('AND (data_vencimento - ' + pQUANT_DIAS_AVISO_VENCIMENTO.ToString +
-      '  <= CURRENT_DATE())');
+    pPersistencia.Query.SQL.Add('AND (data_vencimento - INTERVAL ' + pQUANT_DIAS_AVISO_VENCIMENTO.ToString +
+      ' DAY  <= CURRENT_DATE())');
 
     pPersistencia.Query.Open;
 
